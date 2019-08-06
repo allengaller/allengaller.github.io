@@ -207,6 +207,79 @@ minikube delete
 
 ### Dashboard
 
+![Dashboard](https://github.com/kubernetes/dashboard/raw/master/docs/images/dashboard-ui.png)
+
+[Github](https://github.com/kubernetes/dashboard)
+
 ```
 minikube dashboard
+```
+
+Deploy
+```
+faxi:~ faxi$ kubectl apply -f https://raw.githubusercontent.com/kubernetes/dashboard/v2.0.0-beta1/aio/deploy/recommended.yaml
+namespace/kubernetes-dashboard created
+serviceaccount/kubernetes-dashboard created
+service/kubernetes-dashboard created
+secret/kubernetes-dashboard-certs created
+secret/kubernetes-dashboard-csrf created
+secret/kubernetes-dashboard-key-holder created
+configmap/kubernetes-dashboard-settings created
+role.rbac.authorization.k8s.io/kubernetes-dashboard created
+clusterrole.rbac.authorization.k8s.io/kubernetes-dashboard created
+rolebinding.rbac.authorization.k8s.io/kubernetes-dashboard created
+clusterrolebinding.rbac.authorization.k8s.io/kubernetes-dashboard created
+deployment.apps/kubernetes-dashboard created
+service/dashboard-metrics-scraper created
+deployment.apps/kubernetes-metrics-scraper created
+```
+```
+faxi:~ faxi$ kubectl apply -f https://raw.githubusercontent.com/kubernetes/dashboard/v1.10.1/src/deploy/recommended/kubernetes-dashboard.yaml
+secret/kubernetes-dashboard-certs created
+serviceaccount/kubernetes-dashboard created
+role.rbac.authorization.k8s.io/kubernetes-dashboard-minimal created
+rolebinding.rbac.authorization.k8s.io/kubernetes-dashboard-minimal created
+service/kubernetes-dashboard configured
+The Deployment "kubernetes-dashboard" is invalid: spec.selector: Invalid value: v1.LabelSelector{MatchLabels:map[string]string{"k8s-app":"kubernetes-dashboard"}, MatchExpressions:[]v1.LabelSelectorRequirement(nil)}: field is immutable
+```
+
+To access Dashboard from your local workstation you must create a secure channel to your Kubernetes cluster. Run the following command:
+
+```
+$ kubectl proxy
+```
+
+```
+http://localhost:8001/api/v1/namespaces/kube-system/services/https:kubernetes-dashboard:/proxy/
+```
+
+* ERROR
+无法打开 https://stackoverflow.com/questions/52893111/no-endpoints-available-for-service-kubernetes-dashboard
+```
+faxi:~ faxi$ kubectl -n kube-system -l=k8s-app=kube-dns get pods
+NAME                       READY   STATUS    RESTARTS   AGE
+coredns-5c98db65d4-4r5vd   1/1     Running   1          26m
+coredns-5c98db65d4-m2zn4   1/1     Running   1          26m
+```
+
+```
+faxi:~ faxi$ kubectl get pods --all-namespaces
+NAMESPACE              NAME                                          READY   STATUS             RESTARTS   AGE
+default                hello-minikube-856979d68c-64rkz               1/1     Running            0          19m
+kube-system            coredns-5c98db65d4-4r5vd                      1/1     Running            1          27m
+kube-system            coredns-5c98db65d4-m2zn4                      1/1     Running            1          27m
+kube-system            etcd-minikube                                 1/1     Running            0          26m
+kube-system            kube-addon-manager-minikube                   1/1     Running            0          26m
+kube-system            kube-apiserver-minikube                       1/1     Running            0          26m
+kube-system            kube-controller-manager-minikube              1/1     Running            0          26m
+kube-system            kube-proxy-hb4kj                              1/1     Running            0          27m
+kube-system            kube-scheduler-minikube                       1/1     Running            0          26m
+kube-system            kubernetes-dashboard-7b8ddcb5d6-vr4kf         0/1     CrashLoopBackOff   7          12m
+kube-system            storage-provisioner                           1/1     Running            1          27m
+kubernetes-dashboard   kubernetes-dashboard-5c8f9556c4-npvwf         1/1     Running            0          8m56s
+kubernetes-dashboard   kubernetes-metrics-scraper-86456cdd8f-gl6ws   1/1     Running            0          8m56s
+```
+
+![init](dashboard-init.jpg)
+
 
