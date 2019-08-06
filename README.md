@@ -1,13 +1,15 @@
 # Topic
 
-[Kubernetes](/topic/k8s/k8s.md)
+* Kubernetes
+[About Kubernetes](/topic/k8s/k8s-about.md)
+[Kubernetes deployment](/topic/k8s/k8s-deployment.md)
 
+* Istio
+[About Istio](/topic/microservice/istio-about.md)
 
-[Istio](/topic/microservice/istio.md)
+* Cloud 
+[About Cloud Architecture](/topic/cloud/architecture.md)
 
+# Action Plan
 
-[Architecture](/topic/architecture/architecture.md)
-
-# Plan
-
-Transmission 0801-0820
+Transmission and planning @ 0801-0820
