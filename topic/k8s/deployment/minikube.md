@@ -280,6 +280,6 @@ kubernetes-dashboard   kubernetes-dashboard-5c8f9556c4-npvwf         1/1     Run
 kubernetes-dashboard   kubernetes-metrics-scraper-86456cdd8f-gl6ws   1/1     Running            0          8m56s
 ```
 
-![init](dashboard-init.jpg)
+![init](/topic/k8s/deployment/pic/dashboard-init.jpg)
 
 
