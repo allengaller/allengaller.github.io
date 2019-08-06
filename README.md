@@ -1,8 +1,14 @@
-# Topic
+# Kubernetes
 
-* Kubernetes
 [About Kubernetes](/topic/k8s/k8s-about.md)
-[Kubernetes deployment](/topic/k8s/k8s-deployment.md)
+
+## Deployment
+[Gernal Info](/topic/k8s/k8s-deployment.md)
+
+[Minikube](/topic/k8s/deployment/minikube.md)
+
+## Network
+[Terway vs. Flannel](/topic/k8s/k8s-deployment.md)
 
 * Istio
 [About Istio](/topic/microservice/istio-about.md)
