@@ -282,4 +282,7 @@ kubernetes-dashboard   kubernetes-metrics-scraper-86456cdd8f-gl6ws   1/1     Run
 
 ![init](/topic/k8s/deployment/pic/dashboard-init.jpg)
 
+```
+http://localhost:8001/api/v1/namespaces/kubernetes-dashboard/services/https:kubernetes-dashboard:/proxy/#/login
+```
 

@@ -1,20 +1,30 @@
 # Kubernetes
 
-[About Kubernetes](/topic/k8s/k8s-about.md)
+[kubernetes mainpage](/topic/k8s/k8s-about.md)
 
-## Deployment
-[Gernal Info](/topic/k8s/k8s-deployment.md)
+## deployment
+[k8s deployment](/topic/k8s/k8s-deployment.md)
 
-[Minikube](/topic/k8s/deployment/minikube.md)
+[minikube](/topic/k8s/deployment/minikube.md)
 
-## Network
+## network
 [Terway vs. Flannel](/topic/k8s/k8s-deployment.md)
 
-# Istio
-[About Istio](/topic/microservice/istio-about.md)
+# istio
+[istio mainpage](/topic/microservice/istio-about.md)
 
-# CNCF 
-[About Cloud Architecture](/topic/cncf/architecture.md)
+# cncf 
+[cloud architecture](/topic/cncf/architecture.md)
+
+# go
+[go maimpage](/topic/go/go.md)
+[go tutorial ](/topic/go/go-tutorial.md)
+
+# python
+
+# kv
+
+# developer
 
 # Action Plan
 
