@@ -1,9 +1,8 @@
-# Go tutorial
+# go tutorial
 
 [go mainpage](/topic/go/go.md)
 
-## install
-[Install](https://golang.org/doc/install)
+[install guide](https://golang.org/doc/install)
 
 ## enviroment
 
