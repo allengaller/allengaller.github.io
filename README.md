@@ -25,6 +25,6 @@
 
 # developer
 
-# Action Plan
+# action plan
 
-Transmission and planning @ 0801-0820
+transmission and planning @ 0801-0820
