@@ -2,15 +2,16 @@
 
 ## Links
 
-[Official site](https://golang.org/)
-[Download](https://golang.org/dl/)
-[Install](https://golang.org/doc/install)
-[Command](https://golang.org/cmd/go/)
-[Doc](https://golang.org/doc/)
+[official site](https://golang.org/)
+[download](https://golang.org/dl/)
+[install](https://golang.org/doc/install)
+[command](https://golang.org/cmd/go/)
+[doc](https://golang.org/doc/)
+[youtube](https://www.youtube.com/user/gocoding/videos)
 
-## Tutorial
+## tutorial
 
-[Faxi Go Tutorial](/topic/go/go-tutorial.md)
-[Official tour](https://tour.golang.org/welcome/1)
+[faxi Go Tutorial](/topic/go/go-tutorial.md)
+[official tour](https://tour.golang.org/welcome/1)
 
-## Project
+## project
