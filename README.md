@@ -1,6 +1,6 @@
 # kubernetes
 
-[kubernetes mainpage](/topic/k8s/k8s-about.md)
+[kubernetes mainpage](/topic/k8s/k8s.md)
 
 [k8s deployment](/topic/k8s/k8s-deployment.md)
 
@@ -20,6 +20,8 @@
 [go tutorial ](/topic/go/go-tutorial.md)
 
 # python
+
+# devops
 
 # kv
 

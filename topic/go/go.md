@@ -13,5 +13,7 @@
 
 [faxi Go Tutorial](/topic/go/go-tutorial.md)
 [official tour](https://tour.golang.org/welcome/1)
+[the-way-to-go](https://www.kancloud.cn/kancloud/the-way-to-go/)
+[zhihu](https://www.zhihu.com/question/23486344)
 
 ## project

@@ -1,28 +1,5 @@
-# Kubernetes
+# k8s concepts
 
-## Links
-
-[K8S Official Sites](https://kubernetes.io/)
-[Docker Official Website](https://www.docker.com/)
-
-## Side Project
-
-[Kruise](https://github.com/openkruise/kruise)
-
-
-## Reading List
-
-[Toutiao](https://toutiao.io/search?utf8=%E2%9C%93&q=kubernetes)
-[Yunqi @ Jianshu](https://www.jianshu.com/u/12532d36e4da)
-
-
-## Best Practice
-
-* Kubernetes deployment @ alibaba-cloud-ecs vm.
-* Publish demo app in cluster.
-* Swarm migration to kubernetes.
-
-## Concept
 
 [Official website](https://kubernetes.io/docs/concepts/)
 [中英名词对比](https://help.aliyun.com/document_detail/113088.html)

@@ -10,3 +10,6 @@
 ```
 pip install Django==2.2.4
 ```
+
+## tut
+[real python](https://realpython.com/tutorials/django/)
