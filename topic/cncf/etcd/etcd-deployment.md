@@ -1,7 +1,5 @@
 # etcd deployment
 
-[mainpage](/topic/cncf/etcd/etcd.md)
-
 [guide](http://play.etcd.io/install)
 
 ## system requirements

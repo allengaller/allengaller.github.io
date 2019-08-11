@@ -2,10 +2,6 @@
 
 Production-Grade Container Scheduling and Management.
 
-[docker mainpage](/topic/k8s/docker.md)
-
-[concept](/topic/k8s/k8s-concept.md)
-
 ## deployment
 
 [deployment](/topic/k8s/deployment/k8s-deployment.md)
@@ -24,8 +20,9 @@ Production-Grade Container Scheduling and Management.
 
 [minikube: Run Kubernetes locally]()
 
-## project
+[mesos](http://mesos.apache.org/)
 
+## project
 
 [giantswarm](https://giantswarm.io/)
 
@@ -63,5 +60,9 @@ Production-Grade Container Scheduling and Management.
 ## monitoring
 
 [netdata](https://www.netdata.cloud/) [github](https://github.com/netdata/netdata)
+
+[heapster](https://github.com/kubernetes-retired/heapster)
+
+[Heapster+InfluxDB+Grafana](https://www.cnblogs.com/justmine/p/8723467.html)
 
 

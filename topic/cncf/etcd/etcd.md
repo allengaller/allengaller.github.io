@@ -9,9 +9,7 @@ KV存储仓库，用于配置共享和服务发现，使用Go语言编写，通�
 
 [github](https://github.com/etcd-io/etcd)
 
-[play](http://play.etcd.io/play)
-
-[deployment](/topic/cncf/etcd/etcd-deployment.md)
+[play](http://play.etcd.io/play) [code](https://github.com/etcd-io/etcdlabs)
 
 ## features
 
