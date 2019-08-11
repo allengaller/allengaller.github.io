@@ -2,7 +2,7 @@
 
 [microservice](/topic/microservice/istio/istio.md): [istio](/topic/microservice/istio/istio.md) + [envoy](/topic/microservice/envoy/envoy.md)
 
-[cncf](/topic/cncf/cncf.md): [etcd](/topic/cncf/etcd/etcd.md) + [prometheus](/topic/cncf/envoy/prometheus.md)
+[cncf](/topic/cncf/cncf.md): [etcd](/topic/cncf/etcd/etcd.md)([deployment](/topic/cncf/etcd/etcd-deployment.md))+ [prometheus](/topic/cncf/envoy/prometheus.md)
 
 [devops](/topic/devops/devops.md)
 
