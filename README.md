@@ -4,8 +4,6 @@
 
 [cncf](/topic/cncf/cncf.md): [etcd](/topic/cncf/etcd/etcd.md) + [prometheus](/topic/cncf/envoy/prometheus.md)
 
-[123](/topic/cncf/etcd/etcd-deployment.md)
-
 [devops](/topic/devops/devops.md)
 
 [database](/topic/database/database.md)
