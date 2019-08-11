@@ -1,31 +1,48 @@
 # kubernetes
 
-[kubernetes mainpage](/topic/k8s/k8s.md)
+[k8s mainpage](/topic/k8s/k8s.md)
 
-[k8s deployment](/topic/k8s/k8s-deployment.md)
+[docker mainpage](/topic/k8s/docker.md)
 
-[minikube](/topic/k8s/deployment/minikube.md)
+[k8s concept](/topic/k8s/k8s-concept.md)
 
-[terway vs. flannel](/topic/k8s/k8s-deployment.md)
+[k8s deployment](/topic/k8s/deployment/k8s-deployment.md) 
+
+|- [minikube](/topic/k8s/deployment/minikube.md) 
+
+|- [kubectl](/topic/k8s/deployment/kubectl.md) 
+
+[terway vs. flannel](/topic/k8s/network/k8s-deployment.md)
 
 # istio
-[istio mainpage](/topic/microservice/istio-about.md)
+
+[istio mainpage](/topic/microservice/istio/istio.md)
 
 # cncf 
-[cloud architecture](/topic/cncf/architecture.md)
+
+[cncf mainpage](/topic/cncf/cncf.md)
 
 # go
+
 [go maimpage](/topic/go/go.md)
 
 [go tutorial ](/topic/go/go-tutorial.md)
 
 # python
 
+[python maimpage](/topic/python/python.md)
+
 # devops
+
+[devops maimpage](/topic/devops/devops.md)
 
 # kv
 
+[kv maimpage](/topic/kv/kv.md)
+
 # developer
+
+[developer maimpage](/topic/developer/developer.md)
 
 # action plan
 
