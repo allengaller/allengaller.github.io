@@ -1,5 +1,17 @@
 # kubernetes
 
+[docker mainpage](/topic/k8s/docker.md)
+
+[concept](/topic/k8s/k8s-concept.md)
+
+## deployment
+
+[deployment](/topic/k8s/deployment/k8s-deployment.md)
+
+[minikube](/topic/k8s/deployment/minikube.md) 
+
+[kubectl](/topic/k8s/deployment/kubectl.md) 
+
 ## links
 
 [official site](https://kubernetes.io/)
@@ -9,9 +21,14 @@
 
 ## project
 
+
 [giantswarm](https://giantswarm.io/)
 [octant](https://github.com/vmware/octant)
 [kruise](https://github.com/openkruise/kruise)
+
+## kv
+
+[etcd](/topic/cncf/etcd/etcd.md): Distributed reliable key-value store for the most critical data of a distributed system.
 
 ## cicd
 
@@ -24,8 +41,19 @@
 
 ## best practice
 
-* Kubernetes deployment @ alibaba-cloud-ecs vm.
+* alibaba cloud container service demo (dedicated cloud) @ 20190805
+* minikube deployment demo @ 20190806
+* go demo @ 20190810
+* etcd demo @ 20190811
 * Publish demo app in cluster.
 * Swarm migration to kubernetes.
 
-## concept
+## networking
+
+[terway vs. flannel](/topic/k8s/network/terway-flannel.md)
+
+## monitoring
+
+[netdata](https://www.netdata.cloud/) [github](https://github.com/netdata/netdata)
+
+

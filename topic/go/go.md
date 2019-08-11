@@ -1,5 +1,7 @@
 # Go 
 
+[go tutorial ](/topic/go/go-tutorial.md)
+
 ## Links
 
 [official site](https://golang.org/)
