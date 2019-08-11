@@ -36,3 +36,20 @@ etcd is open source, available on GitHub, and backed by the Cloud Native Computi
 5. 分布式通知与协调
 6. 分布式锁与竞选
 7. 分布式队列
+
+## Tools (3.3.12)
+
+etcdctl - A command line client for etcd
+etcd-backup - A powerful command line utility for dumping/restoring etcd - Supports v2
+etcd-dump - Command line utility for dumping/restoring etcd.
+etcd-fs - FUSE filesystem for etcd
+etcddir - Realtime sync etcd and local directory. Work with windows and linux.
+etcd-browser - A web-based key/value editor for etcd using AngularJS
+etcd-lock - Master election & distributed r/w lock implementation using etcd - Supports v2
+etcd-console - A web-base key/value editor for etcd using PHP
+etcd-viewer - An etcd key-value store editor/viewer written in Java
+etcdtool - Export/Import/Edit etcd directory as JSON/YAML/TOML and Validate directory using JSON schema
+etcd-rest - Create generic REST API in Go using etcd as a backend with validation using JSON schema
+etcdsh - A command line client with support of command history and tab completion. Supports v2
+etcdloadtest - A command line load test client for etcd version 3.0 and above.
+lucas - A web-based key-value viewer for kubernetes etcd3.0+ cluster.
