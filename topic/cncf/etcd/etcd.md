@@ -1,14 +1,16 @@
 # etcd
 
+[deployment](/topic/cncf/etcd/etcd-deployment.md)
+
 Distributed reliable key-value store for the most critical data of a distributed system.
 KV存储仓库，用于配置共享和服务发现，使用Go语言编写，通过Raft来保证一致性，提供HTTP+JSON接口。特点：简单、安全、快速、可靠。前辈是zookeeper, 备份方案是consul。
-
-[deployment](/topic/cncf/etcd/etcd-deployment.md)
 
 ## links
 
 [official website](https://etcd.io/)
+
 [github](https://github.com/etcd-io/etcd)
+
 [play](http://play.etcd.io/play)
 
 ## features
@@ -27,29 +29,29 @@ Your applications can read from and write data into etcd. A simple use case is s
 
 etcd is open source, available on GitHub, and backed by the Cloud Native Computing Foundation.
 
-## 主要应用场景
+## main usage
 
-1. 服务发现
-2. 集群监控
-3. 负载均衡
-4. 消息发布与订阅
-5. 分布式通知与协调
-6. 分布式锁与竞选
-7. 分布式队列
+* 服务发现
+* 集群监控
+* 负载均衡
+* 消息发布与订阅
+* 分布式通知与协调
+* 分布式锁与竞选
+* 分布式队列
 
 ## Tools (3.3.12)
 
-etcdctl - A command line client for etcd
-etcd-backup - A powerful command line utility for dumping/restoring etcd - Supports v2
-etcd-dump - Command line utility for dumping/restoring etcd.
-etcd-fs - FUSE filesystem for etcd
-etcddir - Realtime sync etcd and local directory. Work with windows and linux.
-etcd-browser - A web-based key/value editor for etcd using AngularJS
-etcd-lock - Master election & distributed r/w lock implementation using etcd - Supports v2
-etcd-console - A web-base key/value editor for etcd using PHP
-etcd-viewer - An etcd key-value store editor/viewer written in Java
-etcdtool - Export/Import/Edit etcd directory as JSON/YAML/TOML and Validate directory using JSON schema
-etcd-rest - Create generic REST API in Go using etcd as a backend with validation using JSON schema
-etcdsh - A command line client with support of command history and tab completion. Supports v2
-etcdloadtest - A command line load test client for etcd version 3.0 and above.
-lucas - A web-based key-value viewer for kubernetes etcd3.0+ cluster.
+* etcdctl - A command line client for etcd
+* etcd-backup - A powerful command line utility for dumping/restoring etcd - Supports v2
+* etcd-dump - Command line utility for dumping/restoring etcd.
+* etcd-fs - FUSE filesystem for etcd
+* etcddir - Realtime sync etcd and local directory. Work with windows and linux.
+* etcd-browser - A web-based key/value editor for etcd using AngularJS
+* etcd-lock - Master election & distributed r/w lock implementation using etcd - Supports v2
+* etcd-console - A web-base key/value editor for etcd using PHP
+* etcd-viewer - An etcd key-value store editor/viewer written in Java
+* etcdtool - Export/Import/Edit etcd directory as JSON/YAML/TOML and Validate directory using JSON schema
+* etcd-rest - Create generic REST API in Go using etcd as a backend with validation using JSON schema
+* etcdsh - A command line client with support of command history and tab completion. Supports v2
+* etcdloadtest - A command line load test client for etcd version 3.0 and above.
+* lucas - A web-based key-value viewer for kubernetes etcd3.0+ cluster.

@@ -1,4 +1,4 @@
-[kubernetes](/topic/k8s/k8s.md): Production-Grade Container Scheduling and Management.
+[kubernetes](/topic/k8s/k8s.md)
 
 [microservice](/topic/microservice/istio/istio.md): [istio](/topic/microservice/istio/istio.md) + [envoy](/topic/microservice/envoy/envoy.md)
 
