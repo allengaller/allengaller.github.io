@@ -1,7 +1,5 @@
 # etcd
 
-[deployment](/topic/cncf/etcd/etcd-deployment.md)
-
 * Distributed reliable key-value store for the most critical data of a distributed system.
 KV存储仓库，用于配置共享和服务发现，使用Go语言编写，通过Raft来保证一致性，提供HTTP+JSON接口。特点：简单、安全、快速、可靠。前辈是zookeeper, 备份方案是consul。
 
@@ -12,6 +10,8 @@ KV存储仓库，用于配置共享和服务发现，使用Go语言编写，通�
 [github](https://github.com/etcd-io/etcd)
 
 [play](http://play.etcd.io/play)
+
+[deployment](/topic/cncf/etcd/etcd-deployment.md)
 
 ## features
 
