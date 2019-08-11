@@ -38,6 +38,18 @@ action
 [root@k8s-ttt-main-1 ~]# chmod +x etcd.install.sh
 ```
 
+version check
+```
+[root@k8s-ttt-us-1 ~]# /tmp/etcd-download-test/etcd --version
+etcd Version: 3.3.13
+Git SHA: 98d3084
+Go Version: go1.10.8
+Go OS/Arch: linux/amd64
+[root@k8s-ttt-us-1 ~]# ETCDCTL_API=3 /tmp/etcd-download-test/etcdctl version
+etcdctl version: 3.3.13
+API version: 3.3
+```
+
 testing
 ```
 # start a local etcd server
@@ -46,4 +58,24 @@ testing
 # write,read to etcd
 ETCDCTL_API=3 /tmp/etcd-download-test/etcdctl --endpoints=localhost:2379 put foo bar
 ETCDCTL_API=3 /tmp/etcd-download-test/etcdctl --endpoints=localhost:2379 get foo
+```
+
+```
+[root@k8s-ttt-us-1 ~]# ETCDCTL_API=3 /tmp/etcd-download-test/etcdctl --endpoints=localhost:2379 put foo bar
+OK
+[root@k8s-ttt-us-1 ~]# ETCDCTL_API=3 /tmp/etcd-download-test/etcdctl --endpoints=localhost:2379 get foo
+foo
+bar
+```
+
+files
+```
+[root@k8s-ttt-us-1 etcd-download-test]# ll
+总用量 29776
+drwxr-xr-x 10 1000 1000     4096 5月   3 01:55 Documentation
+-rwxr-xr-x  1 1000 1000 16927136 5月   3 01:55 etcd
+-rwxr-xr-x  1 1000 1000 13498880 5月   3 01:55 etcdctl
+-rw-r--r--  1 1000 1000    38864 5月   3 01:55 README-etcdctl.md
+-rw-r--r--  1 1000 1000     7262 5月   3 01:55 README.md
+-rw-r--r--  1 1000 1000     7855 5月   3 01:55 READMEv2-etcdctl.md
 ```
