@@ -1,36 +1,23 @@
+[kubernetes](/topic/k8s/k8s.md): Production-Grade Container Scheduling and Management.
 
-# kubernetes
+[microservice](/topic/microservice/istio/istio.md): [istio](/topic/microservice/istio/istio.md) + [envoy](/topic/microservice/envoy/envoy.md)
 
-[mainpage](/topic/k8s/k8s.md): Production-Grade Container Scheduling and Management.
+[cncf](/topic/cncf/cncf.md): [etcd](/topic/cncf/etcd/etcd.md) + [prometheus](/topic/cncf/envoy/prometheus.md)
 
-# istio
+[devops](/topic/devops/devops.md)
 
-[mainpage](/topic/microservice/istio/istio.md)
+[database](/topic/database/database.md)
 
-# cncf 
+[kv](/topic/kv/kv.md)
 
-[mainpage](/topic/cncf/cncf.md)
+[architecture](/topic/architecture/architecture.md)
 
-# go
+[developer](/topic/developer/developer.md)
 
-[maimpage](/topic/go/go.md)
+[go](/topic/go/go.md)
 
-# python
+[python](/topic/python/python.md)
 
-[maimpage](/topic/python/python.md)
+[java](/topic/java/java.md)
 
-# devops
-
-[maimpage](/topic/devops/devops.md)
-
-# kv
-
-[maimpage](/topic/kv/kv.md)
-
-# developer
-
-[maimpage](/topic/developer/developer.md)
-
-# action plan
-
-transmission and planning @ 0801-0820
+[js](/topic/js/js.md)
