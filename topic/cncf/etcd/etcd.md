@@ -1,8 +1,8 @@
 # etcd
 
-[deployment](/topic/cncf/etcd/etcd-deployment.md)
+* [deployment](/topic/cncf/etcd/etcd-deployment.md)
 
-Distributed reliable key-value store for the most critical data of a distributed system.
+* Distributed reliable key-value store for the most critical data of a distributed system.
 KV存储仓库，用于配置共享和服务发现，使用Go语言编写，通过Raft来保证一致性，提供HTTP+JSON接口。特点：简单、安全、快速、可靠。前辈是zookeeper, 备份方案是consul。
 
 ## links
@@ -21,13 +21,13 @@ KV存储仓库，用于配置共享和服务发现，使用Go语言编写，通�
 
 ## about
 
-etcd is a strongly consistent, distributed key-value store that provides a reliable way to store data that needs to be accessed by a distributed system or cluster of machines. It gracefully handles leader elections during network partitions and can tolerate machine failure, even in the leader node.
+* etcd is a strongly consistent, distributed key-value store that provides a reliable way to store data that needs to be accessed by a distributed system or cluster of machines. It gracefully handles leader elections during network partitions and can tolerate machine failure, even in the leader node.
 
-Applications of any complexity, from a simple web app to Kubernetes, can read data from and write data into etcd.
+* Applications of any complexity, from a simple web app to Kubernetes, can read data from and write data into etcd.
 
-Your applications can read from and write data into etcd. A simple use case is storing database connection details or feature flags in etcd as key-value pairs. These values can be watched, allowing your app to reconfigure itself when they change. Advanced uses take advantage of etcd’s consistency guarantees to implement database leader elections or perform distributed locking across a cluster of workers.
+* Your applications can read from and write data into etcd. A simple use case is storing database connection details or feature flags in etcd as key-value pairs. These values can be watched, allowing your app to reconfigure itself when they change. Advanced uses take advantage of etcd’s consistency guarantees to implement database leader elections or perform distributed locking across a cluster of workers.
 
-etcd is open source, available on GitHub, and backed by the Cloud Native Computing Foundation.
+* etcd is open source, available on GitHub, and backed by the Cloud Native Computing Foundation.
 
 ## main usage
 
