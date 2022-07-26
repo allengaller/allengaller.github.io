@@ -27,6 +27,7 @@
 [w3s](https://www.w3schools.com/python/python_intro.asp)
 [100day](https://github.com/jackfrued/Python-100-Days)
 [30s](https://github.com/30-seconds/30-seconds-of-python-code)
+[Scaler](https://www.scaler.com/topics/python/what-is-python/)
 
 ## framework
 
