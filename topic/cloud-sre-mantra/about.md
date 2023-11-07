@@ -1,6 +1,6 @@
 __cloud native__:
 
-[kubernetes](/topic/k8s/k8s.md)
+[kubernetes](/topic/k8s/k8s)
 
 [microservice](/topic/microservice/istio/istio.md): [istio](/topic/microservice/istio/istio.md) + [envoy](/topic/microservice/envoy/envoy.md)
 
