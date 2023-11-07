@@ -1,3 +1,5 @@
+__k8s__:
+
 # kubernetes
 
 Production-Grade Container Scheduling and Management.
