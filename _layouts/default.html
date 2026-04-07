@@ -1,0 +1,453 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>{{ page.title | default: site.title }}</title>
+  <meta name="description" content="{{ site.description }}">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&family=Share+Tech+Mono&family=Noto+Sans+SC:wght@300;400;700&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --cyan: #00fff9;
+      --magenta: #ff2d95;
+      --yellow: #f0e130;
+      --dark: #0a0a12;
+      --darker: #06060c;
+      --panel: rgba(10, 10, 18, 0.85);
+      --border: rgba(0, 255, 249, 0.15);
+      --text: #c8d6e5;
+      --text-dim: #5a6a7a;
+      --glow-cyan: 0 0 10px rgba(0, 255, 249, 0.4), 0 0 40px rgba(0, 255, 249, 0.1);
+      --glow-magenta: 0 0 10px rgba(255, 45, 149, 0.4), 0 0 40px rgba(255, 45, 149, 0.1);
+    }
+
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+
+    html {
+      scroll-behavior: smooth;
+      scrollbar-width: thin;
+      scrollbar-color: var(--cyan) var(--darker);
+    }
+
+    ::-webkit-scrollbar { width: 6px; }
+    ::-webkit-scrollbar-track { background: var(--darker); }
+    ::-webkit-scrollbar-thumb { background: var(--cyan); border-radius: 3px; }
+
+    body {
+      font-family: 'Noto Sans SC', 'Share Tech Mono', monospace;
+      background: var(--dark);
+      color: var(--text);
+      min-height: 100vh;
+      overflow-x: hidden;
+      line-height: 1.8;
+    }
+
+    /* ===== BACKGROUND GRID ===== */
+    .bg-grid {
+      position: fixed;
+      inset: 0;
+      z-index: 0;
+      pointer-events: none;
+      background-image:
+        linear-gradient(rgba(0,255,249,0.03) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(0,255,249,0.03) 1px, transparent 1px);
+      background-size: 60px 60px;
+    }
+
+    /* ===== SCAN LINES ===== */
+    .scanlines {
+      position: fixed;
+      inset: 0;
+      z-index: 9999;
+      pointer-events: none;
+      background: repeating-linear-gradient(
+        0deg,
+        transparent,
+        transparent 2px,
+        rgba(0, 0, 0, 0.03) 2px,
+        rgba(0, 0, 0, 0.03) 4px
+      );
+    }
+
+    /* ===== FLOATING PARTICLES ===== */
+    .particles {
+      position: fixed;
+      inset: 0;
+      z-index: 1;
+      pointer-events: none;
+      overflow: hidden;
+    }
+    .particle {
+      position: absolute;
+      width: 2px;
+      background: var(--cyan);
+      opacity: 0;
+      animation: rain linear infinite;
+    }
+    @keyframes rain {
+      0% { transform: translateY(-100vh); opacity: 0; }
+      10% { opacity: 0.6; }
+      90% { opacity: 0.6; }
+      100% { transform: translateY(100vh); opacity: 0; }
+    }
+
+    /* ===== HEADER ===== */
+    .site-header {
+      position: relative;
+      z-index: 10;
+      padding: 60px 20px 40px;
+      text-align: center;
+      border-bottom: 1px solid var(--border);
+      background: linear-gradient(180deg, rgba(0,255,249,0.04) 0%, transparent 100%);
+    }
+
+    .site-title {
+      font-family: 'Orbitron', sans-serif;
+      font-size: clamp(2rem, 5vw, 3.5rem);
+      font-weight: 900;
+      color: var(--cyan);
+      text-shadow: var(--glow-cyan);
+      letter-spacing: 6px;
+      text-transform: uppercase;
+      position: relative;
+      display: inline-block;
+      animation: glitch-skew 4s infinite linear alternate-reverse;
+    }
+
+    .site-title::before,
+    .site-title::after {
+      content: attr(data-text);
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+    }
+    .site-title::before {
+      color: var(--magenta);
+      animation: glitch-1 3s infinite linear alternate-reverse;
+      clip-path: polygon(0 0, 100% 0, 100% 35%, 0 35%);
+    }
+    .site-title::after {
+      color: var(--yellow);
+      animation: glitch-2 2s infinite linear alternate-reverse;
+      clip-path: polygon(0 65%, 100% 65%, 100% 100%, 0 100%);
+    }
+
+    @keyframes glitch-1 {
+      0%, 92% { transform: none; }
+      93% { transform: translate(2px, -1px); }
+      94% { transform: translate(-2px, 1px); }
+      95% { transform: translate(1px, 2px); }
+      96% { transform: none; }
+    }
+    @keyframes glitch-2 {
+      0%, 90% { transform: none; }
+      91% { transform: translate(-1px, 2px); }
+      92% { transform: translate(2px, -1px); }
+      93% { transform: translate(-2px, -1px); }
+      94% { transform: none; }
+    }
+    @keyframes glitch-skew {
+      0%, 97% { transform: skew(0deg); }
+      98% { transform: skew(0.5deg); }
+      99% { transform: skew(-0.3deg); }
+      100% { transform: skew(0deg); }
+    }
+
+    .site-subtitle {
+      font-family: 'Share Tech Mono', monospace;
+      font-size: 1rem;
+      color: var(--text-dim);
+      margin-top: 12px;
+      letter-spacing: 8px;
+    }
+    .site-subtitle .blink {
+      animation: blink 1s steps(1) infinite;
+      color: var(--cyan);
+    }
+    @keyframes blink {
+      50% { opacity: 0; }
+    }
+
+    .header-line {
+      width: 200px;
+      height: 2px;
+      margin: 20px auto 0;
+      background: linear-gradient(90deg, transparent, var(--cyan), var(--magenta), transparent);
+      box-shadow: var(--glow-cyan);
+    }
+
+    /* ===== NAV ===== */
+    .site-nav {
+      position: relative;
+      z-index: 10;
+      display: flex;
+      justify-content: center;
+      gap: 8px;
+      padding: 16px 20px;
+      background: rgba(0,0,0,0.4);
+      border-bottom: 1px solid var(--border);
+      flex-wrap: wrap;
+    }
+    .site-nav a {
+      font-family: 'Share Tech Mono', monospace;
+      font-size: 0.8rem;
+      color: var(--text-dim);
+      text-decoration: none;
+      padding: 6px 16px;
+      border: 1px solid transparent;
+      transition: all 0.3s;
+      letter-spacing: 1px;
+    }
+    .site-nav a:hover {
+      color: var(--cyan);
+      border-color: var(--cyan);
+      box-shadow: var(--glow-cyan);
+      background: rgba(0, 255, 249, 0.05);
+    }
+
+    /* ===== MAIN CONTENT ===== */
+    .site-main {
+      position: relative;
+      z-index: 10;
+      max-width: 900px;
+      margin: 0 auto;
+      padding: 40px 24px 80px;
+    }
+
+    /* Content styling */
+    .content h1 {
+      font-family: 'Orbitron', sans-serif;
+      font-size: 1.8rem;
+      color: var(--cyan);
+      text-shadow: var(--glow-cyan);
+      margin: 40px 0 20px;
+      padding-bottom: 10px;
+      border-bottom: 1px solid var(--border);
+      letter-spacing: 2px;
+    }
+    .content h1:first-child { margin-top: 0; }
+
+    .content h2 {
+      font-family: 'Orbitron', sans-serif;
+      font-size: 1.3rem;
+      color: var(--magenta);
+      text-shadow: var(--glow-magenta);
+      margin: 36px 0 16px;
+      padding-left: 16px;
+      border-left: 3px solid var(--magenta);
+      letter-spacing: 1px;
+    }
+
+    .content h3 {
+      font-family: 'Share Tech Mono', monospace;
+      font-size: 1.1rem;
+      color: var(--yellow);
+      margin: 24px 0 12px;
+    }
+    .content h3::before {
+      content: '> ';
+      color: var(--cyan);
+    }
+
+    .content p {
+      margin: 12px 0;
+      color: var(--text);
+    }
+
+    .content strong {
+      color: var(--cyan);
+      font-weight: 700;
+    }
+
+    .content a {
+      color: var(--cyan);
+      text-decoration: none;
+      border-bottom: 1px solid rgba(0,255,249,0.3);
+      transition: all 0.3s;
+    }
+    .content a:hover {
+      color: #fff;
+      text-shadow: var(--glow-cyan);
+      border-bottom-color: var(--cyan);
+    }
+
+    .content ul, .content ol {
+      padding-left: 0;
+      list-style: none;
+      margin: 12px 0;
+    }
+    .content li {
+      padding: 6px 0 6px 24px;
+      position: relative;
+    }
+    .content li::before {
+      content: '//';
+      position: absolute;
+      left: 0;
+      color: var(--magenta);
+      font-family: 'Share Tech Mono', monospace;
+      font-size: 0.85rem;
+    }
+
+    .content hr {
+      border: none;
+      height: 1px;
+      background: linear-gradient(90deg, transparent, var(--border), transparent);
+      margin: 32px 0;
+    }
+
+    /* Tables */
+    .content table {
+      width: 100%;
+      border-collapse: collapse;
+      margin: 20px 0;
+      font-size: 0.9rem;
+    }
+    .content th {
+      font-family: 'Share Tech Mono', monospace;
+      background: rgba(0,255,249,0.08);
+      color: var(--cyan);
+      padding: 10px 16px;
+      text-align: left;
+      border-bottom: 2px solid var(--cyan);
+      letter-spacing: 1px;
+      font-size: 0.8rem;
+      text-transform: uppercase;
+    }
+    .content td {
+      padding: 10px 16px;
+      border-bottom: 1px solid var(--border);
+    }
+    .content tr:hover td {
+      background: rgba(0,255,249,0.03);
+    }
+
+    /* Code blocks */
+    .content code {
+      font-family: 'Share Tech Mono', monospace;
+      background: rgba(0,255,249,0.08);
+      color: var(--cyan);
+      padding: 2px 8px;
+      border-radius: 3px;
+      font-size: 0.9em;
+    }
+    .content pre {
+      background: var(--darker);
+      border: 1px solid var(--border);
+      border-left: 3px solid var(--cyan);
+      padding: 16px 20px;
+      overflow-x: auto;
+      margin: 16px 0;
+      border-radius: 4px;
+    }
+    .content pre code {
+      background: none;
+      padding: 0;
+    }
+
+    /* Blockquote */
+    .content blockquote {
+      border-left: 3px solid var(--magenta);
+      padding: 12px 20px;
+      margin: 16px 0;
+      background: rgba(255, 45, 149, 0.05);
+      color: var(--text-dim);
+      font-style: italic;
+    }
+
+    /* ===== FOOTER ===== */
+    .site-footer {
+      position: relative;
+      z-index: 10;
+      text-align: center;
+      padding: 30px 20px;
+      border-top: 1px solid var(--border);
+      background: rgba(0,0,0,0.3);
+    }
+    .site-footer p {
+      font-family: 'Share Tech Mono', monospace;
+      font-size: 0.75rem;
+      color: var(--text-dim);
+      letter-spacing: 2px;
+    }
+    .site-footer .neon-bar {
+      width: 60px;
+      height: 2px;
+      margin: 0 auto 12px;
+      background: var(--magenta);
+      box-shadow: var(--glow-magenta);
+    }
+
+    /* ===== RESPONSIVE ===== */
+    @media (max-width: 600px) {
+      .site-header { padding: 40px 16px 30px; }
+      .site-main { padding: 24px 16px 60px; }
+      .site-nav a { font-size: 0.7rem; padding: 5px 10px; }
+      .content h1 { font-size: 1.4rem; }
+      .content h2 { font-size: 1.1rem; }
+    }
+
+    /* ===== PAGE LOAD ANIMATION ===== */
+    .content { animation: fadeUp 0.8s ease-out; }
+    @keyframes fadeUp {
+      from { opacity: 0; transform: translateY(20px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+  </style>
+</head>
+<body>
+  <div class="bg-grid"></div>
+  <div class="scanlines"></div>
+  <div class="particles" id="particles"></div>
+
+  <header class="site-header">
+    <h1 class="site-title" data-text="{{ site.title }}">{{ site.title }}</h1>
+    <p class="site-subtitle">// {{ site.description }} <span class="blink">_</span></p>
+    <div class="header-line"></div>
+  </header>
+
+  <nav class="site-nav">
+    <a href="{{ '/' | relative_url }}">[ HOME ]</a>
+    <a href="{{ '/topic/cloud-sre-mantra/about' | relative_url }}">[ SRE ]</a>
+    <a href="{{ '/topic/ai-tools/ai-tools' | relative_url }}">[ AI ]</a>
+    <a href="{{ '/topic/k8s/k8s' | relative_url }}">[ K8S ]</a>
+    <a href="{{ '/topic/go/go' | relative_url }}">[ GO ]</a>
+    <a href="{{ '/topic/python/python' | relative_url }}">[ PYTHON ]</a>
+  </nav>
+
+  <main class="site-main">
+    <div class="content">
+      {{ content }}
+    </div>
+  </main>
+
+  <footer class="site-footer">
+    <div class="neon-bar"></div>
+    <p>SYS.ONLINE // {{ site.title }} // {{ site.time | date: '%Y' }}</p>
+  </footer>
+
+  <script>
+    // Data rain particles
+    (function() {
+      const container = document.getElementById('particles');
+      const count = 30;
+      for (let i = 0; i < count; i++) {
+        const p = document.createElement('div');
+        p.className = 'particle';
+        const h = 20 + Math.random() * 80;
+        p.style.height = h + 'px';
+        p.style.left = Math.random() * 100 + '%';
+        p.style.animationDuration = (4 + Math.random() * 8) + 's';
+        p.style.animationDelay = Math.random() * 10 + 's';
+        p.style.opacity = 0;
+        if (Math.random() > 0.7) p.style.background = 'var(--magenta)';
+        container.appendChild(p);
+      }
+    })();
+  </script>
+</body>
+</html>
