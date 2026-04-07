@@ -3,143 +3,233 @@ layout: default
 title: 法喜个人主页
 ---
 
-<section class="hero-koan">
-  <div class="koan-text">
-    <p class="koan-line">云上行走，禅中落地</p>
-    <p class="koan-sub">Cloud Native · SRE · AI — 用技术修行，以写作观心</p>
+<section class="hero-projects">
+  <div class="hero-content">
+    <p class="hero-line">开源之光 · 代码为证</p>
+    <p class="hero-sub">Open Source Projects — 构建、分享、连接</p>
   </div>
   <div class="status-bar">
     <span class="status-dot"></span>
-    <span class="status-text">node.active</span>
+    <span class="status-text">github.active</span>
     <span class="status-sep">|</span>
-    <span class="status-text">focus: infrastructure × intelligence</span>
+    <span class="status-text">projects: building</span>
   </div>
 </section>
 
-<section class="section-block">
-  <h2 class="section-title">技术写作</h2>
-  <div class="card-grid">
-    <a href="/topic/cloud-sre-mantra/about" class="card">
-      <div class="card-glyph">☁</div>
-      <div class="card-body">
-        <div class="card-label">稳云真经</div>
-        <div class="card-desc">Cloud Native SRE — K8s、微服务、可观测性</div>
+<!-- 核心项目 -->
+<section class="section-block featured">
+  <h2 class="section-title">
+    <span class="title-icon">◈</span>
+    核心项目
+  </h2>
+  <div class="project-grid">
+    
+    <!-- 项目模板 - 请替换为你的实际项目 -->
+    <a href="https://github.com/username/project-1" target="_blank" class="project-card featured-card">
+      <div class="project-header">
+        <div class="project-icon">⚡</div>
+        <div class="project-meta">
+          <span class="project-lang">Go</span>
+          <span class="project-stars">★ 0</span>
+        </div>
       </div>
-      <div class="card-arrow">→</div>
-    </a>
-    <a href="/topic/ai-tools/ai-tools" class="card">
-      <div class="card-glyph">◎</div>
-      <div class="card-body">
-        <div class="card-label">AI 工具链</div>
-        <div class="card-desc">编程、对话、创作、陪伴类 AI 工具整理</div>
+      <h3 class="project-name">Project Alpha</h3>
+      <p class="project-desc">高性能云原生工具库，简化 Kubernetes 操作，提供声明式 API 管理</p>
+      <div class="project-tags">
+        <span class="tag">k8s</span>
+        <span class="tag">cloud-native</span>
+        <span class="tag">cli</span>
       </div>
-      <div class="card-arrow">→</div>
+      <div class="project-arrow">→</div>
     </a>
+
+    <a href="https://github.com/username/project-2" target="_blank" class="project-card featured-card">
+      <div class="project-header">
+        <div class="project-icon">🔮</div>
+        <div class="project-meta">
+          <span class="project-lang">Python</span>
+          <span class="project-stars">★ 0</span>
+        </div>
+      </div>
+      <h3 class="project-name">Project Beta</h3>
+      <p class="project-desc">AI 驱动的可观测性平台，智能日志分析与异常检测系统</p>
+      <div class="project-tags">
+        <span class="tag">ai</span>
+        <span class="tag">observability</span>
+        <span class="tag">ml</span>
+      </div>
+      <div class="project-arrow">→</div>
+    </a>
+
+    <a href="https://github.com/username/project-3" target="_blank" class="project-card featured-card">
+      <div class="project-header">
+        <div class="project-icon">🌐</div>
+        <div class="project-meta">
+          <span class="project-lang">Rust</span>
+          <span class="project-stars">★ 0</span>
+        </div>
+      </div>
+      <h3 class="project-name">Project Gamma</h3>
+      <p class="project-desc">轻量级服务网格代理，高性能 Envoy 替代方案</p>
+      <div class="project-tags">
+        <span class="tag">service-mesh</span>
+        <span class="tag">proxy</span>
+        <span class="tag">network</span>
+      </div>
+      <div class="project-arrow">→</div>
+    </a>
+
   </div>
 </section>
 
+<!-- 工具与库 -->
 <section class="section-block">
-  <h2 class="section-title">云原生 & 基础设施</h2>
-  <div class="link-grid">
-    <a href="/topic/k8s/k8s" class="link-item">
-      <span class="link-name">Kubernetes</span>
-      <span class="link-sub">概念 · 部署 · 网络</span>
+  <h2 class="section-title">
+    <span class="title-icon">◇</span>
+    工具与库
+  </h2>
+  <div class="project-grid compact">
+    
+    <a href="https://github.com/username/tool-1" target="_blank" class="project-card small-card">
+      <div class="project-icon-small">🛠</div>
+      <div class="project-info">
+        <h4 class="project-name-small">DevHelper</h4>
+        <p class="project-desc-small">开发者日常工具集</p>
+        <div class="project-lang-tag">Shell</div>
+      </div>
     </a>
-    <a href="/topic/k8s/docker" class="link-item">
-      <span class="link-name">Docker</span>
+
+    <a href="https://github.com/username/tool-2" target="_blank" class="project-card small-card">
+      <div class="project-icon-small">📊</div>
+      <div class="project-info">
+        <h4 class="project-name-small">MetricsKit</h4>
+        <p class="project-desc-small">指标采集与可视化 SDK</p>
+        <div class="project-lang-tag">Go</div>
+      </div>
     </a>
-    <a href="/topic/cncf/cncf" class="link-item">
-      <span class="link-name">CNCF 生态</span>
-      <span class="link-sub">etcd · Prometheus · Helm</span>
+
+    <a href="https://github.com/username/tool-3" target="_blank" class="project-card small-card">
+      <div class="project-icon-small">🔐</div>
+      <div class="project-info">
+        <h4 class="project-name-small">SecureFlow</h4>
+        <p class="project-desc-small">零信任安全框架</p>
+        <div class="project-lang-tag">Rust</div>
+      </div>
     </a>
-    <a href="/topic/microservice/microservice" class="link-item">
-      <span class="link-name">微服务</span>
-      <span class="link-sub">Istio + Envoy</span>
+
+    <a href="https://github.com/username/tool-4" target="_blank" class="project-card small-card">
+      <div class="project-icon-small">📝</div>
+      <div class="project-info">
+        <h4 class="project-name-small">DocGen</h4>
+        <p class="project-desc-small">API 文档自动生成器</p>
+        <div class="project-lang-tag">Python</div>
+      </div>
     </a>
-    <a href="/topic/devops/devops" class="link-item">
-      <span class="link-name">DevOps</span>
-    </a>
+
   </div>
 </section>
 
+<!-- 实验性项目 -->
 <section class="section-block">
-  <h2 class="section-title">数据 & 中间件</h2>
-  <div class="link-grid">
-    <a href="/topic/database/database" class="link-item">
-      <span class="link-name">数据库</span>
+  <h2 class="section-title">
+    <span class="title-icon">◉</span>
+    实验性项目
+  </h2>
+  <div class="experiment-list">
+    
+    <a href="https://github.com/username/experiment-1" target="_blank" class="experiment-item">
+      <span class="exp-status" title="活跃开发中"></span>
+      <span class="exp-name">WebAssembly Runtime</span>
+      <span class="exp-desc">浏览器外的 WASM 运行时探索</span>
+      <span class="exp-lang">Rust</span>
     </a>
-    <a href="/topic/kv/kv" class="link-item">
-      <span class="link-name">KV 存储</span>
+
+    <a href="https://github.com/username/experiment-2" target="_blank" class="experiment-item">
+      <span class="exp-status paused" title="暂停维护"></span>
+      <span class="exp-name">Serverless Framework</span>
+      <span class="exp-desc">轻量级函数计算平台</span>
+      <span class="exp-lang">Go</span>
     </a>
-    <a href="/topic/middleware/mq" class="link-item">
-      <span class="link-name">消息队列</span>
+
+    <a href="https://github.com/username/experiment-3" target="_blank" class="experiment-item">
+      <span class="exp-status" title="活跃开发中"></span>
+      <span class="exp-name">LLM Proxy</span>
+      <span class="exp-desc">大模型 API 统一代理网关</span>
+      <span class="exp-lang">TypeScript</span>
     </a>
-    <a href="/topic/big-data/big-data" class="link-item">
-      <span class="link-name">大数据</span>
-    </a>
+
   </div>
 </section>
 
+<!-- 贡献与参与 -->
 <section class="section-block">
-  <h2 class="section-title">架构 & 开发</h2>
-  <div class="link-grid">
-    <a href="/topic/architecture/architecture" class="link-item">
-      <span class="link-name">架构设计</span>
-    </a>
-    <a href="/topic/developer/developer" class="link-item">
-      <span class="link-name">开发者</span>
-    </a>
+  <h2 class="section-title">
+    <span class="title-icon">◎</span>
+    贡献与参与
+  </h2>
+  <div class="contrib-grid">
+    <div class="contrib-card">
+      <div class="contrib-icon">🏗</div>
+      <div class="contrib-content">
+        <h4>Kubernetes</h4>
+        <p>sig-scheduling, sig-node 相关贡献</p>
+      </div>
+    </div>
+    <div class="contrib-card">
+      <div class="contrib-icon">📡</div>
+      <div class="contrib-content">
+        <h4>Prometheus</h4>
+        <p>exporter 与文档改进</p>
+      </div>
+    </div>
+    <div class="contrib-card">
+      <div class="contrib-icon">🔧</div>
+      <div class="contrib-content">
+        <h4>CNCF Projects</h4>
+        <p>etcd, Helm 等工具的贡献</p>
+      </div>
+    </div>
   </div>
 </section>
 
-<section class="section-block">
-  <h2 class="section-title">编程语言</h2>
-  <div class="lang-grid">
-    <a href="/topic/go/go" class="lang-card">
-      <div class="lang-name">Go</div>
-      <div class="lang-bar"><div class="lang-fill go"></div></div>
-    </a>
-    <a href="/topic/python/python" class="lang-card">
-      <div class="lang-name">Python</div>
-      <div class="lang-bar"><div class="lang-fill python"></div></div>
-    </a>
-    <a href="/topic/java/java" class="lang-card">
-      <div class="lang-name">Java</div>
-      <div class="lang-bar"><div class="lang-fill java"></div></div>
-    </a>
-    <a href="/topic/js/js" class="lang-card">
-      <div class="lang-name">JavaScript</div>
-      <div class="lang-bar"><div class="lang-fill js"></div></div>
-    </a>
-  </div>
+<!-- GitHub 入口 -->
+<section class="section-block github-cta">
+  <a href="https://github.com/username" target="_blank" class="github-link">
+    <span class="github-icon">
+      <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 0c-6.626 0-12 5.373-12 12 0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23.957-.266 1.983-.399 3.003-.404 1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576 4.765-1.589 8.199-6.086 8.199-11.386 0-6.627-5.373-12-12-12z"/></svg>
+    </span>
+    <span class="github-text">在 GitHub 上查看全部项目</span>
+    <span class="github-arrow">→</span>
+  </a>
 </section>
 
 <style>
-  /* ===== HERO KOAN ===== */
-  .hero-koan {
-    margin-bottom: 56px;
-    padding: 36px 0;
+  /* ===== HERO ===== */
+  .hero-projects {
+    margin-bottom: 48px;
+    padding: 32px 0 40px;
     border-bottom: 1px solid var(--border);
+    text-align: center;
   }
-  .koan-text { text-align: center; margin-bottom: 28px; }
-  .koan-line {
+  .hero-content { margin-bottom: 24px; }
+  .hero-line {
     font-family: 'Noto Serif SC', serif;
-    font-size: clamp(1.2rem, 3vw, 1.7rem);
+    font-size: clamp(1.3rem, 3.5vw, 1.9rem);
     font-weight: 300;
     color: var(--text);
-    letter-spacing: 8px;
-    animation: koan-appear 2s ease-out;
+    letter-spacing: 6px;
+    animation: hero-appear 1.5s ease-out;
   }
-  .koan-sub {
+  .hero-sub {
     font-family: 'JetBrains Mono', monospace;
     font-size: 0.75rem;
     color: var(--text-dim);
-    margin-top: 14px;
+    margin-top: 12px;
     letter-spacing: 1px;
   }
-  @keyframes koan-appear {
-    from { opacity: 0; letter-spacing: 20px; }
-    to { opacity: 1; letter-spacing: 8px; }
+  @keyframes hero-appear {
+    from { opacity: 0; transform: translateY(10px); }
+    to { opacity: 1; transform: translateY(0); }
   }
 
   .status-bar {
@@ -162,158 +252,330 @@ title: 法喜个人主页
   .status-sep { opacity: 0.3; }
 
   /* ===== SECTIONS ===== */
-  .section-block { margin-bottom: 44px; }
+  .section-block { margin-bottom: 48px; }
+  .section-block.featured { margin-bottom: 56px; }
+  
   .section-title {
     font-family: 'Noto Serif SC', serif;
-    font-size: 1rem;
+    font-size: 0.95rem;
     font-weight: 600;
     color: var(--gold);
-    margin-bottom: 18px;
-    padding-bottom: 8px;
+    margin-bottom: 20px;
+    padding-bottom: 10px;
     border-bottom: 1px solid var(--border-gold);
-    letter-spacing: 4px;
+    letter-spacing: 3px;
     display: flex;
     align-items: center;
     gap: 10px;
   }
-  .section-title::before {
-    content: '';
-    display: inline-block;
-    width: 6px; height: 6px;
-    background: var(--gold);
-    border-radius: 50%;
-    opacity: 0.6;
+  .title-icon {
+    font-size: 0.8rem;
+    opacity: 0.7;
   }
 
-  /* ===== CARDS ===== */
-  .card-grid {
+  /* ===== PROJECT GRID ===== */
+  .project-grid {
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-    gap: 14px;
-  }
-  .card {
-    display: flex;
-    align-items: flex-start;
+    grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
     gap: 16px;
+  }
+  .project-grid.compact {
+    grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+    gap: 12px;
+  }
+
+  /* ===== FEATURED PROJECT CARD ===== */
+  .project-card {
+    display: block;
     background: var(--panel);
     border: 1px solid var(--border);
-    border-radius: 6px;
-    padding: 22px 24px;
+    border-radius: 8px;
+    padding: 24px;
     text-decoration: none;
-    transition: all 0.5s ease;
+    transition: all 0.4s ease;
     position: relative;
+    overflow: hidden;
   }
-  .card:hover {
-    border-color: rgba(94,196,182,0.3);
-    box-shadow: 0 2px 24px rgba(94,196,182,0.06);
-    transform: translateY(-2px);
+  .project-card::before {
+    content: '';
+    position: absolute;
+    top: 0; left: 0; right: 0;
+    height: 2px;
+    background: linear-gradient(90deg, var(--jade), var(--gold));
+    opacity: 0;
+    transition: opacity 0.4s ease;
   }
-  .card-glyph {
-    font-size: 1.4rem;
+  .project-card:hover {
+    border-color: rgba(94,196,182,0.25);
+    transform: translateY(-3px);
+    box-shadow: 0 8px 32px rgba(0,0,0,0.3);
+  }
+  .project-card:hover::before {
+    opacity: 1;
+  }
+
+  .project-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    margin-bottom: 16px;
+  }
+  .project-icon {
+    font-size: 1.8rem;
+    opacity: 0.9;
+  }
+  .project-meta {
+    display: flex;
+    gap: 10px;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.65rem;
+  }
+  .project-lang {
     color: var(--jade);
-    opacity: 0.7;
-    flex-shrink: 0;
-    margin-top: 2px;
+    background: rgba(94,196,182,0.1);
+    padding: 2px 8px;
+    border-radius: 3px;
   }
-  .card:hover .card-glyph { opacity: 1; }
-  .card-label {
-    font-family: 'Noto Serif SC', serif;
-    font-size: 0.95rem; font-weight: 600;
+  .project-stars {
+    color: var(--gold);
+  }
+
+  .project-name {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 1.1rem;
+    font-weight: 400;
     color: var(--text);
-    margin-bottom: 6px;
-    letter-spacing: 2px;
+    margin-bottom: 10px;
+    transition: color 0.3s ease;
   }
-  .card:hover .card-label { color: var(--jade); }
-  .card-desc {
-    font-size: 0.8rem;
+  .project-card:hover .project-name {
+    color: var(--jade);
+  }
+
+  .project-desc {
+    font-size: 0.82rem;
     color: var(--text-dim);
-    line-height: 1.6;
+    line-height: 1.7;
+    margin-bottom: 16px;
   }
-  .card-arrow {
-    position: absolute; right: 20px; top: 50%;
-    transform: translateY(-50%) translateX(-6px);
+
+  .project-tags {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 6px;
+  }
+  .tag {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.62rem;
+    color: var(--text-dim);
+    background: rgba(255,255,255,0.03);
+    padding: 3px 8px;
+    border-radius: 3px;
+    border: 1px solid var(--border);
+  }
+
+  .project-arrow {
+    position: absolute;
+    right: 20px;
+    bottom: 20px;
     font-family: 'JetBrains Mono', monospace;
     color: var(--jade);
     opacity: 0;
-    transition: all 0.4s ease;
+    transform: translateX(-8px);
+    transition: all 0.3s ease;
   }
-  .card:hover .card-arrow { opacity: 0.7; transform: translateY(-50%) translateX(0); }
+  .project-card:hover .project-arrow {
+    opacity: 0.7;
+    transform: translateX(0);
+  }
 
-  /* ===== LINK GRID ===== */
-  .link-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
-    gap: 6px;
+  /* ===== SMALL PROJECT CARD ===== */
+  .small-card {
+    display: flex;
+    align-items: flex-start;
+    gap: 14px;
+    padding: 18px;
   }
-  .link-item {
-    display: block;
-    padding: 10px 16px;
-    border: 1px solid transparent;
-    border-radius: 4px;
-    text-decoration: none;
-    transition: all 0.4s ease;
+  .project-icon-small {
+    font-size: 1.4rem;
+    flex-shrink: 0;
   }
-  .link-item:hover {
-    border-color: var(--border);
-    background: rgba(94,196,182,0.03);
-  }
-  .link-name {
-    font-family: 'Noto Sans SC', sans-serif;
-    font-size: 0.88rem;
-    color: var(--text);
-    transition: color 0.4s;
-  }
-  .link-item:hover .link-name { color: var(--jade); }
-  .link-sub {
-    display: block;
+  .project-info { flex: 1; }
+  .project-name-small {
     font-family: 'JetBrains Mono', monospace;
-    font-size: 0.65rem;
+    font-size: 0.9rem;
+    font-weight: 400;
+    color: var(--text);
+    margin-bottom: 4px;
+  }
+  .project-card:hover .project-name-small {
+    color: var(--jade);
+  }
+  .project-desc-small {
+    font-size: 0.75rem;
     color: var(--text-dim);
-    margin-top: 3px;
-    letter-spacing: 0.5px;
+    margin-bottom: 8px;
+  }
+  .project-lang-tag {
+    display: inline-block;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.6rem;
+    color: var(--gold);
+    background: rgba(201,169,110,0.1);
+    padding: 2px 6px;
+    border-radius: 2px;
   }
 
-  /* ===== LANGUAGE GRID ===== */
-  .lang-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(170px, 1fr));
-    gap: 10px;
+  /* ===== EXPERIMENT LIST ===== */
+  .experiment-list {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
   }
-  .lang-card {
-    display: block;
+  .experiment-item {
+    display: flex;
+    align-items: center;
+    gap: 14px;
     padding: 14px 18px;
     background: var(--panel);
     border: 1px solid var(--border);
-    border-radius: 5px;
+    border-radius: 6px;
     text-decoration: none;
-    transition: all 0.4s ease;
+    transition: all 0.3s ease;
   }
-  .lang-card:hover { border-color: rgba(94,196,182,0.3); }
-  .lang-name {
+  .experiment-item:hover {
+    border-color: rgba(94,196,182,0.2);
+    background: rgba(94,196,182,0.03);
+  }
+  .exp-status {
+    width: 8px;
+    height: 8px;
+    background: var(--jade);
+    border-radius: 50%;
+    flex-shrink: 0;
+    box-shadow: 0 0 6px rgba(94,196,182,0.5);
+    animation: pulse 2s ease-in-out infinite;
+  }
+  .exp-status.paused {
+    background: var(--text-dim);
+    box-shadow: none;
+    animation: none;
+  }
+  @keyframes pulse {
+    0%, 100% { opacity: 1; }
+    50% { opacity: 0.5; }
+  }
+  .exp-name {
     font-family: 'JetBrains Mono', monospace;
     font-size: 0.85rem;
     color: var(--text);
-    margin-bottom: 10px;
+    min-width: 180px;
   }
-  .lang-card:hover .lang-name { color: var(--jade); }
-  .lang-bar {
-    height: 2px; background: rgba(255,255,255,0.05);
-    border-radius: 1px; overflow: hidden;
+  .experiment-item:hover .exp-name {
+    color: var(--jade);
   }
-  .lang-fill {
-    height: 100%; border-radius: 1px;
-    transition: width 0.6s ease;
+  .exp-desc {
+    flex: 1;
+    font-size: 0.78rem;
+    color: var(--text-dim);
   }
-  .lang-fill.go { width: 75%; background: var(--jade); }
-  .lang-fill.python { width: 60%; background: var(--gold); }
-  .lang-fill.java { width: 45%; background: var(--coral); }
-  .lang-fill.js { width: 50%; background: #b8a27e; }
-  .lang-card:hover .lang-fill { width: 100%; }
+  .exp-lang {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.65rem;
+    color: var(--gold);
+    background: rgba(201,169,110,0.08);
+    padding: 3px 8px;
+    border-radius: 3px;
+  }
 
+  /* ===== CONTRIB SECTION ===== */
+  .contrib-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 12px;
+  }
+  .contrib-card {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    padding: 16px 18px;
+    background: rgba(255,255,255,0.02);
+    border: 1px solid var(--border);
+    border-radius: 6px;
+  }
+  .contrib-icon {
+    font-size: 1.5rem;
+  }
+  .contrib-content h4 {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.85rem;
+    color: var(--text);
+    margin-bottom: 4px;
+  }
+  .contrib-content p {
+    font-size: 0.75rem;
+    color: var(--text-dim);
+  }
+
+  /* ===== GITHUB CTA ===== */
+  .github-cta {
+    margin-top: 40px;
+  }
+  .github-link {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 14px;
+    padding: 20px 32px;
+    background: linear-gradient(135deg, rgba(94,196,182,0.08), rgba(201,169,110,0.05));
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    text-decoration: none;
+    transition: all 0.4s ease;
+  }
+  .github-link:hover {
+    border-color: rgba(94,196,182,0.3);
+    background: linear-gradient(135deg, rgba(94,196,182,0.12), rgba(201,169,110,0.08));
+    transform: translateY(-2px);
+  }
+  .github-icon {
+    width: 24px;
+    height: 24px;
+    color: var(--text);
+  }
+  .github-text {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.85rem;
+    color: var(--text);
+    letter-spacing: 1px;
+  }
+  .github-link:hover .github-text {
+    color: var(--jade);
+  }
+  .github-arrow {
+    color: var(--jade);
+    opacity: 0;
+    transform: translateX(-6px);
+    transition: all 0.3s ease;
+  }
+  .github-link:hover .github-arrow {
+    opacity: 1;
+    transform: translateX(0);
+  }
+
+  /* ===== RESPONSIVE ===== */
   @media (max-width: 600px) {
-    .card-grid { grid-template-columns: 1fr; }
-    .link-grid { grid-template-columns: 1fr 1fr; }
-    .lang-grid { grid-template-columns: 1fr 1fr; }
-    .koan-line { letter-spacing: 4px; }
+    .project-grid,
+    .project-grid.compact {
+      grid-template-columns: 1fr;
+    }
+    .experiment-item {
+      flex-wrap: wrap;
+      gap: 8px;
+    }
+    .exp-name { min-width: auto; width: 100%; }
+    .exp-desc { width: 100%; }
+    .contrib-grid { grid-template-columns: 1fr; }
+    .hero-line { letter-spacing: 3px; }
   }
 </style>
