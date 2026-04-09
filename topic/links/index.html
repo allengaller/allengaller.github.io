@@ -3,14 +3,22 @@ layout: default
 title: Links - 资源导航
 ---
 
-<div class="page-header">
-  <h1>资源导航</h1>
-  <div class="search-box">
-    <input type="text" id="searchInput" placeholder="搜索关键词..." onkeyup="filterLinks()">
+<div class="top-nav" id="topNav">
+  <div class="nav-inner">
+    <h1 class="nav-title">资源导航</h1>
+    <div class="search-box">
+      <input type="text" id="searchInput" placeholder="搜索..." onkeyup="filterLinks()">
+    </div>
+    <button class="back-to-top" id="backToTop" onclick="scrollToTop()">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+        <polyline points="18 15 12 9 6 15"></polyline>
+      </svg>
+    </button>
   </div>
   <div class="section-nav" id="sectionNav"></div>
 </div>
 
+<div class="main-content">
 <!-- 技术写作 -->
 <section class="section-block" id="技术写作">
   <h2 class="section-title">技术写作</h2>
@@ -1121,63 +1129,149 @@ title: Links - 资源导航
     <a href="https://aztec.network" class="tag" target="_blank">Aztec</a>
   </div>
 </section>
+</div>
 
 <style>
-  .page-header {
-    margin-bottom: 32px;
+  :root {
+    --nav-bg: #1a2332;
+    --nav-bg-hover: #2d3a4f;
+    --nav-border: #3d4f6a;
+    --nav-text: #e8edf4;
+    --nav-text-dim: #8b9ab5;
+    --accent: #3b82f6;
+    --accent-hover: #2563eb;
+    --accent-light: #dbeafe;
+    --accent-intl: #6366f1;
+    --accent-cn: #f59e0b;
+    --tag-bg: #f8fafc;
+    --tag-border: #e2e8f0;
+    --tag-hover-border: #3b82f6;
+    --tag-hover-color: #2563eb;
   }
-  .page-header h1 {
-    font-size: 1.5rem;
-    font-weight: 500;
-    color: var(--text);
-    margin-bottom: 16px;
+
+  .top-nav {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    z-index: 1000;
+    background: var(--nav-bg);
+    border-bottom: 1px solid var(--nav-border);
+    box-shadow: 0 4px 20px rgba(0,0,0,0.25);
+  }
+
+  .nav-inner {
+    display: flex;
+    align-items: center;
+    gap: 20px;
+    padding: 12px 24px;
+    max-width: 1400px;
+    margin: 0 auto;
+  }
+
+  .nav-title {
+    font-size: 1.1rem;
+    font-weight: 600;
+    color: var(--nav-text);
+    margin: 0;
+    white-space: nowrap;
   }
 
   .search-box {
-    margin-bottom: 16px;
+    flex: 1;
+    max-width: 280px;
   }
   .search-box input {
     width: 100%;
-    max-width: 400px;
-    padding: 10px 14px;
-    border: 1px solid var(--border);
+    padding: 8px 14px;
+    border: 1px solid var(--nav-border);
     border-radius: 6px;
-    background: var(--panel);
-    color: var(--text);
-    font-size: 0.9rem;
+    background: #0f1722;
+    color: var(--nav-text);
+    font-size: 0.85rem;
   }
   .search-box input:focus {
     outline: none;
-    border-color: var(--jade);
+    border-color: var(--accent);
+    background: #1a2332;
   }
   .search-box input::placeholder {
-    color: var(--text-dim);
+    color: var(--nav-text-dim);
+  }
+
+  .back-to-top {
+    width: 36px;
+    height: 36px;
+    border: 1px solid var(--nav-border);
+    border-radius: 6px;
+    background: #0f1722;
+    color: var(--nav-text-dim);
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.2s;
+    flex-shrink: 0;
+  }
+  .back-to-top:hover {
+    border-color: var(--accent);
+    color: var(--accent);
+    background: var(--nav-bg);
+  }
+  .back-to-top svg {
+    width: 18px;
+    height: 18px;
   }
 
   .section-nav {
     display: flex;
-    flex-wrap: wrap;
-    gap: 6px;
-    padding-bottom: 16px;
-    border-bottom: 1px solid var(--border);
+    gap: 4px;
+    padding: 0 24px 10px;
+    max-width: 1400px;
+    margin: 0 auto;
+    overflow-x: auto;
+    scrollbar-width: thin;
+    scrollbar-color: var(--nav-border) transparent;
   }
+  .section-nav::-webkit-scrollbar {
+    height: 4px;
+  }
+  .section-nav::-webkit-scrollbar-track {
+    background: transparent;
+  }
+  .section-nav::-webkit-scrollbar-thumb {
+    background: var(--nav-border);
+    border-radius: 2px;
+  }
+
   .section-nav a {
-    font-size: 0.75rem;
-    color: var(--text-dim);
+    font-size: 0.72rem;
+    color: var(--nav-text-dim);
     text-decoration: none;
-    padding: 4px 8px;
+    padding: 5px 10px;
     border-radius: 4px;
+    white-space: nowrap;
     transition: all 0.2s;
   }
   .section-nav a:hover {
-    background: var(--jade);
-    color: var(--bg);
+    background: var(--accent);
+    color: #fff;
+  }
+  .section-nav a.active {
+    background: var(--accent);
+    color: #fff;
+  }
+
+  .main-content {
+    max-width: 1400px;
+    margin: 0 auto;
+    padding: 130px 24px 40px;
   }
 
   .section-block {
     margin-bottom: 28px;
-    padding-bottom: 20px;
-    border-bottom: 1px solid var(--border);
+    padding-bottom: 24px;
+    border-bottom: 1px solid #e2e8f0;
   }
   .section-block:last-child {
     border-bottom: none;
@@ -1186,9 +1280,11 @@ title: Links - 资源导航
   .section-title {
     font-size: 1rem;
     font-weight: 600;
-    color: var(--text);
-    margin-bottom: 12px;
-    padding-bottom: 6px;
+    color: #1e293b;
+    margin-bottom: 14px;
+    padding-bottom: 8px;
+    border-bottom: 2px solid #3b82f6;
+    display: inline-block;
   }
 
   .link-cards {
@@ -1201,18 +1297,20 @@ title: Links - 资源导航
     align-items: flex-start;
     gap: 12px;
     padding: 16px;
-    background: var(--panel);
-    border: 1px solid var(--border);
+    background: #f8fafc;
+    border: 1px solid #e2e8f0;
     border-radius: 8px;
     text-decoration: none;
     transition: all 0.2s;
   }
   .link-card:hover {
-    border-color: var(--jade);
+    border-color: var(--accent);
+    box-shadow: 0 2px 12px rgba(59,130,246,0.12);
     transform: translateY(-2px);
   }
   .link-card.feature {
-    border-left: 3px solid var(--jade);
+    border-left: 4px solid var(--accent);
+    background: linear-gradient(135deg, #eff6ff 0%, #f8fafc 100%);
   }
   .link-card .card-icon {
     font-size: 1.4rem;
@@ -1220,16 +1318,16 @@ title: Links - 资源导航
   }
   .link-card .card-name {
     font-size: 0.95rem;
-    font-weight: 500;
-    color: var(--text);
+    font-weight: 600;
+    color: #1e293b;
     display: block;
   }
   .link-card:hover .card-name {
-    color: var(--jade);
+    color: var(--accent);
   }
   .link-card .card-desc {
     font-size: 0.8rem;
-    color: var(--text-dim);
+    color: #64748b;
     margin-top: 4px;
     display: block;
   }
@@ -1245,34 +1343,36 @@ title: Links - 资源导航
     margin-bottom: 0;
   }
   .tag-label {
-    font-size: 0.7rem;
+    font-size: 0.68rem;
     font-weight: 600;
-    color: var(--bg);
-    background: var(--text-dim);
+    color: #fff;
+    background: #64748b;
     padding: 3px 8px;
     border-radius: 4px;
     flex-shrink: 0;
+    letter-spacing: 0.02em;
   }
   .tag-label.intl {
-    background: #6366f1;
+    background: var(--accent-intl);
   }
   .tag-label.cn {
-    background: #ef4444;
+    background: var(--accent-cn);
   }
   .tag {
     font-size: 0.8rem;
-    color: var(--text);
+    color: #334155;
     text-decoration: none;
     padding: 5px 10px;
-    background: var(--panel);
-    border: 1px solid var(--border);
+    background: var(--tag-bg);
+    border: 1px solid var(--tag-border);
     border-radius: 4px;
     transition: all 0.2s;
     white-space: nowrap;
   }
   .tag:hover {
-    border-color: var(--jade);
-    color: var(--jade);
+    border-color: var(--tag-hover-border);
+    color: var(--tag-hover-color);
+    box-shadow: 0 1px 4px rgba(59,130,246,0.1);
   }
   .tag[target="_blank"]::after {
     content: '';
@@ -1280,19 +1380,41 @@ title: Links - 资源导航
     width: 10px;
     height: 10px;
     margin-left: 4px;
-    background: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23999999' stroke-width='2'%3E%3Cpath d='M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6'/%3E%3Cpolyline points='15 3 21 3 21 9'/%3E%3Cline x1='10' y1='14' x2='21' y2='3'/%3E%3C/svg%3E") no-repeat center;
+    background: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%2394a3b8' stroke-width='2'%3E%3Cpath d='M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6'/%3E%3Cpolyline points='15 3 21 3 21 9'/%3E%3Cline x1='10' y1='14' x2='21' y2='3'/%3E%3C/svg%3E") no-repeat center;
     background-size: contain;
-    opacity: 0.5;
+    opacity: 0.6;
   }
   .tag[target="_blank"]:hover::after {
     opacity: 1;
   }
 
-  @media (max-width: 600px) {
-    .link-cards { grid-template-columns: 1fr; }
-    .link-tags { gap: 6px; }
-    .tag { padding: 4px 8px; font-size: 0.75rem; }
-    .section-nav { display: none; }
+  @media (max-width: 768px) {
+    .nav-inner {
+      padding: 10px 16px;
+      gap: 12px;
+    }
+    .nav-title {
+      font-size: 0.95rem;
+    }
+    .search-box {
+      max-width: 180px;
+    }
+    .main-content {
+      padding: 120px 16px 32px;
+    }
+    .section-nav {
+      padding: 0 16px 10px;
+    }
+    .section-nav a {
+      font-size: 0.68rem;
+      padding: 4px 8px;
+    }
+  }
+
+  @media (max-width: 480px) {
+    .nav-title { display: none; }
+    .search-box { max-width: 100px; }
+    .main-content { padding-top: 110px; }
   }
 </style>
 
@@ -1303,64 +1425,81 @@ title: Links - 资源导航
     const sections = document.querySelectorAll('.section-block');
     const navLinks = document.querySelectorAll('.section-nav a');
 
-    sections.forEach((section, index) => {
+    sections.forEach((section) => {
       const text = section.textContent.toLowerCase();
-      const isVisible = text.includes(filter);
-      section.style.display = isVisible ? '' : 'none';
+      section.style.display = text.includes(filter) ? '' : 'none';
     });
 
-    navLinks.forEach((link, index) => {
-      const section = sections[index];
+    navLinks.forEach((link) => {
+      const sectionId = link.getAttribute('href').substring(1);
+      const section = document.getElementById(sectionId);
       if (section) {
         link.style.display = section.style.display === 'none' ? 'none' : '';
       }
     });
   }
 
+  function scrollToTop() {
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  }
+
+  function updateBackToTop() {
+    const btn = document.getElementById('backToTop');
+    if (window.scrollY > 400) {
+      btn.style.opacity = '1';
+      btn.style.pointerEvents = 'auto';
+    } else {
+      btn.style.opacity = '0.3';
+      btn.style.pointerEvents = 'none';
+    }
+  }
+
   document.addEventListener('DOMContentLoaded', function() {
     const nav = document.getElementById('sectionNav');
-    const sections = document.querySelectorAll('.section-block');
     const titles = [
-      '技术写作', '云原生', '数据', '架构', '编程语言', 'AI',
-      'AI社区', 'AI开源', 'Agentic', 'Vibe Coding', 'AgentHarness',
-      'LLM', 'Prompt', '多模态', 'AI产品', 'AI学习', 'AI基础设施',
-      'AI研究', '工具箱', '架构师', '安全', 'SRE', '数据工程',
-      'IoT', '低代码', 'Web3', '开源社区', '播客', '博客',
-      '招聘', '媒体', '基金会', '隐私计算'
+      { name: '技术写作', id: '技术写作' },
+      { name: '云原生', id: '云原生' },
+      { name: '数据', id: '数据' },
+      { name: '架构', id: '架构' },
+      { name: '编程语言', id: '编程语言' },
+      { name: 'AI', id: 'AI' },
+      { name: 'AI社区', id: 'AI社区' },
+      { name: 'AI开源', id: 'AI开源' },
+      { name: 'Agentic', id: 'Agentic' },
+      { name: 'Vibe Coding', id: 'VibeCoding' },
+      { name: 'Agent Harness', id: 'AgentHarness' },
+      { name: 'LLM', id: 'LLM' },
+      { name: 'Prompt', id: 'Prompt' },
+      { name: '多模态', id: '多模态' },
+      { name: 'AI产品', id: 'AI产品' },
+      { name: 'AI学习', id: 'AI学习' },
+      { name: 'AI基础设施', id: 'AI基础设施' },
+      { name: 'AI研究', id: 'AI研究' },
+      { name: '工具箱', id: '工具箱' },
+      { name: '架构师', id: '架构师' },
+      { name: '安全', id: '安全' },
+      { name: 'SRE', id: 'SRE' },
+      { name: '数据工程', id: '数据工程' },
+      { name: 'IoT', id: 'IoT' },
+      { name: '低代码', id: '低代码' },
+      { name: 'Web3', id: 'Web3' },
+      { name: '开源社区', id: '开源社区' },
+      { name: '播客', id: '播客' },
+      { name: '博客', id: '博客' },
+      { name: '招聘', id: '招聘' },
+      { name: '媒体', id: '媒体' },
+      { name: '基金会', id: '基金会' },
+      { name: '隐私计算', id: '隐私计算' }
     ];
 
-    titles.forEach((title, i) => {
+    titles.forEach((t) => {
       const a = document.createElement('a');
-      a.href = '#' + (title === 'AI' ? 'AI' :
-                    title === 'AI社区' ? 'AI社区' :
-                    title === 'AI开源' ? 'AI开源' :
-                    title === 'Agentic' ? 'Agentic' :
-                    title === 'Vibe Coding' ? 'VibeCoding' :
-                    title === 'AgentHarness' ? 'AgentHarness' :
-                    title === 'LLM' ? 'LLM' :
-                    title === 'Prompt' ? 'Prompt' :
-                    title === '多模态' ? '多模态' :
-                    title === 'AI产品' ? 'AI产品' :
-                    title === 'AI学习' ? 'AI学习' :
-                    title === 'AI基础设施' ? 'AI基础设施' :
-                    title === 'AI研究' ? 'AI研究' :
-                    title === '工具箱' ? '工具箱' :
-                    title === '架构师' ? '架构师' :
-                    title === '安全' ? '安全' :
-                    title === 'SRE' ? 'SRE' :
-                    title === '数据工程' ? '数据工程' :
-                    title === 'IoT' ? 'IoT' :
-                    title === '低代码' ? '低代码' :
-                    title === 'Web3' ? 'Web3' :
-                    title === '开源社区' ? '开源社区' :
-                    title === '播客' ? '播客' :
-                    title === '博客' ? '博客' :
-                    title === '招聘' ? '招聘' :
-                    title === '媒体' ? '媒体' :
-                    title === '基金会' ? '基金会' :
-                    title === '隐私计算' ? '隐私计算' : title);
-      a.textContent = title;
+      a.href = '#' + t.id;
+      a.textContent = t.name;
       nav.appendChild(a);
     });
+
+    updateBackToTop();
+    window.addEventListener('scroll', updateBackToTop);
   });
 </script>
