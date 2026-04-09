@@ -4,6 +4,8 @@
 |------|------|----------|
 | Cloud Native SRE | [稳云真经](/topic/cloud-sre-mantra/about) | Kubernetes、微服务、可观测性一条龙 |
 | AI 工具链 | [AI Tools](/topic/ai-tools/ai-tools) | 开发、对话、创作、陪伴类 AI 工具整理 |
+| 音乐语料库 | [SIT Music Database](/topic/music/music) | 专业音乐知识语料库，140+ 文档覆盖 10 大方向 |
+| 减肥语料库 | [Fat Looser Database](/topic/fat-looser/fat-looser) | 循证医学减肥知识库，6 大模块覆盖生理/心理/医疗/运动/药物/营养 |
 
 ---
 
@@ -35,3 +37,8 @@
 - [Python](/topic/python/python)
 - [Java](/topic/java/java)
 - [JavaScript](/topic/js/js)
+
+**其他**
+
+- [音乐语料库](/topic/music/music) — SIT Music Database
+- [减肥语料库](/topic/fat-looser/fat-looser) — Fat Looser Database
