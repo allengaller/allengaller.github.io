@@ -99,6 +99,13 @@
 **特色能力**：高速代码补全、中文优化、多模型协同
 **付费状态**：已付费订阅双平台
 
+### Claude CLI + cc-switch + Minimax 💰
+**开发商**：Anthropic + 个人开源项目 + MiniMax
+**核心功能**：Claude CLI 搭配 cc-switch 工具链，集成 MiniMax 大模型，三方协同编程辅助
+**支持工具**：Claude Code、cc-switch、abab6.5
+**特色能力**：一键切换 AI 助手、多模型协同、中文优化、环境隔离配置
+**付费状态**：已付费订阅全平台
+
 ### kimi-cli 💰
 **开发商**：月之暗面 (Moonshot AI)
 **核心功能**：轻量级命令行 Kimi 工具，快速代码补全和片段生成
