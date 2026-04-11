@@ -1,0 +1,748 @@
+<!DOCTYPE html>
+<html lang="zh-CN" data-theme="dark">
+<head>
+  
+  
+  
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>k8s concepts</title>
+  <meta name="description" content="高产开源黑客的个人品牌总入口，聚合 4500+ 文档、10+ 开源工具、内容矩阵与合作入口。">
+  <meta name="robots" content="index,follow">
+  <meta name="theme-color" content="#0d0f1a">
+  <link rel="canonical" href="http://localhost:4000/backup_20260411_002117/backup_20260411_002117/backup_20260411_002000/topic/k8s/k8s-concepts.html">
+
+  <meta property="og:site_name" content="法喜">
+  <meta property="og:title" content="k8s concepts">
+  <meta property="og:description" content="高产开源黑客的个人品牌总入口，聚合 4500+ 文档、10+ 开源工具、内容矩阵与合作入口。">
+  <meta property="og:type" content="article">
+  <meta property="og:url" content="http://localhost:4000/backup_20260411_002117/backup_20260411_002117/backup_20260411_002000/topic/k8s/k8s-concepts.html">
+  <meta property="og:locale" content="zh_CN">
+
+  <meta name="twitter:card" content="summary">
+  <meta name="twitter:title" content="k8s concepts">
+  <meta name="twitter:description" content="高产开源黑客的个人品牌总入口，聚合 4500+ 文档、10+ 开源工具、内容矩阵与合作入口。">
+
+  <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "Person",
+      "name": "法喜",
+      "url": "http://localhost:4000",
+      "jobTitle": "Cloud Native SRE · AI Toolsmith · Knowledge Architect",
+      "description": "高产开源黑客的个人品牌总入口，聚合 4500+ 文档、10+ 开源工具、内容矩阵与合作入口。",
+      "sameAs": [
+        "https://github.com/allengaller",
+        "https://allengaller.github.io/topic/links/"
+      ]
+    }
+  </script>
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Serif+SC:wght@300;400;600;700&family=JetBrains+Mono:wght@300;400;500&family=Noto+Sans+SC:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="/assets/css/corpus.css">
+  <style>
+    :root {
+      --jade: #5ec4b6;
+      --jade-dark: #4a9e92;
+      --gold: #c9a96e;
+      --gold-light: #e0c088;
+      --coral: #d4726a;
+      --bg-primary: #0d0f1a;
+      --bg-secondary: #141829;
+      --bg-tertiary: #1a1e35;
+      --bg-card: rgba(20, 24, 41, 0.76);
+      --panel: rgba(14, 16, 30, 0.84);
+      --border: rgba(94, 196, 182, 0.12);
+      --border-strong: rgba(94, 196, 182, 0.25);
+      --border-gold: rgba(201, 169, 110, 0.15);
+      --text: #e8e4dc;
+      --text-secondary: #b8b3ab;
+      --text-dim: #7a756d;
+      --glow-jade: 0 0 20px rgba(94, 196, 182, 0.25), 0 0 60px rgba(94, 196, 182, 0.08);
+      --glow-gold: 0 0 20px rgba(201, 169, 110, 0.3), 0 0 60px rgba(201, 169, 110, 0.1);
+      --shadow-sm: 0 2px 8px rgba(0, 0, 0, 0.3);
+      --shadow-md: 0 4px 20px rgba(0, 0, 0, 0.4);
+      --shadow-lg: 0 8px 40px rgba(0, 0, 0, 0.5);
+      --radius-sm: 6px;
+      --radius-md: 10px;
+      --radius-lg: 16px;
+      --transition-fast: 0.2s ease;
+      --transition-base: 0.3s ease;
+      --transition-slow: 0.5s ease;
+    }
+
+    [data-theme="light"] {
+      --jade: #2d8a7e;
+      --jade-dark: #1f6359;
+      --gold: #b8944f;
+      --gold-light: #d4b06a;
+      --coral: #c45c54;
+      --bg-primary: #f8f7f4;
+      --bg-secondary: #ffffff;
+      --bg-tertiary: #f0efe9;
+      --bg-card: rgba(255, 255, 255, 0.9);
+      --panel: rgba(255, 255, 255, 0.76);
+      --border: rgba(45, 138, 126, 0.15);
+      --border-strong: rgba(45, 138, 126, 0.3);
+      --border-gold: rgba(184, 148, 79, 0.2);
+      --text: #2d2a26;
+      --text-secondary: #5a5650;
+      --text-dim: #8a8580;
+      --glow-jade: 0 0 15px rgba(45, 138, 126, 0.2), 0 0 40px rgba(45, 138, 126, 0.05);
+      --glow-gold: 0 0 15px rgba(184, 148, 79, 0.25), 0 0 40px rgba(184, 148, 79, 0.08);
+      --shadow-sm: 0 2px 8px rgba(0, 0, 0, 0.06);
+      --shadow-md: 0 4px 20px rgba(0, 0, 0, 0.08);
+      --shadow-lg: 0 8px 40px rgba(0, 0, 0, 0.12);
+    }
+
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+
+    html {
+      scroll-behavior: smooth;
+      scrollbar-width: thin;
+      scrollbar-color: var(--jade) var(--bg-secondary);
+    }
+
+    ::-webkit-scrollbar { width: 6px; }
+    ::-webkit-scrollbar-track { background: var(--bg-secondary); }
+    ::-webkit-scrollbar-thumb {
+      background: var(--jade);
+      border-radius: 3px;
+      opacity: 0.6;
+    }
+    ::-webkit-scrollbar-thumb:hover { opacity: 1; }
+
+    body {
+      font-family: 'Noto Sans SC', sans-serif;
+      font-weight: 400;
+      background: var(--bg-primary);
+      color: var(--text);
+      min-height: 100vh;
+      overflow-x: hidden;
+      line-height: 1.8;
+      transition: background-color var(--transition-slow), color var(--transition-slow);
+    }
+
+    .ambient-bg {
+      position: fixed; inset: 0; z-index: 0; pointer-events: none;
+      background:
+        radial-gradient(ellipse 80% 50% at 50% -20%, var(--jade) 0%, transparent 50%),
+        radial-gradient(ellipse 60% 40% at 80% 80%, var(--gold) 0%, transparent 40%);
+      opacity: 0.03;
+      filter: blur(60px);
+    }
+
+    .bg-texture {
+      position: fixed; inset: 0; z-index: 1; pointer-events: none;
+      opacity: 0.02;
+      background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 400 400' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.8' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+      background-size: 300px 300px;
+    }
+
+    .particles {
+      position: fixed; inset: 0; z-index: 2; pointer-events: none; overflow: hidden;
+    }
+    .particle {
+      position: absolute;
+      border-radius: 50%;
+      opacity: 0;
+      animation: float-particle linear infinite;
+    }
+    @keyframes float-particle {
+      0% { transform: translateY(100vh) scale(0); opacity: 0; }
+      10% { opacity: 0.55; }
+      90% { opacity: 0.28; }
+      100% { transform: translateY(-10vh) scale(1); opacity: 0; }
+    }
+
+    .theme-toggle {
+      position: fixed;
+      top: 20px;
+      right: 20px;
+      z-index: 1000;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      padding: 10px 16px;
+      background: var(--bg-card);
+      backdrop-filter: blur(12px);
+      border: 1px solid var(--border);
+      border-radius: 50px;
+      cursor: pointer;
+      transition: all var(--transition-base);
+      box-shadow: var(--shadow-sm);
+    }
+    .theme-toggle:hover {
+      border-color: var(--border-strong);
+      box-shadow: var(--shadow-md), var(--glow-jade);
+      transform: translateY(-2px);
+    }
+    .theme-toggle svg {
+      width: 18px;
+      height: 18px;
+      fill: var(--gold);
+      transition: transform var(--transition-base);
+    }
+    .theme-toggle:hover svg { transform: rotate(20deg); }
+    .theme-toggle span {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 0.7rem;
+      color: var(--text-secondary);
+      letter-spacing: 1px;
+    }
+
+    .site-header {
+      position: relative;
+      z-index: 10;
+      padding: 100px 24px 48px;
+      text-align: center;
+      background: radial-gradient(ellipse at 50% 100%, rgba(94, 196, 182, 0.22) 0%, transparent 62%);
+      background-size: 100% 55%;
+      background-repeat: no-repeat;
+    }
+
+    .enso {
+      width: 120px;
+      height: 120px;
+      margin: 0 auto 28px;
+      position: relative;
+    }
+    .enso::before {
+      content: '';
+      position: absolute;
+      inset: -10px;
+      border-radius: 50%;
+      background: conic-gradient(from 0deg, transparent, var(--jade), transparent);
+      opacity: 0.1;
+      animation: enso-rotate 20s linear infinite;
+    }
+    @keyframes enso-rotate { to { transform: rotate(360deg); } }
+    .enso svg {
+      width: 100%;
+      height: 100%;
+      animation: enso-breathe 6s ease-in-out infinite;
+      filter: drop-shadow(var(--glow-jade));
+    }
+    @keyframes enso-breathe {
+      0%, 100% { opacity: 0.7; transform: scale(1); }
+      50% { opacity: 1; transform: scale(1.03); }
+    }
+
+    .site-title {
+      font-family: 'Noto Serif SC', serif;
+      font-size: clamp(2rem, 5vw, 3.2rem);
+      font-weight: 700;
+      color: var(--text);
+      letter-spacing: 12px;
+      position: relative;
+      display: inline-block;
+      background: linear-gradient(135deg, var(--text) 0%, var(--text-secondary) 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+    .site-title::after {
+      content: '';
+      display: block;
+      width: 60px;
+      height: 2px;
+      background: linear-gradient(90deg, transparent, var(--gold), transparent);
+      margin: 20px auto 0;
+      box-shadow: var(--glow-gold);
+    }
+
+    .site-subtitle {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 0.8rem;
+      font-weight: 500;
+      color: var(--jade);
+      margin-top: 22px;
+      letter-spacing: 2px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 12px;
+      flex-wrap: wrap;
+      text-transform: uppercase;
+    }
+    .site-subtitle .zen-dot {
+      display: inline-block;
+      width: 6px;
+      height: 6px;
+      background: var(--jade);
+      border-radius: 50%;
+      animation: dot-pulse 3s ease-in-out infinite;
+      box-shadow: var(--glow-jade);
+    }
+    @keyframes dot-pulse {
+      0%, 100% { opacity: 0.4; transform: scale(1); }
+      50% { opacity: 1; transform: scale(1.3); }
+    }
+
+    .site-description {
+      max-width: 760px;
+      margin: 18px auto 0;
+      color: var(--text-secondary);
+      font-size: 0.98rem;
+      line-height: 1.9;
+    }
+
+    .site-nav-wrap {
+      position: sticky;
+      top: 0;
+      z-index: 40;
+      padding: 0 20px 18px;
+      backdrop-filter: blur(14px);
+      background: linear-gradient(to bottom, rgba(13, 15, 26, 0.85), rgba(13, 15, 26, 0.35));
+    }
+    [data-theme="light"] .site-nav-wrap {
+      background: linear-gradient(to bottom, rgba(248, 247, 244, 0.9), rgba(248, 247, 244, 0.4));
+    }
+    .site-nav {
+      position: relative;
+      z-index: 10;
+      display: flex;
+      justify-content: center;
+      gap: 8px;
+      padding: 12px;
+      margin: 0 auto;
+      max-width: 780px;
+      flex-wrap: wrap;
+      background: var(--panel);
+      border: 1px solid var(--border);
+      border-radius: 999px;
+      box-shadow: var(--shadow-sm);
+    }
+    .site-nav a {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 0.72rem;
+      font-weight: 500;
+      color: var(--text-dim);
+      text-decoration: none;
+      padding: 10px 18px;
+      transition: all var(--transition-base);
+      letter-spacing: 1.8px;
+      border-radius: 999px;
+      position: relative;
+      overflow: hidden;
+    }
+    .site-nav a::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      border-radius: 999px;
+      background: rgba(94, 196, 182, 0.08);
+      opacity: 0;
+      transition: opacity var(--transition-base);
+    }
+    .site-nav a:hover,
+    .site-nav a.is-active {
+      color: var(--jade);
+    }
+    .site-nav a:hover::before,
+    .site-nav a.is-active::before {
+      opacity: 1;
+    }
+
+    .site-main {
+      position: relative;
+      z-index: 10;
+      max-width: 1100px;
+      margin: 0 auto;
+      padding: 40px 28px 100px;
+    }
+
+    .content h1 {
+      font-family: 'Noto Serif SC', serif;
+      font-size: 1.8rem;
+      font-weight: 600;
+      color: var(--text);
+      margin: 56px 0 24px;
+      padding-bottom: 16px;
+      border-bottom: 1px solid var(--border);
+      letter-spacing: 4px;
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+    .content h1::before {
+      content: '';
+      display: inline-block;
+      width: 10px;
+      height: 10px;
+      background: var(--jade);
+      border-radius: 50%;
+      box-shadow: var(--glow-jade);
+    }
+    .content h1:first-child { margin-top: 0; }
+
+    .content h2 {
+      font-family: 'Noto Serif SC', serif;
+      font-size: 1.3rem;
+      font-weight: 600;
+      color: var(--gold);
+      margin: 40px 0 20px;
+      padding-left: 20px;
+      border-left: 3px solid var(--gold);
+      letter-spacing: 2px;
+    }
+
+    .content h3 {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 1.1rem;
+      font-weight: 500;
+      color: var(--jade);
+      margin: 28px 0 12px;
+      padding: 8px 0;
+      border-bottom: 1px dashed var(--border);
+    }
+
+    .content p {
+      margin: 16px 0;
+      color: var(--text-secondary);
+      line-height: 1.9;
+    }
+    .content strong {
+      color: var(--jade);
+      font-weight: 600;
+      background: linear-gradient(120deg, transparent 0%, rgba(94, 196, 182, 0.1) 50%, transparent 100%);
+      padding: 0 4px;
+    }
+
+    .content a {
+      color: var(--jade);
+      text-decoration: none;
+      border-bottom: 1px solid transparent;
+      transition: all var(--transition-base);
+      position: relative;
+    }
+    .content a::after {
+      content: '';
+      position: absolute;
+      bottom: -2px;
+      left: 0;
+      width: 0;
+      height: 1px;
+      background: var(--jade);
+      transition: width var(--transition-base);
+    }
+    .content a:hover { color: var(--jade-dark); }
+    .content a:hover::after { width: 100%; }
+
+    .content ul, .content ol {
+      padding-left: 0;
+      list-style: none;
+      margin: 16px 0;
+    }
+    .content li {
+      padding: 8px 0 8px 28px;
+      position: relative;
+      color: var(--text-secondary);
+    }
+    .content li::before {
+      content: '';
+      position: absolute;
+      left: 8px;
+      top: 16px;
+      width: 6px;
+      height: 6px;
+      background: var(--gold);
+      border-radius: 50%;
+      opacity: 0.8;
+    }
+
+    .content hr {
+      border: none;
+      height: 1px;
+      background: linear-gradient(90deg, transparent, var(--border-gold), transparent);
+      margin: 48px 0;
+    }
+
+    .content table {
+      width: 100%;
+      border-collapse: separate;
+      border-spacing: 0;
+      margin: 24px 0;
+      font-size: 0.9rem;
+      border-radius: var(--radius-md);
+      overflow: hidden;
+      box-shadow: var(--shadow-sm);
+    }
+    .content th {
+      font-family: 'JetBrains Mono', monospace;
+      background: var(--bg-tertiary);
+      color: var(--gold);
+      padding: 14px 18px;
+      text-align: left;
+      font-size: 0.75rem;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+      font-weight: 600;
+      border-bottom: 2px solid var(--border-gold);
+    }
+    .content td {
+      padding: 14px 18px;
+      border-bottom: 1px solid var(--border);
+      background: var(--bg-card);
+    }
+    .content tr:hover td { background: rgba(94, 196, 182, 0.05); }
+
+    .content code {
+      font-family: 'JetBrains Mono', monospace;
+      background: var(--bg-tertiary);
+      color: var(--jade);
+      padding: 3px 8px;
+      border-radius: var(--radius-sm);
+      font-size: 0.85em;
+      border: 1px solid var(--border);
+    }
+    .content pre {
+      background: var(--bg-secondary);
+      border: 1px solid var(--border);
+      border-left: 3px solid var(--jade);
+      padding: 20px 24px;
+      overflow-x: auto;
+      margin: 20px 0;
+      border-radius: var(--radius-md);
+      box-shadow: var(--shadow-sm);
+    }
+    .content pre code {
+      background: none;
+      padding: 0;
+      border: none;
+      color: var(--text-secondary);
+    }
+
+    .content blockquote {
+      border-left: 3px solid var(--gold);
+      padding: 16px 28px;
+      margin: 24px 0;
+      background: var(--bg-tertiary);
+      color: var(--text-dim);
+      font-family: 'Noto Serif SC', serif;
+      font-style: italic;
+      border-radius: 0 var(--radius-md) var(--radius-md) 0;
+    }
+
+    .site-footer {
+      position: relative;
+      z-index: 10;
+      text-align: center;
+      padding: 48px 24px;
+      background: linear-gradient(to top, var(--bg-secondary), transparent);
+      border-top: 1px solid var(--border);
+    }
+    .site-footer p {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 0.75rem;
+      color: var(--text-dim);
+      letter-spacing: 3px;
+    }
+    .footer-zen {
+      font-family: 'Noto Serif SC', serif;
+      font-size: 1rem;
+      color: var(--text-secondary);
+      margin-bottom: 12px;
+      letter-spacing: 4px;
+      opacity: 0.82;
+    }
+
+    .content { animation: fadeInUp 0.8s ease-out; }
+    @keyframes fadeInUp {
+      from { opacity: 0; transform: translateY(20px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    *, *::before, *::after {
+      transition: background-color var(--transition-slow), border-color var(--transition-slow), color var(--transition-fast);
+    }
+
+    @media (max-width: 720px) {
+      .site-header { padding: 74px 20px 36px; }
+      .enso { width: 92px; height: 92px; margin-bottom: 22px; }
+      .site-title { letter-spacing: 8px; }
+      .site-subtitle { font-size: 0.7rem; gap: 8px; }
+      .site-description { font-size: 0.9rem; }
+      .site-main { padding: 28px 20px 72px; }
+      .site-nav-wrap { padding: 0 12px 14px; }
+      .site-nav { border-radius: 20px; }
+      .site-nav a { font-size: 0.68rem; padding: 10px 14px; }
+      .content h1 { font-size: 1.4rem; }
+      .content h2 { font-size: 1.12rem; }
+      .theme-toggle { top: 12px; right: 12px; padding: 8px 12px; }
+    }
+  </style>
+</head>
+<body>
+  <div class="ambient-bg"></div>
+  <div class="bg-texture"></div>
+  <div class="particles" id="particles"></div>
+
+  <button class="theme-toggle" id="themeToggle" aria-label="切换主题">
+    <svg id="themeIcon" viewBox="0 0 24 24">
+      <path d="M12 3c.132 0 .263 0 .393 0a7.5 7.5 0 0 0 7.92 12.446a9 9 0 1 1-8.313-12.454z"/>
+    </svg>
+    <span id="themeText">DARK</span>
+  </button>
+
+  <header class="site-header">
+    <div class="enso">
+      <svg viewBox="0 0 100 100" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <path d="M85 50c0 19.3-15.7 35-35 35S15 69.3 15 50 30.7 15 50 15s35 15.7 35 35z"
+              stroke="url(#enso-grad)" stroke-width="2.5" stroke-linecap="round"
+              stroke-dasharray="200" stroke-dashoffset="18"
+              opacity="0.9"/>
+        <defs>
+          <linearGradient id="enso-grad" x1="15" y1="15" x2="85" y2="85">
+            <stop offset="0%" stop-color="var(--jade)"/>
+            <stop offset="50%" stop-color="var(--gold)"/>
+            <stop offset="100%" stop-color="var(--jade)" stop-opacity="0.3"/>
+          </linearGradient>
+        </defs>
+      </svg>
+    </div>
+    <h1 class="site-title">法喜</h1>
+    <p class="site-subtitle">
+      <span class="zen-dot"></span>
+      Cloud Native SRE · AI Toolsmith · Knowledge Architect
+      <span class="zen-dot"></span>
+    </p>
+    <p class="site-description">高产开源黑客的个人品牌总入口，聚合 4500+ 文档、10+ 开源工具、内容矩阵与合作入口。</p>
+  </header>
+
+  <div class="site-nav-wrap">
+    <nav class="site-nav">
+      <a href="/" class="">HOME</a>
+      <a href="/projects/" class="">PROJECTS</a>
+      <a href="/topic/links/" class="">LINKS</a>
+      <a href="/about/" class="">ABOUT</a>
+      <a href="https://github.com/allengaller" target="_blank" rel="noopener">GITHUB</a>
+    </nav>
+  </div>
+
+  <main class="site-main">
+    <div class="content">
+      <h1 id="k8s-concepts">k8s concepts</h1>
+
+<p><a href="https://kubernetes.io/docs/concepts/">Official website</a>
+<a href="https://help.aliyun.com/document_detail/113088.html">中英名词对比</a>
+<a href="https://help.aliyun.com/document_detail/86742.html">Kubernetes 相关概念</a></p>
+
+<h2 id="集群">集群</h2>
+
+<p>一个集群指容器运行所需要的云资源组合，关联了若干服务器节点、负载均衡、专有网络等云资源。</p>
+
+<h2 id="节点">节点</h2>
+
+<p>一台服务器（可以是虚拟机实例或者物理服务器）已经安装了 Docker Engine，可以用于部署和管理容器；容器服务的 Agent 程序会安装到节点上并注册到一个集群上。集群中的节点数量可以伸缩。</p>
+
+<h2 id="容器">容器</h2>
+
+<p>一个通过 Docker 镜像创建的运行实例，一个节点可运行多个容器。</p>
+
+<h2 id="镜像">镜像</h2>
+
+<p>Docker 镜像是容器应用打包的标准格式，在部署容器化应用时可以指定镜像，镜像可以来自于 Docker Hub，阿里云镜像服务，或者用户的私有 Registry。镜像 ID 可以由镜像所在仓库 URI 和镜像 Tag（缺省为 latest）唯一确认。</p>
+
+<h2 id="管理节点master-node">管理节点（Master Node）</h2>
+
+<p>管理节点是Kubernetes集群的管理者，运行着的服务包括kube-apiserver、kube-scheduler、kube-controller-manager、etcd和容器网络等组件。一般3个管理节点组成HA的架构。</p>
+
+<h2 id="工作节点worker-node">工作节点（Worker Node）</h2>
+
+<p>工作节点是Kubernetes集群中承担工作负载的节点，可以是虚拟机也可以是物理机。工作节点承担实际的 Pod 调度以及与管理节点的通信等。一个工作节点上的服务包括Docker运行时环境、kubelet、Kube-Proxy以及其它一些可选的Addon组件。</p>
+
+<h2 id="命名空间namespace">命名空间（Namespace）</h2>
+
+<p>命名空间为 Kubernetes 集群提供虚拟的隔离作用。Kubernetes 集群初始有 3 个命名空间，分别是默认命名空间 default、系统命名空间 kube-system 和 kube-public ，除此以外，管理员可以创建新的命名空间以满足需求。</p>
+
+<h2 id="pod">Pod</h2>
+
+<p>Pod是 Kubernetes 部署应用或服务的最小的基本单位。一个Pod 封装多个应用容器（也可以只有一个容器）、存储资源、一个独立的网络 IP 以及管理控制容器运行方式的策略选项。</p>
+
+<h2 id="副本控制器replication-controllerrc">副本控制器（Replication Controller，RC）</h2>
+
+<p>RC 确保任何时候 Kubernetes 集群中有指定数量的 pod 副本(replicas)在运行。通过监控运行中的 Pod 来保证集群中运行指定数目的 Pod 副本。指定的数目可以是多个也可以是1个；少于指定数目，RC 就会启动运行新的 Pod 副本；多于指定数目，RC 就会终止多余的 Pod 副本。</p>
+
+<h2 id="副本集replica-setrs">副本集（Replica Set，RS）</h2>
+
+<p>ReplicaSet（RS）是 RC 的升级版本，唯一区别是对选择器的支持，RS 能支持更多种类的匹配模式。副本集对象一般不单独使用，而是作为 Deployment 的理想状态参数使用。</p>
+
+<h2 id="部署deployment">部署（Deployment）</h2>
+
+<p>部署表示用户对 Kubernetes 集群的一次更新操作。部署比 RS 应用更广，可以是创建一个新的服务，更新一个新的服务，也可以是滚动升级一个服务。滚动升级一个服务，实际是创建一个新的 RS，然后逐渐将新 RS 中副本数增加到理想状态，将旧 RS 中的副本数减小到 0 的复合操作；这样一个复合操作用一个RS是不太好描述的，所以用一个更通用的 Deployment 来描述。不建议您手动管理利用 Deployment 创建的 RS。</p>
+
+<h2 id="服务service">服务（Service）</h2>
+
+<p>Service 也是 Kubernetes 的基本操作单元，是真实应用服务的抽象，每一个服务后面都有很多对应的容器来提供支持，通过 Kube-Proxy 的 port 和服务 selector 决定服务请求传递给后端的容器，对外表现为一个单一访问接口，外部不需要了解后端如何运行，这给扩展或维护后端带来很大的好处。</p>
+
+<h2 id="标签labels">标签（labels）</h2>
+
+<p>Labels 的实质是附着在资源对象上的一系列 Key/Value 键值对，用于指定对用户有意义的对象的属性，标签对内核系统是没有直接意义的。标签可以在创建一个对象的时候直接赋予，也可以在后期随时修改，每一个对象可以拥有多个标签，但 key 值必须唯一。</p>
+
+<h2 id="存储卷volume">存储卷（Volume）</h2>
+
+<p>Kubernetes 集群中的存储卷跟 Docker 的存储卷有些类似，只不过 Docker 的存储卷作用范围为一个容器，而 Kubernetes 的存储卷的生命周期和作用范围是一个 Pod。每个 Pod 中声明的存储卷由 Pod 中的所有容器共享。支持使用 Persistent Volume Claim 即 PVC 这种逻辑存储，使用者可以忽略后台的实际存储技术，具体关于 Persistent Volumn(pv)的配置由存储管理员来配置。</p>
+
+<h2 id="持久存储卷persistent-volumepv和持久存储卷声明persistent-volume-claimpvc">持久存储卷（Persistent Volume，PV）和持久存储卷声明（Persistent Volume Claim，PVC）</h2>
+
+<p>PV 和 PVC 使得 Kubernetes 集群具备了存储的逻辑抽象能力，使得在配置 Pod 的逻辑里可以忽略对实际后台存储技术的配置，而把这项配置的工作交给 PV 的配置者。存储的 PV 和 PVC 的这种关系，跟计算的 Node 和 Pod 的关系是非常类似的；PV 和 Node 是资源的提供者，根据集群的基础设施变化而变化，由 Kubernetes 集群管理员配置；而 PVC 和 Pod是资源的使用者，根据业务服务的需求变化而变化，由 Kubernetes 集群的使用者即服务的管理员来配置。</p>
+
+<h2 id="ingress">Ingress</h2>
+
+<p>Ingress 是授权入站连接到达集群服务的规则集合。你可以通过 Ingress 配置提供外部可访问的 URL、负载均衡、SSL、基于名称的虚拟主机等。用户通过 POST Ingress 资源到 API server 的方式来请求 Ingress。 Ingress controller 负责实现 Ingress，通常使用负载均衡器，它还可以配置边界路由和其他前端，这有助于以 HA 方式处理流量。</p>
+
+    </div>
+  </main>
+
+  <footer class="site-footer">
+    <p class="footer-zen">Build in public · learn in public</p>
+    <p>法喜 // 2026</p>
+  </footer>
+
+  <script>
+    (function() {
+      const html = document.documentElement;
+      const toggle = document.getElementById('themeToggle');
+      const icon = document.getElementById('themeIcon');
+      const text = document.getElementById('themeText');
+      const savedTheme = localStorage.getItem('theme') || 'dark';
+      html.setAttribute('data-theme', savedTheme);
+      updateThemeUI(savedTheme);
+
+      toggle.addEventListener('click', function() {
+        const currentTheme = html.getAttribute('data-theme');
+        const newTheme = currentTheme === 'dark' ? 'light' : 'dark';
+        html.setAttribute('data-theme', newTheme);
+        localStorage.setItem('theme', newTheme);
+        updateThemeUI(newTheme);
+      });
+
+      function updateThemeUI(theme) {
+        if (theme === 'dark') {
+          icon.innerHTML = '<path d="M12 3c.132 0 .263 0 .393 0a7.5 7.5 0 0 0 7.92 12.446a9 9 0 1 1-8.313-12.454z"/>';
+          text.textContent = 'DARK';
+        } else {
+          icon.innerHTML = '<path d="M12 7a5 5 0 1 0 0 10 5 5 0 0 0 0-10zM2 13h2a1 1 0 0 0 0-2H2a1 1 0 0 0 0 2zm18 0h2a1 1 0 0 0 0-2h-2a1 1 0 0 0 0 2zM11 2v2a1 1 0 0 0 2 0V2a1 1 0 0 0-2 0zm0 18v2a1 1 0 0 0 2 0v-2a1 1 0 0 0-2 0zM6.343 4.343l1.414 1.414a1 1 0 0 0 1.414-1.414L7.757 2.929a1 1 0 0 0-1.414 1.414zm12.728 12.728l1.414 1.414a1 1 0 0 0 1.414-1.414l-1.414-1.414a1 1 0 0 0-1.414 1.414z"/>';
+          text.textContent = 'LIGHT';
+        }
+      }
+
+      const particles = document.getElementById('particles');
+      for (let i = 0; i < 18; i++) {
+        const p = document.createElement('div');
+        p.className = 'particle';
+        p.style.left = Math.random() * 100 + '%';
+        p.style.width = (2 + Math.random() * 3) + 'px';
+        p.style.height = p.style.width;
+        p.style.background = Math.random() > 0.5 ? 'var(--jade)' : 'var(--gold)';
+        p.style.animationDuration = (15 + Math.random() * 18) + 's';
+        p.style.animationDelay = Math.random() * 15 + 's';
+        particles.appendChild(p);
+      }
+    })();
+  </script>
+</body>
+</html>

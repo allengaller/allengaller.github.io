@@ -1,0 +1,1505 @@
+---
+layout: default
+title: Links - 资源导航
+---
+
+<div class="top-nav" id="topNav">
+  <div class="nav-inner">
+    <h1 class="nav-title">资源导航</h1>
+    <div class="search-box">
+      <input type="text" id="searchInput" placeholder="搜索..." onkeyup="filterLinks()">
+    </div>
+    <button class="back-to-top" id="backToTop" onclick="scrollToTop()">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+        <polyline points="18 15 12 9 6 15"></polyline>
+      </svg>
+    </button>
+  </div>
+  <div class="section-nav" id="sectionNav"></div>
+</div>
+
+<div class="main-content">
+<!-- 技术写作 -->
+<section class="section-block" id="技术写作">
+  <h2 class="section-title">技术写作</h2>
+  <div class="link-cards">
+    <a href="/topic/cloud-sre-mantra/about" class="link-card feature">
+      <span class="card-icon">☁️</span>
+      <span class="card-name">稳云真经</span>
+      <span class="card-desc">Cloud Native SRE — K8s、微服务、可观测性</span>
+    </a>
+    <a href="/topic/ai-tools/ai-tools" class="link-card feature">
+      <span class="card-icon">🤖</span>
+      <span class="card-name">AI 工具链</span>
+      <span class="card-desc">编程、对话、创作、陪伴类 AI 工具整理</span>
+    </a>
+  </div>
+</section>
+
+<!-- 云原生 & 基础设施 -->
+<section class="section-block" id="云原生">
+  <h2 class="section-title">云原生 & 基础设施</h2>
+  <div class="link-tags">
+    <span class="tag-label">站内导航</span>
+    <a href="/topic/k8s/k8s" class="tag">Kubernetes</a>
+    <a href="/topic/k8s/docker" class="tag">Docker</a>
+    <a href="/topic/cncf/cncf" class="tag">CNCF 生态</a>
+    <a href="/topic/microservice/microservice" class="tag">微服务</a>
+    <a href="/topic/devops/devops" class="tag">DevOps</a>
+  </div>
+  <div class="link-tags">
+    <span class="tag-label intl">国际</span>
+    <a href="https://kubernetes.io" class="tag" target="_blank">k8s.io</a>
+    <a href="https://landscape.cncf.io" class="tag" target="_blank">CNCF Landscape</a>
+    <a href="https://docs.docker.com" class="tag" target="_blank">Docker Docs</a>
+    <a href="https://istio.io" class="tag" target="_blank">Istio</a>
+    <a href="https://helm.sh" class="tag" target="_blank">Helm</a>
+    <a href="https://prometheus.io" class="tag" target="_blank">Prometheus</a>
+    <a href="https://grafana.com" class="tag" target="_blank">Grafana</a>
+    <a href="https://terraform.io" class="tag" target="_blank">Terraform</a>
+    <a href="https://argoproj.github.io/cd" class="tag" target="_blank">Argo CD</a>
+    <a href="https://crossplane.io" class="tag" target="_blank">Crossplane</a>
+  </div>
+  <div class="link-tags">
+    <span class="tag-label cn">国内</span>
+    <a href="https://kubernetes.io/zh" class="tag" target="_blank">K8s 中文文档</a>
+    <a href="https://doc.daocloud.io" class="tag" target="_blank">DaoCloud</a>
+    <a href="https://www.aliyun.com" class="tag" target="_blank">阿里云 ACK</a>
+    <a href="https://www.tencentcloud.com" class="tag" target="_blank">腾讯云 TKE</a>
+    <a href="https://www.huaweicloud.com" class="tag" target="_blank">华为云 CCE</a>
+  </div>
+</section>
+
+<!-- 数据 & 中间件 -->
+<section class="section-block" id="数据">
+  <h2 class="section-title">数据 & 中间件</h2>
+  <div class="link-tags">
+    <span class="tag-label">站内导航</span>
+    <a href="/topic/database/database" class="tag">数据库</a>
+    <a href="/topic/kv/kv" class="tag">KV 存储</a>
+    <a href="/topic/middleware/mq" class="tag">消息队列</a>
+    <a href="/topic/big-data/big-data" class="tag">大数据</a>
+  </div>
+  <div class="link-tags">
+    <span class="tag-label intl">国际</span>
+    <a href="https://www.postgresql.org" class="tag" target="_blank">PostgreSQL</a>
+    <a href="https://www.mysql.com" class="tag" target="_blank">MySQL</a>
+    <a href="https://redis.io" class="tag" target="_blank">Redis</a>
+    <a href="https://www.mongodb.com" class="tag" target="_blank">MongoDB</a>
+    <a href="https://cassandra.apache.org" class="tag" target="_blank">Cassandra</a>
+    <a href="https://kafka.apache.org" class="tag" target="_blank">Apache Kafka</a>
+    <a href="https://clickhouse.com" class="tag" target="_blank">ClickHouse</a>
+    <a href="https://www.elastic.co" class="tag" target="_blank">Elasticsearch</a>
+  </div>
+  <div class="link-tags">
+    <span class="tag-label cn">国内</span>
+    <a href="https://www.dameng.com" class="tag" target="_blank">达梦数据库</a>
+    <a href="https://www.openGauss.org" class="tag" target="_blank">openGauss</a>
+    <a href="https://oceanbase.com" class="tag" target="_blank">OceanBase</a>
+    <a href="https://www.taosdata.com" class="tag" target="_blank">TDengine</a>
+  </div>
+</section>
+
+<!-- 架构 & 开发 -->
+<section class="section-block" id="架构">
+  <h2 class="section-title">架构 & 开发</h2>
+  <div class="link-tags">
+    <span class="tag-label">站内导航</span>
+    <a href="/topic/architecture/architecture" class="tag">架构设计</a>
+    <a href="/topic/developer/developer" class="tag">开发者</a>
+  </div>
+  <div class="link-tags">
+    <span class="tag-label">架构参考</span>
+    <a href="https://aws.amazon.com/architecture" class="tag" target="_blank">AWS 架构中心</a>
+    <a href="https://learn.microsoft.com/en-us/azure/architecture" class="tag" target="_blank">Azure 架构</a>
+    <a href="https://cloud.google.com/architecture" class="tag" target="_blank">GCP 架构</a>
+    <a href="https://martinfowler.com" class="tag" target="_blank">Martin Fowler</a>
+    <a href="https://samnewman.io" class="tag" target="_blank">Sam Newman</a>
+  </div>
+  <div class="link-tags">
+    <span class="tag-label">技术社区</span>
+    <a href="https://github.com" class="tag" target="_blank">GitHub</a>
+    <a href="https://stackoverflow.com" class="tag" target="_blank">Stack Overflow</a>
+    <a href="https://dev.to" class="tag" target="_blank">DEV Community</a>
+    <a href="https://lobste.rs" class="tag" target="_blank">Lobsters</a>
+  </div>
+</section>
+
+<!-- 编程语言 -->
+<section class="section-block" id="编程语言">
+  <h2 class="section-title">编程语言</h2>
+  <div class="link-tags">
+    <span class="tag-label">站内导航</span>
+    <a href="/topic/go/go" class="tag">Go</a>
+    <a href="/topic/python/python" class="tag">Python</a>
+    <a href="/topic/java/java" class="tag">Java</a>
+    <a href="/topic/js/js" class="tag">JavaScript</a>
+  </div>
+  <div class="link-tags">
+    <span class="tag-label">Go</span>
+    <a href="https://go.dev" class="tag" target="_blank">go.dev</a>
+    <a href="https://pkg.go.dev" class="tag" target="_blank">pkg.go.dev</a>
+    <a href="https://go.dev/blog" class="tag" target="_blank">Go Blog</a>
+    <a href="https://gorm.io" class="tag" target="_blank">GORM</a>
+    <a href="https://gin-gonic.com" class="tag" target="_blank">Gin</a>
+  </div>
+  <div class="link-tags">
+    <span class="tag-label">Python</span>
+    <a href="https://docs.python.org" class="tag" target="_blank">Docs</a>
+    <a href="https://pypi.org" class="tag" target="_blank">PyPI</a>
+    <a href="https://www.djangoproject.com" class="tag" target="_blank">Django</a>
+    <a href="https://fastapi.tiangolo.com" class="tag" target="_blank">FastAPI</a>
+    <a href="https://numpy.org" class="tag" target="_blank">NumPy</a>
+    <a href="https://pandas.pydata.org" class="tag" target="_blank">Pandas</a>
+  </div>
+  <div class="link-tags">
+    <span class="tag-label">Java</span>
+    <a href="https://docs.oracle.com/javase" class="tag" target="_blank">Java SE</a>
+    <a href="https://spring.io" class="tag" target="_blank">Spring</a>
+    <a href="https://gradle.org" class="tag" target="_blank">Gradle</a>
+    <a href="https://maven.apache.org" class="tag" target="_blank">Maven</a>
+  </div>
+  <div class="link-tags">
+    <span class="tag-label">JavaScript</span>
+    <a href="https://developer.mozilla.org" class="tag" target="_blank">MDN</a>
+    <a href="https://nodejs.org" class="tag" target="_blank">Node.js</a>
+    <a href="https://react.dev" class="tag" target="_blank">React</a>
+    <a href="https://vuejs.org" class="tag" target="_blank">Vue</a>
+    <a href="https://angular.io" class="tag" target="_blank">Angular</a>
+    <a href="https://nextjs.org" class="tag" target="_blank">Next.js</a>
+  </div>
+</section>
+
+<!-- AI & 机器学习 -->
+<section class="section-block" id="AI">
+  <h2 class="section-title">AI & 机器学习</h2>
+  <div class="link-tags">
+    <span class="tag-label">模型厂商</span>
+    <a href="https://openai.com" class="tag" target="_blank">OpenAI</a>
+    <a href="https://anthropic.com" class="tag" target="_blank">Anthropic</a>
+    <a href="https://deepmind.google" class="tag" target="_blank">DeepMind</a>
+    <a href="https://x.ai" class="tag" target="_blank">xAI (Grok)</a>
+    <a href="https://mistral.ai" class="tag" target="_blank">Mistral AI</a>
+    <a href="https://ai.meta.com" class="tag" target="_blank">Meta AI</a>
+    <a href="https://www.groq.com" class="tag" target="_blank">Groq</a>
+    <a href="https://cohere.com" class="tag" target="_blank">Cohere</a>
+    <a href="https://www.together.ai" class="tag" target="_blank">Together AI</a>
+  </div>
+  <div class="link-tags">
+    <span class="tag-label">模型平台</span>
+    <a href="https://huggingface.co" class="tag" target="_blank">Hugging Face</a>
+    <a href="https://www.modelscope.cn" class="tag" target="_blank">ModelScope</a>
+    <a href="https://chat.lmsys.org" class="tag" target="_blank">LMSYS Arena</a>
+    <a href="https://perplexity.ai" class="tag" target="_blank">Perplexity</a>
+    <a href="https://ollama.com" class="tag" target="_blank">Ollama</a>
+    <a href="https://www.llama.com" class="tag" target="_blank">Llama</a>
+  </div>
+  <div class="link-tags">
+    <span class="tag-label">arXiv 论文</span>
+    <a href="https://arxiv.org/list/cs.AI/recent" class="tag" target="_blank">cs.AI</a>
+    <a href="https://arxiv.org/list/cs.CL/recent" class="tag" target="_blank">cs.CL (NLP)</a>
+    <a href="https://arxiv.org/list/cs.LG/recent" class="tag" target="_blank">cs.LG (ML)</a>
+    <a href="https://arxiv.org/list/cs.CV/recent" class="tag" target="_blank">cs.CV (Vision)</a>
+    <a href="https://papers.labml.ai" class="tag" target="_blank">LabML Papers</a>
+  </div>
+  <div class="link-tags">
+    <span class="tag-label cn">国内模型</span>
+    <a href="https://www.zhipuai.cn" class="tag" target="_blank">智谱 AI</a>
+    <a href="https://www.moonshot.cn" class="tag" target="_blank">月之暗面</a>
+    <a href="https://www.deepseek.com" class="tag" target="_blank">DeepSeek</a>
+    <a href="https://yiyan.baidu.com" class="tag" target="_blank">文心一言</a>
+    <a href="https://tongyi.aliyun.com" class="tag" target="_blank">通义千问</a>
+    <a href="https://kimi.moonshot.cn" class="tag" target="_blank">Kimi</a>
+    <a href="https://www.minimax.io" class="tag" target="_blank">MiniMax</a>
+  </div>
+</section>
+
+<!-- AI 社区 & 新闻 -->
+<section class="section-block" id="AI社区">
+  <h2 class="section-title">AI 社区 & 新闻</h2>
+  <div class="link-tags">
+    <span class="tag-label intl">国际新闻</span>
+    <a href="https://venturebeat.com/category/ai/" class="tag" target="_blank">VentureBeat AI</a>
+    <a href="https://www.theverge.com/ai-artificial-intelligence" class="tag" target="_blank">The Verge AI</a>
+    <a href="https://techcrunch.com/category/artificial-intelligence/" class="tag" target="_blank">TechCrunch AI</a>
+    <a href="https://www.wired.com/tag/artificial-intelligence/" class="tag" target="_blank">Wired AI</a>
+    <a href="https://www.technologyreview.com/topic/artificial-intelligence/" class="tag" target="_blank">MIT Tech Review</a>
+    <a href="https://lastweekin.ai" class="tag" target="_blank">Last Week in AI</a>
+  </div>
+  <div class="link-tags">
+    <span class="tag-label cn">国内新闻</span>
+    <a href="https://jiqizhixin.com" class="tag" target="_blank">机器之心</a>
+    <a href="https://www.qbitai.com" class="tag" target="_blank">量子位</a>
+    <a href="https://www.leiphone.com" class="tag" target="_blank">雷锋网</a>
+    <a href="https://www.36kr.com/o/ai" class="tag" target="_blank">36kr AI</a>
+  </div>
+  <div class="link-tags">
+    <span class="tag-label intl">国际社区</span>
+    <a href="https://reddit.com/r/MachineLearning" class="tag" target="_blank">r/MachineLearning</a>
+    <a href="https://reddit.com/r/LocalLLaMA" class="tag" target="_blank">r/LocalLLaMA</a>
+    <a href="https://reddit.com/r/ChatGPT" class="tag" target="_blank">r/ChatGPT</a>
+    <a href="https://news.ycombinator.com" class="tag" target="_blank">Hacker News</a>
+    <a href="https://discourse.org" class="tag" target="_blank">Discourse</a>
+  </div>
+  <div class="link-tags">
+    <span class="tag-label cn">国内社区</span>
+    <a href="https://www.zhihu.com/topic/19551218" class="tag" target="_blank">知乎 AI</a>
+    <a href="https://juejin.cn/ai" class="tag" target="_blank">掘金 AI</a>
+    <a href="https://ai.pingwest.com" class="tag" target="_blank">品玩 AI</a>
+    <a href="https://www.oschina.net" class="tag" target="_blank">开源中国</a>
+    <a href="https://www.52nlp.cn" class="tag" target="_blank">52nlp</a>
+  </div>
+  <div class="link-tags">
+    <span class="tag-label">AI 论坛</span>
+    <a href="https://www.kaggle.com" class="tag" target="_blank">Kaggle</a>
+    <a href="https://colab.research.google.com" class="tag" target="_blank">Google Colab</a>
+    <a href="https://wandb.ai" class="tag" target="_blank">Weights & Biases</a>
+    <a href="https://discuss.huggingface.co" class="tag" target="_blank">HF Forum</a>
+  </div>
+</section>
+
+<!-- AI 开源项目 -->
+<section class="section-block" id="AI开源">
+  <h2 class="section-title">AI 开源项目</h2>
+  <div class="link-tags">
+    <span class="tag-label">大语言模型</span>
+    <a href="https://github.com/meta-llama/llama" class="tag" target="_blank">Llama</a>
+    <a href="https://github.com/mistralai/mistral-src" class="tag" target="_blank">Mistral</a>
+    <a href="https://github.com/vllm-project/vllm" class="tag" target="_blank">vLLM</a>
+    <a href="https://github.com/qualified/llama.cpp" class="tag" target="_blank">llama.cpp</a>
+    <a href="https://github.com/hiyouga/LLaMA-Factory" class="tag" target="_blank">LLaMA-Factory</a>
+    <a href="https://github.com/deepseek-ai" class="tag" target="_blank">DeepSeek</a>
+    <a href="https://github.com/QwenLM" class="tag" target="_blank">Qwen</a>
+    <a href="https://github.com/THUDM" class="tag" target="_blank">ChatGLM</a>
+    <a href="https://github.com/baichuan-inc" class="tag" target="_blank">Baichuan</a>
+  </div>
+  <div class="link-tags">
+    <span class="tag-label">AI Agent</span>
+    <a href="https://github.com/langchain-ai/langchain" class="tag" target="_blank">LangChain</a>
+    <a href="https://github.com/langchain-ai/langgraph" class="tag" target="_blank">LangGraph</a>
+    <a href="https://github.com/microsoft/autogen" class="tag" target="_blank">AutoGen</a>
+    <a href="https://github.com/transformary-ai/crewai" class="tag" target="_blank">CrewAI</a>
+    <a href="https://github.com/Significant-Gravitas/AutoGPT" class="tag" target="_blank">AutoGPT</a>
+    <a href="https://github.com/Transformer-Optimus/superagent" class="tag" target="_blank">SuperAGI</a>
+    <a href="https://github.com/assafelovic/gpt-researcher" class="tag" target="_blank">GPT Researcher</a>
+  </div>
+  <div class="link-tags">
+    <span class="tag-label">开发框架</span>
+    <a href="https://github.com/transformers" class="tag" target="_blank">Transformers</a>
+    <a href="https://github.com/facebookresearch/pytorch" class="tag" target="_blank">PyTorch</a>
+    <a href="https://github.com/tensorflow/tensorflow" class="tag" target="_blank">TensorFlow</a>
+    <a href="https://github.com/gradio-app/gradio" class="tag" target="_blank">Gradio</a>
+    <a href="https://github.com/streamlit/streamlit" class="tag" target="_blank">Streamlit</a>
+    <a href="https://github.com/ray-project/ray" class="tag" target="_blank">Ray</a>
+  </div>
+  <div class="link-tags">
+    <span class="tag-label">RAG & Embedding</span>
+    <a href="https://github.com/run-llama/llama_index" class="tag" target="_blank">LlamaIndex</a>
+    <a href="https://github.com/chroma-core/chroma" class="tag" target="_blank">Chroma</a>
+    <a href="https://github.com/milvus-io/milvus" class="tag" target="_blank">Milvus</a>
+    <a href="https://github.com/qdrant/qdrant" class="tag" target="_blank">Qdrant</a>
+    <a href="https://github.com/weaviate/recipes" class="tag" target="_blank">Weaviate</a>
+    <a href="https://github.com/FlagOpen/FlagEmbedding" class="tag" target="_blank">FlagEmbedding</a>
+  </div>
+  <div class="link-tags">
+    <span class="tag-label">AI 图像</span>
+    <a href="https://github.com/runwayml/stable-diffusion" class="tag" target="_blank">Stable Diffusion</a>
+    <a href="https://github.com/AUTOMATIC1111/stable-diffusion-webui" class="tag" target="_blank">SD WebUI</a>
+    <a href="https://github.com/comfyanonymous/ComfyUI" class="tag" target="_blank">ComfyUI</a>
+    <a href="https://github.com/lllyasviel/ControlNet" class="tag" target="_blank">ControlNet</a>
+    <a href="https://github.com/IDEA-CCNL" class="tag" target="_blank">IDEA 姜子牙</a>
+  </div>
+  <div class="link-tags">
+    <span class="tag-label cn">国产开源</span>
+    <a href="https://github.com/QwenLM" class="tag" target="_blank">Qwen 通义千问</a>
+    <a href="https://github.com/THUDM" class="tag" target="_blank">ChatGLM 智谱</a>
+    <a href="https://github.com/deepseek-ai" class="tag" target="_blank">DeepSeek 深度求索</a>
+    <a href="https://github.com/baichuan-inc" class="tag" target="_blank">Baichuan 百川</a>
+    <a href="https://github.com/scuticall" class="tag" target="_blank">Yi 零一万物</a>
+    <a href="https://github.com/InternLM/InternLM" class="tag" target="_blank">InternLM 书生</a>
+  </div>
+</section>
+
+<!-- Agentic Engineering -->
+<section class="section-block" id="Agentic">
+  <h2 class="section-title">Agentic Engineering</h2>
+  <div class="link-tags">
+    <span class="tag-label">核心概念</span>
+    <a href="https://github.com/anthropics/anthropic-cookbook" class="tag" target="_blank">Anthropic Cookbook</a>
+    <a href="https://github.com/anthropics/anthropic-quickstarts" class="tag" target="_blank">Quickstarts</a>
+    <a href="https://github.com/industrial-thinking/agentic-design-patterns" class="tag" target="_blank">Agentic Patterns</a>
+    <a href="https://github.com/e2b-dev/infra" class="tag" target="_blank">E2B</a>
+    <a href="https://github.com/AutoGPT/AutoGPT" class="tag" target="_blank">AutoGPT</a>
+  </div>
+  <div class="link-tags">
+    <span class="tag-label">Agent 框架</span>
+    <a href="https://github.com/langchain-ai/langgraph" class="tag" target="_blank">LangGraph</a>
+    <a href="https://github.com/microsoft/autogen" class="tag" target="_blank">AutoGen</a>
+    <a href="https://github.com/transformary-ai/crewai" class="tag" target="_blank">CrewAI</a>
+    <a href="https://github.com/AgentOps-AI/agentops" class="tag" target="_blank">AgentOps</a>
+    <a href="https://github.com/Transformer-Optimus/superagent" class="tag" target="_blank">SuperAGI</a>
+  </div>
+  <div class="link-tags">
+    <span class="tag-label">记忆 & 上下文</span>
+    <a href="https://github.com/llmhyy/evolving-agents" class="tag" target="_blank">Evolving Agents</a>
+    <a href="https://github.com/memFree" class="tag" target="_blank">MemGPT</a>
+    <a href="https://github.com/rrmb+agents/agents" class="tag" target="_blank">Letta</a>
+    <a href="https://github.com/psychepeak/vector%20memory" class="tag" target="_blank">Vector Memory</a>
+  </div>
+  <div class="link-tags">
+    <span class="tag-label">安全 & 防护</span>
+    <a href="https://github.com/AgentOps-AI/agentops" class="tag" target="_blank">AgentOps</a>
+    <a href="https://github.com/prototypez/sguard" class="tag" target="_blank">SGuard</a>
+    <a href="https://github.com/e2b-dev/infra" class="tag" target="_blank">E2B Sandboxing</a>
+    <a href="https://github.com/Ali-UI/safe-agents" class="tag" target="_blank">Safe Agents</a>
+  </div>
+</section>
+
+<!-- Vibe Coding -->
+<section class="section-block" id="VibeCoding">
+  <h2 class="section-title">Vibe Coding</h2>
+  <div class="link-tags">
+    <span class="tag-label">IDE & 编辑器</span>
+    <a href="https://cursor.com" class="tag" target="_blank">Cursor</a>
+    <a href="https://codeium.com" class="tag" target="_blank">Codeium</a>
+    <a href="https://windsurf.ai" class="tag" target="_blank">Windsurf</a>
+    <a href="https://www.trae.ai" class="tag" target="_blank">Trae</a>
+    <a href="https://github.com/features/copilot" class="tag" target="_blank">Copilot</a>
+    <a href="https://www.tabnine.com" class="tag" target="_blank">Tabnine</a>
+  </div>
+  <div class="link-tags">
+    <span class="tag-label">工具链</span>
+    <a href="https://github.com/features/actions" class="tag" target="_blank">GitHub Actions</a>
+    <a href="https://vercel.com" class="tag" target="_blank">Vercel</a>
+    <a href="https://supabase.com" class="tag" target="_blank">Supabase</a>
+    <a href="https://www.prisma.io" class="tag" target="_blank">Prisma</a>
+    <a href="https://t3.gg" class="tag" target="_blank">T3 Stack</a>
+    <a href="https://clerk.com" class="tag" target="_blank">Clerk</a>
+  </div>
+  <div class="link-tags">
+    <span class="tag-label">AI 代码</span>
+    <a href="https://github.com/continue-dev/continue" class="tag" target="_blank">Continue</a>
+    <a href="https://github.com/opencode-ai/opencode" class="tag" target="_blank">OpenCode</a>
+    <a href="https://github.com/cline/cline" class="tag" target="_blank">Cline</a>
+    <a href="https://github.com/chroline/wely" class="tag" target="_blank">Wely</a>
+  </div>
+</section>
+
+<!-- Agent Harness & 测试 -->
+<section class="section-block" id="AgentHarness">
+  <h2 class="section-title">Agent Harness & 测试</h2>
+  <div class="link-tags">
+    <span class="tag-label">Agent Harness</span>
+    <a href="https://github.com/agent-harness" class="tag" target="_blank">Agent Harness</a>
+    <a href="https://github.com/agent-harness/enhanced-gpt-swarm" class="tag" target="_blank">GPT Swarm</a>
+    <a href="https://github.com/agent-harness/langchain-adaptive-rag" class="tag" target="_blank">Adaptive RAG</a>
+  </div>
+  <div class="link-tags">
+    <span class="tag-label">测试框架</span>
+    <a href="https://github.com/AgentOps-AI/agentops" class="tag" target="_blank">AgentOps</a>
+    <a href="https://github.com/BerriAI/litellm" class="tag" target="_blank">LiteLLM</a>
+    <a href="https://github.com/continuous-ai/continuous" class="tag" target="_blank">Continuous AI</a>
+    <a href="https://github.com/pydantic/pydantic" class="tag" target="_blank">Pydantic</a>
+  </div>
+  <div class="link-tags">
+    <span class="tag-label">评估 & Benchmark</span>
+    <a href="https://github.com/open-eval" class="tag" target="_blank">OpenEval</a>
+    <a href="https://github.com/lmarena-ai/lmarena" class="tag" target="_blank">LMArena</a>
+    <a href="https://livecodebench.github.io" class="tag" target="_blank">LiveCodeBench</a>
+    <a href="https://bigcode-bench.github.io" class="tag" target="_blank">BigCode Bench</a>
+    <a href="https://agentbench.github.io" class="tag" target="_blank">AgentBench</a>
+  </div>
+  <div class="link-tags">
+    <span class="tag-label">Sandbox & 执行</span>
+    <a href="https://github.com/e2b-dev/infra" class="tag" target="_blank">E2B</a>
+    <a href="https://github.com/digbang/safe-execute" class="tag" target="_blank">Safe Execute</a>
+    <a href="https://github.com/NVIDIA/holodeck" class="tag" target="_blank">NVIDIA Holodeck</a>
+  </div>
+  <div class="link-tags">
+    <span class="tag-label">LLM Observability</span>
+    <a href="https://github.com/llmonitor" class="tag" target="_blank">LLMonitor</a>
+    <a href="https://github.com/Helicone" class="tag" target="_blank">Helicone</a>
+    <a href="https://github.com/traceloop/openllmetry" class="tag" target="_blank">OpenLLM</a>
+    <a href="https://github.com/promptlayer" class="tag" target="_blank">PromptLayer</a>
+  </div>
+</section>
+
+<!-- LLM & 推理框架 -->
+<section class="section-block" id="LLM">
+  <h2 class="section-title">LLM & 推理框架</h2>
+  <div class="link-tags">
+    <span class="tag-label">推理框架</span>
+    <a href="https://github.com/vllm-project/vllm" class="tag" target="_blank">vLLM</a>
+    <a href="https://github.com/qualified/llama.cpp" class="tag" target="_blank">llama.cpp</a>
+    <a href="https://github.com/ggml-org/ggml" class="tag" target="_blank">GGML</a>
+    <a href="https://github.com/ggerganov/whisper.cpp" class="tag" target="_blank">whisper.cpp</a>
+    <a href="https://github.com/mlc-ai/mlc-llm" class="tag" target="_blank">MLC LLM</a>
+  </div>
+  <div class="link-tags">
+    <span class="tag-label">推理引擎</span>
+    <a href="https://github.com/sph%20Gleason%206" class="tag" target="_blank">TensorRT-LLM</a>
+    <a href="https://github.com/intel/intel-extension-for-transformers" class="tag" target="_blank">Intel Extension</a>
+    <a href="https://github.com/hiyouga/ChatGLM.cpp" class="tag" target="_blank">ChatGLM.cpp</a>
+  </div>
+  <div class="link-tags">
+    <span class="tag-label">API & 部署</span>
+    <a href="https://github.com/BerriAI/litellm" class="tag" target="_blank">LiteLLM</a>
+    <a href="https://github.com/xor-ai/ollama" class="tag" target="_blank">Ollama</a>
+    <a href="https://github.com/openai/openai-python" class="tag" target="_blank">OpenAI Python</a>
+    <a href="https://github.com/anthropics/anthropic-sdk-python" class="tag" target="_blank">Anthropic SDK</a>
+  </div>
+  <div class="link-tags">
+    <span class="tag-label">本地部署</span>
+    <a href="https://github.com/oobabooga/text-generation-webui" class="tag" target="_blank">Text Gen WebUI</a>
+    <a href="https://github.com/unslothai/unsloth" class="tag" target="_blank">Unsloth</a>
+    <a href="https://github.com/lllyasviel/LoRA" class="tag" target="_blank">LoRA</a>
+  </div>
+</section>
+
+<!-- Prompt Engineering -->
+<section class="section-block" id="Prompt">
+  <h2 class="section-title">Prompt Engineering</h2>
+  <div class="link-tags">
+    <span class="tag-label">核心框架</span>
+    <a href="https://github.com/dave1010/prompt-engineering" class="tag" target="_blank">Prompt Engineering</a>
+    <a href="https://www.promptengineering.org" class="tag" target="_blank">Prompt Eng Institute</a>
+    <a href="https://github.com/brexhq/prompt-engineering" class="tag" target="_blank">Brex Prompt</a>
+  </div>
+  <div class="link-tags">
+    <span class="tag-label">思维链 & 推理</span>
+    <a href="https://arxiv.org/abs/2201.11903" class="tag" target="_blank">Chain-of-Thought</a>
+    <a href="https://arxiv.org/abs/2210.03629" class="tag" target="_blank">ReAct</a>
+    <a href="https://arxiv.org/abs/2308.03688" class="tag" target="_blank">Tree of Thoughts</a>
+    <a href="https://arxiv.org/abs/2305.10601" class="tag" target="_blank">Self-Refine</a>
+  </div>
+  <div class="link-tags">
+    <span class="tag-label">学习资源</span>
+    <a href="https://www.promptingguide.ai" class="tag" target="_blank">Prompt Guide</a>
+    <a href="https://learn.deeplearning.ai" class="tag" target="_blank">DeepLearning.AI</a>
+    <a href="https://www.learnprompting.org" class="tag" target="_blank">Learn Prompting</a>
+  </div>
+</section>
+
+<!-- AI 音视频 & 多模态 -->
+<section class="section-block" id="多模态">
+  <h2 class="section-title">AI 音视频 & 多模态</h2>
+  <div class="link-tags">
+    <span class="tag-label">AI 视频生成</span>
+    <a href="https://runwayml.com" class="tag" target="_blank">Runway</a>
+    <a href="https://www.pika.ai" class="tag" target="_blank">Pika</a>
+    <a href="https://klingai.com" class="tag" target="_blank">快手可灵</a>
+    <a href="https://jimengai.com" class="tag" target="_blank">即梦</a>
+    <a href="https://haiper.ai" class="tag" target="_blank">Haiper</a>
+  </div>
+  <div class="link-tags">
+    <span class="tag-label">AI 图像</span>
+    <a href="https://midjourney.com" class="tag" target="_blank">Midjourney</a>
+    <a href="https://www.dalle.com" class="tag" target="_blank">DALL-E</a>
+    <a href="https://ideogram.ai" class="tag" target="_blank">Ideogram</a>
+    <a href="https://github.com/comfyanonymous/ComfyUI" class="tag" target="_blank">ComfyUI</a>
+  </div>
+  <div class="link-tags">
+    <span class="tag-label">AI 音频 & 语音</span>
+    <a href="https://elevenlabs.io" class="tag" target="_blank">ElevenLabs</a>
+    <a href="https://github.com/suno-ai/bark" class="tag" target="_blank">Suno Bark</a>
+    <a href="https://github.com/coqui-ai/tts" class="tag" target="_blank">Coqui TTS</a>
+  </div>
+  <div class="link-tags">
+    <span class="tag-label">多模态模型</span>
+    <a href="https://github.com/haohaofe/URIE" class="tag" target="_blank">LLaVA</a>
+    <a href="https://github.com/deepseek-ai/DeepSeek-VL" class="tag" target="_blank">DeepSeek VL</a>
+    <a href="https://github.com/QwenLM/Qwen-VL" class="tag" target="_blank">Qwen VL</a>
+    <a href="https://github.com/THUDM/ChatGLM3" class="tag" target="_blank">ChatGLM3</a>
+    <a href="https://github.com/aria-ai/MiniGPT-4" class="tag" target="_blank">MiniGPT-4</a>
+  </div>
+</section>
+
+<!-- AI 产品 & 应用 -->
+<section class="section-block" id="AI产品">
+  <h2 class="section-title">AI 产品 & 应用</h2>
+  <div class="link-tags">
+    <span class="tag-label">AI 产品</span>
+    <a href="https://www.notion.so" class="tag" target="_blank">Notion AI</a>
+    <a href="https://www.figma.com" class="tag" target="_blank">Figma AI</a>
+    <a href="https://www.canva.com" class="tag" target="_blank">Canva AI</a>
+    <a href="https://jasper.ai" class="tag" target="_blank">Jasper</a>
+    <a href="https://www.monica.im" class="tag" target="_blank">Monica</a>
+    <a href="https://www.phind.com" class="tag" target="_blank">Phind</a>
+  </div>
+  <div class="link-tags">
+    <span class="tag-label">搜索 & 助手</span>
+    <a href="https://perplexity.ai" class="tag" target="_blank">Perplexity</a>
+    <a href="https://www.you.com" class="tag" target="_blank">You.com</a>
+    <a href="https://metaphor.systems" class="tag" target="_blank">Metaphor</a>
+    <a href="https://kimi.moonshot.cn" class="tag" target="_blank">Kimi</a>
+    <a href="https://yiyan.baidu.com" class="tag" target="_blank">文心一言</a>
+    <a href="https://tongyi.aliyun.com" class="tag" target="_blank">通义千问</a>
+    <a href="https://tiangong.cn" class="tag" target="_blank">天工 AI</a>
+  </div>
+  <div class="link-tags">
+    <span class="tag-label">开发者工具</span>
+    <a href="https://www.gitpod.io" class="tag" target="_blank">GitPod</a>
+    <a href="https://www.sourcegraph.com" class="tag" target="_blank">Sourcegraph</a>
+    <a href="https://www.mintlify.com" class="tag" target="_blank">Mintlify</a>
+    <a href="https://loops.so" class="tag" target="_blank">Loops</a>
+  </div>
+  <div class="link-tags">
+    <span class="tag-label">AI 导航</span>
+    <a href="https://theresanaiforthat.com" class="tag" target="_blank">There's An AI For That</a>
+    <a href="https://www.toolify.ai" class="tag" target="_blank">Toolify</a>
+    <a href="https://futuretools.io" class="tag" target="_blank">Future Tools</a>
+    <a href="https://www.producthunt.com" class="tag" target="_blank">Product Hunt</a>
+  </div>
+</section>
+
+<!-- AI 学习 & 课程 -->
+<section class="section-block" id="AI学习">
+  <h2 class="section-title">AI 学习 & 课程</h2>
+  <div class="link-tags">
+    <span class="tag-label intl">国际课程</span>
+    <a href="https://www.coursera.org" class="tag" target="_blank">Coursera</a>
+    <a href="https://www.udacity.com" class="tag" target="_blank">Udacity</a>
+    <a href="https://www.edx.org" class="tag" target="_blank">edX</a>
+    <a href="https://www.fast.ai" class="tag" target="_blank">Fast.ai</a>
+    <a href="https://www.deeplearning.ai" class="tag" target="_blank">DeepLearning.AI</a>
+    <a href="https://www.oreilly.com" class="tag" target="_blank">O'Reilly</a>
+    <a href="https://www.datacamp.com" class="tag" target="_blank">DataCamp</a>
+  </div>
+  <div class="link-tags">
+    <span class="tag-label">AI 课程</span>
+    <a href="https://learn.deeplearning.ai" class="tag" target="_blank">DeepLearning.AI Learn</a>
+    <a href="https://www.elementsofai.com" class="tag" target="_blank">Elements of AI</a>
+    <a href="https://www.mlc.ai" class="tag" target="_blank">MLC</a>
+    <a href="https://www.learnprompting.org" class="tag" target="_blank">Learn Prompting</a>
+  </div>
+  <div class="link-tags">
+    <span class="tag-label cn">国内课程</span>
+    <a href="https://time.geekbang.org" class="tag" target="_blank">极客时间</a>
+    <a href="https://www.imooc.com" class="tag" target="_blank">慕课网</a>
+    <a href="https://juejin.cn" class="tag" target="_blank">掘金</a>
+    <a href="https://developer.aliyun.com" class="tag" target="_blank">阿里云社区</a>
+    <a href="https://cloud.tencent.com/developer" class="tag" target="_blank">腾讯云社区</a>
+  </div>
+  <div class="link-tags">
+    <span class="tag-label">论文阅读</span>
+    <a href="https://arxiv.org" class="tag" target="_blank">arXiv</a>
+    <a href="https://papers.labml.ai" class="tag" target="_blank">LabML Papers</a>
+    <a href="https://huggingface.co/papers" class="tag" target="_blank">HF Papers</a>
+    <a href="https://www.paperweekly.site" class="tag" target="_blank">PaperWeekly</a>
+    <a href="https://www.google.com/scholar" class="tag" target="_blank">Google Scholar</a>
+  </div>
+</section>
+
+<!-- AI 基础设施 -->
+<section class="section-block" id="AI基础设施">
+  <h2 class="section-title">AI 基础设施</h2>
+  <div class="link-tags">
+    <span class="tag-label">GPU & 计算</span>
+    <a href="https://www.nvidia.com" class="tag" target="_blank">NVIDIA</a>
+    <a href="https://cloud.google.com/tpu" class="tag" target="_blank">Google TPU</a>
+    <a href="https://learn.microsoft.com/en-us/azure/ai" class="tag" target="_blank">Azure AI</a>
+    <a href="https://aws.amazon.com/sagemaker" class="tag" target="_blank">AWS Sagemaker</a>
+    <a href="https://www.lambdalabs.com" class="tag" target="_blank">Lambda Labs</a>
+    <a href="https://www.runpod.io" class="tag" target="_blank">RunPod</a>
+    <a href="https://www.cerebras.net" class="tag" target="_blank">Cerebras</a>
+  </div>
+  <div class="link-tags">
+    <span class="tag-label">向量数据库</span>
+    <a href="https://github.com/milvus-io/milvus" class="tag" target="_blank">Milvus</a>
+    <a href="https://github.com/qdrant/qdrant" class="tag" target="_blank">Qdrant</a>
+    <a href="https://github.com/chroma-core/chroma" class="tag" target="_blank">Chroma</a>
+    <a href="https://github.com/weaviate/weaviate" class="tag" target="_blank">Weaviate</a>
+    <a href="https://github.com/pinecone-io/pinecone" class="tag" target="_blank">Pinecone</a>
+    <a href="https://github.com/facebookresearch/faiss" class="tag" target="_blank">Faiss</a>
+  </div>
+  <div class="link-tags">
+    <span class="tag-label">数据处理</span>
+    <a href="https://github.com/apache/arrow" class="tag" target="_blank">Apache Arrow</a>
+    <a href="https://github.com/pandas-dev/pandas" class="tag" target="_blank">Pandas</a>
+    <a href="https://github.com/dask/dask" class="tag" target="_blank">Dask</a>
+    <a href="https://github.com/ray-project/ray" class="tag" target="_blank">Ray</a>
+  </div>
+  <div class="link-tags">
+    <span class="tag-label">MLOps</span>
+    <a href="https://github.com/mlflow/mlflow" class="tag" target="_blank">MLflow</a>
+    <a href="https://github.com/iterative/dvc" class="tag" target="_blank">DVC</a>
+    <a href="https://github.com/wandb/wandb" class="tag" target="_blank">Weights & Biases</a>
+  </div>
+</section>
+
+<!-- AI 研究 & 技术 -->
+<section class="section-block" id="AI研究">
+  <h2 class="section-title">AI 研究 & 技术</h2>
+  <div class="link-tags">
+    <span class="tag-label">AI 研究机构</span>
+    <a href="https://openai.com/research" class="tag" target="_blank">OpenAI Research</a>
+    <a href="https://www.anthropic.com/research" class="tag" target="_blank">Anthropic Research</a>
+    <a href="https://deepmind.google/research" class="tag" target="_blank">DeepMind Research</a>
+    <a href="https://ai.meta.com/research" class="tag" target="_blank">Meta AI Research</a>
+    <a href="https://x.ai/research" class="tag" target="_blank">xAI Research</a>
+    <a href="https://research.google" class="tag" target="_blank">Google Research</a>
+    <a href="https://ai.stanford.edu" class="tag" target="_blank">Stanford AI Lab</a>
+  </div>
+  <div class="link-tags">
+    <span class="tag-label">AI 学术会议</span>
+    <a href="https://nips.cc" class="tag" target="_blank">NeurIPS</a>
+    <a href="https://icml.cc" class="tag" target="_blank">ICML</a>
+    <a href="https://iclr.cc" class="tag" target="_blank">ICLR</a>
+    <a href="https://aaai.org" class="tag" target="_blank">AAAI</a>
+    <a href="https://acl-org.org" class="tag" target="_blank">ACL</a>
+    <a href="https://emnlp.info" class="tag" target="_blank">EMNLP</a>
+    <a href="https://cvpr2024.thecvf.com" class="tag" target="_blank">CVPR</a>
+    <a href="https://iccv.cc" class="tag" target="_blank">ICCV</a>
+  </div>
+  <div class="link-tags">
+    <span class="tag-label">AI 技术博客</span>
+    <a href="https://openai.com/blog" class="tag" target="_blank">OpenAI Blog</a>
+    <a href="https://deepmind.google/blog" class="tag" target="_blank">DeepMind Blog</a>
+    <a href="https://distill.pub" class="tag" target="_blank">Distill</a>
+    <a href="https://colah.github.io" class="tag" target="_blank">Colah's Blog</a>
+    <a href="https://ruder.io" class="tag" target="_blank">Sebastian Ruder</a>
+  </div>
+  <div class="link-tags">
+    <span class="tag-label">AI Newsletter</span>
+    <a href="https://lastweekin.ai" class="tag" target="_blank">Last Week in AI</a>
+    <a href="https://therundown.ai" class="tag" target="_blank">The Rundown AI</a>
+    <a href="https://thegradient.pub" class="tag" target="_blank">The Gradient</a>
+    <a href="https://importai.substack.com" class="tag" target="_blank">Import AI</a>
+    <a href="https://www.deeplearning.ai/the-batch" class="tag" target="_blank">DeepLearning.AI Batch</a>
+  </div>
+</section>
+
+<!-- 程序员工具箱 -->
+<section class="section-block" id="工具箱">
+  <h2 class="section-title">程序员工具箱</h2>
+  <div class="link-tags">
+    <span class="tag-label">代码工具</span>
+    <a href="https://github.com" class="tag" target="_blank">GitHub</a>
+    <a href="https://gitlab.com" class="tag" target="_blank">GitLab</a>
+    <a href="https://bitbucket.org" class="tag" target="_blank">Bitbucket</a>
+    <a href="https://sentry.io" class="tag" target="_blank">Sentry</a>
+    <a href="https://www.datadog.com" class="tag" target="_blank">Datadog</a>
+    <a href="https://newrelic.com" class="tag" target="_blank">New Relic</a>
+  </div>
+  <div class="link-tags">
+    <span class="tag-label">API 工具</span>
+    <a href="https://www.postman.com" class="tag" target="_blank">Postman</a>
+    <a href="https://insomnia.rest" class="tag" target="_blank">Insomnia</a>
+    <a href="https://hoppscotch.io" class="tag" target="_blank">Hoppscotch</a>
+    <a href="https://www.httpie.org" class="tag" target="_blank">HTTPie</a>
+    <a href="https://ngrok.com" class="tag" target="_blank">ngrok</a>
+    <a href="https://replit.com" class="tag" target="_blank">Replit</a>
+  </div>
+  <div class="link-tags">
+    <span class="tag-label">数据库工具</span>
+    <a href="https://dbeaver.io" class="tag" target="_blank">DBeaver</a>
+    <a href="https://tableplus.com" class="tag" target="_blank">TablePlus</a>
+    <a href="https://www.navicat.com" class="tag" target="_blank">Navicat</a>
+    <a href="https://www.beekeeperstudio.io" class="tag" target="_blank">Beekeeper</a>
+  </div>
+  <div class="link-tags">
+    <span class="tag-label">终端 & 开发</span>
+    <a href="https://iterm2.com" class="tag" target="_blank">iTerm2</a>
+    <a href="https://www.warp.dev" class="tag" target="_blank">Warp</a>
+    <a href="https://hyper.is" class="tag" target="_blank">Hyper</a>
+    <a href="https://ohmyz.sh" class="tag" target="_blank">Oh My Zsh</a>
+    <a href="https://fishshell.com" class="tag" target="_blank">Fish Shell</a>
+    <a href="https://tmux.github.io" class="tag" target="_blank">tmux</a>
+  </div>
+  <div class="link-tags">
+    <span class="tag-label">效率工具</span>
+    <a href="https://www.alfredapp.com" class="tag" target="_blank">Alfred</a>
+    <a href="https://raycast.com" class="tag" target="_blank">Raycast</a>
+    <a href="https://fig.io" class="tag" target="_blank">Fig</a>
+    <a href="https://1password.com" class="tag" target="_blank">1Password</a>
+    <a href="https://bitwarden.com" class="tag" target="_blank">Bitwarden</a>
+    <a href="https://notion.so" class="tag" target="_blank">Notion</a>
+    <a href="https://obsidian.md" class="tag" target="_blank">Obsidian</a>
+  </div>
+</section>
+
+<!-- 架构师资源 -->
+<section class="section-block" id="架构师">
+  <h2 class="section-title">架构师资源</h2>
+  <div class="link-tags">
+    <span class="tag-label">架构模式</span>
+    <a href="https://aws.amazon.com/architecture" class="tag" target="_blank">AWS Architecture</a>
+    <a href="https://learn.microsoft.com/en-us/azure/architecture" class="tag" target="_blank">Azure Architecture</a>
+    <a href="https://cloud.google.com/architecture" class="tag" target="_blank">GCP Architecture</a>
+    <a href="https://martinfowler.com" class="tag" target="_blank">Martin Fowler</a>
+    <a href="https://domainlanguage.com" class="tag" target="_blank">DDD</a>
+    <a href="https://12factor.net" class="tag" target="_blank">12 Factor</a>
+  </div>
+  <div class="link-tags">
+    <span class="tag-label">架构博客</span>
+    <a href="https://bravenewgeek.com" class="tag" target="_blank">Brave New Geek</a>
+    <a href="https://blog.cleancoder.com" class="tag" target="_blank">Clean Coder</a>
+    <a href="https://www.infoq.com" class="tag" target="_blank">InfoQ</a>
+    <a href="https://thenewstack.io" class="tag" target="_blank">The New Stack</a>
+    <a href="https://highscalability.com" class="tag" target="_blank">High Scalability</a>
+  </div>
+  <div class="link-tags">
+    <span class="tag-label">系统设计</span>
+    <a href="https://github.com/donnemartin/system-design-primer" class="tag" target="_blank">System Design Primer</a>
+    <a href="https://github.com/binhnguyennus/awesome-scalability" class="tag" target="_blank">Awesome Scalability</a>
+    <a href="https://design-patterns.readthedocs.io" class="tag" target="_blank">Design Patterns</a>
+    <a href="https://www.oodesign.com" class="tag" target="_blank">OO Design</a>
+  </div>
+  <div class="link-tags">
+    <span class="tag-label">云原生架构</span>
+    <a href="https://landscape.cncf.io" class="tag" target="_blank">CNCF Landscape</a>
+    <a href="https://microservices.io" class="tag" target="_blank">Microservices</a>
+    <a href="https://istio.io" class="tag" target="_blank">Istio</a>
+    <a href="https://linkerd.io" class="tag" target="_blank">Linkerd</a>
+    <a href="https://consul.io" class="tag" target="_blank">Consul</a>
+    <a href="https://www.envoyproxy.io" class="tag" target="_blank">Envoy</a>
+  </div>
+  <div class="link-tags">
+    <span class="tag-label">架构认证</span>
+    <a href="https://aws.amazon.com/certification" class="tag" target="_blank">AWS Certification</a>
+    <a href="https://cloud.google.com/certification" class="tag" target="_blank">GCP Certification</a>
+    <a href="https://learn.microsoft.com/en-us/certifications" class="tag" target="_blank">Azure Certification</a>
+    <a href="https://www.cncf.io/certification" class="tag" target="_blank">CNCF Certification</a>
+  </div>
+</section>
+
+<!-- 安全 & 运维 -->
+<section class="section-block" id="安全">
+  <h2 class="section-title">安全 & 运维</h2>
+  <div class="link-tags">
+    <span class="tag-label intl">国际</span>
+    <a href="https://owasp.org" class="tag" target="_blank">OWASP</a>
+    <a href="https://www.cve.org" class="tag" target="_blank">CVE</a>
+    <a href="https://nvd.nist.gov" class="tag" target="_blank">NIST NVD</a>
+    <a href="https://www.cloudflare.com" class="tag" target="_blank">Cloudflare</a>
+    <a href="https://www.sentinelone.com" class="tag" target="_blank">SentinelOne</a>
+    <a href="https://www.hashicorp.com" class="tag" target="_blank">HashiCorp</a>
+    <a href="https://www.vaultproject.io" class="tag" target="_blank">Vault</a>
+  </div>
+  <div class="link-tags">
+    <span class="tag-label cn">国内</span>
+    <a href="https://www.aliyundun.com" class="tag" target="_blank">阿里云安全</a>
+    <a href="https://cloud.tencent.com/security" class="tag" target="_blank">腾讯云安全</a>
+    <a href="https://www.freebuf.com" class="tag" target="_blank">Freebuf</a>
+    <a href="https://www.4hou.com" class="tag" target="_blank">嘶吼</a>
+    <a href="https://paper.seebug.org" class="tag" target="_blank">Seebug Paper</a>
+  </div>
+</section>
+
+<!-- SRE & 可观测性 -->
+<section class="section-block" id="SRE">
+  <h2 class="section-title">SRE & 可观测性</h2>
+  <div class="link-tags">
+    <span class="tag-label">可观测性</span>
+    <a href="https://www.elastic.co/observability" class="tag" target="_blank">Elastic Observability</a>
+    <a href="https://www.datadoghq.com" class="tag" target="_blank">Datadog</a>
+    <a href="https://www.honeycomb.io" class="tag" target="_blank">Honeycomb</a>
+    <a href="https://www.thousandeyes.com" class="tag" target="_blank">ThousandEyes</a>
+  </div>
+  <div class="link-tags">
+    <span class="tag-label">APM</span>
+    <a href="https://www.newrelic.com" class="tag" target="_blank">New Relic</a>
+    <a href="https://www.dynatrace.com" class="tag" target="_blank">Dynatrace</a>
+    <a href="https://www.appdynamics.com" class="tag" target="_blank">AppDynamics</a>
+    <a href="https://sematext.com" class="tag" target="_blank">Sematext</a>
+  </div>
+  <div class="link-tags">
+    <span class="tag-label">日志 & 追踪</span>
+    <a href="https://www.elastic.co/logging" class="tag" target="_blank">Elasticsearch</a>
+    <a href="https://www.splunk.com" class="tag" target="_blank">Splunk</a>
+    <a href="https://opentelemetry.io" class="tag" target="_blank">OpenTelemetry</a>
+    <a href="https://jaegertracing.io" class="tag" target="_blank">Jaeger</a>
+    <a href="https://zipkin.io" class="tag" target="_blank">Zipkin</a>
+  </div>
+  <div class="link-tags">
+    <span class="tag-label">SRE 工具</span>
+    <a href="https://statuspage.io" class="tag" target="_blank">Statuspage</a>
+    <a href="https://www.pagerduty.com" class="tag" target="_blank">PagerDuty</a>
+    <a href="https://grafana.com" class="tag" target="_blank">Grafana</a>
+    <a href="https://prometheus.io" class="tag" target="_blank">Prometheus</a>
+  </div>
+</section>
+
+<!-- 数据工程 & BI -->
+<section class="section-block" id="数据工程">
+  <h2 class="section-title">数据工程 & BI</h2>
+  <div class="link-tags">
+    <span class="tag-label">数据仓库</span>
+    <a href="https://snowflake.com" class="tag" target="_blank">Snowflake</a>
+    <a href="https://www.databricks.com" class="tag" target="_blank">Databricks</a>
+    <a href="https://cloud.google.com/bigquery" class="tag" target="_blank">BigQuery</a>
+    <a href="https://aws.amazon.com/redshift" class="tag" target="_blank">Redshift</a>
+    <a href="https://www.clickhouse.com" class="tag" target="_blank">ClickHouse</a>
+  </div>
+  <div class="link-tags">
+    <span class="tag-label">ETL & 数据处理</span>
+    <a href="https://airflow.apache.org" class="tag" target="_blank">Airflow</a>
+    <a href="https://www.dbt.com" class="tag" target="_blank">dbt</a>
+    <a href="https://www.fivetran.com" class="tag" target="_blank">Fivetran</a>
+    <a href="https://www.meltano.com" class="tag" target="_blank">Meltano</a>
+  </div>
+  <div class="link-tags">
+    <span class="tag-label">BI 可视化</span>
+    <a href="https://www.tableau.com" class="tag" target="_blank">Tableau</a>
+    <a href="https://www.powerbi.com" class="tag" target="_blank">Power BI</a>
+    <a href="https://www.metabase.com" class="tag" target="_blank">Metabase</a>
+    <a href="https://superset.apache.org" class="tag" target="_blank">Superset</a>
+    <a href="https://grafana.com" class="tag" target="_blank">Grafana</a>
+  </div>
+  <div class="link-tags">
+    <span class="tag-label">数据湖</span>
+    <a href="https://lakefs.io" class="tag" target="_blank">LakeFS</a>
+    <a href="https://delta.io" class="tag" target="_blank">Delta Lake</a>
+    <a href="https://iceberg.apache.org" class="tag" target="_blank">Apache Iceberg</a>
+    <a href="https://hudi.apache.org" class="tag" target="_blank">Apache Hudi</a>
+  </div>
+</section>
+
+<!-- IoT & 边缘计算 -->
+<section class="section-block" id="IoT">
+  <h2 class="section-title">IoT & 边缘计算</h2>
+  <div class="link-tags">
+    <span class="tag-label">IoT 平台</span>
+    <a href="https://aws.amazon.com/iot" class="tag" target="_blank">AWS IoT</a>
+    <a href="https://cloud.google.com/iot-core" class="tag" target="_blank">Google Cloud IoT</a>
+    <a href="https://azure.microsoft.com/en-us/services/iot-hub" class="tag" target="_blank">Azure IoT Hub</a>
+    <a href="https://iot.aliyun.com" class="tag" target="_blank">阿里云 IoT</a>
+  </div>
+  <div class="link-tags">
+    <span class="tag-label">边缘计算</span>
+    <a href="https://www.k3s.io" class="tag" target="_blank">K3s</a>
+    <a href="https://www.openyurt.io" class="tag" target="_blank">OpenYurt</a>
+    <a href="https://kubeedge.io" class="tag" target="_blank">KubeEdge</a>
+    <a href="https://www.linuxfoundation.org/edge" class="tag" target="_blank">LF Edge</a>
+  </div>
+  <div class="link-tags">
+    <span class="tag-label">硬件 & 嵌入式</span>
+    <a href="https://www.arduino.cc" class="tag" target="_blank">Arduino</a>
+    <a href="https://www.raspberrypi.org" class="tag" target="_blank">Raspberry Pi</a>
+    <a href="https://www.espressif.com" class="tag" target="_blank">ESP32</a>
+    <a href="https://platformio.org" class="tag" target="_blank">PlatformIO</a>
+  </div>
+</section>
+
+<!-- 低代码 & 无代码 -->
+<section class="section-block" id="低代码">
+  <h2 class="section-title">低代码 & 无代码</h2>
+  <div class="link-tags">
+    <span class="tag-label">低代码平台</span>
+    <a href="https://www.salesforce.com" class="tag" target="_blank">Salesforce</a>
+    <a href="https://www.microsoft.com/power-platform" class="tag" target="_blank">Microsoft Power</a>
+    <a href="https://www.service-now.com" class="tag" target="_blank">ServiceNow</a>
+    <a href="https://www.outsystems.com" class="tag" target="_blank">OutSystems</a>
+    <a href="https://www.mendix.com" class="tag" target="_blank">Mendix</a>
+  </div>
+  <div class="link-tags">
+    <span class="tag-label">无代码</span>
+    <a href="https://www.bubble.io" class="tag" target="_blank">Bubble</a>
+    <a href="https://www.webflow.com" class="tag" target="_blank">Webflow</a>
+    <a href="https://www.airtable.com" class="tag" target="_blank">Airtable</a>
+    <a href="https://www.zapier.com" class="tag" target="_blank">Zapier</a>
+  </div>
+  <div class="link-tags">
+    <span class="tag-label">RPA</span>
+    <a href="https://www.uipath.com" class="tag" target="_blank">UiPath</a>
+    <a href="https://www.automationanywhere.com" class="tag" target="_blank">Automation Anywhere</a>
+    <a href="https://powerautomate.microsoft.com" class="tag" target="_blank">Power Automate</a>
+  </div>
+</section>
+
+<!-- 区块链 & Web3 -->
+<section class="section-block" id="Web3">
+  <h2 class="section-title">区块链 & Web3</h2>
+  <div class="link-tags">
+    <span class="tag-label">公链 & 协议</span>
+    <a href="https://ethereum.org" class="tag" target="_blank">Ethereum</a>
+    <a href="https://www.bitcoin.org" class="tag" target="_blank">Bitcoin</a>
+    <a href="https://solana.com" class="tag" target="_blank">Solana</a>
+    <a href="https://polygon.technology" class="tag" target="_blank">Polygon</a>
+    <a href="https://www.avax.network" class="tag" target="_blank">Avalanche</a>
+    <a href="https://cosmos.network" class="tag" target="_blank">Cosmos</a>
+    <a href="https://polkadot.network" class="tag" target="_blank">Polkadot</a>
+  </div>
+  <div class="link-tags">
+    <span class="tag-label">DeFi & 金融</span>
+    <a href="https://uniswap.org" class="tag" target="_blank">Uniswap</a>
+    <a href="https://aave.com" class="tag" target="_blank">Aave</a>
+    <a href="https://compound.finance" class="tag" target="_blank">Compound</a>
+    <a href="https://curve.fi" class="tag" target="_blank">Curve</a>
+    <a href="https://MakerDAO.com" class="tag" target="_blank">MakerDAO</a>
+  </div>
+  <div class="link-tags">
+    <span class="tag-label">Web3 开发</span>
+    <a href="https://docs.ethereum.org" class="tag" target="_blank">Ethereum Docs</a>
+    <a href="https://web3js.readthedocs.io" class="tag" target="_blank">Web3.js</a>
+    <a href="https://docs.ethers.io" class="tag" target="_blank">Ethers.js</a>
+    <a href="https://hardhat.org" class="tag" target="_blank">Hardhat</a>
+    <a href="https://openzeppelin.com" class="tag" target="_blank">OpenZeppelin</a>
+  </div>
+</section>
+
+<!-- 开源 & 社区 -->
+<section class="section-block" id="开源社区">
+  <h2 class="section-title">开源 & 社区</h2>
+  <div class="link-tags">
+    <span class="tag-label">开源平台</span>
+    <a href="https://github.com" class="tag" target="_blank">GitHub</a>
+    <a href="https://gitlab.com" class="tag" target="_blank">GitLab</a>
+    <a href="https://gitee.com" class="tag" target="_blank">Gitee 码云</a>
+    <a href="https://sourceforge.net" class="tag" target="_blank">SourceForge</a>
+  </div>
+  <div class="link-tags">
+    <span class="tag-label intl">国际社区</span>
+    <a href="https://news.ycombinator.com" class="tag" target="_blank">Hacker News</a>
+    <a href="https://lobste.rs" class="tag" target="_blank">Lobsters</a>
+    <a href="https://reddit.com/r/programming" class="tag" target="_blank">r/programming</a>
+    <a href="https://dev.to" class="tag" target="_blank">DEV Community</a>
+    <a href="https://hashnode.com" class="tag" target="_blank">Hashnode</a>
+    <a href="https://medium.com" class="tag" target="_blank">Medium</a>
+  </div>
+  <div class="link-tags">
+    <span class="tag-label cn">国内社区</span>
+    <a href="https://www.zhihu.com" class="tag" target="_blank">知乎</a>
+    <a href="https://juejin.cn" class="tag" target="_blank">稀土掘金</a>
+    <a href="https://www.imooc.com" class="tag" target="_blank">慕课网</a>
+    <a href="https://kaiwu.lagou.com" class="tag" target="_blank">拉勾教育</a>
+    <a href="https://time.geekbang.org" class="tag" target="_blank">极客时间</a>
+  </div>
+</section>
+
+<!-- 技术播客 & 大会 -->
+<section class="section-block" id="播客">
+  <h2 class="section-title">技术播客 & 大会</h2>
+  <div class="link-tags">
+    <span class="tag-label">技术播客</span>
+    <a href="https://syntax.fm" class="tag" target="_blank">Syntax</a>
+    <a href="https://changelog.com/podcast" class="tag" target="_blank">Changelog</a>
+    <a href="https://softwareengineeringdaily.com" class="tag" target="_blank">Software Engineering Daily</a>
+    <a href="https://www.se-radio.net" class="tag" target="_blank">SE Radio</a>
+    <a href="https://talkpython.fm" class="tag" target="_blank">Talk Python</a>
+  </div>
+  <div class="link-tags">
+    <span class="tag-label">AI 播客</span>
+    <a href="https://twimlai.com" class="tag" target="_blank">TWIML AI</a>
+    <a href="https://lexfridman.com" class="tag" target="_blank">Lex Fridman</a>
+    <a href="https://www.youtube.com/@AndrewYNg" class="tag" target="_blank">Andrew Ng</a>
+  </div>
+  <div class="link-tags">
+    <span class="tag-label">技术大会</span>
+    <a href="https://qconplus.com" class="tag" target="_blank">QCon</a>
+    <a href="https://goto-con.com" class="tag" target="_blank">GOTO</a>
+    <a href="https://www.cncf.io/events" class="tag" target="_blank">CNCF Events</a>
+    <a href="https://kubecon.com" class="tag" target="_blank">KubeCon</a>
+  </div>
+  <div class="link-tags">
+    <span class="tag-label cn">国内大会</span>
+    <a href="https://archsummit.com" class="tag" target="_blank">ArchSummit</a>
+    <a href="https://qcon.com" class="tag" target="_blank">QCon 全球</a>
+    <a href="https://ATEC.com" class="tag" target="_blank">ATEC</a>
+  </div>
+</section>
+
+<!-- 开发者社区 & 博客 -->
+<section class="section-block" id="博客">
+  <h2 class="section-title">开发者社区 & 博客</h2>
+  <div class="link-tags">
+    <span class="tag-label">YouTube</span>
+    <a href="https://www.youtube.com/c/Fireship" class="tag" target="_blank">Fireship</a>
+    <a href="https://www.youtube.com/c/TechWorldwithNana" class="tag" target="_blank">TechWorld with Nana</a>
+    <a href="https://www.youtube.com/c/ByteByteGo" class="tag" target="_blank">ByteByteGo</a>
+    <a href="https://www.youtube.com/c/TheLinuxFoundation" class="tag" target="_blank">Linux Foundation</a>
+  </div>
+  <div class="link-tags">
+    <span class="tag-label">独立博客</span>
+    <a href="https://jvns.ca" class="tag" target="_blank">Julia Evans</a>
+    <a href="https://nedbatchelder.com" class="tag" target="_blank">Ned Batchelder</a>
+    <a href="https://www.joelonsoftware.com" class="tag" target="_blank">Joel Spolsky</a>
+    <a href="https://blog.cleancoder.com" class="tag" target="_blank">Robert Martin</a>
+    <a href="https://www.allthingsdistributed.com" class="tag" target="_blank">Werner Vogels</a>
+  </div>
+  <div class="link-tags">
+    <span class="tag-label">Reddit</span>
+    <a href="https://reddit.com/r/programming" class="tag" target="_blank">r/programming</a>
+    <a href="https://reddit.com/r/cscareerquestions" class="tag" target="_blank">r/cscareerquestions</a>
+    <a href="https://reddit.com/r/compsci" class="tag" target="_blank">r/compsci</a>
+    <a href="https://reddit.com/r/sysadmin" class="tag" target="_blank">r/sysadmin</a>
+    <a href="https://reddit.com/r/devops" class="tag" target="_blank">r/devops</a>
+  </div>
+</section>
+
+<!-- 招聘 & 远程工作 -->
+<section class="section-block" id="招聘">
+  <h2 class="section-title">招聘 & 远程工作</h2>
+  <div class="link-tags">
+    <span class="tag-label intl">国际招聘</span>
+    <a href="https://www.linkedin.com" class="tag" target="_blank">LinkedIn</a>
+    <a href="https://www.indeed.com" class="tag" target="_blank">Indeed</a>
+    <a href="https://www.glassdoor.com" class="tag" target="_blank">Glassdoor</a>
+    <a href="https://hired.com" class="tag" target="_blank">Hired</a>
+    <a href="https://triplebyte.com" class="tag" target="_blank">TripleByte</a>
+  </div>
+  <div class="link-tags">
+    <span class="tag-label">远程工作</span>
+    <a href="https://remoteok.com" class="tag" target="_blank">RemoteOK</a>
+    <a href="https://weworkremotely.com" class="tag" target="_blank">We Work Remotely</a>
+    <a href="https://flexjobs.com" class="tag" target="_blank">FlexJobs</a>
+    <a href="https://toptal.com" class="tag" target="_blank">Toptal</a>
+  </div>
+  <div class="link-tags">
+    <span class="tag-label cn">国内招聘</span>
+    <a href="https://www.zhipin.com" class="tag" target="_blank">Boss 直聘</a>
+    <a href="https://www.lagou.com" class="tag" target="_blank">拉勾网</a>
+    <a href="https://www.51job.com" class="tag" target="_blank">前程无忧</a>
+    <a href="https://www.100offer.com" class="tag" target="_blank">100offer</a>
+    <a href="https://www.nowcoder.com" class="tag" target="_blank">牛客网</a>
+  </div>
+</section>
+
+<!-- 科技媒体 & 投资 -->
+<section class="section-block" id="媒体">
+  <h2 class="section-title">科技媒体 & 投资</h2>
+  <div class="link-tags">
+    <span class="tag-label intl">国际媒体</span>
+    <a href="https://techcrunch.com" class="tag" target="_blank">TechCrunch</a>
+    <a href="https://www.theverge.com" class="tag" target="_blank">The Verge</a>
+    <a href="https://arstechnica.com" class="tag" target="_blank">Ars Technica</a>
+    <a href="https://www.wired.com" class="tag" target="_blank">Wired</a>
+    <a href="https://www.theinformation.com" class="tag" target="_blank">The Information</a>
+  </div>
+  <div class="link-tags">
+    <span class="tag-label cn">国内媒体</span>
+    <a href="https://36kr.com" class="tag" target="_blank">36氪</a>
+    <a href="https://www.pingwest.com" class="tag" target="_blank">品玩</a>
+    <a href="https://www.ifanr.com" class="tag" target="_blank">爱范儿</a>
+    <a href="https://www.leiphone.com" class="tag" target="_blank">雷锋网</a>
+    <a href="https://www.leiji.com" class="tag" target="_blank">极客公园</a>
+  </div>
+  <div class="link-tags">
+    <span class="tag-label">科技投资</span>
+    <a href="https://www.ycombinator.com" class="tag" target="_blank">Y Combinator</a>
+    <a href="https://a16z.com" class="tag" target="_blank">a16z</a>
+    <a href="https://sequoiacap.com" class="tag" target="_blank">Sequoia</a>
+    <a href="https://www.indexventures.com" class="tag" target="_blank">Index Ventures</a>
+  </div>
+  <div class="link-tags">
+    <span class="tag-label">GitHub 生态</span>
+    <a href="https://stars.github.com" class="tag" target="_blank">GitHub Stars</a>
+    <a href="https://education.github.com" class="tag" target="_blank">GitHub Education</a>
+    <a href="https://accelerator.github.com" class="tag" target="_blank">GitHub Accelerator</a>
+    <a href="https://sponsor.github.com" class="tag" target="_blank">GitHub Sponsors</a>
+  </div>
+</section>
+
+<!-- 开源基金会 & 协议 -->
+<section class="section-block" id="基金会">
+  <h2 class="section-title">开源基金会 & 协议</h2>
+  <div class="link-tags">
+    <span class="tag-label">开源基金会</span>
+    <a href="https://www.linuxfoundation.org" class="tag" target="_blank">Linux Foundation</a>
+    <a href="https://www.cncf.io" class="tag" target="_blank">CNCF</a>
+    <a href="https://apache.org" class="tag" target="_blank">Apache Software</a>
+    <a href="https://www.python.org/psf" class="tag" target="_blank">Python Foundation</a>
+    <a href="https://foundation.elastic.co" class="tag" target="_blank">Elastic</a>
+    <a href="https://www.mozilla.org" class="tag" target="_blank">Mozilla Foundation</a>
+  </div>
+  <div class="link-tags">
+    <span class="tag-label">开源协议</span>
+    <a href="https://choosealicense.com" class="tag" target="_blank">Choose a License</a>
+    <a href="https://opensource.org" class="tag" target="_blank">OSI</a>
+    <a href="https://www.gnu.org/licenses" class="tag" target="_blank">GNU GPL</a>
+    <a href="https://mit-license.org" class="tag" target="_blank">MIT License</a>
+    <a href="https://www.apache.org/licenses" target="_blank">Apache License</a>
+  </div>
+</section>
+
+<!-- 隐私计算 & 安全 -->
+<section class="section-block" id="隐私计算">
+  <h2 class="section-title">隐私计算 & 安全</h2>
+  <div class="link-tags">
+    <span class="tag-label">隐私计算</span>
+    <a href="https://www.federatedcomputing.org" class="tag" target="_blank">联邦学习</a>
+    <a href="https://www.openenclave.io" class="tag" target="_blank">SGX / TEE</a>
+    <a href="https://www.sealos.io" class="tag" target="_blank">可信执行环境</a>
+  </div>
+  <div class="link-tags">
+    <span class="tag-label">零知识证明</span>
+    <a href="https://z.cash" class="tag" target="_blank">Zcash</a>
+    <a href="https://www.starknet.io" class="tag" target="_blank">StarkNet</a>
+    <a href="https://www.zksync.io" class="tag" target="_blank">zkSync</a>
+    <a href="https://aztec.network" class="tag" target="_blank">Aztec</a>
+  </div>
+</section>
+</div>
+
+<style>
+  :root {
+    --nav-bg: #1a2332;
+    --nav-bg-hover: #2d3a4f;
+    --nav-border: #3d4f6a;
+    --nav-text: #e8edf4;
+    --nav-text-dim: #8b9ab5;
+    --accent: #3b82f6;
+    --accent-hover: #2563eb;
+    --accent-light: #dbeafe;
+    --accent-intl: #6366f1;
+    --accent-cn: #f59e0b;
+    --tag-bg: #f8fafc;
+    --tag-border: #e2e8f0;
+    --tag-hover-border: #3b82f6;
+    --tag-hover-color: #2563eb;
+  }
+
+  .top-nav {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    z-index: 1000;
+    background: var(--nav-bg);
+    border-bottom: 1px solid var(--nav-border);
+    box-shadow: 0 4px 20px rgba(0,0,0,0.25);
+  }
+
+  .nav-inner {
+    display: flex;
+    align-items: center;
+    gap: 20px;
+    padding: 12px 24px;
+    max-width: 1400px;
+    margin: 0 auto;
+  }
+
+  .nav-title {
+    font-size: 1.1rem;
+    font-weight: 600;
+    color: var(--nav-text);
+    margin: 0;
+    white-space: nowrap;
+  }
+
+  .search-box {
+    flex: 1;
+    max-width: 280px;
+  }
+  .search-box input {
+    width: 100%;
+    padding: 8px 14px;
+    border: 1px solid var(--nav-border);
+    border-radius: 6px;
+    background: #0f1722;
+    color: var(--nav-text);
+    font-size: 0.85rem;
+  }
+  .search-box input:focus {
+    outline: none;
+    border-color: var(--accent);
+    background: #1a2332;
+  }
+  .search-box input::placeholder {
+    color: var(--nav-text-dim);
+  }
+
+  .back-to-top {
+    width: 36px;
+    height: 36px;
+    border: 1px solid var(--nav-border);
+    border-radius: 6px;
+    background: #0f1722;
+    color: var(--nav-text-dim);
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.2s;
+    flex-shrink: 0;
+  }
+  .back-to-top:hover {
+    border-color: var(--accent);
+    color: var(--accent);
+    background: var(--nav-bg);
+  }
+  .back-to-top svg {
+    width: 18px;
+    height: 18px;
+  }
+
+  .section-nav {
+    display: flex;
+    gap: 4px;
+    padding: 0 24px 10px;
+    max-width: 1400px;
+    margin: 0 auto;
+    overflow-x: auto;
+    scrollbar-width: thin;
+    scrollbar-color: var(--nav-border) transparent;
+  }
+  .section-nav::-webkit-scrollbar {
+    height: 4px;
+  }
+  .section-nav::-webkit-scrollbar-track {
+    background: transparent;
+  }
+  .section-nav::-webkit-scrollbar-thumb {
+    background: var(--nav-border);
+    border-radius: 2px;
+  }
+
+  .section-nav a {
+    font-size: 0.72rem;
+    color: var(--nav-text-dim);
+    text-decoration: none;
+    padding: 5px 10px;
+    border-radius: 4px;
+    white-space: nowrap;
+    transition: all 0.2s;
+  }
+  .section-nav a:hover {
+    background: var(--accent);
+    color: #fff;
+  }
+  .section-nav a.active {
+    background: var(--accent);
+    color: #fff;
+  }
+
+  .main-content {
+    max-width: 1400px;
+    margin: 0 auto;
+    padding: 130px 24px 40px;
+  }
+
+  .section-block {
+    margin-bottom: 28px;
+    padding-bottom: 24px;
+    border-bottom: 1px solid #e2e8f0;
+  }
+  .section-block:last-child {
+    border-bottom: none;
+  }
+
+  .section-title {
+    font-size: 1rem;
+    font-weight: 600;
+    color: #1e293b;
+    margin-bottom: 14px;
+    padding-bottom: 8px;
+    border-bottom: 2px solid #3b82f6;
+    display: inline-block;
+  }
+
+  .link-cards {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+    gap: 12px;
+  }
+  .link-card {
+    display: flex;
+    align-items: flex-start;
+    gap: 12px;
+    padding: 16px;
+    background: #f8fafc;
+    border: 1px solid #e2e8f0;
+    border-radius: 8px;
+    text-decoration: none;
+    transition: all 0.2s;
+  }
+  .link-card:hover {
+    border-color: var(--accent);
+    box-shadow: 0 2px 12px rgba(59,130,246,0.12);
+    transform: translateY(-2px);
+  }
+  .link-card.feature {
+    border-left: 4px solid var(--accent);
+    background: linear-gradient(135deg, #eff6ff 0%, #f8fafc 100%);
+  }
+  .link-card .card-icon {
+    font-size: 1.4rem;
+    flex-shrink: 0;
+  }
+  .link-card .card-name {
+    font-size: 0.95rem;
+    font-weight: 600;
+    color: #1e293b;
+    display: block;
+  }
+  .link-card:hover .card-name {
+    color: var(--accent);
+  }
+  .link-card .card-desc {
+    font-size: 0.8rem;
+    color: #64748b;
+    margin-top: 4px;
+    display: block;
+  }
+
+  .link-tags {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 8px;
+    margin-bottom: 10px;
+  }
+  .link-tags:last-child {
+    margin-bottom: 0;
+  }
+  .tag-label {
+    font-size: 0.68rem;
+    font-weight: 600;
+    color: #fff;
+    background: #64748b;
+    padding: 3px 8px;
+    border-radius: 4px;
+    flex-shrink: 0;
+    letter-spacing: 0.02em;
+  }
+  .tag-label.intl {
+    background: var(--accent-intl);
+  }
+  .tag-label.cn {
+    background: var(--accent-cn);
+  }
+  .tag {
+    font-size: 0.8rem;
+    color: #334155;
+    text-decoration: none;
+    padding: 5px 10px;
+    background: var(--tag-bg);
+    border: 1px solid var(--tag-border);
+    border-radius: 4px;
+    transition: all 0.2s;
+    white-space: nowrap;
+  }
+  .tag:hover {
+    border-color: var(--tag-hover-border);
+    color: var(--tag-hover-color);
+    box-shadow: 0 1px 4px rgba(59,130,246,0.1);
+  }
+  .tag[target="_blank"]::after {
+    content: '';
+    display: inline-block;
+    width: 10px;
+    height: 10px;
+    margin-left: 4px;
+    background: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%2394a3b8' stroke-width='2'%3E%3Cpath d='M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6'/%3E%3Cpolyline points='15 3 21 3 21 9'/%3E%3Cline x1='10' y1='14' x2='21' y2='3'/%3E%3C/svg%3E") no-repeat center;
+    background-size: contain;
+    opacity: 0.6;
+  }
+  .tag[target="_blank"]:hover::after {
+    opacity: 1;
+  }
+
+  @media (max-width: 768px) {
+    .nav-inner {
+      padding: 10px 16px;
+      gap: 12px;
+    }
+    .nav-title {
+      font-size: 0.95rem;
+    }
+    .search-box {
+      max-width: 180px;
+    }
+    .main-content {
+      padding: 120px 16px 32px;
+    }
+    .section-nav {
+      padding: 0 16px 10px;
+    }
+    .section-nav a {
+      font-size: 0.68rem;
+      padding: 4px 8px;
+    }
+  }
+
+  @media (max-width: 480px) {
+    .nav-title { display: none; }
+    .search-box { max-width: 100px; }
+    .main-content { padding-top: 110px; }
+  }
+</style>
+
+<script>
+  function filterLinks() {
+    const input = document.getElementById('searchInput');
+    const filter = input.value.toLowerCase();
+    const sections = document.querySelectorAll('.section-block');
+    const navLinks = document.querySelectorAll('.section-nav a');
+
+    sections.forEach((section) => {
+      const text = section.textContent.toLowerCase();
+      section.style.display = text.includes(filter) ? '' : 'none';
+    });
+
+    navLinks.forEach((link) => {
+      const sectionId = link.getAttribute('href').substring(1);
+      const section = document.getElementById(sectionId);
+      if (section) {
+        link.style.display = section.style.display === 'none' ? 'none' : '';
+      }
+    });
+  }
+
+  function scrollToTop() {
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  }
+
+  function updateBackToTop() {
+    const btn = document.getElementById('backToTop');
+    if (window.scrollY > 400) {
+      btn.style.opacity = '1';
+      btn.style.pointerEvents = 'auto';
+    } else {
+      btn.style.opacity = '0.3';
+      btn.style.pointerEvents = 'none';
+    }
+  }
+
+  document.addEventListener('DOMContentLoaded', function() {
+    const nav = document.getElementById('sectionNav');
+    const titles = [
+      { name: '技术写作', id: '技术写作' },
+      { name: '云原生', id: '云原生' },
+      { name: '数据', id: '数据' },
+      { name: '架构', id: '架构' },
+      { name: '编程语言', id: '编程语言' },
+      { name: 'AI', id: 'AI' },
+      { name: 'AI社区', id: 'AI社区' },
+      { name: 'AI开源', id: 'AI开源' },
+      { name: 'Agentic', id: 'Agentic' },
+      { name: 'Vibe Coding', id: 'VibeCoding' },
+      { name: 'Agent Harness', id: 'AgentHarness' },
+      { name: 'LLM', id: 'LLM' },
+      { name: 'Prompt', id: 'Prompt' },
+      { name: '多模态', id: '多模态' },
+      { name: 'AI产品', id: 'AI产品' },
+      { name: 'AI学习', id: 'AI学习' },
+      { name: 'AI基础设施', id: 'AI基础设施' },
+      { name: 'AI研究', id: 'AI研究' },
+      { name: '工具箱', id: '工具箱' },
+      { name: '架构师', id: '架构师' },
+      { name: '安全', id: '安全' },
+      { name: 'SRE', id: 'SRE' },
+      { name: '数据工程', id: '数据工程' },
+      { name: 'IoT', id: 'IoT' },
+      { name: '低代码', id: '低代码' },
+      { name: 'Web3', id: 'Web3' },
+      { name: '开源社区', id: '开源社区' },
+      { name: '播客', id: '播客' },
+      { name: '博客', id: '博客' },
+      { name: '招聘', id: '招聘' },
+      { name: '媒体', id: '媒体' },
+      { name: '基金会', id: '基金会' },
+      { name: '隐私计算', id: '隐私计算' }
+    ];
+
+    titles.forEach((t) => {
+      const a = document.createElement('a');
+      a.href = '#' + t.id;
+      a.textContent = t.name;
+      nav.appendChild(a);
+    });
+
+    updateBackToTop();
+    window.addEventListener('scroll', updateBackToTop);
+  });
+</script>

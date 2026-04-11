@@ -1,404 +1,629 @@
 ---
 layout: default
-title: 法喜个人主页
+title: 法喜 | 高产开源黑客的个人品牌总入口
+description: 聚合 Cloud Native、AI Tooling、知识库、内容矩阵与合作路径的个人品牌首页，面向开发者、合作方、客户与国际受众。
 ---
 
-<!-- 个人工作室 -->
-<section class="section-block">
-  <h2 class="section-title">个人工作室</h2>
-  <div class="studio-grid">
-    <a href="https://github.com/kudig-io" target="_blank" class="studio-card">
-      <div class="studio-icon">☸️</div>
-      <div class="studio-name">Kudig IO</div>
-      <div class="studio-desc">K8s & 云原生工具</div>
-    </a>
-    <a href="https://github.com/standup-coder" target="_blank" class="studio-card">
-      <div class="studio-icon">💻</div>
-      <div class="studio-name">Standup Coder</div>
-      <div class="studio-desc">开发者工具与平台</div>
-    </a>
-    <a href="https://github.com/ai-guru-global" target="_blank" class="studio-card">
-      <div class="studio-icon">🧠</div>
-      <div class="studio-name">AI Guru Global</div>
-      <div class="studio-desc">AI 教育与工具</div>
-    </a>
-    <a href="https://github.com/peace-lab-global" target="_blank" class="studio-card">
-      <div class="studio-icon">🪷</div>
-      <div class="studio-name">Peace Lab Global</div>
-      <div class="studio-desc">身心健康与冥想</div>
-    </a>
-    <a href="https://github.com/panna-arts" target="_blank" class="studio-card">
-      <div class="studio-icon">🎨</div>
-      <div class="studio-name">Panna Arts</div>
-      <div class="studio-desc">AI 艺术与游戏</div>
-    </a>
-    <a href="https://github.com/opendemo-work" target="_blank" class="studio-card">
-      <div class="studio-icon">📚</div>
-      <div class="studio-name">OpenDemo Work</div>
-      <div class="studio-desc">技术教育平台</div>
-    </a>
-    <a href="https://github.com/better-call-saull" target="_blank" class="studio-card">
-      <div class="studio-icon">⚖️</div>
-      <div class="studio-name">Better Call Saull</div>
-      <div class="studio-desc">法律与法医学</div>
-    </a>
-    <a href="https://github.com/lonely-reader-global" target="_blank" class="studio-card">
-      <div class="studio-icon">📖</div>
-      <div class="studio-name">Lonely Reader Global</div>
-      <div class="studio-desc">文学创作</div>
-    </a>
-    <a href="https://github.com/zenx-studio" target="_blank" class="studio-card">
-      <div class="studio-icon">🌿</div>
-      <div class="studio-name">Zenx Studio</div>
-      <div class="studio-desc">前端与 Web 开发</div>
-    </a>
-    <a href="https://github.com/sit-music" target="_blank" class="studio-card">
-      <div class="studio-icon">🎵</div>
-      <div class="studio-name">Sit Music</div>
-      <div class="studio-desc">音乐相关项目</div>
-    </a>
-    <a href="https://github.com/hack-core-global" target="_blank" class="studio-card">
-      <div class="studio-icon">⚡</div>
-      <div class="studio-name">Hack Core</div>
-      <div class="studio-desc">黑客松与技术挑战</div>
-    </a>
-  </div>
-</section>
+<div class="brand-home">
+  <section class="brand-hero">
+    <div class="hero-glow hero-glow-left"></div>
+    <div class="hero-glow hero-glow-right"></div>
+    <span class="hero-badge">PERSONAL BRAND HUB</span>
+    <p class="hero-kicker">高产开源黑客 · Open Source Builder</p>
+    <h1 class="hero-title">把云原生、AI 工具与知识库，做成可复用的技术生产线。</h1>
+    <p class="hero-summary">
+      我是法喜，长期在 <strong>Cloud Native、AI Tooling、Knowledge Architecture</strong> 的交叉地带持续输出。
+      这个站点不只是博客，而是我的 <strong>个人品牌总入口</strong>：代表项目、知识资产、内容矩阵、合作路径，都从这里开始。
+    </p>
+    <div class="hero-actions">
+      <a href="#featured" class="primary-btn">看代表项目</a>
+      <a href="{{ '/projects/' | relative_url }}" class="secondary-btn">完整项目导航</a>
+      <a href="{{ '/about/' | relative_url }}" class="secondary-btn">了解我</a>
+      <a href="{{ '/topic/links/' | relative_url }}" class="secondary-btn">内容矩阵</a>
+      <a href="https://github.com/allengaller" target="_blank" rel="noopener" class="ghost-btn">GitHub</a>
+    </div>
+    <div class="hero-stats">
+      <div class="stat-card">
+        <span class="stat-num">4500+</span>
+        <span class="stat-label">文档与知识资产</span>
+      </div>
+      <div class="stat-card">
+        <span class="stat-num">10+</span>
+        <span class="stat-label">开源工具与应用</span>
+      </div>
+      <div class="stat-card">
+        <span class="stat-num">5+</span>
+        <span class="stat-label">年云原生实践</span>
+      </div>
+      <div class="stat-card">
+        <span class="stat-num">Multi</span>
+        <span class="stat-label">开源组织与内容品牌</span>
+      </div>
+    </div>
+  </section>
 
-<!-- 语料库 -->
-<section class="section-block">
-  <h2 class="section-title">语料库</h2>
-  <div class="project-grid compact">
-    <a href="https://github.com/kudig-io/kudig-database" target="_blank" class="project-card small-card">
-      <div class="project-icon-small">☸️</div>
-      <div class="project-info">
-        <h4 class="project-name-small">Kudig Database</h4>
-        <p class="project-desc-small">K8s + AI 全域知识库，950+ 文档</p>
-      </div>
-    </a>
-    <a href="https://github.com/ai-guru-global/ai-guru-database" target="_blank" class="project-card small-card">
-      <div class="project-icon-small">🧠</div>
-      <div class="project-info">
-        <h4 class="project-name-small">AI Guru Database</h4>
-        <p class="project-desc-small">AI 学习资源库，290+ 文档</p>
-      </div>
-    </a>
-    <a href="https://github.com/peace-lab-global/peace-lab-database" target="_blank" class="project-card small-card">
-      <div class="project-icon-small">🪷</div>
-      <div class="project-info">
-        <h4 class="project-name-small">Peace Lab Database</h4>
-        <p class="project-desc-small">身心疗愈知识体系，1852+ 文档</p>
-      </div>
-    </a>
-    <a href="https://github.com/better-call-saull/better-call-saull-database" target="_blank" class="project-card small-card">
-      <div class="project-icon-small">⚖️</div>
-      <div class="project-info">
-        <h4 class="project-name-small">Better Call Saull DB</h4>
-        <p class="project-desc-small">法律与法医学知识库，400+ 文档</p>
-      </div>
-    </a>
-    <a href="https://github.com/standup-coder/standup-coder-database" target="_blank" class="project-card small-card">
-      <div class="project-icon-small">💼</div>
-      <div class="project-info">
-        <h4 class="project-name-small">Standup Coder DB</h4>
-        <p class="project-desc-small">企业与岗位信息数据库，16 城市 13 行业</p>
-      </div>
-    </a>
-    <a href="https://github.com/hack-core-global/hack-core-database" target="_blank" class="project-card small-card">
-      <div class="project-icon-small">⚡</div>
-      <div class="project-info">
-        <h4 class="project-name-small">Hack Core Database</h4>
-        <p class="project-desc-small">黑客松与技术挑战知识库</p>
-      </div>
-    </a>
-  </div>
-</section>
+  <section class="section-block audience-section">
+    <div class="section-heading">
+      <span class="section-tag">Audience Paths</span>
+      <h2 class="section-title">不同受众，从不同入口认识我</h2>
+      <p class="section-desc">把“我是谁”与“你为什么该点进来”同时说清楚，才是个人品牌首页该有的第一层分流。</p>
+    </div>
+    <div class="audience-grid">
+      <a href="#featured" class="audience-card">
+        <span class="audience-icon">💻</span>
+        <h3>开发者 / 技术粉丝</h3>
+        <p>先看我做过哪些工具、如何把知识和工程能力产品化。</p>
+        <span class="audience-link">进入精选项目 →</span>
+      </a>
+      <a href="{{ '/projects/' | relative_url }}" class="audience-card">
+        <span class="audience-icon">🗂️</span>
+        <h3>想看全部项目的人</h3>
+        <p>直接进入完整项目导航，查看所有保留但不在首页铺开的组织、语料库、应用与工具。</p>
+        <span class="audience-link">打开完整目录 →</span>
+      </a>
+      <a href="#collab" class="audience-card">
+        <span class="audience-icon">🤝</span>
+        <h3>招聘方 / 合作方</h3>
+        <p>快速判断我的强项、代表战绩、适合怎样的合作方式。</p>
+        <span class="audience-link">查看合作方式 →</span>
+      </a>
+      <a href="#collab" class="audience-card">
+        <span class="audience-icon">🏢</span>
+        <h3>企业客户 / 顾问需求</h3>
+        <p>聚焦 AI 工具化、知识系统搭建、技术内容与开源顾问。</p>
+        <span class="audience-link">查看服务方向 →</span>
+      </a>
+      <a href="{{ '/topic/links/' | relative_url }}" class="audience-card">
+        <span class="audience-icon">📰</span>
+        <h3>自媒体读者 / 内容用户</h3>
+        <p>内容矩阵、外部链接、知识专题和长期输出从这里汇聚。</p>
+        <span class="audience-link">打开内容矩阵 →</span>
+      </a>
+      <a href="{{ '/about/' | relative_url }}#global" class="audience-card">
+        <span class="audience-icon">🌍</span>
+        <h3>国际受众 / Global Builders</h3>
+        <p>用更清晰的英文定位，理解我在全球技术语境里的位置。</p>
+        <span class="audience-link">查看国际表达 →</span>
+      </a>
+    </div>
+  </section>
 
-<!-- APP -->
-<section class="section-block">
-  <h2 class="section-title">APP</h2>
-  <div class="project-grid">
-    <a href="https://github.com/ai-guru-global/resolve-agent" target="_blank" class="project-card">
-      <div class="project-icon">🔧</div>
-      <h3 class="project-name">ResolveAgent</h3>
-      <p class="project-desc">AIOps 智能体平台，支持 FTA 故障树分析、RAG 知识检索</p>
-    </a>
-    <a href="https://github.com/kudig-io/etcd-guardian" target="_blank" class="project-card">
-      <div class="project-icon">⚡</div>
-      <h3 class="project-name">EtcdGuardian</h3>
-      <p class="project-desc">Kubernetes Operator，etcd 备份与恢复</p>
-    </a>
-    <a href="https://github.com/kudig-io/klaw" target="_blank" class="project-card">
-      <div class="project-icon">🌊</div>
-      <h3 class="project-name">Klaw</h3>
-      <p class="project-desc">K8s 运维工具，Web UI 和 ChatOps 能力</p>
-    </a>
-    <a href="https://github.com/kudig-io/kudig" target="_blank" class="project-card">
-      <div class="project-icon">🔍</div>
-      <h3 class="project-name">Kudig</h3>
-      <p class="project-desc">K8s 节点诊断工具，70+ 分析器、eBPF 深度诊断</p>
-    </a>
-    <a href="https://github.com/kudig-io/kugame" target="_blank" class="project-card">
-      <div class="project-icon">🎮</div>
-      <h3 class="project-name">KuGame</h3>
-      <p class="project-desc">游戏化 K8s 学习工具，武侠故事方式学习</p>
-    </a>
-    <a href="https://github.com/standup-coder/leetcast" target="_blank" class="project-card">
-      <div class="project-icon">🎧</div>
-      <h3 class="project-name">LeetCast</h3>
-      <p class="project-desc">每日一题播客平台，AI 生成对话式讲解</p>
-    </a>
-    <a href="https://github.com/panna-arts/lonely-world" target="_blank" class="project-card">
-      <div class="project-icon">🌍</div>
-      <h3 class="project-name">Lonely World</h3>
-      <p class="project-desc">中文 AI 文字冒险游戏，多 LLM 支持</p>
-    </a>
-    <a href="https://github.com/peace-lab-global/mocici-miniapp" target="_blank" class="project-card">
-      <div class="project-icon">🧘</div>
-      <h3 class="project-name">Mocici Miniapp</h3>
-      <p class="project-desc">「静心屿」冥想小程序，Vue3 + NestJS 全栈</p>
-    </a>
-  </div>
-</section>
+  <section class="section-block featured-section" id="featured">
+    <div class="section-heading">
+      <span class="section-tag">Featured Work</span>
+      <h2 class="section-title">先看最能代表我的 6 个项目</h2>
+      <p class="section-desc">首页不再堆满所有仓库，而是先用少数代表作建立认知，再把流量导向完整项目矩阵。</p>
+    </div>
+    <div class="featured-grid">
+      <a href="https://github.com/ai-guru-global/resolve-agent" target="_blank" rel="noopener" class="featured-card">
+        <span class="project-type">AIOPS · AGENT</span>
+        <h3>ResolveAgent</h3>
+        <p>把故障树分析、RAG 知识检索与智能体交互结合到 AIOps 场景里。</p>
+        <div class="project-meta">
+          <span>故障分析</span>
+          <span>知识检索</span>
+          <span>AI 工具化</span>
+        </div>
+      </a>
+      <a href="https://github.com/kudig-io/kudig" target="_blank" rel="noopener" class="featured-card">
+        <span class="project-type">CLOUD NATIVE</span>
+        <h3>Kudig</h3>
+        <p>K8s 节点诊断工具，覆盖 70+ 分析器与更深层的 eBPF 诊断能力。</p>
+        <div class="project-meta">
+          <span>Kubernetes</span>
+          <span>eBPF</span>
+          <span>诊断自动化</span>
+        </div>
+      </a>
+      <a href="https://github.com/kudig-io/etcd-guardian" target="_blank" rel="noopener" class="featured-card">
+        <span class="project-type">OPERATOR</span>
+        <h3>EtcdGuardian</h3>
+        <p>专注 etcd 备份与恢复的 Kubernetes Operator，服务生产级基础设施场景。</p>
+        <div class="project-meta">
+          <span>Operator</span>
+          <span>备份恢复</span>
+          <span>SRE</span>
+        </div>
+      </a>
+      <a href="https://github.com/standup-coder/leetcast" target="_blank" rel="noopener" class="featured-card">
+        <span class="project-type">EDU · MEDIA</span>
+        <h3>LeetCast</h3>
+        <p>把“每日一题”做成 AI 对话式播客，展示技术内容产品化与媒体化能力。</p>
+        <div class="project-meta">
+          <span>AI 内容生成</span>
+          <span>产品化</span>
+          <span>自媒体</span>
+        </div>
+      </a>
+      <a href="https://github.com/standup-coder/mcp4coder" target="_blank" rel="noopener" class="featured-card">
+        <span class="project-type">DEV TOOLING</span>
+        <h3>mcp4coder</h3>
+        <p>聚合 MCP 工具生态，把 AI Agent 真正可调用的工具链做成开发者可消费的资产。</p>
+        <div class="project-meta">
+          <span>MCP</span>
+          <span>Agent</span>
+          <span>开发者生态</span>
+        </div>
+      </a>
+      <a href="https://github.com/opendemo-work/opendemo" target="_blank" rel="noopener" class="featured-card">
+        <span class="project-type">SHOWCASE</span>
+        <h3>OpenDemo</h3>
+        <p>技术演示平台，沉淀 518+ 案例，把知识输出升级为可浏览、可复用、可展示的 demo 资产。</p>
+        <div class="project-meta">
+          <span>案例库</span>
+          <span>技术演示</span>
+          <span>知识资产化</span>
+        </div>
+      </a>
+    </div>
+    <div class="featured-actions">
+      <a href="{{ '/projects/' | relative_url }}" class="secondary-btn">查看完整项目列表</a>
+      <a href="{{ '/projects/' | relative_url }}#tools" class="ghost-btn">直达工具目录</a>
+    </div>
+  </section>
 
-<!-- 网站 -->
-<section class="section-block">
-  <h2 class="section-title">网站</h2>
-  <div class="project-grid compact">
-    <a href="https://github.com/panna-arts/panna-arts" target="_blank" class="project-card small-card">
-      <div class="project-icon-small">🎨</div>
-      <div class="project-info">
-        <h4 class="project-name-small">Panna Arts</h4>
-        <p class="project-desc-small">Next.js 现代 Web 应用</p>
-      </div>
-    </a>
-    <a href="https://github.com/zenx-studio/zenx-studio" target="_blank" class="project-card small-card">
-      <div class="project-icon-small">🌿</div>
-      <div class="project-info">
-        <h4 class="project-name-small">Zenx Studio</h4>
-        <p class="project-desc-small">门户网站模板</p>
-      </div>
-    </a>
-    <a href="https://github.com/opendemo-work/opendemo" target="_blank" class="project-card small-card">
-      <div class="project-icon-small">📖</div>
-      <div class="project-info">
-        <h4 class="project-name-small">OpenDemo</h4>
-        <p class="project-desc-small">技术演示平台，518+ 案例</p>
-      </div>
-    </a>
-  </div>
-</section>
+  <section class="section-block engine-section" id="matrix">
+    <div class="section-heading">
+      <span class="section-tag">Brand Engine</span>
+      <h2 class="section-title">我的品牌引擎，不止是代码</h2>
+      <p class="section-desc">真正能打的技术 IP，不只展示项目，而是同时经营开源、知识、内容与商业化触点。</p>
+    </div>
+    <div class="engine-grid">
+      <a href="https://github.com/kudig-io/kudig-database" target="_blank" rel="noopener" class="engine-card">
+        <span class="engine-icon">📚</span>
+        <h3>知识库</h3>
+        <p>从 Kudig Database 到 Peace Lab Database，把碎片经验沉淀成可检索、可演进的体系。</p>
+      </a>
+      <a href="{{ '/topic/links/' | relative_url }}" class="engine-card">
+        <span class="engine-icon">🧭</span>
+        <h3>内容矩阵</h3>
+        <p>把外部链接、技术资源、学习路径统一收口，降低用户理解和关注成本。</p>
+      </a>
+      <a href="{{ '/about/' | relative_url }}" class="engine-card">
+        <span class="engine-icon">🧠</span>
+        <h3>个人叙事</h3>
+        <p>不仅展示做了什么，也交代为什么做、擅长什么、适合怎样的合作场景。</p>
+      </a>
+      <a href="https://github.com/allengaller" target="_blank" rel="noopener" class="engine-card">
+        <span class="engine-icon">🚀</span>
+        <h3>开源战绩</h3>
+        <p>精选项目建立认知，完整 GitHub 仓库矩阵承接深度浏览与长期信任。</p>
+      </a>
+    </div>
+  </section>
 
-<!-- 工具 -->
-<section class="section-block">
-  <h2 class="section-title">工具</h2>
-  <div class="project-grid compact">
-    <a href="https://github.com/standup-coder/cmd4coder" target="_blank" class="project-card small-card">
-      <div class="project-icon-small">⌨️</div>
-      <div class="project-info">
-        <h4 class="project-name-small">cmd4coder</h4>
-        <p class="project-desc-small">命令行工具大全，38+ 分类、500+ 命令</p>
-      </div>
-    </a>
-    <a href="https://github.com/standup-coder/news4coder" target="_blank" class="project-card small-card">
-      <div class="project-icon-small">📰</div>
-      <div class="project-info">
-        <h4 class="project-name-small">news4coder</h4>
-        <p class="project-desc-small">技术资讯 CLI，LLM-Native 架构</p>
-      </div>
-    </a>
-    <a href="https://github.com/standup-coder/monkey-flow" target="_blank" class="project-card small-card">
-      <div class="project-icon-small">🎵</div>
-      <div class="project-info">
-        <h4 class="project-name-small">monkey-flow</h4>
-        <p class="project-desc-small">命令行音乐播放器</p>
-      </div>
-    </a>
-    <a href="https://github.com/standup-coder/mcp4coder" target="_blank" class="project-card small-card">
-      <div class="project-icon-small">🤖</div>
-      <div class="project-info">
-        <h4 class="project-name-small">mcp4coder</h4>
-        <p class="project-desc-small">MCP 工具大全，15+ 核心 MCP 服务器</p>
-      </div>
-    </a>
-    <a href="https://github.com/ai-guru-global/claude-code" target="_blank" class="project-card small-card">
-      <div class="project-icon-small">🦀</div>
-      <div class="project-info">
-        <h4 class="project-name-small">claw-code</h4>
-        <p class="project-desc-small">Claude Code 的 Rust 开源实现</p>
-      </div>
-    </a>
-    <a href="https://github.com/standup-coder/skills4coder" target="_blank" class="project-card small-card">
-      <div class="project-icon-small">🧩</div>
-      <div class="project-info">
-        <h4 class="project-name-small">skills4coder</h4>
-        <p class="project-desc-small">AI Agent 技能编排框架，MCP 协议</p>
-      </div>
-    </a>
-    <a href="https://github.com/kudig-io/k8s-guardian" target="_blank" class="project-card small-card">
-      <div class="project-icon-small">🛡️</div>
-      <div class="project-info">
-        <h4 class="project-name-small">k8s-guardian</h4>
-        <p class="project-desc-small">K8s 运维 CLI + AI 助手</p>
-      </div>
-    </a>
-    <a href="https://github.com/peace-lab-global/hush.ai" target="_blank" class="project-card small-card">
-      <div class="project-icon-small">🧘</div>
-      <div class="project-info">
-        <h4 class="project-name-small">hush.ai</h4>
-        <p class="project-desc-small">禅意 AI CLI，极简回答</p>
-      </div>
-    </a>
-  </div>
-</section>
+  <section class="section-block directory-section" id="directory">
+    <div class="section-heading">
+      <span class="section-tag">Project Directory</span>
+      <h2 class="section-title">所有被折叠的内容，都从这里进入</h2>
+      <p class="section-desc">首页只保留精选与分流；原来删减或隐藏的项目、组织和知识库，已经完整归档到项目导航页，并按类别提供列表入口。</p>
+    </div>
+    <div class="directory-preview-grid">
+      <a href="{{ '/projects/' | relative_url }}#studios" class="directory-preview-card">
+        <span class="directory-count">11</span>
+        <h3>工作室 / 品牌矩阵</h3>
+        <p>包括 Better Call Saull、Lonely Reader Global、Sit Music 在内的全部组织入口。</p>
+      </a>
+      <a href="{{ '/projects/' | relative_url }}#corpus" class="directory-preview-card">
+        <span class="directory-count">6</span>
+        <h3>语料库 / 知识库</h3>
+        <p>多组织数据库入口已完整保留，不再占用首页首屏空间。</p>
+      </a>
+      <a href="{{ '/projects/' | relative_url }}#apps" class="directory-preview-card">
+        <span class="directory-count">8</span>
+        <h3>APP / 产品应用</h3>
+        <p>云原生、AI、播客、游戏、小程序等旧首页应用都已移入目录页。</p>
+      </a>
+      <a href="{{ '/projects/' | relative_url }}#sites" class="directory-preview-card">
+        <span class="directory-count">3</span>
+        <h3>网站 / 展示平台</h3>
+        <p>对外站点、门户与演示平台统一收口。</p>
+      </a>
+      <a href="{{ '/projects/' | relative_url }}#tools" class="directory-preview-card">
+        <span class="directory-count">8</span>
+        <h3>工具 / CLI / 框架</h3>
+        <p>开发者工具、命令行项目与 Agent 工具链集中浏览。</p>
+      </a>
+    </div>
+    <div class="directory-preview-actions">
+      <a href="{{ '/projects/' | relative_url }}" class="primary-btn">进入完整项目导航</a>
+      <a href="{{ '/projects/' | relative_url }}#studios" class="ghost-btn">先看隐藏组织入口</a>
+    </div>
+    <p class="directory-note">此前从首页折叠的 Better Call Saull、Lonely Reader Global、Sit Music 等内容，现已在 Projects 页完整保留并可直接访问。</p>
+  </section>
 
-<!-- GitHub -->
-<section class="section-block github-cta">
-  <a href="https://github.com/allengaller" target="_blank" class="github-link">
-    <span>在 GitHub 上查看全部项目 →</span>
-  </a>
-</section>
+  <section class="section-block collab-section" id="collab">
+    <div class="section-heading">
+      <span class="section-tag">Collaboration</span>
+      <h2 class="section-title">如果要合作，我最适合这三类场景</h2>
+      <p class="section-desc">让合作方一眼看明白“你能提供什么”，而不是自己去猜你的价值边界。</p>
+    </div>
+    <div class="collab-grid">
+      <div class="collab-card">
+        <span class="collab-icon">🛠️</span>
+        <h3>AI 工具与开发者产品共创</h3>
+        <p>适合把 Agent、RAG、MCP、CLI 或 AI Native Workflow 做成真正可落地的工具产品。</p>
+      </div>
+      <div class="collab-card">
+        <span class="collab-icon">☁️</span>
+        <h3>Cloud Native / SRE 顾问</h3>
+        <p>围绕 Kubernetes、可观测性、故障分析、运维自动化，提供实战经验导向的方案设计。</p>
+      </div>
+      <div class="collab-card">
+        <span class="collab-icon">📖</span>
+        <h3>知识体系与技术内容产品化</h3>
+        <p>把文档、专题、课程、案例库和品牌内容做成持续增长的知识资产，而不只是一次性输出。</p>
+      </div>
+    </div>
+    <div class="collab-actions">
+      <a href="{{ '/about/' | relative_url }}#connect" class="primary-btn">看合作入口</a>
+      <a href="{{ '/projects/' | relative_url }}" class="secondary-btn">完整项目导航</a>
+      <a href="https://github.com/allengaller" target="_blank" rel="noopener" class="ghost-btn">浏览全部仓库</a>
+    </div>
+    <p class="collab-note">当前首页只展示精选入口；全部保留项目与隐藏组织，统一由 Projects 页面和 GitHub 深度承接。</p>
+  </section>
+</div>
 
 <style>
-  .section-block { margin-bottom: 40px; }
-  
-  .section-title {
-    font-size: 1.1rem;
-    font-weight: 500;
-    color: var(--text);
-    margin-bottom: 16px;
-    padding-bottom: 8px;
-    border-bottom: 1px solid var(--border);
+  .brand-home {
+    display: flex;
+    flex-direction: column;
+    gap: 36px;
   }
 
-  .project-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-    gap: 12px;
-  }
-  .project-grid.compact {
-    grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
-  }
-
-  .project-card {
-    display: block;
-    background: var(--panel);
+  .brand-hero,
+  .section-block {
+    position: relative;
+    overflow: hidden;
+    background: var(--bg-card);
     border: 1px solid var(--border);
-    border-radius: 6px;
-    padding: 16px;
-    text-decoration: none;
-    transition: all 0.3s ease;
-  }
-  .project-card:hover {
-    border-color: var(--jade);
-    transform: translateY(-2px);
+    border-radius: 24px;
+    padding: 40px;
+    box-shadow: var(--shadow-sm);
+    backdrop-filter: blur(10px);
   }
 
-  .project-icon {
-    font-size: 1.5rem;
-    margin-bottom: 8px;
+  .brand-hero {
+    padding: 54px 48px 44px;
   }
-  .project-name {
-    font-size: 1rem;
-    font-weight: 500;
+
+  .hero-glow {
+    position: absolute;
+    width: 280px;
+    height: 280px;
+    border-radius: 50%;
+    filter: blur(70px);
+    opacity: 0.15;
+    pointer-events: none;
+  }
+  .hero-glow-left {
+    top: -120px;
+    left: -80px;
+    background: var(--jade);
+  }
+  .hero-glow-right {
+    right: -100px;
+    bottom: -140px;
+    background: var(--gold);
+  }
+
+  .hero-badge,
+  .section-tag {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    padding: 8px 16px;
+    border-radius: 999px;
+    border: 1px solid var(--border-strong);
+    background: rgba(94, 196, 182, 0.08);
+    color: var(--jade);
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.7rem;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    margin-bottom: 18px;
+  }
+
+  .hero-kicker {
+    color: var(--gold);
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.82rem;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    margin-bottom: 14px;
+  }
+
+  .hero-title {
+    margin: 0 0 18px;
+    font-family: 'Noto Serif SC', serif;
+    font-size: clamp(2.1rem, 5vw, 3.8rem);
+    line-height: 1.22;
     color: var(--text);
+    max-width: 860px;
+  }
+
+  .hero-summary {
+    max-width: 820px;
+    font-size: 1rem;
+    color: var(--text-secondary);
+    line-height: 1.95;
+    margin: 0;
+  }
+
+  .hero-actions,
+  .collab-actions {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 12px;
+    margin-top: 28px;
+  }
+
+  .primary-btn,
+  .secondary-btn,
+  .ghost-btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    min-height: 46px;
+    padding: 0 18px;
+    border-radius: 12px;
+    border: 1px solid var(--border-strong);
+    text-decoration: none;
+    font-weight: 600;
+    transition: transform 0.2s ease, box-shadow 0.2s ease, border-color 0.2s ease;
+  }
+  .primary-btn {
+    background: var(--jade);
+    color: #0d0f1a;
+    border-color: transparent;
+  }
+  .secondary-btn {
+    background: rgba(201, 169, 110, 0.08);
+    color: var(--text);
+  }
+  .ghost-btn {
+    background: transparent;
+    color: var(--text);
+  }
+  .primary-btn:hover,
+  .secondary-btn:hover,
+  .ghost-btn:hover {
+    transform: translateY(-2px);
+    box-shadow: var(--shadow-md);
+    border-color: var(--jade);
+  }
+
+  .hero-stats {
+    margin-top: 34px;
+    display: grid;
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+    gap: 14px;
+  }
+
+  .stat-card,
+  .collab-card {
+    background: rgba(255, 255, 255, 0.02);
+    border: 1px solid var(--border);
+    border-radius: 18px;
+    padding: 18px;
+  }
+
+  .stat-num {
+    display: block;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 1.7rem;
+    color: var(--jade);
     margin-bottom: 6px;
   }
-  .project-card:hover .project-name {
-    color: var(--jade);
-  }
-  .project-desc {
-    font-size: 0.8rem;
+
+  .stat-label {
     color: var(--text-dim);
-    line-height: 1.5;
+    font-size: 0.8rem;
+    letter-spacing: 0.04em;
   }
 
-  .small-card {
-    display: flex;
-    align-items: flex-start;
-    gap: 12px;
-    padding: 12px;
+  .section-heading {
+    margin-bottom: 24px;
   }
-  .project-icon-small {
-    font-size: 1.2rem;
-    flex-shrink: 0;
-  }
-  .project-name-small {
-    font-size: 0.9rem;
-    font-weight: 500;
+
+  .brand-home .section-title {
+    margin: 0 0 12px;
+    padding: 0;
+    border: none;
+    font-family: 'Noto Serif SC', serif;
+    font-size: 1.8rem;
     color: var(--text);
-    margin-bottom: 2px;
   }
-  .project-card:hover .project-name-small {
+
+  .section-desc {
+    margin: 0;
+    max-width: 760px;
+    color: var(--text-secondary);
+  }
+
+  .audience-grid,
+  .featured-grid,
+  .engine-grid,
+  .studio-grid,
+  .collab-grid,
+  .directory-preview-grid {
+    display: grid;
+    gap: 16px;
+  }
+
+  .audience-grid {
+    grid-template-columns: repeat(auto-fit, minmax(210px, 1fr));
+  }
+
+  .audience-card,
+  .featured-card,
+  .engine-card,
+  .studio-card {
+    display: block;
+    text-decoration: none;
+    color: inherit;
+    background: rgba(255, 255, 255, 0.02);
+    border: 1px solid var(--border);
+    border-radius: 18px;
+    padding: 22px;
+    transition: transform 0.22s ease, border-color 0.22s ease, box-shadow 0.22s ease;
+  }
+
+  .audience-card:hover,
+  .featured-card:hover,
+  .engine-card:hover,
+  .studio-card:hover {
+    transform: translateY(-4px);
+    border-color: var(--jade);
+    box-shadow: var(--shadow-md);
+  }
+
+  .audience-icon,
+  .engine-icon,
+  .collab-icon,
+  .studio-icon {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 42px;
+    height: 42px;
+    border-radius: 14px;
+    margin-bottom: 14px;
+    background: rgba(94, 196, 182, 0.1);
+    font-size: 1.2rem;
+  }
+
+  .audience-card h3,
+  .featured-card h3,
+  .engine-card h3,
+  .collab-card h3 {
+    margin: 0 0 10px;
+    font-size: 1.05rem;
+    color: var(--text);
+  }
+
+  .audience-card p,
+  .featured-card p,
+  .engine-card p,
+  .collab-card p,
+  .directory-preview-card p {
+    margin: 0;
+    color: var(--text-secondary);
+    font-size: 0.9rem;
+    line-height: 1.8;
+  }
+
+  .audience-link {
+    display: inline-block;
+    margin-top: 14px;
     color: var(--jade);
+    font-size: 0.82rem;
+    font-weight: 600;
   }
-  .project-desc-small {
-    font-size: 0.75rem;
+
+  .featured-grid {
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  }
+
+  .project-type {
+    display: inline-flex;
+    margin-bottom: 12px;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.68rem;
+    letter-spacing: 2px;
+    color: var(--gold);
+  }
+
+  .project-meta {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    margin-top: 16px;
+  }
+
+  .project-meta span {
+    padding: 6px 10px;
+    border-radius: 999px;
+    background: var(--bg-tertiary);
+    border: 1px solid var(--border);
+    font-size: 0.74rem;
     color: var(--text-dim);
+  }
+
+  .engine-grid {
+    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
   }
 
   .studio-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
-    gap: 10px;
+    grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
   }
+
   .studio-card {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    padding: 16px 12px;
-    background: var(--panel);
-    border: 1px solid var(--border);
-    border-radius: 6px;
-    text-decoration: none;
-    transition: all 0.3s ease;
+    text-align: center;
+    padding: 22px 18px;
   }
-  .studio-card:hover {
-    border-color: var(--jade);
-  }
+
   .studio-icon {
-    font-size: 1.5rem;
-    margin-bottom: 8px;
+    margin: 0 auto 12px;
   }
+
   .studio-name {
-    font-size: 0.8rem;
-    font-weight: 500;
+    font-size: 0.92rem;
+    font-weight: 700;
     color: var(--text);
-    margin-bottom: 4px;
+    margin-bottom: 6px;
   }
-  .studio-card:hover .studio-name {
-    color: var(--jade);
-  }
+
   .studio-desc {
-    font-size: 0.7rem;
+    font-size: 0.8rem;
     color: var(--text-dim);
-    text-align: center;
+    line-height: 1.6;
   }
 
-  .github-cta {
-    margin-top: 32px;
-    text-align: center;
-  }
-  .github-link {
-    display: inline-block;
-    padding: 12px 24px;
-    background: var(--panel);
-    border: 1px solid var(--border);
-    border-radius: 6px;
-    text-decoration: none;
-    color: var(--text);
-    transition: all 0.3s ease;
-  }
-  .github-link:hover {
-    border-color: var(--jade);
-    color: var(--jade);
+  .collab-grid {
+    grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
   }
 
-  @media (max-width: 600px) {
-    .project-grid,
-    .project-grid.compact {
-      grid-template-columns: 1fr;
+  .collab-note {
+    margin-top: 16px;
+    color: var(--text-dim);
+    font-size: 0.85rem;
+  }
+
+  @media (max-width: 720px) {
+    .brand-hero,
+    .section-block {
+      padding: 26px 22px;
+      border-radius: 20px;
     }
-    .studio-grid { grid-template-columns: repeat(2, 1fr); }
+
+    .brand-hero {
+      padding-top: 34px;
+    }
+
+    .hero-title {
+      font-size: 1.9rem;
+    }
+
+    .hero-stats {
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+
+    .hero-actions,
+    .collab-actions,
+    .featured-actions,
+    .directory-preview-actions {
+      flex-direction: column;
+    }
+
+    .primary-btn,
+    .secondary-btn,
+    .ghost-btn {
+      width: 100%;
+    }
+
+    .brand-home .section-title {
+      font-size: 1.45rem;
+    }
   }
 </style>

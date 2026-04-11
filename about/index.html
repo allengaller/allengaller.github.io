@@ -1,1045 +1,664 @@
 ---
 layout: default
-title: About - 关于法喜
+title: About | 关于法喜
+description: 关于法喜：Cloud Native SRE、AI Toolsmith、Knowledge Architect，以及适合怎样的合作与连接方式。
 ---
 
-<div class="about-page" id="aboutPage">
-  <!-- Theme Switcher -->
-  <div class="theme-switcher">
-    <button class="theme-btn active" data-theme="dark" onclick="switchTheme('dark')">
-      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg>
-      暗夜
-    </button>
-    <button class="theme-btn" data-theme="light" onclick="switchTheme('light')">
-      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="5"/><line x1="12" y1="1" x2="12" y2="3"/><line x1="12" y1="21" x2="12" y2="23"/><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"/><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"/><line x1="1" y1="12" x2="3" y2="12"/><line x1="21" y1="12" x2="23" y2="12"/><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"/><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"/></svg>
-      明亮
-    </button>
-  </div>
+<div class="about-v2">
+  <section class="about-hero">
+    <span class="hero-badge">ABOUT THE BUILDER</span>
+    <p class="hero-kicker">Cloud Native SRE · AI Toolsmith · Knowledge Architect</p>
+    <h1 class="hero-title">法喜</h1>
+    <p class="hero-summary">
+      我把 <strong>工程经验、知识库思维、开源产品化和内容输出</strong> 放在同一条生产线上。
+      相比“只会做项目”或“只会写内容”，我更擅长把技术能力沉淀成可复用的工具、可增长的知识资产，以及可长期经营的个人品牌。
+    </p>
+    <div class="hero-actions">
+      <a href="https://github.com/allengaller" target="_blank" rel="noopener" class="primary-btn">GitHub Profile</a>
+      <a href="{{ '/projects/' | relative_url }}" class="secondary-btn">完整项目导航</a>
+      <a href="{{ '/topic/links/' | relative_url }}" class="secondary-btn">内容矩阵</a>
+    </div>
+    <div class="trust-pills">
+      <span>开源组织运营者</span>
+      <span>技术内容生产者</span>
+      <span>AI / Cloud Native 实践者</span>
+      <span>面向中英文受众</span>
+    </div>
+  </section>
 
-  <!-- Hero Section -->
-  <section class="hero-section">
-    <div class="hero-bg"></div>
-    <div class="hero-content">
-      <div class="hero-badge">Cloud Native · AI · Open Source</div>
-      <h1 class="hero-title">法喜</h1>
-      <p class="hero-subtitle">技术布道者 / 云原生实践者 / AI 工具匠人</p>
-      <p class="hero-desc">
-        致力于构建高质量技术知识库，让复杂的技术学习变得系统而简单。<br>
-        专注于 Cloud Native SRE、AI 工具链、开发者效率提升领域。
-      </p>
-      <div class="hero-stats">
-        <div class="stat-item">
-          <span class="stat-number">4500+</span>
-          <span class="stat-label">文档产出</span>
-        </div>
-        <div class="stat-divider"></div>
-        <div class="stat-item">
-          <span class="stat-number">10+</span>
-          <span class="stat-label">开源项目</span>
-        </div>
-        <div class="stat-divider"></div>
-        <div class="stat-item">
-          <span class="stat-number">5</span>
-          <span class="stat-label">GitHub Org</span>
-        </div>
+  <section class="proof-strip">
+    <div class="proof-card">
+      <span class="proof-num">4500+</span>
+      <span class="proof-label">文档 / 语料 / 知识资产</span>
+    </div>
+    <div class="proof-card">
+      <span class="proof-num">10+</span>
+      <span class="proof-label">开源工具 / 应用</span>
+    </div>
+    <div class="proof-card">
+      <span class="proof-num">5+</span>
+      <span class="proof-label">年云原生与基础设施实践</span>
+    </div>
+    <div class="proof-card">
+      <span class="proof-num">Multi</span>
+      <span class="proof-label">组织、专题、内容品牌矩阵</span>
+    </div>
+  </section>
+
+  <section class="section-block story-section">
+    <div class="section-heading">
+      <span class="section-tag">Background</span>
+      <h2>我是谁，以及我为什么这么做</h2>
+    </div>
+    <div class="story-layout">
+      <div class="story-main">
+        <p>我最早是从云原生基础设施和 SRE 进入技术世界的：Kubernetes、etcd、可观测性、自动化运维，这些都是长期真正做过、踩过坑、也写过工具的方向。</p>
+        <p>后来我越来越确定一件事：<strong>个人竞争力不只来自会写代码，还来自能否把经验沉淀成系统。</strong> 所以我开始做两类事：一类是工具，把问题工程化；另一类是知识库，把经验结构化。</p>
+        <p>再往后，我把这两件事继续往前推：让知识资产能服务内容传播，让内容传播反过来放大开源项目和产品影响力。于是你会看到我同时在做开源工具、知识库、专题内容和品牌矩阵——这不是分散，而是一套完整的生产系统。</p>
       </div>
-      <div class="hero-actions">
-        <a href="https://github.com/allengaller" target="_blank" class="btn btn-primary">
-          <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 0c-6.626 0-12 5.373-12 12 0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23.957-.266 1.983-.399 3.003-.404 1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576 4.765-1.589 8.199-6.086 8.199-11.386 0-6.627-5.373-12-12-12z"/></svg>
-          GitHub
-        </a>
-        <a href="/topic/links" class="btn btn-secondary">
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M13 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V9z"/><polyline points="13 2 13 9 20 9"/></svg>
-          资源导航
-        </a>
+      <div class="story-side">
+        <div class="mini-card">
+          <h3>我最强的复合能力</h3>
+          <ul>
+            <li>把技术问题做成工具</li>
+            <li>把知识问题做成体系</li>
+            <li>把内容问题做成长期资产</li>
+            <li>把个人输出做成品牌飞轮</li>
+          </ul>
+        </div>
+        <div class="mini-card">
+          <h3>你为什么会找我</h3>
+          <ul>
+            <li>需要懂 Cloud Native 的产品化视角</li>
+            <li>需要把 AI 工具真正落地到工作流</li>
+            <li>需要搭建知识库或内容中台</li>
+            <li>需要一个能写、能做、能讲的人</li>
+          </ul>
+        </div>
       </div>
     </div>
   </section>
 
-  <!-- Philosophy Section -->
-  <section class="section">
-    <div class="section-header">
+  <section class="section-block offer-section">
+    <div class="section-heading">
+      <span class="section-tag">What I Can Do</span>
+      <h2>我能提供的价值</h2>
+    </div>
+    <div class="offer-grid">
+      <div class="offer-card">
+        <span class="offer-icon">☁️</span>
+        <h3>Cloud Native / SRE 顾问</h3>
+        <p>围绕 Kubernetes、可观测性、稳定性治理、故障分析和运维自动化，给出实战导向建议。</p>
+      </div>
+      <div class="offer-card">
+        <span class="offer-icon">🤖</span>
+        <h3>AI 工具与 Agent 工作流设计</h3>
+        <p>把 RAG、Agent、MCP、CLI 和知识系统组合起来，做成真正能用的开发者工具或内部能力。</p>
+      </div>
+      <div class="offer-card">
+        <span class="offer-icon">📚</span>
+        <h3>知识库与学习体系搭建</h3>
+        <p>不是简单写文档，而是搭建可检索、可演化、可复用的知识结构，让团队和用户都能受益。</p>
+      </div>
+      <div class="offer-card">
+        <span class="offer-icon">📰</span>
+        <h3>技术内容产品化与个人品牌</h3>
+        <p>适合做专题、案例库、课程前置内容、品牌主页和长期内容飞轮建设。</p>
+      </div>
+    </div>
+  </section>
+
+  <section class="section-block audience-section">
+    <div class="section-heading">
+      <span class="section-tag">Who I Work With</span>
+      <h2>我主要服务这些对象</h2>
+    </div>
+    <div class="audience-grid">
+      <div class="audience-card">
+        <h3>开发者与技术社区</h3>
+        <p>需要真正能用的工具、文档、学习路径和开源实践案例。</p>
+      </div>
+      <div class="audience-card">
+        <h3>招聘方 / 合作伙伴</h3>
+        <p>希望快速理解我的方法论、成果密度和可合作边界。</p>
+      </div>
+      <div class="audience-card">
+        <h3>企业客户 / 技术团队</h3>
+        <p>需要 AI Tooling、知识体系或基础设施方向的经验与方案。</p>
+      </div>
+      <div class="audience-card">
+        <h3>内容读者 / 课程用户</h3>
+        <p>想找到更系统、更高密度、更少废话的技术内容。</p>
+      </div>
+    </div>
+  </section>
+
+  <section class="section-block principles-section">
+    <div class="section-heading">
       <span class="section-tag">Philosophy</span>
-      <h2 class="section-title">技术观</h2>
+      <h2>我的原则</h2>
     </div>
-    <div class="philosophy-grid">
-      <div class="philosophy-card">
-        <div class="philosophy-icon">☸️</div>
-        <h3>基础设施即代码</h3>
-        <p>云原生不是目的，弹性可靠的系统才是。通过 K8s、IaC 工具，让基础设施可重复、可测试、可追溯。</p>
+    <div class="principles-list">
+      <div class="principle-item">
+        <div class="principle-icon">📖</div>
+        <div>
+          <h3>知识必须结构化，否则只是信息噪音</h3>
+          <p>写得再多，如果不能被检索、复用、更新和迁移，就无法成为真正的资产。</p>
+        </div>
       </div>
-      <div class="philosophy-card">
-        <div class="philosophy-icon">🤖</div>
-        <h3>AI 赋能开发者</h3>
-        <p>AI 是工具，不是替代。专注于构建能够放大开发者能力的工具链，让创意更快落地。</p>
+      <div class="principle-item">
+        <div class="principle-icon">🛠️</div>
+        <div>
+          <h3>工具是能力放大器，不是思考替代品</h3>
+          <p>AI 最有价值的地方，不是生成一段看似聪明的话，而是进入工作流后真正节省决策成本。</p>
+        </div>
       </div>
-      <div class="philosophy-card">
-        <div class="philosophy-icon">📚</div>
-        <h3>知识需要结构</h3>
-        <p>碎片化学习的时代需要系统化知识体系。构建可检索、可扩展、可演进的知识库。</p>
-      </div>
-      <div class="philosophy-card">
-        <div class="philosophy-icon">🌱</div>
-        <h3>开放共享</h3>
-        <p>开源精神在于分享。所有的工具、知识、经验都应被记录和传递，让后来者站在巨人肩上。</p>
+      <div class="principle-item">
+        <div class="principle-icon">🌱</div>
+        <div>
+          <h3>开源与公开输出，是最好的复利机制</h3>
+          <p>Build in public 既能帮别人，也能让自己持续升级；它是学习方式、增长方式，也是品牌方式。</p>
+        </div>
       </div>
     </div>
   </section>
 
-  <!-- Expertise Section -->
-  <section class="section expertise-section">
-    <div class="section-header">
-      <span class="section-tag">Expertise</span>
-      <h2 class="section-title">专业领域</h2>
+  <section class="section-block timeline-section">
+    <div class="section-heading">
+      <span class="section-tag">Experience</span>
+      <h2>经历</h2>
     </div>
-    <div class="expertise-grid">
-      <a href="/topic/cloud-sre-mantra/about" class="expertise-card primary">
-        <div class="expertise-icon">☁️</div>
-        <div class="expertise-content">
-          <h3>Cloud Native SRE</h3>
-          <p>Kubernetes 深度实践 · 微服务架构 · 可观测性体系 · 自动化运维</p>
-          <span class="expertise-link">查看稳云真经 →</span>
-        </div>
-      </a>
-      <a href="/topic/ai-tools/ai-tools" class="expertise-card primary">
-        <div class="expertise-icon">🧠</div>
-        <div class="expertise-content">
-          <h3>AI 工具链</h3>
-          <p>AI 编程助手 · 大语言模型 · RAG 与 Agent · 多模态应用</p>
-          <span class="expertise-link">探索 AI 工具 →</span>
-        </div>
-      </a>
-      <div class="expertise-row">
-        <a href="/topic/k8s/k8s" class="expertise-card small">
-          <div class="expertise-icon">☸️</div>
-          <div class="expertise-content">
-            <h4>Kubernetes</h4>
-            <p>容器编排与最佳实践</p>
+    <div class="timeline">
+      <div class="timeline-item">
+        <div class="timeline-dot"></div>
+        <div class="timeline-content">
+          <div class="timeline-head">
+            <h3>独立开发者 / 技术布道者 / 开源组织运营者</h3>
+            <span>2022 - Present</span>
           </div>
-        </a>
-        <a href="/topic/microservice/microservice" class="expertise-card small">
-          <div class="expertise-icon">🔄</div>
-          <div class="expertise-content">
-            <h4>微服务</h4>
-            <p>Service Mesh · Istio · Envoy</p>
+          <p class="timeline-sub">Kudig IO · AI Guru Global · Standup Coder 等</p>
+          <p>持续运营多个开源组织与品牌矩阵，把项目、知识库、专题内容和工具产品放到同一条长期产线里。</p>
+        </div>
+      </div>
+      <div class="timeline-item">
+        <div class="timeline-dot"></div>
+        <div class="timeline-content">
+          <div class="timeline-head">
+            <h3>SRE / DevOps / 基础设施工程</h3>
+            <span>2019 - 2022</span>
           </div>
-        </a>
-        <a href="/topic/developer/developer" class="expertise-card small">
-          <div class="expertise-icon">⚡</div>
-          <div class="expertise-content">
-            <h4>开发者工具</h4>
-            <p>效率工具 · CLI · 开发流程</p>
-          </div>
-        </a>
-      </div>
-    </div>
-  </section>
-
-  <!-- Projects Section -->
-  <section class="section">
-    <div class="section-header">
-      <span class="section-tag">Projects</span>
-      <h2 class="section-title">核心项目</h2>
-    </div>
-    <div class="projects-showcase">
-      <div class="project-highlight">
-        <div class="project-header">
-          <span class="project-org">☸️ Kudig IO</span>
-          <span class="project-tag">K8s 工具生态</span>
-        </div>
-        <h3 class="project-name">Kudig 全栈工具链</h3>
-        <p class="project-desc">Kubernetes 诊断、运维、备份，游戏化学习全套工具，覆盖 K8s 全生命周期管理。</p>
-        <div class="project-tools">
-          <span class="tool-tag">Kudig - 节点诊断</span>
-          <span class="tool-tag">EtcdGuardian - 备份恢复</span>
-          <span class="tool-tag">Klaw - Web UI</span>
-          <span class="tool-tag">KuGame - 游戏化学习</span>
-        </div>
-      </div>
-      <div class="project-highlight">
-        <div class="project-header">
-          <span class="project-org">🧠 AI Guru Global</span>
-          <span class="project-tag">AI 工具生态</span>
-        </div>
-        <h3 class="project-name">AI Guru 智能体平台</h3>
-        <p class="project-desc">AIOps 智能体、RAG 知识库、Claude Code 开源实现，构建下一代 AI 开发工具。</p>
-        <div class="project-tools">
-          <span class="tool-tag">ResolveAgent - AIOps</span>
-          <span class="tool-tag">claw-code - Claude Rust</span>
-          <span class="tool-tag">mcp4coder - MCP</span>
-          <span class="tool-tag">skills4coder - Agent</span>
-        </div>
-      </div>
-      <div class="project-highlight">
-        <div class="project-header">
-          <span class="project-org">💻 Standup Coder</span>
-          <span class="project-tag">开发者工具</span>
-        </div>
-        <h3 class="project-name">Standup 开发者工具箱</h3>
-        <p class="project-desc">命令行工具大全、技术资讯 CLI、LeetCode 播客，提升开发者日常效率。</p>
-        <div class="project-tools">
-          <span class="tool-tag">cmd4coder - 命令大全</span>
-          <span class="tool-tag">news4coder - 资讯 CLI</span>
-          <span class="tool-tag">LeetCast - 播客</span>
+          <p class="timeline-sub">云原生基础设施团队</p>
+          <p>负责 Kubernetes 生产环境、CI/CD、可观测性与运维自动化，为后来做工具和知识库打下坚实底层理解。</p>
         </div>
       </div>
     </div>
   </section>
 
-  <!-- Knowledge Base Section -->
-  <section class="section kb-section">
-    <div class="section-header">
-      <span class="section-tag">Knowledge</span>
-      <h2 class="section-title">知识语料库</h2>
+  <section class="section-block global-section" id="global">
+    <div class="section-heading">
+      <span class="section-tag">Global Profile</span>
+      <h2>For global builders</h2>
     </div>
-    <div class="kb-grid">
-      <div class="kb-card">
-        <div class="kb-icon">☸️</div>
-        <div class="kb-info">
-          <h4>Kudig Database</h4>
-          <p>K8s + AI 全域知识库</p>
-          <span class="kb-count">950+ 文档</span>
-        </div>
-      </div>
-      <div class="kb-card">
-        <div class="kb-icon">🧠</div>
-        <div class="kb-info">
-          <h4>AI Guru Database</h4>
-          <p>AI 学习资源库</p>
-          <span class="kb-count">290+ 文档</span>
-        </div>
-      </div>
-      <div class="kb-card">
-        <div class="kb-icon">🪷</div>
-        <div class="kb-info">
-          <h4>Peace Lab Database</h4>
-          <p>身心疗愈知识体系</p>
-          <span class="kb-count">1852+ 文档</span>
-        </div>
-      </div>
-      <div class="kb-card">
-        <div class="kb-icon">⚖️</div>
-        <div class="kb-info">
-          <h4>Better Call Saull DB</h4>
-          <p>法律与法医学知识库</p>
-          <span class="kb-count">400+ 文档</span>
-        </div>
+    <div class="global-card">
+      <p><strong>I build open-source tools, knowledge systems, and developer-facing products</strong> at the intersection of Cloud Native, AI Tooling, and technical education.</p>
+      <p>If you are evaluating me from an international context, the fastest way to understand my work is to start from GitHub, then trace the knowledge bases and product experiments behind those repositories.</p>
+      <div class="global-actions">
+        <a href="https://github.com/allengaller" target="_blank" rel="noopener" class="primary-btn">View GitHub</a>
+        <a href="{{ '/projects/' | relative_url }}" class="secondary-btn">Full Project Directory</a>
       </div>
     </div>
   </section>
 
-  <!-- Connect Section -->
-  <section class="section connect-section">
-    <div class="section-header">
+  <section class="section-block connect-section" id="connect">
+    <div class="section-heading">
       <span class="section-tag">Connect</span>
-      <h2 class="section-title">连接我</h2>
+      <h2>连接与合作入口</h2>
+      <p class="section-intro">当前站内优先开放 GitHub、完整项目导航、组织主页和内容矩阵作为连接入口；这比空邮箱按钮更真实，也更适合你现在的品牌阶段。</p>
     </div>
     <div class="connect-grid">
-      <a href="https://github.com/allengaller" target="_blank" class="connect-card">
-        <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 0c-6.626 0-12 5.373-12 12 0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23.957-.266 1.983-.399 3.003-.404 1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576 4.765-1.589 8.199-6.086 8.199-11.386 0-6.627-5.373-12-12-12z"/></svg>
-        <span>GitHub</span>
-        <small>@allengaller</small>
+      <a href="https://github.com/allengaller" target="_blank" rel="noopener" class="connect-card">
+        <span class="connect-icon">🐙</span>
+        <div>
+          <h3>GitHub Profile</h3>
+          <p>查看全部项目、组织与长期输出。</p>
+        </div>
       </a>
-      <a href="https://github.com/kudig-io" target="_blank" class="connect-card">
+      <a href="{{ '/topic/links/' | relative_url }}" class="connect-card">
+        <span class="connect-icon">🧭</span>
+        <div>
+          <h3>内容矩阵</h3>
+          <p>统一收口外部资源、学习路径与链接导航。</p>
+        </div>
+      </a>
+      <a href="https://github.com/kudig-io" target="_blank" rel="noopener" class="connect-card">
         <span class="connect-icon">☸️</span>
-        <span>Kudig IO</span>
-        <small>K8s 工具生态</small>
+        <div>
+          <h3>Kudig IO</h3>
+          <p>云原生工具与知识库核心阵地。</p>
+        </div>
       </a>
-      <a href="https://github.com/ai-guru-global" target="_blank" class="connect-card">
+      <a href="https://github.com/ai-guru-global" target="_blank" rel="noopener" class="connect-card">
         <span class="connect-icon">🧠</span>
-        <span>AI Guru Global</span>
-        <small>AI 工具生态</small>
+        <div>
+          <h3>AI Guru Global</h3>
+          <p>AI 教育、工具与实验项目入口。</p>
+        </div>
       </a>
-      <a href="https://github.com/standup-coder" target="_blank" class="connect-card">
-        <span class="connect-icon">💻</span>
-        <span>Standup Coder</span>
-        <small>开发者工具</small>
+      <a href="{{ '/projects/' | relative_url }}" class="connect-card">
+        <span class="connect-icon">🗂️</span>
+        <div>
+          <h3>完整项目导航</h3>
+          <p>查看所有保留但不直接铺在首页的项目、组织与工具目录。</p>
+        </div>
+      </a>
+      <a href="{{ '/' | relative_url }}#collab" class="connect-card">
+        <span class="connect-icon">🤝</span>
+        <div>
+          <h3>合作方式</h3>
+          <p>回到首页，快速查看适配的合作方向。</p>
+        </div>
       </a>
     </div>
-  </section>
-
-  <!-- Footer Quote -->
-  <section class="quote-section">
-    <blockquote>
-      <p>「技术是工具，创意是灵魂，分享是美德。」</p>
-      <cite>— 法喜</cite>
-    </blockquote>
   </section>
 </div>
 
 <style>
-  /* ========================================
-     THEME DARK - 暗夜风格（当前风格）
-     ======================================== */
-  .about-page[data-theme="dark"] {
-    --bg-primary: #0d0f1a;
-    --bg-secondary: #141829;
-    --bg-tertiary: #1a1e35;
-    --bg-card: rgba(20, 24, 41, 0.8);
-    --text-primary: #e8e4dc;
-    --text-secondary: #b8b3ab;
-    --text-dim: #7a756d;
-    --accent-primary: #5ec4b6;
-    --accent-secondary: #c9a96e;
-    --accent-glow: rgba(94, 196, 182, 0.15);
-    --border-color: rgba(94, 196, 182, 0.12);
-    --border-strong: rgba(94, 196, 182, 0.25);
-    --card-bg: rgba(20, 24, 41, 0.7);
-    --shadow-sm: 0 2px 8px rgba(0,0,0,0.3);
-    --shadow-md: 0 4px 20px rgba(0,0,0,0.4);
-  }
-
-  .about-page[data-theme="dark"] .hero-bg {
-    background: radial-gradient(ellipse at center, rgba(94, 196, 182, 0.15) 0%, transparent 70%);
-  }
-
-  .about-page[data-theme="dark"] .hero-badge {
-    background: rgba(94, 196, 182, 0.1);
-    border-color: rgba(94, 196, 182, 0.2);
-    color: #5ec4b6;
-  }
-
-  .about-page[data-theme="dark"] .hero-title {
-    color: #e8e4dc;
-  }
-
-  .about-page[data-theme="dark"] .hero-subtitle {
-    color: #5ec4b6;
-  }
-
-  .about-page[data-theme="dark"] .stat-number {
-    color: #5ec4b6;
-  }
-
-  .about-page[data-theme="dark"] .btn-primary {
-    background: #5ec4b6;
-    color: #0d0f1a;
-  }
-
-  .about-page[data-theme="dark"] .btn-primary:hover {
-    background: #4a9e92;
-  }
-
-  .about-page[data-theme="dark"] .btn-secondary {
-    background: rgba(20, 24, 41, 0.8);
-    color: #e8e4dc;
-    border-color: rgba(94, 196, 182, 0.25);
-  }
-
-  .about-page[data-theme="dark"] .btn-secondary:hover {
-    border-color: #5ec4b6;
-    color: #5ec4b6;
-  }
-
-  .about-page[data-theme="dark"] .section-tag {
-    color: #c9a96e;
-  }
-
-  .about-page[data-theme="dark"] .section-title {
-    color: #e8e4dc;
-  }
-
-  .about-page[data-theme="dark"] .philosophy-card,
-  .about-page[data-theme="dark"] .expertise-card.primary,
-  .about-page[data-theme="dark"] .expertise-card.small,
-  .about-page[data-theme="dark"] .project-highlight,
-  .about-page[data-theme="dark"] .kb-card,
-  .about-page[data-theme="dark"] .connect-card {
-    background: rgba(20, 24, 41, 0.7);
-    border-color: rgba(94, 196, 182, 0.12);
-  }
-
-  .about-page[data-theme="dark"] .philosophy-card:hover,
-  .about-page[data-theme="dark"] .expertise-card.primary:hover,
-  .about-page[data-theme="dark"] .expertise-card.small:hover,
-  .about-page[data-theme="dark"] .kb-card:hover,
-  .about-page[data-theme="dark"] .connect-card:hover {
-    border-color: rgba(94, 196, 182, 0.4);
-  }
-
-  .about-page[data-theme="dark"] .expertise-card.primary {
-    background: linear-gradient(135deg, rgba(94, 196, 182, 0.08) 0%, rgba(20, 24, 41, 0.7) 100%);
-    border-left-color: #5ec4b6;
-  }
-
-  .about-page[data-theme="dark"] .tool-tag,
-  .about-page[data-theme="dark"] .project-tag,
-  .about-page[data-theme="dark"] .kb-count {
-    background: rgba(26, 30, 53, 0.8);
-    border-color: rgba(94, 196, 182, 0.12);
-    color: #7a756d;
-  }
-
-  .about-page[data-theme="dark"] .theme-btn {
-    background: rgba(20, 24, 41, 0.8);
-    color: #7a756d;
-    border-color: rgba(94, 196, 182, 0.2);
-  }
-
-  .about-page[data-theme="dark"] .theme-btn:hover,
-  .about-page[data-theme="dark"] .theme-btn.active {
-    background: rgba(94, 196, 182, 0.1);
-    color: #5ec4b6;
-    border-color: rgba(94, 196, 182, 0.4);
-  }
-
-  /* ========================================
-     THEME LIGHT - 专业大V风格
-     ======================================== */
-  .about-page[data-theme="light"] {
-    --bg-primary: #ffffff;
-    --bg-secondary: #f7f8fa;
-    --bg-tertiary: #f0f1f4;
-    --bg-card: #ffffff;
-    --text-primary: #1a1a2e;
-    --text-secondary: #4a5568;
-    --text-dim: #718096;
-    --accent-primary: #0066ff;
-    --accent-secondary: #00d4aa;
-    --accent-glow: rgba(0, 102, 255, 0.08);
-    --border-color: #e5e7eb;
-    --border-strong: #d1d5db;
-    --card-bg: #ffffff;
-    --shadow-sm: 0 1px 3px rgba(0,0,0,0.08);
-    --shadow-md: 0 4px 12px rgba(0,0,0,0.1);
-  }
-
-  .about-page[data-theme="light"] .hero-bg {
-    background: radial-gradient(ellipse at center, rgba(0, 102, 255, 0.08) 0%, transparent 70%);
-  }
-
-  .about-page[data-theme="light"] .hero-badge {
-    background: rgba(0, 102, 255, 0.08);
-    border-color: rgba(0, 102, 255, 0.2);
-    color: #0066ff;
-  }
-
-  .about-page[data-theme="light"] .hero-title {
-    color: #1a1a2e;
-  }
-
-  .about-page[data-theme="light"] .hero-subtitle {
-    color: #0066ff;
-  }
-
-  .about-page[data-theme="light"] .stat-number {
-    color: #0066ff;
-  }
-
-  .about-page[data-theme="light"] .btn-primary {
-    background: #0066ff;
-    color: #ffffff;
-  }
-
-  .about-page[data-theme="light"] .btn-primary:hover {
-    background: #0052cc;
-  }
-
-  .about-page[data-theme="light"] .btn-secondary {
-    background: #ffffff;
-    color: #1a1a2e;
-    border-color: #e5e7eb;
-  }
-
-  .about-page[data-theme="light"] .btn-secondary:hover {
-    border-color: #0066ff;
-    color: #0066ff;
-  }
-
-  .about-page[data-theme="light"] .section-tag {
-    color: #0066ff;
-  }
-
-  .about-page[data-theme="light"] .section-title {
-    color: #1a1a2e;
-  }
-
-  .about-page[data-theme="light"] .philosophy-card,
-  .about-page[data-theme="light"] .expertise-card.primary,
-  .about-page[data-theme="light"] .expertise-card.small,
-  .about-page[data-theme="light"] .project-highlight,
-  .about-page[data-theme="light"] .kb-card,
-  .about-page[data-theme="light"] .connect-card {
-    background: #ffffff;
-    border-color: #e5e7eb;
-    box-shadow: 0 1px 3px rgba(0,0,0,0.04);
-  }
-
-  .about-page[data-theme="light"] .philosophy-card:hover,
-  .about-page[data-theme="light"] .expertise-card.primary:hover,
-  .about-page[data-theme="light"] .expertise-card.small:hover,
-  .about-page[data-theme="light"] .kb-card:hover,
-  .about-page[data-theme="light"] .connect-card:hover {
-    border-color: rgba(0, 102, 255, 0.3);
-    box-shadow: 0 4px 12px rgba(0,0,0,0.08);
-  }
-
-  .about-page[data-theme="light"] .expertise-card.primary {
-    background: linear-gradient(135deg, rgba(0, 102, 255, 0.04) 0%, #ffffff 100%);
-    border-left: 4px solid #0066ff;
-  }
-
-  .about-page[data-theme="light"] .tool-tag,
-  .about-page[data-theme="light"] .project-tag {
-    background: #f7f8fa;
-    border-color: #e5e7eb;
-    color: #4a5568;
-  }
-
-  .about-page[data-theme="light"] .kb-count {
-    background: rgba(0, 102, 255, 0.08);
-    border-color: transparent;
-    color: #0066ff;
-  }
-
-  .about-page[data-theme="light"] .theme-btn {
-    background: #ffffff;
-    color: #4a5568;
-    border-color: #e5e7eb;
-  }
-
-  .about-page[data-theme="light"] .theme-btn:hover,
-  .about-page[data-theme="light"] .theme-btn.active {
-    background: #0066ff;
-    color: #ffffff;
-    border-color: #0066ff;
-  }
-
-  /* ========================================
-     SHARED STYLES
-     ======================================== */
-  .about-page {
-    max-width: 900px;
-    margin: 0 auto;
-    padding: 0 24px 80px;
-    transition: background 0.3s, color 0.3s;
-  }
-
-  /* Theme Switcher */
-  .theme-switcher {
-    position: fixed;
-    top: 20px;
-    right: 24px;
-    z-index: 100;
+  .about-v2 {
     display: flex;
-    gap: 8px;
-    background: var(--card-bg);
-    padding: 6px;
-    border-radius: 10px;
-    border: 1px solid var(--border-color);
+    flex-direction: column;
+    gap: 26px;
+  }
+
+  .about-hero,
+  .section-block,
+  .proof-strip {
+    background: var(--bg-card);
+    border: 1px solid var(--border);
+    border-radius: 24px;
     box-shadow: var(--shadow-sm);
+    backdrop-filter: blur(10px);
   }
 
-  .theme-btn {
-    display: flex;
-    align-items: center;
-    gap: 6px;
-    padding: 8px 14px;
-    font-size: 0.8rem;
-    font-weight: 500;
-    border-radius: 6px;
-    border: 1px solid transparent;
-    cursor: pointer;
-    transition: all 0.2s;
-  }
-
-  .theme-btn svg {
-    width: 14px;
-    height: 14px;
-  }
-
-  /* Hero Section */
-  .hero-section {
+  .about-hero {
+    padding: 46px 42px;
     position: relative;
-    padding: 100px 0 60px;
-    text-align: center;
+    overflow: hidden;
   }
-
-  .hero-bg {
+  .about-hero::before {
+    content: '';
     position: absolute;
-    top: 0;
-    left: 50%;
-    transform: translateX(-50%);
-    width: 600px;
-    height: 400px;
+    inset: auto auto -100px -40px;
+    width: 240px;
+    height: 240px;
+    border-radius: 50%;
+    background: radial-gradient(circle, rgba(94, 196, 182, 0.18), transparent 70%);
+    filter: blur(24px);
     pointer-events: none;
-    transition: background 0.3s;
   }
 
-  .hero-content {
-    position: relative;
-    z-index: 1;
-  }
-
-  .hero-badge {
-    display: inline-block;
+  .hero-badge,
+  .section-tag {
+    display: inline-flex;
+    align-items: center;
+    padding: 8px 16px;
+    border-radius: 999px;
+    border: 1px solid var(--border-strong);
+    background: rgba(94, 196, 182, 0.08);
+    color: var(--jade);
+    font-family: 'JetBrains Mono', monospace;
     font-size: 0.7rem;
-    font-weight: 500;
-    letter-spacing: 0.1em;
+    letter-spacing: 2px;
     text-transform: uppercase;
-    padding: 6px 16px;
-    border-radius: 20px;
-    margin-bottom: 24px;
-    transition: all 0.3s;
+    margin-bottom: 16px;
+  }
+
+  .hero-kicker {
+    margin: 0 0 10px;
+    color: var(--gold);
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.82rem;
+    letter-spacing: 1.6px;
+    text-transform: uppercase;
   }
 
   .hero-title {
+    margin: 0 0 16px;
     font-family: 'Noto Serif SC', serif;
-    font-size: 3.5rem;
-    font-weight: 700;
-    margin-bottom: 12px;
-    letter-spacing: 0.1em;
-    transition: color 0.3s;
+    font-size: clamp(2.1rem, 5vw, 3.6rem);
+    color: var(--text);
   }
 
-  .hero-subtitle {
-    font-size: 1.1rem;
-    font-weight: 400;
-    margin-bottom: 20px;
-    transition: color 0.3s;
-  }
-
-  .hero-desc {
-    font-size: 1rem;
-    line-height: 1.8;
-    max-width: 600px;
-    margin: 0 auto 40px;
+  .hero-summary,
+  .section-intro,
+  .story-main p,
+  .global-card p,
+  .timeline-content p {
+    margin: 0;
     color: var(--text-secondary);
+    line-height: 1.95;
   }
 
-  .hero-stats {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    gap: 32px;
-    margin-bottom: 40px;
-  }
-
-  .stat-item {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-  }
-
-  .stat-number {
-    font-size: 2rem;
-    font-weight: 700;
-    font-family: 'JetBrains Mono', monospace;
-    transition: color 0.3s;
-  }
-
-  .stat-label {
-    font-size: 0.75rem;
-    color: var(--text-dim);
-    text-transform: uppercase;
-    letter-spacing: 0.05em;
-  }
-
-  .stat-divider {
-    width: 1px;
-    height: 40px;
-    background: var(--border-strong);
-  }
-
-  .hero-actions {
-    display: flex;
-    justify-content: center;
-    gap: 16px;
-  }
-
-  .btn {
-    display: inline-flex;
-    align-items: center;
-    gap: 8px;
-    padding: 12px 24px;
-    border-radius: 8px;
-    font-size: 0.9rem;
-    font-weight: 500;
-    text-decoration: none;
-    transition: all 0.3s;
-  }
-
-  .btn svg {
-    width: 18px;
-    height: 18px;
-  }
-
-  /* Section Common */
-  .section {
-    padding: 60px 0;
-    border-top: 1px solid var(--border-color);
-    transition: border-color 0.3s;
-  }
-
-  .section-header {
-    margin-bottom: 32px;
-  }
-
-  .section-tag {
-    display: inline-block;
-    font-size: 0.65rem;
-    font-weight: 600;
-    letter-spacing: 0.15em;
-    text-transform: uppercase;
-    margin-bottom: 8px;
-    transition: color 0.3s;
-  }
-
-  .section-title {
-    font-family: 'Noto Serif SC', serif;
-    font-size: 1.8rem;
-    font-weight: 600;
-    transition: color 0.3s;
-  }
-
-  /* Philosophy */
-  .philosophy-grid {
-    display: grid;
-    grid-template-columns: repeat(2, 1fr);
-    gap: 20px;
-  }
-
-  .philosophy-card {
-    padding: 24px;
-    border-radius: 12px;
-    border: 1px solid;
-    transition: all 0.3s;
-  }
-
-  .philosophy-card:hover {
-    transform: translateY(-4px);
-  }
-
-  .philosophy-icon {
-    font-size: 2rem;
-    margin-bottom: 16px;
-  }
-
-  .philosophy-card h3 {
-    font-size: 1.1rem;
-    font-weight: 600;
-    margin-bottom: 10px;
-    color: var(--text-primary);
-  }
-
-  .philosophy-card p {
-    font-size: 0.9rem;
-    line-height: 1.6;
-    color: var(--text-secondary);
-  }
-
-  /* Expertise */
-  .expertise-grid {
-    display: flex;
-    flex-direction: column;
-    gap: 16px;
-  }
-
-  .expertise-card.primary {
-    display: flex;
-    align-items: center;
-    gap: 20px;
-    padding: 24px;
-    border-radius: 12px;
-    border: 1px solid;
-    border-left-width: 4px;
-    text-decoration: none;
-    transition: all 0.3s;
-  }
-
-  .expertise-card.primary:hover {
-    transform: translateX(4px);
-  }
-
-  .expertise-card.small {
-    display: flex;
-    align-items: center;
-    gap: 16px;
-    padding: 16px 20px;
-    border-radius: 10px;
-    border: 1px solid;
-    text-decoration: none;
-    transition: all 0.3s;
-  }
-
-  .expertise-card.small:hover {
-    transform: translateY(-2px);
-  }
-
-  .expertise-icon {
-    font-size: 2.5rem;
-    flex-shrink: 0;
-  }
-
-  .expertise-card.small .expertise-icon {
-    font-size: 1.8rem;
-  }
-
-  .expertise-content h3,
-  .expertise-content h4 {
-    font-size: 1.1rem;
-    font-weight: 600;
-    margin-bottom: 6px;
-    color: var(--text-primary);
-  }
-
-  .expertise-content p {
-    font-size: 0.85rem;
-    color: var(--text-secondary);
-    margin-bottom: 8px;
-  }
-
-  .expertise-link {
-    font-size: 0.8rem;
-    font-weight: 500;
-    color: var(--accent-primary);
-  }
-
-  .expertise-row {
-    display: grid;
-    grid-template-columns: repeat(3, 1fr);
-    gap: 12px;
-  }
-
-  /* Projects */
-  .projects-showcase {
-    display: flex;
-    flex-direction: column;
-    gap: 24px;
-  }
-
-  .project-highlight {
-    padding: 28px;
-    border-radius: 12px;
-    border: 1px solid;
-    transition: all 0.3s;
-  }
-
-  .project-highlight:hover {
-    box-shadow: var(--shadow-md);
-  }
-
-  .project-header {
-    display: flex;
-    align-items: center;
-    gap: 12px;
-    margin-bottom: 12px;
-  }
-
-  .project-org {
-    font-size: 0.85rem;
-    font-weight: 600;
-    color: var(--accent-primary);
-  }
-
-  .project-tag {
-    font-size: 0.7rem;
-    padding: 4px 10px;
-    border-radius: 12px;
-    border: 1px solid;
-    transition: all 0.3s;
-  }
-
-  .project-name {
-    font-size: 1.3rem;
-    font-weight: 600;
-    margin-bottom: 10px;
-    color: var(--text-primary);
-  }
-
-  .project-desc {
-    font-size: 0.9rem;
-    line-height: 1.6;
-    margin-bottom: 16px;
-    color: var(--text-secondary);
-  }
-
-  .project-tools {
+  .hero-actions,
+  .global-actions {
     display: flex;
     flex-wrap: wrap;
-    gap: 8px;
+    gap: 12px;
+    margin-top: 24px;
   }
 
-  .tool-tag {
-    font-size: 0.75rem;
-    padding: 5px 12px;
-    border-radius: 6px;
-    border: 1px solid;
-    transition: all 0.3s;
+  .primary-btn,
+  .secondary-btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    min-height: 44px;
+    padding: 0 18px;
+    border-radius: 12px;
+    text-decoration: none;
+    border: 1px solid var(--border-strong);
+    font-weight: 600;
+    transition: transform 0.2s ease, box-shadow 0.2s ease, border-color 0.2s ease;
+  }
+  .primary-btn {
+    background: var(--jade);
+    color: #0d0f1a;
+    border-color: transparent;
+  }
+  .secondary-btn {
+    color: var(--text);
+    background: transparent;
+  }
+  .primary-btn:hover,
+  .secondary-btn:hover {
+    transform: translateY(-2px);
+    box-shadow: var(--shadow-md);
+    border-color: var(--jade);
   }
 
-  /* Knowledge Base */
-  .kb-grid {
+  .trust-pills {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+    margin-top: 22px;
+  }
+  .trust-pills span,
+  .proof-card,
+  .mini-card,
+  .offer-card,
+  .audience-card,
+  .global-card,
+  .connect-card,
+  .principle-item {
+    background: rgba(255, 255, 255, 0.02);
+    border: 1px solid var(--border);
+    border-radius: 18px;
+  }
+  .trust-pills span {
+    padding: 8px 14px;
+    color: var(--text-secondary);
+    font-size: 0.84rem;
+  }
+
+  .proof-strip {
+    padding: 16px;
     display: grid;
-    grid-template-columns: repeat(4, 1fr);
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+    gap: 14px;
+  }
+  .proof-card {
+    padding: 18px;
+  }
+  .proof-num {
+    display: block;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 1.6rem;
+    color: var(--jade);
+    margin-bottom: 6px;
+  }
+  .proof-label {
+    color: var(--text-dim);
+    font-size: 0.8rem;
+    line-height: 1.6;
+  }
+
+  .section-block {
+    padding: 34px 32px;
+  }
+  .section-heading {
+    margin-bottom: 22px;
+  }
+  .section-heading h2 {
+    margin: 0 0 10px;
+    font-family: 'Noto Serif SC', serif;
+    font-size: 1.7rem;
+    color: var(--text);
+  }
+
+  .story-layout,
+  .offer-grid,
+  .audience-grid,
+  .connect-grid {
+    display: grid;
     gap: 16px;
   }
 
-  .kb-card {
+  .story-layout {
+    grid-template-columns: 1.3fr 0.9fr;
+  }
+  .story-main {
     display: flex;
+    flex-direction: column;
+    gap: 16px;
+  }
+  .story-side {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+  }
+  .mini-card,
+  .offer-card,
+  .audience-card,
+  .global-card,
+  .principle-item {
+    padding: 22px;
+  }
+  .mini-card h3,
+  .offer-card h3,
+  .audience-card h3,
+  .principle-item h3,
+  .connect-card h3,
+  .timeline-head h3 {
+    margin: 0 0 10px;
+    color: var(--text);
+    font-size: 1.02rem;
+  }
+  .mini-card ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+  }
+  .mini-card li {
+    color: var(--text-secondary);
+    position: relative;
+    padding-left: 16px;
+    line-height: 1.7;
+  }
+  .mini-card li::before {
+    content: '';
+    position: absolute;
+    left: 0;
+    top: 11px;
+    width: 6px;
+    height: 6px;
+    border-radius: 50%;
+    background: var(--gold);
+  }
+
+  .offer-grid {
+    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  }
+  .offer-icon,
+  .principle-icon,
+  .connect-icon {
+    display: inline-flex;
     align-items: center;
+    justify-content: center;
+    width: 42px;
+    height: 42px;
+    border-radius: 14px;
+    background: rgba(94, 196, 182, 0.1);
+    margin-bottom: 14px;
+    font-size: 1.15rem;
+  }
+  .offer-card p,
+  .audience-card p,
+  .principle-item p,
+  .connect-card p {
+    margin: 0;
+    color: var(--text-secondary);
+    font-size: 0.9rem;
+    line-height: 1.8;
+  }
+
+  .audience-grid {
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  }
+
+  .principles-list {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+  }
+  .principle-item {
+    display: flex;
+    gap: 18px;
+    align-items: flex-start;
+  }
+  .principle-icon {
+    flex-shrink: 0;
+    margin-bottom: 0;
+  }
+
+  .timeline {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    gap: 18px;
+  }
+  .timeline::before {
+    content: '';
+    position: absolute;
+    left: 17px;
+    top: 10px;
+    bottom: 10px;
+    width: 2px;
+    background: linear-gradient(to bottom, var(--jade), rgba(201, 169, 110, 0.4));
+    opacity: 0.4;
+  }
+  .timeline-item {
+    position: relative;
+    padding-left: 44px;
+  }
+  .timeline-dot {
+    position: absolute;
+    left: 10px;
+    top: 8px;
+    width: 16px;
+    height: 16px;
+    border-radius: 50%;
+    background: var(--bg-secondary);
+    border: 3px solid var(--jade);
+    z-index: 1;
+  }
+  .timeline-content {
+    padding: 22px;
+    background: rgba(255, 255, 255, 0.02);
+    border: 1px solid var(--border);
+    border-radius: 18px;
+  }
+  .timeline-head {
+    display: flex;
+    align-items: baseline;
+    justify-content: space-between;
+    gap: 12px;
+    margin-bottom: 8px;
+  }
+  .timeline-head span {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.75rem;
+    color: var(--text-dim);
+  }
+  .timeline-sub {
+    margin-bottom: 8px !important;
+    color: var(--gold) !important;
+    font-size: 0.88rem;
+  }
+
+  .global-card {
+    display: flex;
+    flex-direction: column;
     gap: 14px;
-    padding: 18px;
-    border-radius: 10px;
-    border: 1px solid;
-    transition: all 0.3s;
   }
 
-  .kb-card:hover {
-    transform: translateY(-2px);
+  .connect-grid {
+    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
   }
-
-  .kb-icon {
-    font-size: 1.8rem;
+  .connect-card {
+    display: flex;
+    gap: 14px;
+    align-items: flex-start;
+    padding: 20px;
+    text-decoration: none;
+    transition: transform 0.2s ease, border-color 0.2s ease, box-shadow 0.2s ease;
+  }
+  .connect-card:hover {
+    transform: translateY(-3px);
+    border-color: var(--jade);
+    box-shadow: var(--shadow-md);
+  }
+  .connect-icon {
+    margin-bottom: 0;
     flex-shrink: 0;
   }
 
-  .kb-info h4 {
-    font-size: 0.9rem;
-    font-weight: 600;
-    margin-bottom: 4px;
-    color: var(--text-primary);
-  }
-
-  .kb-info p {
-    font-size: 0.75rem;
-    color: var(--text-dim);
-    margin-bottom: 6px;
-  }
-
-  .kb-count {
-    font-size: 0.7rem;
-    font-weight: 500;
-    padding: 3px 8px;
-    border-radius: 4px;
-    border: 1px solid;
-    font-family: 'JetBrains Mono', monospace;
-    transition: all 0.3s;
-  }
-
-  /* Connect */
-  .connect-grid {
-    display: grid;
-    grid-template-columns: repeat(4, 1fr);
-    gap: 16px;
-  }
-
-  .connect-card {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    gap: 8px;
-    padding: 24px 16px;
-    border-radius: 12px;
-    border: 1px solid;
-    text-decoration: none;
-    text-align: center;
-    transition: all 0.3s;
-  }
-
-  .connect-card:hover {
-    transform: translateY(-4px);
-  }
-
-  .connect-card svg {
-    width: 32px;
-    height: 32px;
-    color: var(--text-primary);
-  }
-
-  .connect-card .connect-icon {
-    font-size: 2rem;
-  }
-
-  .connect-card span {
-    font-size: 0.9rem;
-    font-weight: 500;
-    color: var(--text-primary);
-  }
-
-  .connect-card small {
-    font-size: 0.7rem;
-    color: var(--text-dim);
-  }
-
-  /* Quote */
-  .quote-section {
-    padding: 60px 0;
-    text-align: center;
-    border-top: 1px solid var(--border-color);
-    transition: border-color 0.3s;
-  }
-
-  .quote-section blockquote {
-    max-width: 600px;
-    margin: 0 auto;
-  }
-
-  .quote-section p {
-    font-family: 'Noto Serif SC', serif;
-    font-size: 1.4rem;
-    font-weight: 400;
-    line-height: 1.8;
-    margin-bottom: 16px;
-    color: var(--text-primary);
-  }
-
-  .quote-section cite {
-    font-size: 0.85rem;
-    color: var(--text-dim);
-    font-style: normal;
-  }
-
-  /* Responsive */
-  @media (max-width: 768px) {
-    .theme-switcher {
-      top: auto;
-      bottom: 20px;
-      right: 16px;
+  @media (max-width: 720px) {
+    .about-hero,
+    .section-block {
+      padding: 26px 22px;
+      border-radius: 20px;
     }
 
-    .hero-section { padding: 80px 0 40px; }
-    .hero-title { font-size: 2.5rem; }
-    .hero-stats { gap: 20px; }
-    .stat-number { font-size: 1.5rem; }
-    .philosophy-grid { grid-template-columns: 1fr; }
-    .expertise-row { grid-template-columns: 1fr; }
-    .kb-grid { grid-template-columns: repeat(2, 1fr); }
-    .connect-grid { grid-template-columns: repeat(2, 1fr); }
-  }
+    .proof-strip {
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      padding: 12px;
+    }
 
-  @media (max-width: 480px) {
-    .hero-section { padding: 70px 0 30px; }
-    .hero-title { font-size: 2rem; }
-    .hero-actions { flex-direction: column; }
-    .btn { width: 100%; justify-content: center; }
-    .kb-grid { grid-template-columns: 1fr; }
-    .connect-grid { grid-template-columns: 1fr; }
-    .theme-btn { padding: 6px 10px; font-size: 0.75rem; }
-    .theme-btn span { display: none; }
+    .story-layout {
+      grid-template-columns: 1fr;
+    }
+
+    .section-heading h2 {
+      font-size: 1.45rem;
+    }
+
+    .hero-actions,
+    .global-actions {
+      flex-direction: column;
+    }
+
+    .primary-btn,
+    .secondary-btn {
+      width: 100%;
+    }
+
+    .timeline-head,
+    .principle-item,
+    .connect-card {
+      flex-direction: column;
+      align-items: flex-start;
+    }
   }
 </style>
-
-<script>
-  function switchTheme(theme) {
-    const page = document.getElementById('aboutPage');
-    const buttons = document.querySelectorAll('.theme-btn');
-
-    page.setAttribute('data-theme', theme);
-
-    buttons.forEach(btn => {
-      if (btn.getAttribute('data-theme') === theme) {
-        btn.classList.add('active');
-      } else {
-        btn.classList.remove('active');
-      }
-    });
-
-    localStorage.setItem('about-theme', theme);
-  }
-
-  document.addEventListener('DOMContentLoaded', function() {
-    const savedTheme = localStorage.getItem('about-theme') || 'dark';
-    switchTheme(savedTheme);
-  });
-</script>

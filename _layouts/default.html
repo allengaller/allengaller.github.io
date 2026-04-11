@@ -1,18 +1,49 @@
 <!DOCTYPE html>
-<html lang="zh-CN" data-theme="dark">
+<html lang="{{ page.lang | default: site.lang | default: 'zh-CN' }}" data-theme="dark">
 <head>
+  {% assign meta_title = page.title | default: site.title %}
+  {% assign meta_description = page.description | default: site.description %}
+  {% assign canonical_url = page.url | absolute_url %}
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>{{ page.title | default: site.title }}</title>
-  <meta name="description" content="{{ site.description }}">
+  <title>{{ meta_title }}</title>
+  <meta name="description" content="{{ meta_description }}">
+  <meta name="robots" content="index,follow">
+  <meta name="theme-color" content="#0d0f1a">
+  <link rel="canonical" href="{{ canonical_url }}">
+
+  <meta property="og:site_name" content="{{ site.title }}">
+  <meta property="og:title" content="{{ meta_title }}">
+  <meta property="og:description" content="{{ meta_description }}">
+  <meta property="og:type" content="{% if page.url == '/' %}website{% else %}article{% endif %}">
+  <meta property="og:url" content="{{ canonical_url }}">
+  <meta property="og:locale" content="zh_CN">
+
+  <meta name="twitter:card" content="summary">
+  <meta name="twitter:title" content="{{ meta_title }}">
+  <meta name="twitter:description" content="{{ meta_description }}">
+
+  <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "Person",
+      "name": "{{ site.author.name }}",
+      "url": "{{ site.url }}",
+      "jobTitle": "{{ site.author.tagline }}",
+      "description": "{{ meta_description }}",
+      "sameAs": [
+        "{{ site.social.github }}",
+        "{{ site.social.links }}"
+      ]
+    }
+  </script>
+
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Noto+Serif+SC:wght@300;400;600;700&family=JetBrains+Mono:wght@300;400;500&family=Noto+Sans+SC:wght@300;400;500;600&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Serif+SC:wght@300;400;600;700&family=JetBrains+Mono:wght@300;400;500&family=Noto+Sans+SC:wght@300;400;500;600;700&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="{{ '/assets/css/corpus.css' | relative_url }}">
   <style>
-    /* ===== THEME VARIABLES ===== */
     :root {
-      /* Dark theme (default) */
       --jade: #5ec4b6;
       --jade-dark: #4a9e92;
       --gold: #c9a96e;
@@ -21,8 +52,8 @@
       --bg-primary: #0d0f1a;
       --bg-secondary: #141829;
       --bg-tertiary: #1a1e35;
-      --bg-card: rgba(20, 24, 41, 0.7);
-      --panel: rgba(14, 16, 30, 0.8);
+      --bg-card: rgba(20, 24, 41, 0.76);
+      --panel: rgba(14, 16, 30, 0.84);
       --border: rgba(94, 196, 182, 0.12);
       --border-strong: rgba(94, 196, 182, 0.25);
       --border-gold: rgba(201, 169, 110, 0.15);
@@ -52,7 +83,7 @@
       --bg-secondary: #ffffff;
       --bg-tertiary: #f0efe9;
       --bg-card: rgba(255, 255, 255, 0.9);
-      --panel: rgba(255, 255, 255, 0.7);
+      --panel: rgba(255, 255, 255, 0.76);
       --border: rgba(45, 138, 126, 0.15);
       --border-strong: rgba(45, 138, 126, 0.3);
       --border-gold: rgba(184, 148, 79, 0.2);
@@ -73,11 +104,11 @@
       scrollbar-width: thin;
       scrollbar-color: var(--jade) var(--bg-secondary);
     }
-    
+
     ::-webkit-scrollbar { width: 6px; }
     ::-webkit-scrollbar-track { background: var(--bg-secondary); }
-    ::-webkit-scrollbar-thumb { 
-      background: var(--jade); 
+    ::-webkit-scrollbar-thumb {
+      background: var(--jade);
       border-radius: 3px;
       opacity: 0.6;
     }
@@ -94,17 +125,15 @@
       transition: background-color var(--transition-slow), color var(--transition-slow);
     }
 
-    /* ===== AMBIENT BACKGROUND ===== */
     .ambient-bg {
       position: fixed; inset: 0; z-index: 0; pointer-events: none;
-      background: 
+      background:
         radial-gradient(ellipse 80% 50% at 50% -20%, var(--jade) 0%, transparent 50%),
         radial-gradient(ellipse 60% 40% at 80% 80%, var(--gold) 0%, transparent 40%);
       opacity: 0.03;
       filter: blur(60px);
     }
 
-    /* ===== TEXTURE OVERLAY ===== */
     .bg-texture {
       position: fixed; inset: 0; z-index: 1; pointer-events: none;
       opacity: 0.02;
@@ -112,7 +141,6 @@
       background-size: 300px 300px;
     }
 
-    /* ===== FLOATING PARTICLES ===== */
     .particles {
       position: fixed; inset: 0; z-index: 2; pointer-events: none; overflow: hidden;
     }
@@ -124,12 +152,11 @@
     }
     @keyframes float-particle {
       0% { transform: translateY(100vh) scale(0); opacity: 0; }
-      10% { opacity: 0.6; }
-      90% { opacity: 0.3; }
+      10% { opacity: 0.55; }
+      90% { opacity: 0.28; }
       100% { transform: translateY(-10vh) scale(1); opacity: 0; }
     }
 
-    /* ===== THEME TOGGLE ===== */
     .theme-toggle {
       position: fixed;
       top: 20px;
@@ -158,9 +185,7 @@
       fill: var(--gold);
       transition: transform var(--transition-base);
     }
-    .theme-toggle:hover svg {
-      transform: rotate(20deg);
-    }
+    .theme-toggle:hover svg { transform: rotate(20deg); }
     .theme-toggle span {
       font-family: 'JetBrains Mono', monospace;
       font-size: 0.7rem;
@@ -168,20 +193,20 @@
       letter-spacing: 1px;
     }
 
-    /* ===== HEADER ===== */
     .site-header {
-      position: relative; z-index: 10;
-      padding: 100px 24px 60px;
+      position: relative;
+      z-index: 10;
+      padding: 100px 24px 48px;
       text-align: center;
-      background: radial-gradient(ellipse at 50% 100%, var(--jade) 0%, transparent 60%);
-      background-size: 100% 50%;
+      background: radial-gradient(ellipse at 50% 100%, rgba(94, 196, 182, 0.22) 0%, transparent 62%);
+      background-size: 100% 55%;
       background-repeat: no-repeat;
     }
 
-    /* Ensō circle with enhanced animation */
     .enso {
-      width: 120px; height: 120px;
-      margin: 0 auto 32px;
+      width: 120px;
+      height: 120px;
+      margin: 0 auto 28px;
       position: relative;
     }
     .enso::before {
@@ -193,11 +218,10 @@
       opacity: 0.1;
       animation: enso-rotate 20s linear infinite;
     }
-    @keyframes enso-rotate {
-      to { transform: rotate(360deg); }
-    }
+    @keyframes enso-rotate { to { transform: rotate(360deg); } }
     .enso svg {
-      width: 100%; height: 100%;
+      width: 100%;
+      height: 100%;
       animation: enso-breathe 6s ease-in-out infinite;
       filter: drop-shadow(var(--glow-jade));
     }
@@ -222,7 +246,8 @@
     .site-title::after {
       content: '';
       display: block;
-      width: 60px; height: 2px;
+      width: 60px;
+      height: 2px;
       background: linear-gradient(90deg, transparent, var(--gold), transparent);
       margin: 20px auto 0;
       box-shadow: var(--glow-gold);
@@ -230,19 +255,22 @@
 
     .site-subtitle {
       font-family: 'JetBrains Mono', monospace;
-      font-size: 0.85rem;
-      font-weight: 400;
-      color: var(--text-dim);
-      margin-top: 24px;
-      letter-spacing: 4px;
+      font-size: 0.8rem;
+      font-weight: 500;
+      color: var(--jade);
+      margin-top: 22px;
+      letter-spacing: 2px;
       display: flex;
       align-items: center;
       justify-content: center;
       gap: 12px;
+      flex-wrap: wrap;
+      text-transform: uppercase;
     }
     .site-subtitle .zen-dot {
       display: inline-block;
-      width: 6px; height: 6px;
+      width: 6px;
+      height: 6px;
       background: var(--jade);
       border-radius: 50%;
       animation: dot-pulse 3s ease-in-out infinite;
@@ -253,55 +281,83 @@
       50% { opacity: 1; transform: scale(1.3); }
     }
 
-    /* ===== NAVIGATION ===== */
+    .site-description {
+      max-width: 760px;
+      margin: 18px auto 0;
+      color: var(--text-secondary);
+      font-size: 0.98rem;
+      line-height: 1.9;
+    }
+
+    .site-nav-wrap {
+      position: sticky;
+      top: 0;
+      z-index: 40;
+      padding: 0 20px 18px;
+      backdrop-filter: blur(14px);
+      background: linear-gradient(to bottom, rgba(13, 15, 26, 0.85), rgba(13, 15, 26, 0.35));
+    }
+    [data-theme="light"] .site-nav-wrap {
+      background: linear-gradient(to bottom, rgba(248, 247, 244, 0.9), rgba(248, 247, 244, 0.4));
+    }
     .site-nav {
-      position: relative; z-index: 10;
-      display: flex; justify-content: center; gap: 8px;
-      padding: 20px;
+      position: relative;
+      z-index: 10;
+      display: flex;
+      justify-content: center;
+      gap: 8px;
+      padding: 12px;
       margin: 0 auto;
-      max-width: 600px;
+      max-width: 780px;
+      flex-wrap: wrap;
+      background: var(--panel);
+      border: 1px solid var(--border);
+      border-radius: 999px;
+      box-shadow: var(--shadow-sm);
     }
     .site-nav a {
       font-family: 'JetBrains Mono', monospace;
-      font-size: 0.75rem; font-weight: 500;
+      font-size: 0.72rem;
+      font-weight: 500;
       color: var(--text-dim);
       text-decoration: none;
-      padding: 12px 24px;
+      padding: 10px 18px;
       transition: all var(--transition-base);
-      letter-spacing: 2px;
-      border-radius: var(--radius-sm);
+      letter-spacing: 1.8px;
+      border-radius: 999px;
       position: relative;
       overflow: hidden;
     }
     .site-nav a::before {
       content: '';
       position: absolute;
-      bottom: 0; left: 50%;
-      width: 0; height: 2px;
-      background: var(--jade);
-      transition: all var(--transition-base);
-      transform: translateX(-50%);
+      inset: 0;
+      border-radius: 999px;
+      background: rgba(94, 196, 182, 0.08);
+      opacity: 0;
+      transition: opacity var(--transition-base);
     }
-    .site-nav a:hover {
+    .site-nav a:hover,
+    .site-nav a.is-active {
       color: var(--jade);
-      background: rgba(94, 196, 182, 0.05);
     }
-    .site-nav a:hover::before {
-      width: 60%;
+    .site-nav a:hover::before,
+    .site-nav a.is-active::before {
+      opacity: 1;
     }
 
-    /* ===== MAIN CONTENT ===== */
     .site-main {
-      position: relative; z-index: 10;
-      max-width: 900px;
+      position: relative;
+      z-index: 10;
+      max-width: 1100px;
       margin: 0 auto;
-      padding: 60px 28px 100px;
+      padding: 40px 28px 100px;
     }
 
-    /* ===== CONTENT TYPOGRAPHY ===== */
     .content h1 {
       font-family: 'Noto Serif SC', serif;
-      font-size: 1.8rem; font-weight: 600;
+      font-size: 1.8rem;
+      font-weight: 600;
       color: var(--text);
       margin: 56px 0 24px;
       padding-bottom: 16px;
@@ -314,7 +370,8 @@
     .content h1::before {
       content: '';
       display: inline-block;
-      width: 10px; height: 10px;
+      width: 10px;
+      height: 10px;
       background: var(--jade);
       border-radius: 50%;
       box-shadow: var(--glow-jade);
@@ -323,7 +380,8 @@
 
     .content h2 {
       font-family: 'Noto Serif SC', serif;
-      font-size: 1.3rem; font-weight: 600;
+      font-size: 1.3rem;
+      font-weight: 600;
       color: var(--gold);
       margin: 40px 0 20px;
       padding-left: 20px;
@@ -333,20 +391,21 @@
 
     .content h3 {
       font-family: 'JetBrains Mono', monospace;
-      font-size: 1.1rem; font-weight: 500;
+      font-size: 1.1rem;
+      font-weight: 500;
       color: var(--jade);
       margin: 28px 0 12px;
       padding: 8px 0;
       border-bottom: 1px dashed var(--border);
     }
 
-    .content p { 
-      margin: 16px 0; 
+    .content p {
+      margin: 16px 0;
       color: var(--text-secondary);
       line-height: 1.9;
     }
-    .content strong { 
-      color: var(--jade); 
+    .content strong {
+      color: var(--jade);
       font-weight: 600;
       background: linear-gradient(120deg, transparent 0%, rgba(94, 196, 182, 0.1) 50%, transparent 100%);
       padding: 0 4px;
@@ -362,22 +421,20 @@
     .content a::after {
       content: '';
       position: absolute;
-      bottom: -2px; left: 0;
-      width: 0; height: 1px;
+      bottom: -2px;
+      left: 0;
+      width: 0;
+      height: 1px;
       background: var(--jade);
       transition: width var(--transition-base);
     }
-    .content a:hover {
-      color: var(--jade-dark);
-    }
-    .content a:hover::after {
-      width: 100%;
-    }
+    .content a:hover { color: var(--jade-dark); }
+    .content a:hover::after { width: 100%; }
 
-    .content ul, .content ol { 
-      padding-left: 0; 
-      list-style: none; 
-      margin: 16px 0; 
+    .content ul, .content ol {
+      padding-left: 0;
+      list-style: none;
+      margin: 16px 0;
     }
     .content li {
       padding: 8px 0 8px 28px;
@@ -386,25 +443,28 @@
     }
     .content li::before {
       content: '';
-      position: absolute; left: 8px; top: 16px;
-      width: 6px; height: 6px;
+      position: absolute;
+      left: 8px;
+      top: 16px;
+      width: 6px;
+      height: 6px;
       background: var(--gold);
       border-radius: 50%;
       opacity: 0.8;
     }
 
     .content hr {
-      border: none; height: 1px;
+      border: none;
+      height: 1px;
       background: linear-gradient(90deg, transparent, var(--border-gold), transparent);
       margin: 48px 0;
     }
 
-    /* ===== ENHANCED TABLE STYLING ===== */
-    .content table { 
-      width: 100%; 
+    .content table {
+      width: 100%;
       border-collapse: separate;
       border-spacing: 0;
-      margin: 24px 0; 
+      margin: 24px 0;
       font-size: 0.9rem;
       border-radius: var(--radius-md);
       overflow: hidden;
@@ -414,32 +474,27 @@
       font-family: 'JetBrains Mono', monospace;
       background: var(--bg-tertiary);
       color: var(--gold);
-      padding: 14px 18px; 
+      padding: 14px 18px;
       text-align: left;
-      font-size: 0.75rem; 
-      letter-spacing: 2px; 
+      font-size: 0.75rem;
+      letter-spacing: 2px;
       text-transform: uppercase;
       font-weight: 600;
       border-bottom: 2px solid var(--border-gold);
     }
-    .content td { 
-      padding: 14px 18px; 
+    .content td {
+      padding: 14px 18px;
       border-bottom: 1px solid var(--border);
       background: var(--bg-card);
     }
-    .content tr:hover td { 
-      background: rgba(94, 196, 182, 0.05);
-    }
-    .content tr:last-child td:first-child { border-bottom-left-radius: var(--radius-md); }
-    .content tr:last-child td:last-child { border-bottom-right-radius: var(--radius-md); }
+    .content tr:hover td { background: rgba(94, 196, 182, 0.05); }
 
-    /* ===== CODE BLOCKS ===== */
     .content code {
       font-family: 'JetBrains Mono', monospace;
       background: var(--bg-tertiary);
-      color: var(--jade); 
+      color: var(--jade);
       padding: 3px 8px;
-      border-radius: var(--radius-sm); 
+      border-radius: var(--radius-sm);
       font-size: 0.85em;
       border: 1px solid var(--border);
     }
@@ -447,22 +502,22 @@
       background: var(--bg-secondary);
       border: 1px solid var(--border);
       border-left: 3px solid var(--jade);
-      padding: 20px 24px; 
+      padding: 20px 24px;
       overflow-x: auto;
-      margin: 20px 0; 
+      margin: 20px 0;
       border-radius: var(--radius-md);
       box-shadow: var(--shadow-sm);
     }
-    .content pre code { 
-      background: none; 
-      padding: 0; 
+    .content pre code {
+      background: none;
+      padding: 0;
       border: none;
       color: var(--text-secondary);
     }
 
     .content blockquote {
       border-left: 3px solid var(--gold);
-      padding: 16px 28px; 
+      padding: 16px 28px;
       margin: 24px 0;
       background: var(--bg-tertiary);
       color: var(--text-dim);
@@ -471,9 +526,9 @@
       border-radius: 0 var(--radius-md) var(--radius-md) 0;
     }
 
-    /* ===== FOOTER ===== */
     .site-footer {
-      position: relative; z-index: 10;
+      position: relative;
+      z-index: 10;
       text-align: center;
       padding: 48px 24px;
       background: linear-gradient(to top, var(--bg-secondary), transparent);
@@ -490,33 +545,33 @@
       font-size: 1rem;
       color: var(--text-secondary);
       margin-bottom: 12px;
-      letter-spacing: 8px;
-      opacity: 0.7;
+      letter-spacing: 4px;
+      opacity: 0.82;
     }
 
-    /* ===== RESPONSIVE ===== */
-    @media (max-width: 600px) {
-      .site-header { padding: 70px 20px 45px; }
-      .enso { width: 90px; height: 90px; }
-      .site-main { padding: 40px 20px 70px; }
-      .site-nav a { font-size: 0.7rem; padding: 10px 16px; }
-      .content h1 { font-size: 1.4rem; }
-      .content h2 { font-size: 1.15rem; }
-      .theme-toggle { top: 12px; right: 12px; padding: 8px 12px; }
-    }
-
-    /* ===== ANIMATIONS ===== */
     .content { animation: fadeInUp 0.8s ease-out; }
     @keyframes fadeInUp {
       from { opacity: 0; transform: translateY(20px); }
       to { opacity: 1; transform: translateY(0); }
     }
 
-    /* Smooth theme transition for all elements */
     *, *::before, *::after {
-      transition: background-color var(--transition-slow), 
-                  border-color var(--transition-slow), 
-                  color var(--transition-fast);
+      transition: background-color var(--transition-slow), border-color var(--transition-slow), color var(--transition-fast);
+    }
+
+    @media (max-width: 720px) {
+      .site-header { padding: 74px 20px 36px; }
+      .enso { width: 92px; height: 92px; margin-bottom: 22px; }
+      .site-title { letter-spacing: 8px; }
+      .site-subtitle { font-size: 0.7rem; gap: 8px; }
+      .site-description { font-size: 0.9rem; }
+      .site-main { padding: 28px 20px 72px; }
+      .site-nav-wrap { padding: 0 12px 14px; }
+      .site-nav { border-radius: 20px; }
+      .site-nav a { font-size: 0.68rem; padding: 10px 14px; }
+      .content h1 { font-size: 1.4rem; }
+      .content h2 { font-size: 1.12rem; }
+      .theme-toggle { top: 12px; right: 12px; padding: 8px 12px; }
     }
   </style>
 </head>
@@ -525,10 +580,8 @@
   <div class="bg-texture"></div>
   <div class="particles" id="particles"></div>
 
-  <!-- Theme Toggle Button -->
   <button class="theme-toggle" id="themeToggle" aria-label="切换主题">
     <svg id="themeIcon" viewBox="0 0 24 24">
-      <!-- Moon icon for dark mode -->
       <path d="M12 3c.132 0 .263 0 .393 0a7.5 7.5 0 0 0 7.92 12.446a9 9 0 1 1-8.313-12.454z"/>
     </svg>
     <span id="themeText">DARK</span>
@@ -553,16 +606,21 @@
     <h1 class="site-title">{{ site.title }}</h1>
     <p class="site-subtitle">
       <span class="zen-dot"></span>
-      {{ site.description }}
+      {{ site.tagline }}
       <span class="zen-dot"></span>
     </p>
+    <p class="site-description">{{ site.description }}</p>
   </header>
 
-  <nav class="site-nav">
-    <a href="{{ '/topic/links/' | relative_url }}">LINKS</a>
-    <a href="https://github.com/allengaller" target="_blank">STUDIO</a>
-    <a href="{{ '/about' | relative_url }}">ABOUT</a>
-  </nav>
+  <div class="site-nav-wrap">
+    <nav class="site-nav">
+      <a href="{{ '/' | relative_url }}" class="{% if page.url == '/' %}is-active{% endif %}">HOME</a>
+      <a href="{{ '/projects/' | relative_url }}" class="{% if page.url contains '/projects/' %}is-active{% endif %}">PROJECTS</a>
+      <a href="{{ '/topic/links/' | relative_url }}" class="{% if page.url contains '/topic/links/' %}is-active{% endif %}">LINKS</a>
+      <a href="{{ '/about/' | relative_url }}" class="{% if page.url contains '/about' %}is-active{% endif %}">ABOUT</a>
+      <a href="{{ site.social.github }}" target="_blank" rel="noopener">GITHUB</a>
+    </nav>
+  </div>
 
   <main class="site-main">
     <div class="content">
@@ -571,32 +629,28 @@
   </main>
 
   <footer class="site-footer">
-    <p class="footer-zen">一念清净 · 万法归一</p>
+    <p class="footer-zen">Build in public · learn in public</p>
     <p>{{ site.title }} // {{ site.time | date: '%Y' }}</p>
   </footer>
 
   <script>
-    // Theme toggle functionality
     (function() {
       const html = document.documentElement;
       const toggle = document.getElementById('themeToggle');
       const icon = document.getElementById('themeIcon');
       const text = document.getElementById('themeText');
-      
-      // Check for saved theme preference or default to dark
       const savedTheme = localStorage.getItem('theme') || 'dark';
       html.setAttribute('data-theme', savedTheme);
       updateThemeUI(savedTheme);
-      
+
       toggle.addEventListener('click', function() {
         const currentTheme = html.getAttribute('data-theme');
         const newTheme = currentTheme === 'dark' ? 'light' : 'dark';
-        
         html.setAttribute('data-theme', newTheme);
         localStorage.setItem('theme', newTheme);
         updateThemeUI(newTheme);
       });
-      
+
       function updateThemeUI(theme) {
         if (theme === 'dark') {
           icon.innerHTML = '<path d="M12 3c.132 0 .263 0 .393 0a7.5 7.5 0 0 0 7.92 12.446a9 9 0 1 1-8.313-12.454z"/>';
@@ -606,17 +660,16 @@
           text.textContent = 'LIGHT';
         }
       }
-      
-      // Create floating particles
+
       const particles = document.getElementById('particles');
-      for (let i = 0; i < 20; i++) {
+      for (let i = 0; i < 18; i++) {
         const p = document.createElement('div');
         p.className = 'particle';
         p.style.left = Math.random() * 100 + '%';
         p.style.width = (2 + Math.random() * 3) + 'px';
         p.style.height = p.style.width;
         p.style.background = Math.random() > 0.5 ? 'var(--jade)' : 'var(--gold)';
-        p.style.animationDuration = (15 + Math.random() * 20) + 's';
+        p.style.animationDuration = (15 + Math.random() * 18) + 's';
         p.style.animationDelay = Math.random() * 15 + 's';
         particles.appendChild(p);
       }

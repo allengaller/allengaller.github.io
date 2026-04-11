@@ -1,5 +1,17 @@
-title: 法喜个人主页
-description: 云与禅
+title: 法喜
+tagline: Cloud Native SRE · AI Toolsmith · Knowledge Architect
+description: 高产开源黑客的个人品牌总入口，聚合 4500+ 文档、10+ 开源工具、内容矩阵与合作入口。
+lang: zh-CN
+url: https://allengaller.github.io
+
+author:
+  name: 法喜
+  tagline: Cloud Native SRE · AI Toolsmith · Knowledge Architect
+
+social:
+  github: https://github.com/allengaller
+  links: https://allengaller.github.io/topic/links/
+  about: https://allengaller.github.io/about/
 
 markdown: kramdown
 kramdown:
