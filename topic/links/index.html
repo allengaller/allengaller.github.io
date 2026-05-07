@@ -3,22 +3,23 @@ layout: default
 title: Links - 资源导航
 ---
 
-<div class="top-nav" id="topNav">
-  <div class="nav-inner">
-    <h1 class="nav-title">资源导航</h1>
-    <div class="search-box">
-      <input type="text" id="searchInput" placeholder="搜索..." onkeyup="filterLinks()">
-    </div>
-    <button class="back-to-top" id="backToTop" onclick="scrollToTop()">
-      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-        <polyline points="18 15 12 9 6 15"></polyline>
-      </svg>
-    </button>
+<!-- Fixed top search bar -->
+<div class="links-topbar">
+  <div class="links-topbar-inner">
+    <span class="links-topbar-title">Links</span>
+    <input type="text" id="searchInput" class="links-search" placeholder="Filter..." onkeyup="filterLinks()">
   </div>
-  <div class="section-nav" id="sectionNav"></div>
 </div>
 
-<div class="main-content">
+<!-- Three-column layout -->
+<div class="links-layout">
+  <!-- LEFT: category navigation -->
+  <aside class="links-left">
+    <nav class="links-nav" id="sectionNav"></nav>
+  </aside>
+
+  <!-- MIDDLE: all link content -->
+  <main class="links-main">
 <!-- 技术写作 -->
 <section class="section-block" id="技术写作">
   <h2 class="section-title">技术写作</h2>
@@ -1124,394 +1125,114 @@ title: Links - 资源导航
     <a href="https://aztec.network" class="tag" target="_blank">Aztec</a>
   </div>
 </section>
+  </main>
+  <div class="links-right"></div>
 </div>
 
 <style>
-  /* === Links 页面：使用主站 minimal dark theme === */
+  /* === Three-column layout === */
+  .links-topbar { position:fixed; top:0; left:0; right:0; z-index:1000; background:var(--bg); border-bottom:1px solid var(--border); }
+  .links-topbar-inner { display:flex; align-items:center; gap:12px; padding:10px 20px; max-width:100%; }
+  .links-topbar-title { font-family:monospace; font-size:0.68rem; color:var(--text-dim); letter-spacing:0.8px; }
+  .links-search { flex:1; max-width:240px; padding:6px 12px; border:1px solid var(--border); border-radius:6px; background:var(--surface); color:var(--text); font-size:0.75rem; font-family:monospace; outline:none; }
+  .links-search:focus { border-color:var(--accent); }
+  .links-search::placeholder { color:var(--text-dim); }
 
-  .top-nav {
-    position: fixed;
-    top: 0; left: 0; right: 0;
-    z-index: 1000;
-    background: var(--panel);
-    
-    border-bottom: 1px solid var(--border);
-    box-shadow: none;
-  }
+  /* Three-column grid */
+  .links-layout { display:grid; grid-template-columns:200px minmax(0,1fr) 80px; max-width:100%; margin:0 auto; padding-top:54px; min-height:100vh; }
 
-  .nav-inner {
-    display: flex;
-    align-items: center;
-    gap: 20px;
-    padding: 12px 24px;
-    max-width: 1400px;
-    margin: 0 auto;
-  }
+  /* LEFT: sticky category nav */
+  .links-left { position:sticky; top:54px; height:calc(100vh - 54px); overflow-y:auto; padding:16px 12px 40px 20px; border-right:1px solid var(--border); scrollbar-width:thin; scrollbar-color:var(--border) transparent; }
+  .links-nav { display:flex; flex-direction:column; gap:1px; }
+  .links-nav a { display:block; padding:5px 10px; font-size:0.72rem; font-family:monospace; color:var(--text-dim); text-decoration:none; border-radius:4px; white-space:nowrap; transition:color 0.1s,background 0.1s; }
+  .links-nav a:hover { color:var(--text); background:var(--hover); }
+  .links-nav a.active { color:var(--accent); background:var(--surface); }
+  .links-nav a.hidden-link { display:none; }
 
-  .nav-title {
-    font-family: 'Noto Serif SC', serif;
-    font-size: 1.05rem;
-    font-weight: 600;
-    color: var(--text);
-    margin: 0;
-    white-space: nowrap;
-  }
+  /* MIDDLE: content */
+  .links-main { padding:20px 24px 60px; min-width:0; }
 
-  .search-box {
-    flex: 1;
-    max-width: 280px;
-  }
-  .search-box input {
-    width: 100%;
-    padding: 10px 16px;
-    border: 1px solid var(--border-hover);
-    border-radius: 50px;
-    background: var(--surface);
-    color: var(--text);
-    font-size: 0.82rem;
-    font-family: 'JetBrains Mono', monospace;
-    transition: border-color var(--dur-fast);
-  }
-  .search-box input:focus {
-    outline: none;
-    border-color: var(--accent);
-    
-  }
-  .search-box input::placeholder {
-    color: var(--text-dim);
-  }
+  /* Section: flat rows, no cards */
+  .section-block { margin-bottom:24px; padding:0; background:none; border:none; border-radius:0; }
+  .section-title { font-size:0.78rem; font-weight:600; color:var(--text); margin:0 0 10px; padding:0; border:none; letter-spacing:0.3px; text-transform:uppercase; font-family:monospace; }
+  .section-title::before { display:none; }
 
-  .back-to-top {
-    width: 38px; height: 38px;
-    border: 1px solid var(--border);
-    border-radius: 50px;
-    background: var(--surface);
-    color: var(--text-dim);
-    cursor: pointer;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    transition: all var(--dur-fast);
-    flex-shrink: 0;
-  }
-  .back-to-top:hover {
-    border-color: var(--accent);
-    color: var(--accent);
-    
-  }
-  .back-to-top svg {
-    width: 16px; height: 16px;
-  }
-
-  .section-nav {
-    display: flex;
-    gap: 4px;
-    padding: 0 24px 10px;
-    max-width: 1400px;
-    margin: 0 auto;
-    overflow-x: auto;
-    scrollbar-width: thin;
-    scrollbar-color: var(--border) transparent;
-  }
-  .section-nav::-webkit-scrollbar { height: 4px; }
-  .section-nav::-webkit-scrollbar-track { background: transparent; }
-  .section-nav::-webkit-scrollbar-thumb {
-    background: var(--border);
-    border-radius: 2px;
-  }
-
-  .section-nav a {
-    font-family: 'JetBrains Mono', monospace;
-    font-size: 0.65rem;
-    color: var(--text-dim);
-    text-decoration: none;
-    padding: 5px 12px;
-    border-radius: 50px;
-    white-space: nowrap;
-    transition: all var(--dur-fast);
-    border: 1px solid transparent;
-  }
-  .section-nav a:hover {
-    background: var(--surface);
-    color: var(--accent);
-    border-color: var(--border);
-  }
-  .section-nav a.active {
-    background: var(--surface);
-    color: var(--accent);
-    border-color: var(--border-hover);
-  }
-
-  .main-content {
-    max-width: 1400px;
-    margin: 0 auto;
-    padding: 130px 28px 60px;
-  }
-
-  /* Section blocks override: use card style instead of white boxes */
-  .section-block {
-    margin-bottom: 32px;
-    padding: 32px;
-    background: var(--card);
-    border: 1px solid var(--border);
-    border-radius: 20px;
-    
-    box-shadow: none;
-  }
-  .section-block:last-child {
-    margin-bottom: 0;
-  }
-
-  .section-title {
-    font-family: 'Noto Serif SC', serif;
-    font-size: 1.15rem;
-    font-weight: 600;
-    color: var(--text-muted);
-    margin: 0 0 18px;
-    padding-bottom: 10px;
-    border-bottom: 1px solid var(--border);
-    letter-spacing: 2px;
-    display: flex;
-    align-items: center;
-    gap: 8px;
-  }
-  .section-title::before {
-    content: '';
-    display: inline-block;
-    width: 8px; height: 8px;
-    background: var(--text-muted);
-    border-radius: 50%;
-    flex-shrink: 0;
-  }
-
-  /* Feature link cards */
-  .link-cards {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-    gap: 12px;
-    margin-bottom: 8px;
-  }
-  .link-card {
-    display: flex;
-    align-items: flex-start;
-    gap: 14px;
-    padding: 18px 20px;
-    background: var(--surface);
-    border: 1px solid var(--border);
-    border-radius: 14px;
-    text-decoration: none;
-    transition: all var(--dur-base);
-  }
-  .link-card:hover {
-    border-color: var(--accent);
-    
-    
-  }
-  .link-card.feature {
-    border-left: 3px solid var(--accent);
-    
-  }
-  .link-card .card-icon {
-    font-size: 1.5rem;
-    flex-shrink: 0;
-    line-height: 1;
-  }
-  .link-card .card-name {
-    font-size: 0.95rem;
-    font-weight: 600;
-    color: var(--text);
-    display: block;
-    margin-bottom: 4px;
-  }
-  .link-card:hover .card-name {
-    color: var(--accent);
-  }
-  .link-card .card-desc {
-    font-size: 0.8rem;
-    color: var(--text-dim);
-    display: block;
-    line-height: 1.6;
-  }
+  /* Link cards (featured) */
+  .link-cards { display:flex; flex-wrap:wrap; gap:8px; margin-bottom:12px; }
+  .link-card { display:flex; align-items:center; gap:8px; padding:6px 14px; background:var(--surface); border:1px solid var(--border); border-radius:6px; text-decoration:none; transition:border-color 0.1s; }
+  .link-card:hover { border-color:var(--accent); }
+  .link-card.feature { border-left:3px solid var(--accent); }
+  .link-card .card-icon { font-size:1rem; flex-shrink:0; }
+  .link-card .card-name { font-size:0.82rem; font-weight:500; color:var(--text); }
+  .link-card:hover .card-name { color:var(--accent); }
+  .link-card .card-desc { font-size:0.7rem; color:var(--text-dim); }
 
   /* Tag rows */
-  .link-tags {
-    display: flex;
-    flex-wrap: wrap;
-    align-items: center;
-    gap: 8px;
-    margin-bottom: 10px;
-  }
-  .link-tags:last-child {
-    margin-bottom: 0;
-  }
+  .link-tags { display:flex; flex-wrap:wrap; align-items:baseline; gap:6px; margin-bottom:6px; }
+  .link-tags:last-child { margin-bottom:0; }
+  .tag-label { font-family:monospace; font-size:0.6rem; font-weight:600; color:var(--text-dim); padding:1px 0; flex-shrink:0; letter-spacing:0.5px; text-transform:uppercase; }
+  .tag { font-family:monospace; font-size:0.72rem; color:var(--text-muted); text-decoration:none; padding:2px 8px; border:1px solid var(--border); border-radius:4px; transition:border-color 0.1s,color 0.1s; white-space:nowrap; }
+  .tag:hover { border-color:var(--accent); color:var(--accent); }
+  .tag[target="_blank"]::after { content:"↗"; font-size:0.6rem; opacity:0.4; margin-left:2px; }
 
-  .tag-label {
-    font-family: 'JetBrains Mono', monospace;
-    font-size: 0.62rem;
-    font-weight: 600;
-    color: var(--accent);
-    background: var(--surface);
-    padding: 4px 10px;
-    border-radius: 50px;
-    border: 1px solid var(--border);
-    flex-shrink: 0;
-    letter-spacing: 1px;
-    text-transform: uppercase;
-  }
-  .tag-label.intl {
-    background: rgba(201, 169, 110, 0.12);
-    color: var(--text-muted);
-    border-color: var(--border);
-  }
-  .tag-label.cn {
-    background: rgba(212, 114, 106, 0.12);
-    color: var(--text-dim);
-    border-color: rgba(212, 114, 106, 0.2);
-  }
+  /* RIGHT: spacer */
+  .links-right { border-left:1px solid var(--border); min-height:100%; }
 
-  .tag {
-    font-family: 'JetBrains Mono', monospace;
-    font-size: 0.72rem;
-    color: var(--text-muted);
-    text-decoration: none;
-    padding: 6px 12px;
-    background: var(--surface);
-    border: 1px solid var(--border);
-    border-radius: 8px;
-    transition: all var(--dur-fast);
-    white-space: nowrap;
-  }
-  .tag:hover {
-    border-color: var(--accent);
-    color: var(--accent);
-    box-shadow: 0 0 12px var(--surface);
-    
-  }
-  .tag[target="_blank"]::after {
-    content: ' ↗';
-    font-size: 0.65rem;
-    opacity: 0.5;
-  }
-
-  @media (max-width: 768px) {
-    .nav-inner {
-      padding: 10px 16px;
-      gap: 12px;
-    }
-    .nav-title {
-      font-size: 0.9rem;
-    }
-    .search-box {
-      max-width: 160px;
-    }
-    .main-content {
-      padding: 120px 16px 40px;
-    }
-    .section-nav {
-      padding: 0 16px 10px;
-    }
-    .section-nav a {
-      font-size: 0.62rem;
-      padding: 4px 10px;
-    }
-    .section-block {
-      padding: 22px 18px;
-      border-radius: 16px;
-    }
-  }
-
-  @media (max-width: 480px) {
-    .nav-title { display: none; }
-    .search-box { max-width: 100px; }
-    .main-content { padding-top: 110px; }
-    .link-cards {
-      grid-template-columns: 1fr;
-    }
+  /* Mobile: collapse to single column */
+  @media (max-width:860px) {
+    .links-layout { grid-template-columns:1fr; }
+    .links-left { display:none; }
+    .links-right { display:none; }
+    .links-main { padding:16px; }
   }
 </style>
-
 <script>
   function filterLinks() {
-    const input = document.getElementById('searchInput');
-    const filter = input.value.toLowerCase();
-    const sections = document.querySelectorAll('.section-block');
-    const navLinks = document.querySelectorAll('.section-nav a');
-
-    sections.forEach((section) => {
-      const text = section.textContent.toLowerCase();
-      section.style.display = text.includes(filter) ? '' : 'none';
+    var input = document.getElementById('searchInput');
+    var filter = input.value.toLowerCase();
+    var sections = document.querySelectorAll('.section-block');
+    var navLinks = document.querySelectorAll('.links-nav a');
+    sections.forEach(function(s) {
+      s.style.display = s.textContent.toLowerCase().indexOf(filter) > -1 ? '' : 'none';
     });
-
-    navLinks.forEach((link) => {
-      const sectionId = link.getAttribute('href').substring(1);
-      const section = document.getElementById(sectionId);
-      if (section) {
-        link.style.display = section.style.display === 'none' ? 'none' : '';
-      }
+    navLinks.forEach(function(a) {
+      var sec = document.getElementById(a.getAttribute('href').substring(1));
+      if (sec) a.classList.toggle('hidden-link', sec.style.display === 'none');
     });
   }
-
-  function scrollToTop() {
-    window.scrollTo({ top: 0, behavior: 'smooth' });
-  }
-
-  function updateBackToTop() {
-    const btn = document.getElementById('backToTop');
-    if (window.scrollY > 400) {
-      btn.style.opacity = '1';
-      btn.style.pointerEvents = 'auto';
-    } else {
-      btn.style.opacity = '0.3';
-      btn.style.pointerEvents = 'none';
-    }
-  }
-
   document.addEventListener('DOMContentLoaded', function() {
-    const nav = document.getElementById('sectionNav');
-    const titles = [
-      { name: '技术写作', id: '技术写作' },
-      { name: '云原生', id: '云原生' },
-      { name: '数据', id: '数据' },
-      { name: '架构', id: '架构' },
-      { name: '编程语言', id: '编程语言' },
-      { name: 'AI', id: 'AI' },
-      { name: 'AI社区', id: 'AI社区' },
-      { name: 'AI开源', id: 'AI开源' },
-      { name: 'Agentic', id: 'Agentic' },
-      { name: 'Vibe Coding', id: 'VibeCoding' },
-      { name: 'Agent Harness', id: 'AgentHarness' },
-      { name: 'LLM', id: 'LLM' },
-      { name: 'Prompt', id: 'Prompt' },
-      { name: '多模态', id: '多模态' },
-      { name: 'AI产品', id: 'AI产品' },
-      { name: 'AI学习', id: 'AI学习' },
-      { name: 'AI基础设施', id: 'AI基础设施' },
-      { name: 'AI研究', id: 'AI研究' },
-      { name: '工具箱', id: '工具箱' },
-      { name: '架构师', id: '架构师' },
-      { name: '安全', id: '安全' },
-      { name: 'SRE', id: 'SRE' },
-      { name: '数据工程', id: '数据工程' },
-      { name: 'IoT', id: 'IoT' },
-      { name: '低代码', id: '低代码' },
-      { name: 'Web3', id: 'Web3' },
-      { name: '开源社区', id: '开源社区' },
-      { name: '播客', id: '播客' },
-      { name: '博客', id: '博客' },
-      { name: '招聘', id: '招聘' },
-      { name: '媒体', id: '媒体' },
-      { name: '基金会', id: '基金会' },
-      { name: '隐私计算', id: '隐私计算' }
+    var nav = document.getElementById('sectionNav');
+    var titles = [
+      {name:'技术写作',id:'技术写作'},{name:'云原生',id:'云原生'},{name:'数据',id:'数据'},
+      {name:'架构',id:'架构'},{name:'编程语言',id:'编程语言'},{name:'AI',id:'AI'},
+      {name:'AI社区',id:'AI社区'},{name:'AI开源',id:'AI开源'},{name:'Agentic',id:'Agentic'},
+      {name:'Vibe Coding',id:'VibeCoding'},{name:'Agent Harness',id:'AgentHarness'},
+      {name:'LLM',id:'LLM'},{name:'Prompt',id:'Prompt'},{name:'多模态',id:'多模态'},
+      {name:'AI产品',id:'AI产品'},{name:'AI学习',id:'AI学习'},{name:'AI基础设施',id:'AI基础设施'},
+      {name:'AI研究',id:'AI研究'},{name:'工具箱',id:'工具箱'},{name:'架构师',id:'架构师'},
+      {name:'安全',id:'安全'},{name:'SRE',id:'SRE'},{name:'数据工程',id:'数据工程'},
+      {name:'IoT',id:'IoT'},{name:'低代码',id:'低代码'},{name:'Web3',id:'Web3'},
+      {name:'开源社区',id:'开源社区'},{name:'播客',id:'播客'},{name:'博客',id:'博客'},
+      {name:'招聘',id:'招聘'},{name:'媒体',id:'媒体'},{name:'基金会',id:'基金会'},
+      {name:'隐私计算',id:'隐私计算'}
     ];
-
-    titles.forEach((t) => {
-      const a = document.createElement('a');
+    titles.forEach(function(t) {
+      var a = document.createElement('a');
       a.href = '#' + t.id;
       a.textContent = t.name;
       nav.appendChild(a);
     });
-
-    updateBackToTop();
-    window.addEventListener('scroll', updateBackToTop);
+    var links = nav.querySelectorAll('a');
+    var sections = document.querySelectorAll('.section-block');
+    var observer = new IntersectionObserver(function(entries) {
+      entries.forEach(function(e) {
+        if (e.isIntersecting) {
+          links.forEach(function(a) { a.classList.remove('active'); });
+          var active = nav.querySelector('a[href="#' + e.target.id + '"]');
+          if (active) active.classList.add('active');
+        }
+      });
+    }, { rootMargin: '-20% 0px -70% 0px' });
+    sections.forEach(function(s) { observer.observe(s); });
   });
 </script>
