@@ -1135,8 +1135,8 @@ title: Links - 资源导航
     z-index: 1000;
     background: var(--panel);
     backdrop-filter: blur(16px);
-    border-bottom: 1px solid var(--border);
-    box-shadow: var(--shadow-md);
+    border-bottom: 1px solid var(--border-default);
+    box-shadow: var(--shadow-2);
   }
 
   .nav-inner {
@@ -1152,7 +1152,7 @@ title: Links - 资源导航
     font-family: 'Noto Serif SC', serif;
     font-size: 1.05rem;
     font-weight: 600;
-    color: var(--text);
+    color: var(--text-primary);
     margin: 0;
     white-space: nowrap;
   }
@@ -1166,11 +1166,11 @@ title: Links - 资源导航
     padding: 10px 16px;
     border: 1px solid var(--border-strong);
     border-radius: 50px;
-    background: var(--bg-tertiary);
-    color: var(--text);
+    background: var(--bg-layer-2);
+    color: var(--text-primary);
     font-size: 0.82rem;
     font-family: 'JetBrains Mono', monospace;
-    transition: border-color var(--transition-fast);
+    transition: border-color var(--dur-fast);
   }
   .search-box input:focus {
     outline: none;
@@ -1183,15 +1183,15 @@ title: Links - 资源导航
 
   .back-to-top {
     width: 38px; height: 38px;
-    border: 1px solid var(--border);
+    border: 1px solid var(--border-default);
     border-radius: 50px;
-    background: var(--bg-tertiary);
+    background: var(--bg-layer-2);
     color: var(--text-dim);
     cursor: pointer;
     display: flex;
     align-items: center;
     justify-content: center;
-    transition: all var(--transition-fast);
+    transition: all var(--dur-fast);
     flex-shrink: 0;
   }
   .back-to-top:hover {
@@ -1216,7 +1216,7 @@ title: Links - 资源导航
   .section-nav::-webkit-scrollbar { height: 4px; }
   .section-nav::-webkit-scrollbar-track { background: transparent; }
   .section-nav::-webkit-scrollbar-thumb {
-    background: var(--border);
+    background: var(--border-default);
     border-radius: 2px;
   }
 
@@ -1228,13 +1228,13 @@ title: Links - 资源导航
     padding: 5px 12px;
     border-radius: 50px;
     white-space: nowrap;
-    transition: all var(--transition-fast);
+    transition: all var(--dur-fast);
     border: 1px solid transparent;
   }
   .section-nav a:hover {
     background: rgba(94, 196, 182, 0.1);
     color: var(--jade);
-    border-color: var(--border);
+    border-color: var(--border-default);
   }
   .section-nav a.active {
     background: rgba(94, 196, 182, 0.12);
@@ -1253,10 +1253,10 @@ title: Links - 资源导航
     margin-bottom: 32px;
     padding: 32px;
     background: var(--bg-card);
-    border: 1px solid var(--border);
+    border: 1px solid var(--border-default);
     border-radius: 20px;
     backdrop-filter: blur(8px);
-    box-shadow: var(--shadow-sm);
+    box-shadow: var(--shadow-1);
   }
   .section-block:last-child {
     margin-bottom: 0;
@@ -1297,14 +1297,14 @@ title: Links - 资源导航
     gap: 14px;
     padding: 18px 20px;
     background: rgba(94, 196, 182, 0.04);
-    border: 1px solid var(--border);
+    border: 1px solid var(--border-default);
     border-radius: 14px;
     text-decoration: none;
-    transition: all var(--transition-base);
+    transition: all var(--dur-base);
   }
   .link-card:hover {
     border-color: var(--jade);
-    box-shadow: var(--shadow-md), var(--glow-jade);
+    box-shadow: var(--shadow-2), var(--glow-jade);
     transform: translateY(-2px);
   }
   .link-card.feature {
@@ -1319,7 +1319,7 @@ title: Links - 资源导航
   .link-card .card-name {
     font-size: 0.95rem;
     font-weight: 600;
-    color: var(--text);
+    color: var(--text-primary);
     display: block;
     margin-bottom: 4px;
   }
@@ -1353,7 +1353,7 @@ title: Links - 资源导航
     background: rgba(94, 196, 182, 0.12);
     padding: 4px 10px;
     border-radius: 50px;
-    border: 1px solid var(--border);
+    border: 1px solid var(--border-default);
     flex-shrink: 0;
     letter-spacing: 1px;
     text-transform: uppercase;
@@ -1375,10 +1375,10 @@ title: Links - 资源导航
     color: var(--text-secondary);
     text-decoration: none;
     padding: 6px 12px;
-    background: var(--bg-tertiary);
-    border: 1px solid var(--border);
+    background: var(--bg-layer-2);
+    border: 1px solid var(--border-default);
     border-radius: 8px;
-    transition: all var(--transition-fast);
+    transition: all var(--dur-fast);
     white-space: nowrap;
   }
   .tag:hover {
