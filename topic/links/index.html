@@ -1127,16 +1127,16 @@ title: Links - 资源导航
 </div>
 
 <style>
-  /* === Links 页面：使用主站 jade/gold 暗色主题 === */
+  /* === Links 页面：使用主站 minimal dark theme === */
 
   .top-nav {
     position: fixed;
     top: 0; left: 0; right: 0;
     z-index: 1000;
     background: var(--panel);
-    backdrop-filter: blur(16px);
-    border-bottom: 1px solid var(--border-default);
-    box-shadow: var(--shadow-2);
+    
+    border-bottom: 1px solid var(--border);
+    box-shadow: none;
   }
 
   .nav-inner {
@@ -1152,7 +1152,7 @@ title: Links - 资源导航
     font-family: 'Noto Serif SC', serif;
     font-size: 1.05rem;
     font-weight: 600;
-    color: var(--text-primary);
+    color: var(--text);
     margin: 0;
     white-space: nowrap;
   }
@@ -1164,18 +1164,18 @@ title: Links - 资源导航
   .search-box input {
     width: 100%;
     padding: 10px 16px;
-    border: 1px solid var(--border-strong);
+    border: 1px solid var(--border-hover);
     border-radius: 50px;
-    background: var(--bg-layer-2);
-    color: var(--text-primary);
+    background: var(--surface);
+    color: var(--text);
     font-size: 0.82rem;
     font-family: 'JetBrains Mono', monospace;
     transition: border-color var(--dur-fast);
   }
   .search-box input:focus {
     outline: none;
-    border-color: var(--jade);
-    box-shadow: var(--glow-jade);
+    border-color: var(--accent);
+    
   }
   .search-box input::placeholder {
     color: var(--text-dim);
@@ -1183,9 +1183,9 @@ title: Links - 资源导航
 
   .back-to-top {
     width: 38px; height: 38px;
-    border: 1px solid var(--border-default);
+    border: 1px solid var(--border);
     border-radius: 50px;
-    background: var(--bg-layer-2);
+    background: var(--surface);
     color: var(--text-dim);
     cursor: pointer;
     display: flex;
@@ -1195,9 +1195,9 @@ title: Links - 资源导航
     flex-shrink: 0;
   }
   .back-to-top:hover {
-    border-color: var(--jade);
-    color: var(--jade);
-    box-shadow: var(--glow-jade);
+    border-color: var(--accent);
+    color: var(--accent);
+    
   }
   .back-to-top svg {
     width: 16px; height: 16px;
@@ -1216,7 +1216,7 @@ title: Links - 资源导航
   .section-nav::-webkit-scrollbar { height: 4px; }
   .section-nav::-webkit-scrollbar-track { background: transparent; }
   .section-nav::-webkit-scrollbar-thumb {
-    background: var(--border-default);
+    background: var(--border);
     border-radius: 2px;
   }
 
@@ -1232,14 +1232,14 @@ title: Links - 资源导航
     border: 1px solid transparent;
   }
   .section-nav a:hover {
-    background: rgba(94, 196, 182, 0.1);
-    color: var(--jade);
-    border-color: var(--border-default);
+    background: var(--surface);
+    color: var(--accent);
+    border-color: var(--border);
   }
   .section-nav a.active {
-    background: rgba(94, 196, 182, 0.12);
-    color: var(--jade);
-    border-color: var(--border-strong);
+    background: var(--surface);
+    color: var(--accent);
+    border-color: var(--border-hover);
   }
 
   .main-content {
@@ -1252,11 +1252,11 @@ title: Links - 资源导航
   .section-block {
     margin-bottom: 32px;
     padding: 32px;
-    background: var(--bg-card);
-    border: 1px solid var(--border-default);
+    background: var(--card);
+    border: 1px solid var(--border);
     border-radius: 20px;
-    backdrop-filter: blur(8px);
-    box-shadow: var(--shadow-1);
+    
+    box-shadow: none;
   }
   .section-block:last-child {
     margin-bottom: 0;
@@ -1266,10 +1266,10 @@ title: Links - 资源导航
     font-family: 'Noto Serif SC', serif;
     font-size: 1.15rem;
     font-weight: 600;
-    color: var(--gold);
+    color: var(--text-muted);
     margin: 0 0 18px;
     padding-bottom: 10px;
-    border-bottom: 1px solid var(--border-gold);
+    border-bottom: 1px solid var(--border);
     letter-spacing: 2px;
     display: flex;
     align-items: center;
@@ -1279,7 +1279,7 @@ title: Links - 资源导航
     content: '';
     display: inline-block;
     width: 8px; height: 8px;
-    background: var(--gold);
+    background: var(--text-muted);
     border-radius: 50%;
     flex-shrink: 0;
   }
@@ -1296,20 +1296,20 @@ title: Links - 资源导航
     align-items: flex-start;
     gap: 14px;
     padding: 18px 20px;
-    background: rgba(94, 196, 182, 0.04);
-    border: 1px solid var(--border-default);
+    background: var(--surface);
+    border: 1px solid var(--border);
     border-radius: 14px;
     text-decoration: none;
     transition: all var(--dur-base);
   }
   .link-card:hover {
-    border-color: var(--jade);
-    box-shadow: var(--shadow-2), var(--glow-jade);
-    transform: translateY(-2px);
+    border-color: var(--accent);
+    
+    
   }
   .link-card.feature {
-    border-left: 3px solid var(--jade);
-    background: linear-gradient(135deg, rgba(94, 196, 182, 0.06), rgba(94, 196, 182, 0.02));
+    border-left: 3px solid var(--accent);
+    
   }
   .link-card .card-icon {
     font-size: 1.5rem;
@@ -1319,12 +1319,12 @@ title: Links - 资源导航
   .link-card .card-name {
     font-size: 0.95rem;
     font-weight: 600;
-    color: var(--text-primary);
+    color: var(--text);
     display: block;
     margin-bottom: 4px;
   }
   .link-card:hover .card-name {
-    color: var(--jade);
+    color: var(--accent);
   }
   .link-card .card-desc {
     font-size: 0.8rem;
@@ -1349,43 +1349,43 @@ title: Links - 资源导航
     font-family: 'JetBrains Mono', monospace;
     font-size: 0.62rem;
     font-weight: 600;
-    color: var(--jade);
-    background: rgba(94, 196, 182, 0.12);
+    color: var(--accent);
+    background: var(--surface);
     padding: 4px 10px;
     border-radius: 50px;
-    border: 1px solid var(--border-default);
+    border: 1px solid var(--border);
     flex-shrink: 0;
     letter-spacing: 1px;
     text-transform: uppercase;
   }
   .tag-label.intl {
     background: rgba(201, 169, 110, 0.12);
-    color: var(--gold);
-    border-color: var(--border-gold);
+    color: var(--text-muted);
+    border-color: var(--border);
   }
   .tag-label.cn {
     background: rgba(212, 114, 106, 0.12);
-    color: var(--coral);
+    color: var(--text-dim);
     border-color: rgba(212, 114, 106, 0.2);
   }
 
   .tag {
     font-family: 'JetBrains Mono', monospace;
     font-size: 0.72rem;
-    color: var(--text-secondary);
+    color: var(--text-muted);
     text-decoration: none;
     padding: 6px 12px;
-    background: var(--bg-layer-2);
-    border: 1px solid var(--border-default);
+    background: var(--surface);
+    border: 1px solid var(--border);
     border-radius: 8px;
     transition: all var(--dur-fast);
     white-space: nowrap;
   }
   .tag:hover {
-    border-color: var(--jade);
-    color: var(--jade);
-    box-shadow: 0 0 12px rgba(94, 196, 182, 0.15);
-    transform: translateY(-1px);
+    border-color: var(--accent);
+    color: var(--accent);
+    box-shadow: 0 0 12px var(--surface);
+    
   }
   .tag[target="_blank"]::after {
     content: ' ↗';

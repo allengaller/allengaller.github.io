@@ -22,16 +22,16 @@
   width: 240px; height: 1px;
 }
 .corpus-hero.music::before {
-  background: radial-gradient(ellipse 70% 60% at 50% 0%, rgba(94, 196, 182, 0.18) 0%, transparent 70%);
+  background: radial-gradient(ellipse 70% 60% at 50% 0%, var(--surface) 0%, transparent 70%);
 }
 .corpus-hero.music::after {
-  background: linear-gradient(90deg, transparent, var(--gold), transparent);
+  background: linear-gradient(90deg, transparent, var(--text-muted), transparent);
 }
 .corpus-hero.fat::before {
-  background: radial-gradient(ellipse 70% 60% at 50% 0%, rgba(212, 114, 106, 0.15) 0%, transparent 70%);
+  background: radial-gradient(ellipse 70% 60% at 50% 0%, var(--surface) 0%, transparent 70%);
 }
 .corpus-hero.fat::after {
-  background: linear-gradient(90deg, transparent, var(--coral), transparent);
+  background: linear-gradient(90deg, transparent, var(--text-dim), transparent);
 }
 
 /* Floating orb decorations */
@@ -44,10 +44,10 @@
   animation: orbFloat 8s ease-in-out infinite;
 }
 .corpus-hero.music .orb {
-  background: var(--jade);
+  background: var(--accent);
 }
 .corpus-hero.fat .orb {
-  background: var(--coral);
+  background: var(--text-dim);
 }
 .corpus-hero .orb-1 {
   width: 300px; height: 300px;
@@ -88,20 +88,20 @@
   animation: fadeInDown 0.8s ease-out;
 }
 .corpus-hero.music .corpus-badge {
-  background: rgba(94, 196, 182, 0.12);
-  border: 1px solid rgba(94, 196, 182, 0.3);
-  color: var(--jade);
+  background: var(--surface);
+  border: 1px solid var(--surface);
+  color: var(--accent);
 }
 .corpus-hero.fat .corpus-badge {
-  background: rgba(212, 114, 106, 0.12);
-  border: 1px solid rgba(212, 114, 106, 0.3);
-  color: var(--coral);
+  background: var(--surface);
+  border: 1px solid var(--surface);
+  color: var(--text-dim);
 }
 .corpus-badge svg {
   width: 16px; height: 16px;
 }
-.corpus-hero.music .corpus-badge svg { fill: var(--jade); }
-.corpus-hero.fat .corpus-badge svg { fill: var(--coral); }
+.corpus-hero.music .corpus-badge svg { fill: var(--accent); }
+.corpus-hero.fat .corpus-badge svg { fill: var(--text-dim); }
 
 /* Hero Title */
 .corpus-hero h1 {
@@ -115,13 +115,13 @@
   animation: fadeInUp 0.9s ease-out;
 }
 .corpus-hero.music h1 {
-  background: linear-gradient(135deg, var(--text) 0%, var(--jade) 40%, var(--gold) 100%);
+  background: linear-gradient(135deg, var(--text) 0%, var(--accent) 40%, var(--text-muted) 100%);
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
   background-clip: text;
 }
 .corpus-hero.fat h1 {
-  background: linear-gradient(135deg, var(--text) 0%, var(--coral) 40%, var(--gold) 100%);
+  background: linear-gradient(135deg, var(--text) 0%, var(--text-dim) 40%, var(--text-muted) 100%);
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
   background-clip: text;
@@ -130,7 +130,7 @@
 /* Hero Description */
 .corpus-hero-desc {
   font-size: 1.1rem;
-  color: var(--text-secondary);
+  color: var(--text-muted);
   max-width: 640px;
   margin: 0 auto;
   line-height: 1.9;
@@ -169,8 +169,8 @@
   display: block;
   line-height: 1.2;
 }
-.corpus-hero.music .corpus-stat-num { color: var(--jade); }
-.corpus-hero.fat .corpus-stat-num { color: var(--coral); }
+.corpus-hero.music .corpus-stat-num { color: var(--accent); }
+.corpus-hero.fat .corpus-stat-num { color: var(--text-dim); }
 .corpus-stat-label {
   font-size: 0.7rem;
   color: var(--text-dim);
@@ -185,16 +185,16 @@
   align-items: center;
   gap: 12px;
   padding: 16px 32px;
-  background: var(--bg-card);
+  background: var(--card);
   border: 1px solid var(--border);
-  border-radius: var(--radius-md);
+  border-radius: var(--radius);
   color: var(--text);
   text-decoration: none;
   font-family: 'JetBrains Mono', monospace;
   font-size: 0.85rem;
   margin-top: 40px;
   transition: all 0.35s ease;
-  backdrop-filter: blur(12px);
+  
   position: relative;
   z-index: 2;
   animation: fadeInUp 0.9s ease-out 0.45s both;
@@ -208,12 +208,12 @@
   transform: translateY(-4px);
 }
 .corpus-hero.music .corpus-github-btn:hover {
-  border-color: var(--jade);
-  box-shadow: var(--shadow-lg), 0 0 50px rgba(94, 196, 182, 0.2);
+  border-color: var(--accent);
+  box-shadow: none, 0 0 50px var(--surface);
 }
 .corpus-hero.fat .corpus-github-btn:hover {
-  border-color: var(--coral);
-  box-shadow: var(--shadow-lg), 0 0 50px rgba(212, 114, 106, 0.2);
+  border-color: var(--text-dim);
+  box-shadow: none, 0 0 50px var(--surface);
 }
 .corpus-github-btn:hover svg {
   transform: scale(1.1);
@@ -233,16 +233,16 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  background: var(--bg-tertiary);
-  border-radius: var(--radius-md);
+  background: var(--surface);
+  border-radius: var(--radius);
   border: 1px solid var(--border);
   flex-shrink: 0;
 }
 .corpus-section-icon svg {
   width: 22px; height: 22px;
 }
-.corpus-hero.music ~ .content .corpus-section-icon svg { fill: var(--gold); }
-.corpus-hero.fat ~ .content .corpus-section-icon svg { fill: var(--coral); }
+.corpus-hero.music ~ .content .corpus-section-icon svg { fill: var(--text-muted); }
+.corpus-hero.fat ~ .content .corpus-section-icon svg { fill: var(--text-dim); }
 .corpus-section-title h2 {
   font-family: 'Noto Serif SC', serif;
   font-size: 1.4rem;
@@ -264,7 +264,7 @@
 
 /* Module Card */
 .corpus-module-card {
-  background: var(--bg-card);
+  background: var(--card);
   border: 1px solid var(--border);
   border-radius: var(--radius-lg);
   padding: 28px;
@@ -272,7 +272,7 @@
   transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
   position: relative;
   overflow: hidden;
-  backdrop-filter: blur(12px);
+  
 }
 .corpus-module-card::before {
   content: '';
@@ -296,25 +296,25 @@
 
 /* Card color variants */
 .corpus-module-card.jade-accent::before {
-  background: linear-gradient(90deg, var(--jade), var(--gold));
+  background: linear-gradient(90deg, var(--accent), var(--text-muted));
 }
 .corpus-module-card.jade-accent:hover {
-  border-color: rgba(94, 196, 182, 0.35);
-  box-shadow: var(--shadow-lg), 0 0 60px rgba(94, 196, 182, 0.12);
+  border-color: var(--surface);
+  box-shadow: none, 0 0 60px var(--surface);
 }
 .corpus-module-card.coral-accent::before {
-  background: linear-gradient(90deg, var(--coral), var(--gold));
+  background: linear-gradient(90deg, var(--text-dim), var(--text-muted));
 }
 .corpus-module-card.coral-accent:hover {
-  border-color: rgba(212, 114, 106, 0.35);
-  box-shadow: var(--shadow-lg), 0 0 60px rgba(212, 114, 106, 0.12);
+  border-color: var(--surface);
+  box-shadow: none, 0 0 60px var(--surface);
 }
 .corpus-module-card.green-accent::before {
-  background: linear-gradient(90deg, var(--jade), var(--coral));
+  background: linear-gradient(90deg, var(--accent), var(--text-dim));
 }
 .corpus-module-card.green-accent:hover {
-  border-color: rgba(94, 196, 182, 0.35);
-  box-shadow: var(--shadow-lg), 0 0 60px rgba(94, 196, 182, 0.12);
+  border-color: var(--surface);
+  box-shadow: none, 0 0 60px var(--surface);
 }
 
 /* Card Number */
@@ -325,9 +325,9 @@
   margin-bottom: 14px;
   opacity: 0.7;
 }
-.corpus-module-card.jade-accent .card-num { color: var(--jade); }
-.corpus-module-card.coral-accent .card-num { color: var(--coral); }
-.corpus-module-card.green-accent .card-num { color: var(--jade); }
+.corpus-module-card.jade-accent .card-num { color: var(--accent); }
+.corpus-module-card.coral-accent .card-num { color: var(--text-dim); }
+.corpus-module-card.green-accent .card-num { color: var(--accent); }
 
 /* Card Title */
 .corpus-module-card h3 {
@@ -358,7 +358,7 @@
   align-items: center;
   justify-content: center;
   border-radius: 50%;
-  background: var(--bg-tertiary);
+  background: var(--surface);
   border: 1px solid var(--border);
   opacity: 0;
   transition: all 0.3s ease;
@@ -372,20 +372,20 @@
   right: 20px;
 }
 .corpus-module-card:hover .card-arrow svg {
-  fill: var(--jade);
+  fill: var(--accent);
 }
 .corpus-module-card.coral-accent:hover .card-arrow svg {
-  fill: var(--coral);
+  fill: var(--text-dim);
 }
 
 /* Featured Section */
 .corpus-featured {
-  background: var(--bg-card);
+  background: var(--card);
   border: 1px solid var(--border);
   border-radius: var(--radius-lg);
   padding: 40px;
   margin: 48px 0;
-  backdrop-filter: blur(12px);
+  
   position: relative;
   overflow: hidden;
 }
@@ -396,10 +396,10 @@
   height: 2px;
 }
 .corpus-hero.music ~ .content .corpus-featured::before {
-  background: linear-gradient(90deg, transparent, var(--jade), transparent);
+  background: linear-gradient(90deg, transparent, var(--accent), transparent);
 }
 .corpus-hero.fat ~ .content .corpus-featured::before {
-  background: linear-gradient(90deg, transparent, var(--coral), transparent);
+  background: linear-gradient(90deg, transparent, var(--text-dim), transparent);
 }
 
 /* Decorative corner */
@@ -408,11 +408,11 @@
   position: absolute;
   bottom: 0; right: 0;
   width: 200px; height: 200px;
-  background: radial-gradient(circle at bottom right, rgba(94, 196, 182, 0.05) 0%, transparent 70%);
+  background: radial-gradient(circle at bottom right, var(--surface) 0%, transparent 70%);
   pointer-events: none;
 }
 .corpus-hero.fat ~ .content .corpus-featured::after {
-  background: radial-gradient(circle at bottom right, rgba(212, 114, 106, 0.05) 0%, transparent 70%);
+  background: radial-gradient(circle at bottom right, var(--surface) 0%, transparent 70%);
 }
 
 /* Featured Label */
@@ -428,14 +428,14 @@
   margin-bottom: 24px;
 }
 .corpus-hero.music ~ .content .corpus-featured-label {
-  background: rgba(201, 169, 110, 0.1);
-  border: 1px solid rgba(201, 169, 110, 0.25);
-  color: var(--gold);
+  background: var(--surface);
+  border: 1px solid var(--surface);
+  color: var(--text-muted);
 }
 .corpus-hero.fat ~ .content .corpus-featured-label {
-  background: rgba(212, 114, 106, 0.1);
-  border: 1px solid rgba(212, 114, 106, 0.25);
-  color: var(--coral);
+  background: var(--surface);
+  border: 1px solid var(--surface);
+  color: var(--text-dim);
 }
 .corpus-featured-label svg {
   width: 12px; height: 12px;
@@ -450,7 +450,7 @@
   letter-spacing: 3px;
 }
 .corpus-featured p {
-  color: var(--text-secondary);
+  color: var(--text-muted);
   font-size: 1rem;
   line-height: 1.9;
 }
@@ -464,11 +464,11 @@
 }
 .corpus-tag {
   padding: 8px 18px;
-  background: var(--bg-tertiary);
+  background: var(--surface);
   border: 1px solid var(--border);
   border-radius: 50px;
   font-size: 0.8rem;
-  color: var(--text-secondary);
+  color: var(--text-muted);
   transition: all 0.3s ease;
   cursor: default;
 }
@@ -476,33 +476,33 @@
   transform: translateY(-2px);
 }
 .corpus-hero.music ~ .content .corpus-tag:hover {
-  border-color: var(--jade);
-  color: var(--jade);
-  background: rgba(94, 196, 182, 0.08);
+  border-color: var(--accent);
+  color: var(--accent);
+  background: var(--surface);
 }
 .corpus-hero.fat ~ .content .corpus-tag:hover {
-  border-color: var(--coral);
-  color: var(--coral);
-  background: rgba(212, 114, 106, 0.08);
+  border-color: var(--text-dim);
+  color: var(--text-dim);
+  background: var(--surface);
 }
 
 /* Disclaimer */
 .corpus-disclaimer {
-  border-radius: var(--radius-md);
+  border-radius: var(--radius);
   padding: 24px 28px;
   margin: 48px 0;
   font-size: 0.9rem;
   line-height: 1.8;
   position: relative;
-  backdrop-filter: blur(8px);
+  
 }
 .corpus-disclaimer {
-  background: rgba(212, 114, 106, 0.05);
-  border: 1px solid rgba(212, 114, 106, 0.15);
+  background: var(--surface);
+  border: 1px solid var(--surface);
   color: var(--text-dim);
 }
 .corpus-disclaimer strong {
-  color: var(--coral);
+  color: var(--text-dim);
 }
 .corpus-disclaimer::before {
   content: '⚠';
@@ -521,7 +521,7 @@
   position: absolute;
   left: 20px; top: 0; bottom: 0;
   width: 2px;
-  background: linear-gradient(to bottom, var(--jade), var(--gold), var(--coral));
+  background: linear-gradient(to bottom, var(--accent), var(--text-muted), var(--text-dim));
   opacity: 0.3;
   border-radius: 1px;
 }
@@ -536,12 +536,12 @@
   left: 13px; top: 6px;
   width: 16px; height: 16px;
   border-radius: 50%;
-  background: var(--bg-secondary);
-  border: 2px solid var(--jade);
+  background: var(--surface);
+  border: 2px solid var(--accent);
   z-index: 1;
 }
-.corpus-path-item:nth-child(2)::before { border-color: var(--gold); }
-.corpus-path-item:nth-child(3)::before { border-color: var(--coral); }
+.corpus-path-item:nth-child(2)::before { border-color: var(--text-muted); }
+.corpus-path-item:nth-child(3)::before { border-color: var(--text-dim); }
 .corpus-path-num {
   font-family: 'JetBrains Mono', monospace;
   font-size: 0.65rem;

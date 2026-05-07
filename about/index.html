@@ -273,11 +273,11 @@ description: 关于法喜：Cloud Native SRE、AI Toolsmith、Knowledge Architec
 
   .about-hero,
   .proof-strip {
-    background: var(--bg-card);
+    background: var(--card);
     border: 1px solid var(--border);
     border-radius: 24px;
-    box-shadow: var(--shadow-1);
-    backdrop-filter: blur(10px);
+    box-shadow: none;
+    
   }
 
   .about-hero {
@@ -292,7 +292,7 @@ description: 关于法喜：Cloud Native SRE、AI Toolsmith、Knowledge Architec
     width: 240px;
     height: 240px;
     border-radius: 50%;
-    background: radial-gradient(circle, rgba(94, 196, 182, 0.18), transparent 70%);
+    background: radial-gradient(circle, var(--surface), transparent 70%);
     filter: blur(24px);
     pointer-events: none;
   }
@@ -303,7 +303,7 @@ description: 关于法喜：Cloud Native SRE、AI Toolsmith、Knowledge Architec
   .global-card p,
   .timeline-content p {
     margin: 0;
-    color: var(--text-secondary);
+    color: var(--text-muted);
     line-height: 1.95;
   }
 
@@ -328,7 +328,7 @@ description: 关于法喜：Cloud Native SRE、AI Toolsmith、Knowledge Architec
     margin: 0 0 10px;
     font-family: 'Noto Serif SC', serif;
     font-size: 1.7rem;
-    color: var(--text-primary);
+    color: var(--text);
   }
 
   .trust-pills {
@@ -339,7 +339,7 @@ description: 关于法喜：Cloud Native SRE、AI Toolsmith、Knowledge Architec
   }
   .trust-pills span {
     padding: 8px 14px;
-    color: var(--text-secondary);
+    color: var(--text-muted);
     font-size: 0.84rem;
     background: rgba(255, 255, 255, 0.02);
     border: 1px solid var(--border);
@@ -363,7 +363,7 @@ description: 关于法喜：Cloud Native SRE、AI Toolsmith、Knowledge Architec
     display: block;
     font-family: 'JetBrains Mono', monospace;
     font-size: 1.6rem;
-    color: var(--jade);
+    color: var(--accent);
     margin-bottom: 6px;
   }
   .proof-label {
@@ -413,7 +413,7 @@ description: 关于法喜：Cloud Native SRE、AI Toolsmith、Knowledge Architec
   .connect-card h3,
   .timeline-head h3 {
     margin: 0 0 10px;
-    color: var(--text-primary);
+    color: var(--text);
     font-size: 1.02rem;
   }
 
@@ -426,7 +426,7 @@ description: 关于法喜：Cloud Native SRE、AI Toolsmith、Knowledge Architec
     gap: 10px;
   }
   .mini-card li {
-    color: var(--text-secondary);
+    color: var(--text-muted);
     position: relative;
     padding-left: 16px;
     line-height: 1.7;
@@ -439,7 +439,7 @@ description: 关于法喜：Cloud Native SRE、AI Toolsmith、Knowledge Architec
     width: 6px;
     height: 6px;
     border-radius: 50%;
-    background: var(--gold);
+    background: var(--text-muted);
   }
 
   .offer-grid {
@@ -454,7 +454,7 @@ description: 关于法喜：Cloud Native SRE、AI Toolsmith、Knowledge Architec
     width: 42px;
     height: 42px;
     border-radius: 14px;
-    background: rgba(94, 196, 182, 0.1);
+    background: var(--surface);
     margin-bottom: 14px;
     font-size: 1.15rem;
   }
@@ -463,7 +463,7 @@ description: 关于法喜：Cloud Native SRE、AI Toolsmith、Knowledge Architec
   .principle-item p,
   .connect-card p {
     margin: 0;
-    color: var(--text-secondary);
+    color: var(--text-muted);
     font-size: 0.9rem;
     line-height: 1.8;
   }
@@ -501,7 +501,7 @@ description: 关于法喜：Cloud Native SRE、AI Toolsmith、Knowledge Architec
     top: 10px;
     bottom: 10px;
     width: 2px;
-    background: linear-gradient(to bottom, var(--jade), rgba(201, 169, 110, 0.4));
+    
     opacity: 0.4;
   }
   .timeline-item {
@@ -516,7 +516,7 @@ description: 关于法喜：Cloud Native SRE、AI Toolsmith、Knowledge Architec
     height: 16px;
     border-radius: 50%;
     background: var(--bg-secondary);
-    border: 3px solid var(--jade);
+    border: 3px solid var(--accent);
     z-index: 1;
   }
   .timeline-content {
@@ -539,7 +539,7 @@ description: 关于法喜：Cloud Native SRE、AI Toolsmith、Knowledge Architec
   }
   .timeline-sub {
     margin-bottom: 8px !important;
-    color: var(--gold) !important;
+    color: var(--text-muted) !important;
     font-size: 0.88rem;
   }
 
@@ -564,9 +564,9 @@ description: 关于法喜：Cloud Native SRE、AI Toolsmith、Knowledge Architec
     transition: transform 0.2s ease, border-color 0.2s ease, box-shadow 0.2s ease;
   }
   .connect-card:hover {
-    transform: translateY(-3px);
-    border-color: var(--jade);
-    box-shadow: var(--shadow-2);
+    
+    border-color: var(--accent);
+    box-shadow: none;
   }
   .connect-icon {
     margin-bottom: 0;

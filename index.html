@@ -265,265 +265,112 @@ description: 聚合 Cloud Native、AI Tooling、知识库、内容矩阵与合�
 </div>
 
 <style>
-  /* === 首页特有样式 === */
+  /* === 首页 — 极简布局 === */
+  .brand-home { display: flex; flex-direction: column; gap: 24px; }
 
-  .brand-home {
-    display: flex;
-    flex-direction: column;
-    gap: 36px;
-  }
+  .brand-hero { padding: 0; }
 
-  .brand-hero {
-    padding: 54px 48px 44px;
-  }
-
-  .hero-glow {
-    position: absolute;
-    width: 280px;
-    height: 280px;
-    border-radius: 50%;
-    filter: blur(70px);
-    opacity: 0.15;
-    pointer-events: none;
-  }
-  .hero-glow-left {
-    top: -120px;
-    left: -80px;
-    background: var(--jade);
-  }
-  .hero-glow-right {
-    right: -100px;
-    bottom: -140px;
-    background: var(--gold);
-  }
+  /* Hide decorative glow orbs */
+  .hero-glow { display: none; }
 
   .hero-stats {
-    margin-top: 34px;
+    margin-top: 32px;
     display: grid;
     grid-template-columns: repeat(4, minmax(0, 1fr));
-    gap: 14px;
+    gap: 12px;
   }
 
-  /* collab-card 继承 stat-card 基础 */
-  .collab-card {
-    background: rgba(255, 255, 255, 0.02);
-    border: 1px solid var(--border);
-    border-radius: 18px;
-    padding: 18px;
-  }
-
-  /* Section title 品牌下特殊尺寸 */
-  .brand-home .section-title {
-    margin: 0 0 12px;
-    padding: 0;
-    border: none;
-    font-family: 'Noto Serif SC', serif;
-    font-size: 1.8rem;
-    color: var(--text-primary);
-  }
-
-  /* 网格布局 */
+  /* Grid layouts */
   .hero-actions,
   .collab-actions,
   .featured-actions,
   .directory-preview-actions {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 12px;
-    margin-top: 28px;
+    display: flex; flex-wrap: wrap; gap: 8px; margin-top: 24px;
   }
 
-  .audience-grid,
-  .featured-grid,
-  .engine-grid,
-  .studio-grid,
-  .collab-grid,
-  .directory-preview-grid {
-    display: grid;
-    gap: 16px;
-  }
+  .audience-grid { grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); }
+  .featured-grid { grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); }
+  .engine-grid   { grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); }
+  .collab-grid   { grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); }
+  .audience-grid, .featured-grid, .engine-grid, .collab-grid,
+  .directory-preview-grid { display: grid; gap: 12px; }
 
-  .audience-grid {
-    grid-template-columns: repeat(auto-fit, minmax(210px, 1fr));
-  }
-
-  .featured-grid {
-    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-  }
-
-  .engine-grid {
-    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
-  }
-
-  .collab-grid {
-    grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
-  }
-
-  .studio-grid {
-    grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
-  }
-
-  /* 通用卡片基础 */
-  .audience-card,
-  .featured-card,
-  .engine-card,
-  .studio-card,
-  .directory-preview-card {
-    display: block;
-    text-decoration: none;
-    color: inherit;
-    background: rgba(255, 255, 255, 0.02);
+  /* Cards — clean bordered */
+  .audience-card, .featured-card, .engine-card,
+  .directory-preview-card, .collab-card {
+    display: block; text-decoration: none; color: inherit;
+    background: var(--card);
     border: 1px solid var(--border);
-    border-radius: 18px;
-    padding: 22px;
-    transition: transform 0.22s ease, border-color 0.22s ease, box-shadow 0.22s ease;
+    border-radius: var(--radius);
+    padding: 20px;
+    transition: border-color 0.15s ease, background 0.15s ease;
+  }
+  .audience-card:hover, .featured-card:hover, .engine-card:hover,
+  .directory-preview-card:hover, .collab-card:hover {
+    border-color: var(--border-hover);
+    background: var(--hover);
   }
 
-  .audience-card:hover,
-  .featured-card:hover,
-  .engine-card:hover,
-  .studio-card:hover,
-  .directory-preview-card:hover {
-    transform: translateY(-4px);
-    border-color: var(--jade);
-    box-shadow: var(--shadow-2);
+  /* Icon circles */
+  .audience-icon, .engine-icon, .collab-icon {
+    display: inline-flex; align-items: center; justify-content: center;
+    width: 32px; height: 32px;
+    border-radius: 6px;
+    margin-bottom: 12px;
+    font-size: 1rem;
   }
 
-  /* 图标圆形 */
-  .audience-icon,
-  .engine-icon,
-  .collab-icon,
-  .studio-icon {
-    display: inline-flex;
-    align-items: center;
-    justify-content: center;
-    width: 42px;
-    height: 42px;
-    border-radius: 14px;
-    margin-bottom: 14px;
-    background: rgba(94, 196, 182, 0.1);
-    font-size: 1.2rem;
+  /* Card typography */
+  .audience-card h3, .featured-card h3, .engine-card h3,
+  .collab-card h3, .directory-preview-card h3 {
+    margin: 0 0 6px; font-size: 0.92rem; color: var(--text); font-weight: 600;
   }
-
-  /* 卡片内标题和段落 */
-  .audience-card h3,
-  .featured-card h3,
-  .engine-card h3,
-  .collab-card h3,
-  .directory-preview-card h3 {
-    margin: 0 0 10px;
-    font-size: 1.05rem;
-    color: var(--text-primary);
-  }
-
-  .audience-card p,
-  .featured-card p,
-  .engine-card p,
-  .collab-card p,
-  .directory-preview-card p {
-    margin: 0;
-    color: var(--text-secondary);
-    font-size: 0.9rem;
-    line-height: 1.8;
+  .audience-card p, .featured-card p, .engine-card p,
+  .collab-card p, .directory-preview-card p {
+    margin: 0; color: var(--text-muted); font-size: 0.82rem; line-height: 1.6;
   }
 
   .audience-link {
-    display: inline-block;
-    margin-top: 14px;
-    color: var(--jade);
-    font-size: 0.82rem;
-    font-weight: 600;
+    display: inline-block; margin-top: 10px;
+    color: var(--accent); font-size: 0.75rem; font-weight: 500;
   }
 
-  /* 项目类型标签 */
+  /* Project type label */
   .project-type {
-    display: inline-flex;
-    margin-bottom: 12px;
-    font-family: 'JetBrains Mono', monospace;
-    font-size: 0.68rem;
-    letter-spacing: 2px;
-    color: var(--gold);
+    display: block; margin-bottom: 8px;
+    font-family: monospace; font-size: 0.62rem;
+    letter-spacing: 0.8px; color: var(--text-dim);
+    text-transform: uppercase;
   }
 
-  .project-meta {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 8px;
-    margin-top: 16px;
-  }
-
+  .project-meta { display: flex; flex-wrap: wrap; gap: 6px; margin-top: 12px; }
   .project-meta span {
-    padding: 6px 10px;
-    border-radius: 999px;
-    background: var(--bg-tertiary);
-    border: 1px solid var(--border);
-    font-size: 0.74rem;
-    color: var(--text-dim);
+    padding: 3px 8px; border-radius: 4px;
+    background: var(--surface); border: 1px solid var(--border);
+    font-size: 0.68rem; color: var(--text-dim);
+    font-family: monospace;
   }
 
   .directory-count {
-    display: block;
-    font-family: 'JetBrains Mono', monospace;
-    font-size: 1.7rem;
-    color: var(--jade);
-    margin-bottom: 6px;
+    display: block; font-family: monospace;
+    font-size: 1.4rem; color: var(--accent); margin-bottom: 4px;
   }
 
-  .directory-note,
-  .collab-note {
-    margin-top: 16px;
-    color: var(--text-dim);
-    font-size: 0.85rem;
+  .directory-note, .collab-note {
+    margin-top: 14px; color: var(--text-dim); font-size: 0.78rem;
   }
 
-  .studio-card {
-    text-align: center;
-    padding: 22px 18px;
+  .brand-home .section-title {
+    margin: 0 0 8px; padding: 0; border: none;
+    font-family: 'Noto Serif SC', 'Georgia', serif;
+    font-size: 1.3rem; color: var(--text); font-weight: 400;
   }
 
-  .studio-icon {
-    margin: 0 auto 12px;
-  }
-
-  .studio-name {
-    font-size: 0.92rem;
-    font-weight: 700;
-    color: var(--text-primary);
-    margin-bottom: 6px;
-  }
-
-  .studio-desc {
-    font-size: 0.8rem;
-    color: var(--text-dim);
-    line-height: 1.6;
-  }
-
-  /* === 响应式 === */
   @media (max-width: 720px) {
-    .brand-hero {
-      padding: 34px 22px;
-      border-radius: 20px;
-    }
-
-    .hero-stats {
-      grid-template-columns: repeat(2, minmax(0, 1fr));
-    }
-
-    .hero-actions,
-    .collab-actions,
-    .featured-actions,
-    .directory-preview-actions {
-      flex-direction: column;
-    }
-
-    .primary-btn,
-    .secondary-btn,
-    .ghost-btn {
-      width: 100%;
-    }
-
-    .brand-home .section-title {
-      font-size: 1.45rem;
-    }
+    .hero-stats { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+    .hero-actions, .collab-actions, .featured-actions,
+    .directory-preview-actions { flex-direction: column; }
+    .primary-btn, .secondary-btn, .ghost-btn { width: 100%; }
+    .brand-home .section-title { font-size: 1.15rem; }
   }
 </style>
