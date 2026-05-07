@@ -1,0 +1,31 @@
+# Jekyll build output
+_site/
+
+# Backup directories / files
+backup_*/
+backup_README.md
+
+# macOS
+.DS_Store
+.AppleDouble
+.LSOverride
+._*
+
+# Ruby / Bundler
+vendor/
+.bundle/
+Gemfile.lock
+
+# Generated / lock files
+skills-lock.json
+
+# IDE
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+
+# Temporary files
+*.tmp
+*.log

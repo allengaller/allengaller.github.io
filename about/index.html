@@ -263,6 +263,8 @@ description: 关于法喜：Cloud Native SRE、AI Toolsmith、Knowledge Architec
 </div>
 
 <style>
+  /* === About 页面特有样式 === */
+
   .about-v2 {
     display: flex;
     flex-direction: column;
@@ -270,7 +272,6 @@ description: 关于法喜：Cloud Native SRE、AI Toolsmith、Knowledge Architec
   }
 
   .about-hero,
-  .section-block,
   .proof-strip {
     background: var(--bg-card);
     border: 1px solid var(--border);
@@ -296,38 +297,6 @@ description: 关于法喜：Cloud Native SRE、AI Toolsmith、Knowledge Architec
     pointer-events: none;
   }
 
-  .hero-badge,
-  .section-tag {
-    display: inline-flex;
-    align-items: center;
-    padding: 8px 16px;
-    border-radius: 999px;
-    border: 1px solid var(--border-strong);
-    background: rgba(94, 196, 182, 0.08);
-    color: var(--jade);
-    font-family: 'JetBrains Mono', monospace;
-    font-size: 0.7rem;
-    letter-spacing: 2px;
-    text-transform: uppercase;
-    margin-bottom: 16px;
-  }
-
-  .hero-kicker {
-    margin: 0 0 10px;
-    color: var(--gold);
-    font-family: 'JetBrains Mono', monospace;
-    font-size: 0.82rem;
-    letter-spacing: 1.6px;
-    text-transform: uppercase;
-  }
-
-  .hero-title {
-    margin: 0 0 16px;
-    font-family: 'Noto Serif SC', serif;
-    font-size: clamp(2.1rem, 5vw, 3.6rem);
-    color: var(--text);
-  }
-
   .hero-summary,
   .section-intro,
   .story-main p,
@@ -346,33 +315,20 @@ description: 关于法喜：Cloud Native SRE、AI Toolsmith、Knowledge Architec
     margin-top: 24px;
   }
 
-  .primary-btn,
-  .secondary-btn {
-    display: inline-flex;
-    align-items: center;
-    justify-content: center;
-    min-height: 44px;
-    padding: 0 18px;
-    border-radius: 12px;
-    text-decoration: none;
-    border: 1px solid var(--border-strong);
-    font-weight: 600;
-    transition: transform 0.2s ease, box-shadow 0.2s ease, border-color 0.2s ease;
+  /* 覆盖 section-block padding */
+  .section-block {
+    padding: 34px 32px;
   }
-  .primary-btn {
-    background: var(--jade);
-    color: #0d0f1a;
-    border-color: transparent;
+
+  /* 覆盖 section-heading 内 h2 */
+  .section-heading {
+    margin-bottom: 22px;
   }
-  .secondary-btn {
+  .section-heading h2 {
+    margin: 0 0 10px;
+    font-family: 'Noto Serif SC', serif;
+    font-size: 1.7rem;
     color: var(--text);
-    background: transparent;
-  }
-  .primary-btn:hover,
-  .secondary-btn:hover {
-    transform: translateY(-2px);
-    box-shadow: var(--shadow-md);
-    border-color: var(--jade);
   }
 
   .trust-pills {
@@ -381,24 +337,16 @@ description: 关于法喜：Cloud Native SRE、AI Toolsmith、Knowledge Architec
     gap: 10px;
     margin-top: 22px;
   }
-  .trust-pills span,
-  .proof-card,
-  .mini-card,
-  .offer-card,
-  .audience-card,
-  .global-card,
-  .connect-card,
-  .principle-item {
-    background: rgba(255, 255, 255, 0.02);
-    border: 1px solid var(--border);
-    border-radius: 18px;
-  }
   .trust-pills span {
     padding: 8px 14px;
     color: var(--text-secondary);
     font-size: 0.84rem;
+    background: rgba(255, 255, 255, 0.02);
+    border: 1px solid var(--border);
+    border-radius: 18px;
   }
 
+  /* 证明条 / 统计行 */
   .proof-strip {
     padding: 16px;
     display: grid;
@@ -407,6 +355,9 @@ description: 关于法喜：Cloud Native SRE、AI Toolsmith、Knowledge Architec
   }
   .proof-card {
     padding: 18px;
+    background: rgba(255, 255, 255, 0.02);
+    border: 1px solid var(--border);
+    border-radius: 18px;
   }
   .proof-num {
     display: block;
@@ -421,19 +372,7 @@ description: 关于法喜：Cloud Native SRE、AI Toolsmith、Knowledge Architec
     line-height: 1.6;
   }
 
-  .section-block {
-    padding: 34px 32px;
-  }
-  .section-heading {
-    margin-bottom: 22px;
-  }
-  .section-heading h2 {
-    margin: 0 0 10px;
-    font-family: 'Noto Serif SC', serif;
-    font-size: 1.7rem;
-    color: var(--text);
-  }
-
+  /* Story 布局 */
   .story-layout,
   .offer-grid,
   .audience-grid,
@@ -441,7 +380,6 @@ description: 关于法喜：Cloud Native SRE、AI Toolsmith、Knowledge Architec
     display: grid;
     gap: 16px;
   }
-
   .story-layout {
     grid-template-columns: 1.3fr 0.9fr;
   }
@@ -455,13 +393,19 @@ description: 关于法喜：Cloud Native SRE、AI Toolsmith、Knowledge Architec
     flex-direction: column;
     gap: 16px;
   }
+
+  /* 通用卡片 */
   .mini-card,
   .offer-card,
   .audience-card,
   .global-card,
   .principle-item {
     padding: 22px;
+    background: rgba(255, 255, 255, 0.02);
+    border: 1px solid var(--border);
+    border-radius: 18px;
   }
+
   .mini-card h3,
   .offer-card h3,
   .audience-card h3,
@@ -472,6 +416,7 @@ description: 关于法喜：Cloud Native SRE、AI Toolsmith、Knowledge Architec
     color: var(--text);
     font-size: 1.02rem;
   }
+
   .mini-card ul {
     list-style: none;
     padding: 0;
@@ -542,6 +487,7 @@ description: 关于法喜：Cloud Native SRE、AI Toolsmith、Knowledge Architec
     margin-bottom: 0;
   }
 
+  /* 时间线 */
   .timeline {
     position: relative;
     display: flex;
@@ -612,6 +558,9 @@ description: 关于法喜：Cloud Native SRE、AI Toolsmith、Knowledge Architec
     align-items: flex-start;
     padding: 20px;
     text-decoration: none;
+    background: rgba(255, 255, 255, 0.02);
+    border: 1px solid var(--border);
+    border-radius: 18px;
     transition: transform 0.2s ease, border-color 0.2s ease, box-shadow 0.2s ease;
   }
   .connect-card:hover {
@@ -624,9 +573,9 @@ description: 关于法喜：Cloud Native SRE、AI Toolsmith、Knowledge Architec
     flex-shrink: 0;
   }
 
+  /* === 响应式 === */
   @media (max-width: 720px) {
-    .about-hero,
-    .section-block {
+    .about-hero {
       padding: 26px 22px;
       border-radius: 20px;
     }

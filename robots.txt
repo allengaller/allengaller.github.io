@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://allengaller.github.io/sitemap.xml

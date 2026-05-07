@@ -26,7 +26,21 @@ defaults:
 
 plugins:
   - jekyll-relative-links
+  - jekyll-sitemap
 
 relative_links:
   enabled: true
   collections: true
+
+exclude:
+  - backup_*/
+  - vendor/
+  - Gemfile
+  - Gemfile.lock
+  - README.md
+  - backup_README.md
+  - skills-lock.json
+  - .agents/
+  - .claude/
+  - .hermes/
+  - .qoder/
