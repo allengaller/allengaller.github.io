@@ -149,6 +149,13 @@
 **特色能力**：毫秒级响应、低资源占用、多编辑器集成
 **付费状态**：开源免费，使用自备 API Key
 
+### Crush CLI + 智谱 Coding Plan 💰
+**开发商**：Crush AI + 智谱 AI (Zhipu AI)
+**核心功能**：Crush CLI 搭配智谱 Coding Plan，轻量级命令行编程助手结合 GLM 专属编码优化
+**支持模型**：GLM-4、GLM-4V、Coding Plan 专属优化模型
+**特色能力**：极速代码补全、中文代码理解、上下文感知、代码审查
+**付费状态**：已订阅 Pro 版 + Coding Plan
+
 ---
 
 ## 对话与通用助手
