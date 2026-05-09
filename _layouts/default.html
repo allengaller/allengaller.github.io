@@ -1,197 +1,38 @@
 <!DOCTYPE html>
-<html lang="{{ page.lang | default: site.lang | default: 'zh-CN' }}" data-theme="dark">
+<html lang="zh-CN">
 <head>
-  {% assign meta_title = page.title | default: site.title %}
-  {% assign meta_description = page.description | default: site.description %}
-  {% assign canonical_url = page.url | absolute_url %}
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>{{ meta_title }}</title>
-  <meta name="description" content="{{ meta_description }}">
+  <title>{{ page.title }}</title>
+  <meta name="description" content="{{ page.description }}">
   <meta name="robots" content="index,follow">
-  <meta name="theme-color" content="#0a0a0a">
-  <link rel="canonical" href="{{ canonical_url }}">
-
-  <meta property="og:site_name" content="{{ site.title }}">
-  <meta property="og:title" content="{{ meta_title }}">
-  <meta property="og:description" content="{{ meta_description }}">
-  <meta property="og:type" content="{% if page.url == '/' %}website{% else %}article{% endif %}">
-  <meta property="og:url" content="{{ canonical_url }}">
-  <meta property="og:locale" content="zh_CN">
-
-  <meta name="twitter:card" content="summary">
-  <meta name="twitter:title" content="{{ meta_title }}">
-  <meta name="twitter:description" content="{{ meta_description }}">
-
-  <script type="application/ld+json">
-    {
-      "@context": "https://schema.org",
-      "@type": "Person",
-      "name": "{{ site.author.name }}",
-      "url": "{{ site.url }}",
-      "jobTitle": "{{ site.author.tagline }}",
-      "description": "{{ meta_description }}",
-      "sameAs": [
-        "{{ site.social.github }}",
-        "{{ site.social.links }}"
-      ]
-    }
-  </script>
-
+  <meta name="theme-color" content="#ffffff">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link rel="preload" as="style" href="https://fonts.googleapis.com/css2?family=Noto+Serif+SC:wght@400;600;700&family=JetBrains+Mono:wght@400;500&family=Noto+Sans+SC:wght@400;500;600&display=swap">
-<link href="https://fonts.googleapis.com/css2?family=Noto+Serif+SC:wght@400;600;700&family=JetBrains+Mono:wght@400;500&family=Noto+Sans+SC:wght@400;500;600&display=swap" rel="stylesheet" media="print" onload="this.media='all'">
-<noscript><link href="https://fonts.googleapis.com/css2?family=Noto+Serif+SC:wght@400;600;700&family=JetBrains+Mono:wght@400;500&family=Noto+Sans+SC:wght@400;500;600&display=swap" rel="stylesheet"></noscript>
-  <link rel="stylesheet" href="{{ '/assets/css/main.css' | relative_url }}">
-  <link rel="stylesheet" href="{{ '/assets/css/corpus.css' | relative_url }}">
-
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="/assets/css/main.css">
 </head>
 <body>
-  <a href="#main-content" class="skip-link">Skip to content</a>
-  <div class="ambient-bg"></div>
-  <div class="bg-texture"></div>
-  <div class="particles" id="particles"></div>
 
-  <button class="theme-toggle" id="themeToggle" aria-label="切换主题">
-    <svg id="themeIcon" viewBox="0 0 24 24">
-      <path d="M12 3c.132 0 .263 0 .393 0a7.5 7.5 0 0 0 7.92 12.446a9 9 0 1 1-8.313-12.454z"/>
-    </svg>
-    <span id="themeText">DARK</span>
-  </button>
-
-  <header class="site-header">
-    <div class="enso">
-      <svg viewBox="0 0 100 100" fill="none" xmlns="http://www.w3.org/2000/svg">
-        <path d="M85 50c0 19.3-15.7 35-35 35S15 69.3 15 50 30.7 15 50 15s35 15.7 35 35z"
-              stroke="url(#enso-grad)" stroke-width="2.5" stroke-linecap="round"
-              stroke-dasharray="200" stroke-dashoffset="18"
-              opacity="0.9"/>
-        <defs>
-          <linearGradient id="enso-grad" x1="15" y1="15" x2="85" y2="85">
-            <stop offset="0%" stop-color="var(--jade)"/>
-            <stop offset="50%" stop-color="var(--gold)"/>
-            <stop offset="100%" stop-color="var(--jade)" stop-opacity="0.3"/>
-          </linearGradient>
-        </defs>
-      </svg>
-    </div>
-    <h1 class="site-title">{{ site.title }}</h1>
-    <p class="site-subtitle">
-      <span class="zen-dot"></span>
-      {{ site.tagline }}
-      <span class="zen-dot"></span>
-    </p>
-    <p class="site-description">{{ site.description }}</p>
+  <header class="site-nav-wrap">
+    <nav class="site-nav">
+      <a href="/" class="">Home</a>
+      <a href="/projects/" class="">Projects</a>
+      <a href="/topic/links/" class="">Links</a>
+      <a href="/topic/ai-tools/" class="">AI Tools</a>
+      <a href="/about/" class="">About</a>
+      <a href="https://github.com/allengaller" target="_blank" rel="noopener">GitHub</a>
+    </nav>
   </header>
 
-  <div class="site-nav-wrap">
-    <nav class="site-nav">
-      <a href="{{ '/' | relative_url }}" class="{% if page.url == '/' %}is-active{% endif %}">HOME</a>
-      <a href="{{ '/projects/' | relative_url }}" class="{% if page.url contains '/projects/' %}is-active{% endif %}">PROJECTS</a>
-      <a href="{{ '/topic/links/' | relative_url }}" class="{% if page.url contains '/topic/links/' %}is-active{% endif %}">LINKS</a>
-      <a href="{{ '/about/' | relative_url }}" class="{% if page.url contains '/about' %}is-active{% endif %}">ABOUT</a>
-      <a href="{{ site.social.github }}" target="_blank" rel="noopener">GITHUB</a>
-    </nav>
-  </div>
-
-  <main class="site-main" id="main-content">
-    <div class="content">
-      {{ content }}
-    </div>
+  <main class="site-main">
+    {{ content }}
   </main>
 
   <footer class="site-footer">
-    <p class="footer-zen">Build in public · learn in public</p>
-    <p>{{ site.title }} // {{ site.time | date: '%Y' }}</p>
+    <span>法喜 — 2026</span>
+    <span>Build in public · learn in public</span>
   </footer>
 
-  <script>
-    (function() {
-      const html = document.documentElement;
-      const toggle = document.getElementById('themeToggle');
-      const icon = document.getElementById('themeIcon');
-      const text = document.getElementById('themeText');
-      const savedTheme = localStorage.getItem('theme') || 'dark';
-      html.setAttribute('data-theme', savedTheme);
-      updateThemeUI(savedTheme);
-
-      toggle.addEventListener('click', function() {
-        const currentTheme = html.getAttribute('data-theme');
-        const newTheme = currentTheme === 'dark' ? 'light' : 'dark';
-        html.setAttribute('data-theme', newTheme);
-        localStorage.setItem('theme', newTheme);
-        updateThemeUI(newTheme);
-      });
-
-      function updateThemeUI(theme) {
-        if (theme === 'dark') {
-          icon.innerHTML = '<path d="M12 3c.132 0 .263 0 .393 0a7.5 7.5 0 0 0 7.92 12.446a9 9 0 1 1-8.313-12.454z"/>';
-          text.textContent = 'DARK';
-        } else {
-          icon.innerHTML = '<path d="M12 7a5 5 0 1 0 0 10 5 5 0 0 0 0-10zM2 13h2a1 1 0 0 0 0-2H2a1 1 0 0 0 0 2zm18 0h2a1 1 0 0 0 0-2h-2a1 1 0 0 0 0 2zM11 2v2a1 1 0 0 0 2 0V2a1 1 0 0 0-2 0zm0 18v2a1 1 0 0 0 2 0v-2a1 1 0 0 0-2 0zM6.343 4.343l1.414 1.414a1 1 0 0 0 1.414-1.414L7.757 2.929a1 1 0 0 0-1.414 1.414zm12.728 12.728l1.414 1.414a1 1 0 0 0 1.414-1.414l-1.414-1.414a1 1 0 0 0-1.414 1.414z"/>';
-          text.textContent = 'LIGHT';
-        }
-      }
-
-      /* Particles */
-      const particles = document.getElementById('particles');
-      if (particles) {
-        for (let i = 0; i < 18; i++) {
-          const p = document.createElement('div');
-          p.className = 'particle';
-          p.style.left = Math.random() * 100 + '%';
-          p.style.width = (2 + Math.random() * 3) + 'px';
-          p.style.height = p.style.width;
-          p.style.background = Math.random() > 0.5 ? 'var(--jade)' : 'var(--gold)';
-          p.style.animationDuration = (15 + Math.random() * 18) + 's';
-          p.style.animationDelay = Math.random() * 15 + 's';
-          particles.appendChild(p);
-        }
-      }
-
-      /* Nav shadow on scroll */
-      const navWrap = document.querySelector('.site-nav-wrap');
-      if (navWrap) {
-        let ticking = false;
-        window.addEventListener('scroll', function() {
-          if (!ticking) {
-            requestAnimationFrame(function() {
-              navWrap.classList.toggle('scrolled', window.scrollY > 10);
-              ticking = false;
-            });
-            ticking = true;
-          }
-        });
-      }
-
-      /* Section reveal animations */
-      const animateSections = function() {
-        const sections = document.querySelectorAll('.section-block, .brand-hero, .projects-hero, .about-hero');
-        if (!('IntersectionObserver' in window)) return;
-        const observer = new IntersectionObserver(function(entries) {
-          entries.forEach(function(entry) {
-            if (entry.isIntersecting) {
-              entry.target.style.opacity = '1';
-              entry.target.style.transform = 'translateY(0)';
-              observer.unobserve(entry.target);
-            }
-          });
-        }, { threshold: 0.1, rootMargin: '0px 0px -40px 0px' });
-
-        sections.forEach(function(el) {
-          el.style.opacity = '0';
-          el.style.transform = 'translateY(24px)';
-          el.style.transition = 'opacity 0.6s ease-out, transform 0.6s ease-out';
-          observer.observe(el);
-        });
-      };
-      if (document.readyState === 'loading') {
-        document.addEventListener('DOMContentLoaded', animateSections);
-      } else {
-        animateSections();
-      }
-    })();
-  </script>
 </body>
 </html>
