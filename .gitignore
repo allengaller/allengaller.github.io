@@ -1,31 +1,25 @@
-# Jekyll build output
+# Build output
 _site/
 
-# Backup directories / files
-backup_*/
-backup_README.md
-
-# macOS
-.DS_Store
-.AppleDouble
-.LSOverride
-._*
-
-# Ruby / Bundler
+# Ruby vendor
 vendor/
 .bundle/
-Gemfile.lock
 
-# Generated / lock files
+# Backups
+backup_*/
+
+# Agent/tool configs (not site content)
+.agents/
+.claude/
+.qoder/
+.hermes/
+
+# Archives
+_archive/
+
+# Misc
 skills-lock.json
-
-# IDE
-.vscode/
-.idea/
+backup_README.md
 *.swp
 *.swo
-*~
-
-# Temporary files
-*.tmp
-*.log
+.DS_Store

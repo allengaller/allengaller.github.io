@@ -5,7 +5,7 @@ import yaml
 import os
 
 def build_page():
-    base = "/Users/allengaller/Documents/GitHub/allengaller/allengaller.github.io"
+    base = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
     data_path = os.path.join(base, "_data/ai-tools.yml")
     output_path = os.path.join(base, "topic/ai-tools/index.html")
 
@@ -25,8 +25,20 @@ def build_page():
         if tool.get("price"):
             plan = f'{plan} · {tool.get("price")}'
 
-        url_ph = " placeholder" if tool.get("url") == "[待补充]" else ""
-        usage_ph = " placeholder" if tool.get("usage") == "[待记录]" else ""
+        url = tool.get("url", "")
+        usage = tool.get("usage", "")
+
+        # Render URL as clickable link
+        if url and url.startswith("http"):
+            url_html = f'<a href="{url}" target="_blank" rel="noopener" class="link-val link-url">{url.replace("https://", "").replace("http://", "")}</a>'
+        else:
+            url_html = f'<span class="link-val placeholder">{url or "—"}</span>'
+
+        # Render usage as text
+        if usage and not usage.startswith("["):
+            usage_html = f'<span class="link-val">{usage}</span>'
+        else:
+            usage_html = f'<span class="link-val placeholder">{usage or "—"}</span>'
 
         return f"""
         <article class="{card_class}" style="--delay: {delay:.3f}s">
@@ -38,11 +50,11 @@ def build_page():
           <div class="card-links">
             <div class="link-row">
               <span class="link-label">URL</span>
-              <span class="link-val{url_ph}">{tool.get("url", "")}</span>
+              {url_html}
             </div>
             <div class="link-row">
               <span class="link-label">用量</span>
-              <span class="link-val{usage_ph}">{tool.get("usage", "")}</span>
+              {usage_html}
             </div>
           </div>
         </article>"""
@@ -52,7 +64,8 @@ def build_page():
 
     html = f"""---
 layout: default
-title: 我的 AI 工具链
+nav_active_ai_tools: is-active
+title: AI Tools | AI 工具链
 description: Allen 的 AI 工具链清单，包含编程开发、对话助手、创作工具等订阅与用量信息。
 ---
 
@@ -94,23 +107,10 @@ description: Allen 的 AI 工具链清单，包含编程开发、对话助手、
 </div>
 
 <style>
-:root {{
-  --bg: #ffffff;
-  --bg-card: #fafafa;
-  --bg-card-hover: #f4f4f4;
-  --text-primary: #111111;
-  --text-secondary: #666666;
-  --text-muted: #bbbbbb;
-  --border: #e8e8e8;
-  --accent: #111111;
-}}
-* {{ box-sizing: border-box; margin: 0; padding: 0; }}
 .ai-tools-v3 {{
   background: var(--bg);
-  color: var(--text-primary);
+  color: var(--text);
   min-height: 100vh;
-  font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
-  -webkit-font-smoothing: antialiased;
 }}
 .ai-hero {{
   max-width: 1100px;
@@ -181,7 +181,7 @@ description: Allen 的 AI 工具链清单，包含编程开发、对话助手、
   overflow: hidden;
 }}
 .tool-card {{
-  background: var(--bg-card);
+  background: var(--bg-subtle);
   padding: 1.25rem;
   display: flex;
   flex-direction: column;
@@ -189,7 +189,7 @@ description: Allen 的 AI 工具链清单，包含编程开发、对话助手、
   transition: background 0.15s ease;
   animation: cardReveal 0.4s ease-out var(--delay, 0s) both;
 }}
-.tool-card:hover {{ background: var(--bg-card-hover); }}
+.tool-card:hover {{ background: var(--bg-hover); }}
 .tool-card.wide {{ grid-column: span 2; }}
 @media (max-width: 540px) {{ .tool-card.wide {{ grid-column: span 1; }} }}
 .card-top {{ display: flex; align-items: center; gap: 0.6rem; }}
@@ -197,13 +197,21 @@ description: Allen 的 AI 工具链清单，包含编程开发、对话助手、
 .card-name {{ font-size: 0.875rem; font-weight: 500; }}
 .card-plan {{ font-size: 0.75rem; color: var(--text-muted); }}
 .card-links {{ display: flex; flex-direction: column; gap: 0.3rem; padding-top: 0.75rem; border-top: 1px solid var(--border); }}
-.link-row {{ display: flex; justify-content: space-between; gap: 0.5rem; }}
-.link-label {{ font-size: 0.65rem; text-transform: uppercase; letter-spacing: 0.08em; color: var(--text-muted); }}
+.link-row {{ display: flex; justify-content: space-between; gap: 0.5rem; align-items: center; }}
+.link-label {{ font-size: 0.65rem; text-transform: uppercase; letter-spacing: 0.08em; color: var(--text-muted); flex-shrink: 0; }}
 .link-val {{ font-size: 0.75rem; color: var(--text-secondary); text-align: right; word-break: break-all; }}
+.link-url {{
+  text-decoration: none;
+  transition: color 0.15s ease;
+}}
+.link-url:hover {{ color: var(--text); opacity: 1; }}
 .placeholder {{ color: var(--text-muted); font-style: italic; }}
-@keyframes fadeUp {{ from {{ opacity: 0; transform: translateY(8px); }} to {{ opacity: 1; transform: translateY(0); }} }}
 @keyframes cardReveal {{ from {{ opacity: 0; transform: translateY(4px); }} to {{ opacity: 1; transform: translateY(0); }} }}
-@media (max-width: 640px) {{ .ai-hero {{ padding: 3.5rem 1.25rem 2.5rem; }} .ai-main {{ padding: 2rem 1.25rem 4rem; }} .tool-grid {{ grid-template-columns: 1fr; }} }}
+@media (max-width: 640px) {{
+  .ai-hero {{ padding: 3.5rem 1.25rem 2.5rem; }}
+  .ai-main {{ padding: 2rem 1.25rem 4rem; }}
+  .tool-grid {{ grid-template-columns: 1fr; }}
+}}
 </style>"""
 
     with open(output_path, "w") as f:

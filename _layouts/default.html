@@ -6,7 +6,8 @@
   <title>{{ page.title }}</title>
   <meta name="description" content="{{ page.description }}">
   <meta name="robots" content="index,follow">
-  <meta name="theme-color" content="#ffffff">
+  <meta name="theme-color" content="#111111">
+  <link rel="icon" type="image/svg+xml" href="/favicon.svg">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
@@ -16,11 +17,11 @@
 
   <header class="site-nav-wrap">
     <nav class="site-nav">
-      <a href="/" class="">Home</a>
-      <a href="/projects/" class="">Projects</a>
-      <a href="/topic/links/" class="">Links</a>
-      <a href="/topic/ai-tools/" class="">AI Tools</a>
-      <a href="/about/" class="">About</a>
+      <a href="/" class="{{ page.nav_active_home }}">Home</a>
+      <a href="/projects/" class="{{ page.nav_active_projects }}">Projects</a>
+      <a href="/topic/links/" class="{{ page.nav_active_links }}">Links</a>
+      <a href="/topic/ai-tools/" class="{{ page.nav_active_ai_tools }}">AI Tools</a>
+      <a href="/about/" class="{{ page.nav_active_about }}">About</a>
       <a href="https://github.com/allengaller" target="_blank" rel="noopener">GitHub</a>
     </nav>
   </header>

@@ -334,7 +334,280 @@ code {
   align-items: center;
 }
 
-/* ── Animations ──────────────────────────────────────────── */
+/* ── Stats Grid (shared: home, projects, about) ──────── */
+.stats-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 1px;
+  background: var(--border);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  overflow: hidden;
+  margin-bottom: 3rem;
+}
+
+.stat {
+  background: var(--bg);
+  padding: 1.25rem 1.5rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.25rem;
+}
+
+.stat-num {
+  font-size: 1.5rem;
+  font-weight: 600;
+  letter-spacing: -0.02em;
+}
+
+.stat-label {
+  font-size: 0.75rem;
+  color: var(--text-muted);
+}
+
+/* ── Section (page-level, extends .section-header) ───── */
+.page-section {
+  margin-bottom: 4rem;
+}
+
+.section-more {
+  font-size: 0.8125rem;
+  color: var(--text-secondary);
+}
+
+/* ── Project Card Grid ───────────────────────────────── */
+.project-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+  gap: 1px;
+  background: var(--border);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  overflow: hidden;
+}
+
+.project-card {
+  background: var(--bg);
+  padding: 1.5rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  transition: background 0.15s ease;
+  animation: fadeUp 0.4s ease-out both;
+}
+
+.project-card:hover {
+  background: var(--bg-subtle);
+}
+
+.project-type {
+  font-size: 0.65rem;
+  font-weight: 500;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  color: var(--text-muted);
+}
+
+.project-card h3 {
+  font-size: 1rem;
+  font-weight: 600;
+}
+
+.project-card p {
+  font-size: 0.8125rem;
+  color: var(--text-secondary);
+  line-height: 1.6;
+  flex: 1;
+}
+
+.project-tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.375rem;
+  margin-top: 0.5rem;
+}
+
+.project-tags span {
+  font-size: 0.6875rem;
+  padding: 0.2rem 0.5rem;
+  background: var(--bg-subtle);
+  border: 1px solid var(--border);
+  border-radius: 2rem;
+  color: var(--text-muted);
+}
+
+/* ── Project List (flat rows) ────────────────────────── */
+.project-list {
+  display: flex;
+  flex-direction: column;
+}
+
+.project-item {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+  padding: 1.25rem 0;
+  border-bottom: 1px solid var(--border);
+  transition: background 0.15s ease;
+}
+
+.project-item:last-child { border-bottom: none; }
+
+.project-item:hover {
+  background: var(--bg-subtle);
+  margin: 0 -24px;
+  padding-left: 24px;
+  padding-right: 24px;
+}
+
+.project-item .item-main { flex: 1; min-width: 0; }
+
+.project-item .item-main h3 {
+  font-size: 0.9375rem;
+  font-weight: 600;
+  margin-bottom: 0.2rem;
+}
+
+.project-item .item-main p {
+  font-size: 0.8125rem;
+  color: var(--text-muted);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.project-item .item-tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.375rem;
+  flex-shrink: 0;
+}
+
+.project-item .item-tags span {
+  font-size: 0.6875rem;
+  padding: 0.2rem 0.5rem;
+  background: var(--bg-subtle);
+  border: 1px solid var(--border);
+  border-radius: 2rem;
+  color: var(--text-muted);
+}
+
+.project-item .item-arrow {
+  font-size: 1rem;
+  color: var(--text-muted);
+  flex-shrink: 0;
+}
+
+/* ── Ability Grid (about) ────────────────────────────── */
+.ability-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+  gap: 1px;
+  background: var(--border);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  overflow: hidden;
+}
+
+.ability-card {
+  background: var(--bg);
+  padding: 1.5rem;
+}
+
+.ability-card h3 {
+  font-size: 0.9375rem;
+  font-weight: 600;
+  margin-bottom: 0.5rem;
+}
+
+.ability-card p {
+  font-size: 0.8125rem;
+  color: var(--text-secondary);
+  line-height: 1.6;
+  margin: 0;
+}
+
+/* ── Reason List (about) ─────────────────────────────── */
+.reason-list {
+  display: flex;
+  flex-direction: column;
+}
+
+.reason-item {
+  display: flex;
+  gap: 1.5rem;
+  padding: 1.5rem 0;
+  border-bottom: 1px solid var(--border);
+}
+
+.reason-item:last-child { border-bottom: none; }
+
+.reason-num {
+  font-size: 0.75rem;
+  font-weight: 600;
+  color: var(--text-muted);
+  font-variant-numeric: tabular-nums;
+  flex-shrink: 0;
+  width: 2rem;
+}
+
+.reason-item h3 {
+  font-size: 0.9375rem;
+  font-weight: 600;
+  margin-bottom: 0.25rem;
+}
+
+.reason-item p {
+  font-size: 0.875rem;
+  color: var(--text-secondary);
+  margin: 0;
+  line-height: 1.6;
+}
+
+/* ── Connect Grid (about) ────────────────────────────── */
+.connect-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+  gap: 1px;
+  background: var(--border);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  overflow: hidden;
+}
+
+.connect-card {
+  background: var(--bg);
+  padding: 1.5rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  transition: background 0.15s ease;
+}
+
+.connect-card:hover { background: var(--bg-subtle); }
+
+.connect-icon { font-size: 1.5rem; }
+
+.connect-card h3 {
+  font-size: 0.9375rem;
+  font-weight: 600;
+}
+
+.connect-card p {
+  font-size: 0.8125rem;
+  color: var(--text-muted);
+  margin: 0;
+}
+
+/* ── Responsive (page-level additions) ───────────────── */
+@media (max-width: 640px) {
+  .stats-grid { grid-template-columns: repeat(2, 1fr); }
+  .project-item { flex-direction: column; align-items: flex-start; }
+  .project-item .item-tags { display: none; }
+}
+
+/* ── Animations ──────────────────────────────────────── */
 @keyframes fadeUp {
   from { opacity: 0; transform: translateY(8px); }
   to { opacity: 1; transform: translateY(0); }
@@ -344,7 +617,202 @@ code {
   animation: fadeUp 0.5s ease-out both;
 }
 
-/* ── Responsive ──────────────────────────────────────────── */
+/* ── Home Page ────────────────────────────────────────── */
+.home { max-width: 100%; }
+
+.home-header {
+  padding: 4rem 0 3rem;
+  border-bottom: 1px solid var(--border);
+  margin-bottom: 3rem;
+}
+
+.home-header h1 {
+  font-size: clamp(2.5rem, 6vw, 3.5rem);
+  font-weight: 600;
+  letter-spacing: -0.03em;
+  margin-bottom: 0.5rem;
+  animation: fadeUp 0.5s ease-out both;
+}
+
+.home-tagline {
+  font-size: 0.8125rem;
+  font-weight: 500;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  color: var(--text-muted);
+  margin-bottom: 1rem;
+  animation: fadeUp 0.5s ease-out 0.05s both;
+}
+
+.home-desc {
+  font-size: 1.0625rem;
+  color: var(--text-secondary);
+  line-height: 1.7;
+  max-width: 540px;
+  margin-bottom: 1.5rem;
+  animation: fadeUp 0.5s ease-out 0.1s both;
+}
+
+.home-desc strong { color: var(--text); }
+
+.home-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.75rem;
+  animation: fadeUp 0.5s ease-out 0.15s both;
+}
+
+/* ── Audience Grid (home) ──────────────────────────────── */
+.audience-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+  gap: 1px;
+  background: var(--border);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  overflow: hidden;
+}
+
+.audience-card {
+  background: var(--bg);
+  padding: 1.25rem 1.5rem;
+  display: flex;
+  align-items: flex-start;
+  gap: 1rem;
+  transition: background 0.15s ease;
+}
+
+.audience-card:hover { background: var(--bg-subtle); }
+
+.audience-icon { font-size: 1.25rem; flex-shrink: 0; }
+
+.audience-card h3 {
+  font-size: 0.875rem;
+  font-weight: 600;
+  margin-bottom: 0.25rem;
+}
+
+.audience-card p {
+  font-size: 0.8125rem;
+  color: var(--text-secondary);
+  line-height: 1.5;
+}
+
+/* ── Collab List (home) ────────────────────────────────── */
+.collab-list {
+  display: flex;
+  flex-direction: column;
+}
+
+.collab-item {
+  padding: 1.5rem 0;
+  border-bottom: 1px solid var(--border);
+}
+
+.collab-item:last-child { border-bottom: none; }
+
+.collab-item h3 {
+  font-size: 0.9375rem;
+  font-weight: 600;
+  margin-bottom: 0.5rem;
+}
+
+.collab-item p {
+  font-size: 0.875rem;
+  color: var(--text-secondary);
+  line-height: 1.6;
+}
+
+/* ── About Page ────────────────────────────────────────── */
+.about { max-width: 100%; }
+
+.about-header {
+  padding: 4rem 0 3rem;
+  border-bottom: 1px solid var(--border);
+  margin-bottom: 3rem;
+}
+
+.about-header h1 {
+  font-size: clamp(2rem, 5vw, 2.75rem);
+  font-weight: 600;
+  letter-spacing: -0.03em;
+  margin-bottom: 0.5rem;
+  animation: fadeUp 0.5s ease-out both;
+}
+
+.about-tagline {
+  font-size: 0.875rem;
+  color: var(--text-muted);
+  font-weight: 500;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  animation: fadeUp 0.5s ease-out 0.05s both;
+}
+
+.about-section {
+  margin-bottom: 4rem;
+}
+
+.about-section h2 {
+  font-size: 0.8125rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  color: var(--text-muted);
+  margin-bottom: 1.5rem;
+  padding-bottom: 1rem;
+  border-bottom: 1px solid var(--border);
+}
+
+.about-section p {
+  font-size: 1rem;
+  color: var(--text-secondary);
+  line-height: 1.75;
+  margin-bottom: 1rem;
+}
+
+.about-section p:last-child { margin-bottom: 0; }
+
+.about-section strong { color: var(--text); }
+
+/* ── Projects Page ─────────────────────────────────────── */
+.projects { max-width: 100%; }
+
+.projects-header {
+  padding: 4rem 0 3rem;
+  border-bottom: 1px solid var(--border);
+  margin-bottom: 3rem;
+}
+
+.projects-header h1 {
+  font-size: clamp(2rem, 5vw, 2.75rem);
+  font-weight: 600;
+  letter-spacing: -0.03em;
+  margin-bottom: 0.5rem;
+  animation: fadeUp 0.5s ease-out both;
+}
+
+.projects-tagline {
+  font-size: 0.875rem;
+  color: var(--text-secondary);
+  margin-bottom: 0.5rem;
+  animation: fadeUp 0.5s ease-out 0.05s both;
+}
+
+.projects-desc {
+  font-size: 0.875rem;
+  color: var(--text-muted);
+  margin-bottom: 1.5rem;
+  animation: fadeUp 0.5s ease-out 0.1s both;
+}
+
+.projects-actions {
+  display: flex;
+  gap: 0.75rem;
+  animation: fadeUp 0.5s ease-out 0.15s both;
+}
+
+/* ── Responsive ──────────────────────────────────────── */
 @media (max-width: 640px) {
   .site-header { padding: 3.5rem 20px 2rem; }
   .site-main { padding: 2rem 20px 4rem; }
@@ -352,4 +820,7 @@ code {
   .grid { grid-template-columns: 1fr; }
   .site-nav { gap: 1rem; }
   .site-header .header-meta { flex-direction: column; gap: 0.5rem; }
+  .home-header { padding: 3rem 0 2rem; }
+  .about-header { padding: 3rem 0 2rem; }
+  .projects-header { padding: 3rem 0 2rem; }
 }

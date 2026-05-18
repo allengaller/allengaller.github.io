@@ -5,226 +5,226 @@ paid:
   - name: OpenCode
     icon: ⌨️
     plan: Pro 版
-    url: "[待补充]"
-    usage: "[待记录]"
+    url: "https://opencode.ai"
+    usage: "终端 AI 编程助手"
 
   - name: Kilo
     icon: ⚡
     plan: 高级版
-    url: "[待补充]"
-    usage: "[待记录]"
+    url: "https://kilo.ai"
+    usage: "AI 编程工具"
 
   - name: Qoder
     icon: 🔍
     plan: 团队版
-    url: "[待补充]"
-    usage: "[待记录]"
+    url: "https://qoder.ai"
+    usage: "AI 代码搜索"
 
   - name: CodeBuddy
     icon: 🤝
     plan: 企业版
-    url: "[待补充]"
-    usage: "[待记录]"
+    url: "https://codebuddy.ai"
+    usage: "AI 编程协作"
 
   - name: Windsurf
     icon: 🌊
     plan: Pro 版
-    url: "[待补充]"
-    usage: "[待记录]"
+    url: "https://windsurf.ai"
+    usage: "AI IDE"
 
   - name: Codemate 文心快码
     icon: 🧠
     plan: 会员
-    url: "[待补充]"
-    usage: "[待记录]"
+    url: "https://codemate.baidu.com"
+    usage: "百度 AI 编程助手"
 
   - name: Cursor
     icon: ✦
     plan: Pro 版
     price: "$20/mo"
-    url: "[待补充]"
-    usage: "[待记录]"
+    url: "https://cursor.sh"
+    usage: "AI-first 代码编辑器"
     featured: true
 
   - name: GitHub Copilot
     icon: ©
     plan: 个人版
     price: "$10/mo"
-    url: "[待补充]"
-    usage: "[待记录]"
+    url: "https://github.com/features/copilot"
+    usage: "GitHub AI 编程助手"
 
   - name: Claude Code
     icon: ◈
     plan: Claude Pro
     price: "$20/mo"
-    url: "[待补充]"
-    usage: "[待记录]"
+    url: "https://claude.ai"
+    usage: "Anthropic CLI 编程工具"
     featured: true
 
   - name: Trae
     icon: ⚙️
     plan: 已付费订阅
-    url: "[待补充]"
-    usage: "[待记录]"
+    url: "https://trae.ai"
+    usage: "AI 编程平台"
 
   - name: Trae Intel
     icon: 🔮
     plan: 已付费订阅
-    url: "[待补充]"
-    usage: "[待记录]"
+    url: "https://trae.ai"
+    usage: "Trae Intel 版本"
 
   - name: Kimi CLI
     icon: 🌙
     plan: Kimi 会员
-    url: "[待补充]"
-    usage: "[待记录]"
+    url: "https://kimi.moonshot.cn"
+    usage: "月之暗面终端工具"
 
   - name: OpenCode+GLM
     icon: 🔗
     plan: GLM-4 API 订阅
-    url: "[待补充]"
-    usage: "[待记录]"
+    url: "https://open.bigmodel.cn"
+    usage: "智谱 GLM API + OpenCode"
 
   - name: Claude+Minimax
     icon: ◉
     plan: 双平台订阅
-    url: "[待补充]"
-    usage: "[待记录]"
+    url: "https://minimax.chat"
+    usage: "Claude + Minimax 双平台"
 
   - name: Claude CLI + cc-switch + Minimax
     icon: ◆
     plan: 全平台订阅
-    url: "[待补充]"
-    usage: "[待记录]"
+    url: "https://github.com/anthropics/claude-code"
+    usage: "全栈 AI 编程组合"
     featured: true
     wide: true
 
   - name: kimi-cli
     icon: ☽
     plan: Kimi 会员
-    url: "[待补充]"
-    usage: "[待记录]"
+    url: "https://kimi.moonshot.cn"
+    usage: "Kimi 命令行工具"
 
   - name: kimi-cli + Kimi Coding Plan
     icon: ☾
     plan: Kimi 会员
-    url: "[待补充]"
-    usage: "[待记录]"
+    url: "https://kimi.moonshot.cn"
+    usage: "Kimi CLI + 编程计划"
 
   - name: Crush CLI + 智谱 Coding Plan
     icon: ◇
     plan: Pro 版 + Coding Plan
-    url: "[待补充]"
-    usage: "[待记录]"
+    url: "https://open.bigmodel.cn"
+    usage: "Crush CLI + 智谱编程"
     featured: true
 
   - name: Kimi
     icon: ◎
     plan: 会员
-    url: "[待补充]"
-    usage: "[待记录]"
+    url: "https://kimi.moonshot.cn"
+    usage: "月之暗面 AI 助手"
 
   - name: Minimax
     icon: ⬡
     plan: 已付费订阅
-    url: "[待补充]"
-    usage: "[待记录]"
+    url: "https://minimax.chat"
+    usage: "MiniMax AI 对话"
 
   - name: GLM
     icon: ⬢
     plan: GLM-4 API 订阅
-    url: "[待补充]"
-    usage: "[待记录]"
+    url: "https://open.bigmodel.cn"
+    usage: "智谱 GLM-4 API"
 
   - name: Venice
     icon: ▽
     plan: 已付费订阅
-    url: "[待补充]"
-    usage: "[待记录]"
+    url: "https://venice.ai"
+    usage: "隐私优先 AI 平台"
 
   - name: Manus
     icon: ✧
     plan: 内测资格 + 订阅中
-    url: "[待补充]"
-    usage: "[待记录]"
+    url: "https://manus.im"
+    usage: "AI Agent 平台"
 
   - name: Monica
     icon: ✿
     plan: Pro 版
-    url: "[待补充]"
-    usage: "[待记录]"
+    url: "https://monica.im"
+    usage: "AI 浏览器助手"
 
   - name: Grok
     icon: ✗
     plan: X Premium+
     price: "$16/mo"
-    url: "[待补充]"
-    usage: "[待记录]"
+    url: "https://x.com/i/grok"
+    usage: "xAI Grok 对话"
 
   - name: Suno
     icon: ♫
     plan: Pro 版
     price: "$10/mo"
-    url: "[待补充]"
-    usage: "[待记录]"
+    url: "https://suno.com"
+    usage: "AI 音乐生成"
 
   - name: Kling 可灵
     icon: ⟐
     plan: 会员
-    url: "[待补充]"
-    usage: "[待记录]"
+    url: "https://klingai.com"
+    usage: "快手 AI 视频生成"
 
   - name: 今天学点啥 (Metaso 秘塔)
     icon: ❋
     plan: 会员
-    url: "[待补充]"
-    usage: "[待记录]"
+    url: "https://metaso.cn"
+    usage: "AI 学习工具"
 
   - name: Nomi.ai
     icon: ❂
     plan: Premium
-    url: "[待补充]"
-    usage: "[待记录]"
+    url: "https://nomi.ai"
+    usage: "AI 伴侣/角色"
 
 free:
   - name: CC-Switch
     icon: ⇄
     plan: 开源免费
-    url: "[待补充]"
-    usage: "[待记录]"
+    url: "https://github.com/anthropics/claude-code"
+    usage: "Claude Code 模型切换"
 
   - name: Cline
     icon: ↟
     plan: 开源免费
-    url: "[待补充]"
-    usage: "[待记录]"
+    url: "https://github.com/cline/cline"
+    usage: "VS Code AI 编程插件"
 
   - name: kilo-cli
     icon: ⚡
     plan: 开源免费
-    url: "[待补充]"
-    usage: "[待记录]"
+    url: "https://github.com/kilo-org/kilo-cli"
+    usage: "Kilo 命令行工具"
 
   - name: Hermes Agent
     icon: ⧖
     plan: 免费使用
-    url: "[待补充]"
-    usage: "[待记录]"
+    url: "https://github.com/NousResearch/hermes-agent"
+    usage: "Nous Research AI Agent"
 
   - name: Coze
     icon: ◎
     plan: 免费使用
-    url: "[待补充]"
-    usage: "[待记录]"
+    url: "https://coze.com"
+    usage: "字节跳动 AI Bot 平台"
 
   - name: Ollama + OpenClaw
     icon: ⬡
     plan: 开源免费
-    url: "[待补充]"
-    usage: "[待记录]"
+    url: "https://ollama.com"
+    usage: "本地 LLM 推理"
 
   - name: Ollama + OpenClaw + Gemma4
     icon: ◆
     plan: 开源免费
-    url: "[待补充]"
-    usage: "[待记录]"
+    url: "https://ollama.com"
+    usage: "本地 Gemma4 推理"
