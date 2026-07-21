@@ -2,14 +2,33 @@
 <html lang="zh-CN">
 <head>
   <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+  <meta name="color-scheme" content="light dark">
   <title>{{ page.title }}</title>
   <meta name="description" content="{{ page.description }}">
-  <meta name="robots" content="index,follow">
-  <meta name="theme-color" content="#111111">
+  <meta name="robots" content="{{ page.robots | default: 'index,follow' }}">
+  <meta name="theme-color" content="#111111" media="(prefers-color-scheme: light)">
+  <meta name="theme-color" content="#0a0a0a" media="(prefers-color-scheme: dark)">
+  <meta name="generator" content="allengaller.github.io (custom Python builder)">
+
+  <!-- Favicons -->
   <link rel="icon" type="image/svg+xml" href="/favicon.svg">
-  <link rel="alternate icon" type="image/png" sizes="32x32" href="/favicon-32.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32.png">
   <link rel="apple-touch-icon" sizes="180x180" href="/favicon-180.png">
+
+  <!-- PWA / Mobile web app -->
+  <link rel="manifest" href="/manifest.webmanifest">
+  <meta name="mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+  <meta name="apple-mobile-web-app-title" content="法喜">
+  <meta name="application-name" content="法喜">
+  <meta name="format-detection" content="telephone=no">
+
+  <!-- Canonical & hreflang -->
+  <link rel="canonical" href="https://allengaller.github.io{{ page.url }}">
+  <link rel="alternate" hreflang="zh-CN" href="https://allengaller.github.io{{ page.url }}">
+  <link rel="alternate" hreflang="x-default" href="https://allengaller.github.io{{ page.url }}">
 
   <!-- Open Graph -->
   <meta property="og:type" content="website">
@@ -19,38 +38,57 @@
   <meta property="og:url" content="https://allengaller.github.io{{ page.url }}">
   <meta property="og:locale" content="zh_CN">
   <meta property="og:image" content="https://allengaller.github.io/og-default.png">
+  <meta property="og:image:width" content="1200">
+  <meta property="og:image:height" content="630">
+  <meta property="og:image:alt" content="法喜 — Cloud Native SRE · AI Toolsmith · Knowledge Architect">
 
   <!-- Twitter Card -->
   <meta name="twitter:card" content="summary_large_image">
   <meta name="twitter:title" content="{{ page.title }}">
   <meta name="twitter:description" content="{{ page.description }}">
   <meta name="twitter:image" content="https://allengaller.github.io/og-default.png">
+  <meta name="twitter:image:alt" content="法喜 — Cloud Native SRE · AI Toolsmith · Knowledge Architect">
 
+  <!-- Security headers (meta equivalents — full headers need server config) -->
+  <meta http-equiv="X-Content-Type-Options" content="nosniff">
+  <meta http-equiv="Referrer-Policy" content="strict-origin-when-cross-origin">
+  <meta http-equiv="Permissions-Policy" content="accelerometer=(), camera=(), geolocation=(), gyroscope=(), microphone=(), payment=(), usb=()">
+
+  <!-- JSON-LD (overridden per page; empty when not set) -->
+  <script type="application/ld+json" class="page-jsonld">{{ page.jsonld }}</script>
+
+  <!-- Fonts: variable Fraunces (display) + Geist (body) + JetBrains Mono (code) -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght,SOFT,WONK@9..144,300..900,0..100,0..1&family=Geist:wght@300..700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+
   <link rel="stylesheet" href="/assets/css/main.css">
 </head>
 <body>
 
+  <a href="#main" class="skip-link">跳到主要内容</a>
+
   <header class="site-nav-wrap">
-    <nav class="site-nav">
-      <a href="/" class="{{ page.nav_active_home }}">Home</a>
-      <a href="/projects/" class="{{ page.nav_active_projects }}">Projects</a>
-      <a href="/topic/links/" class="{{ page.nav_active_links }}">Links</a>
-      <a href="/topic/ai-tools/" class="{{ page.nav_active_ai_tools }}">AI Tools</a>
-      <a href="/about/" class="{{ page.nav_active_about }}">About</a>
-      <a href="https://github.com/allengaller" target="_blank" rel="noopener">GitHub</a>
+    <nav class="site-nav" aria-label="主导航">
+      <a href="/" class="{{ page.nav_active_home }}"{% if page.nav_active_home %} aria-current="page"{% endif %}>Home</a>
+      <a href="/projects/" class="{{ page.nav_active_projects }}"{% if page.nav_active_projects %} aria-current="page"{% endif %}>Projects</a>
+      <a href="/topic/links/" class="{{ page.nav_active_links }}"{% if page.nav_active_links %} aria-current="page"{% endif %}>Links</a>
+      <a href="/topic/ai-tools/" class="{{ page.nav_active_ai_tools }}"{% if page.nav_active_ai_tools %} aria-current="page"{% endif %}>AI Tools</a>
+      <a href="/about/" class="{{ page.nav_active_about }}"{% if page.nav_active_about %} aria-current="page"{% endif %}>About</a>
+      <a href="https://github.com/allengaller" target="_blank" rel="noopener">GitHub ↗</a>
     </nav>
   </header>
 
-  <main class="site-main">
+  <main id="main" class="site-main">
     {{ content }}
   </main>
 
   <footer class="site-footer">
-    <span>法喜 — 2026</span>
-    <span>Build in public · learn in public</span>
+    <div class="footer-row">
+      <span class="footer-mark">法喜</span>
+      <span class="footer-text">Build in public · learn in public</span>
+      <span class="footer-meta">2026</span>
+    </div>
   </footer>
 
 </body>

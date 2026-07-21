@@ -1,0 +1,133 @@
+---
+layout: default
+title: 404 - 页面未找到
+description: 你访问的页面不存在或已被移动。
+permalink: /404.html
+robots: noindex,follow
+---
+
+<div class="notfound">
+
+  <div class="notfound-mark" aria-hidden="true">404</div>
+
+  <h1 class="notfound-title">这里没有东西</h1>
+
+  <p class="notfound-desc">
+    你访问的页面可能已被移除、改名，或者从未存在。<br>
+    从下面几个入口继续：
+  </p>
+
+  <nav class="notfound-nav" aria-label="主导航">
+    <a href="/" class="notfound-link">
+      <span class="notfound-link-num">01</span>
+      <span class="notfound-link-main">返回首页</span>
+      <span class="notfound-link-sub">了解法喜在做什么</span>
+    </a>
+    <a href="/projects/" class="notfound-link">
+      <span class="notfound-link-num">02</span>
+      <span class="notfound-link-main">浏览全部项目</span>
+      <span class="notfound-link-sub">36 个项目 / 11 个工作室</span>
+    </a>
+    <a href="/topic/links/" class="notfound-link">
+      <span class="notfound-link-num">03</span>
+      <span class="notfound-link-main">资源导航</span>
+      <span class="notfound-link-sub">云原生 / 数据 / AI 外链</span>
+    </a>
+    <a href="/topic/archive/" class="notfound-link">
+      <span class="notfound-link-num">04</span>
+      <span class="notfound-link-main">归档知识库</span>
+      <span class="notfound-link-sub">33 篇早期技术写作</span>
+    </a>
+  </nav>
+
+</div>
+
+<style>
+.notfound {
+  max-width: 720px;
+  margin: 0 auto;
+  padding: 6rem 24px;
+}
+
+.notfound-mark {
+  font-family: var(--font-display, serif);
+  font-size: clamp(6rem, 18vw, 11rem);
+  font-weight: 600;
+  font-variation-settings: "SOFT" 100, "WONK" 0;
+  letter-spacing: -0.06em;
+  line-height: 0.9;
+  color: var(--text);
+  margin-bottom: 2rem;
+  animation: fadeUp 0.6s ease-out both;
+}
+
+.notfound-title {
+  font-family: var(--font-display, serif);
+  font-size: clamp(1.5rem, 4vw, 2rem);
+  font-weight: 500;
+  letter-spacing: -0.02em;
+  margin-bottom: 1rem;
+  animation: fadeUp 0.5s ease-out 0.05s both;
+}
+
+.notfound-desc {
+  font-size: 0.9375rem;
+  color: var(--text-secondary);
+  line-height: 1.7;
+  margin-bottom: 3rem;
+  animation: fadeUp 0.5s ease-out 0.1s both;
+}
+
+.notfound-nav {
+  display: flex;
+  flex-direction: column;
+  border-top: 1px solid var(--border);
+  animation: fadeUp 0.5s ease-out 0.15s both;
+}
+
+.notfound-link {
+  display: grid;
+  grid-template-columns: auto 1fr auto;
+  align-items: baseline;
+  gap: 1.5rem;
+  padding: 1.5rem 0;
+  border-bottom: 1px solid var(--border);
+  transition: background 0.2s ease, padding 0.2s ease;
+}
+
+.notfound-link:hover {
+  background: var(--bg-subtle);
+  margin: 0 -24px;
+  padding-left: 24px;
+  padding-right: 24px;
+}
+
+.notfound-link-num {
+  font-family: var(--font-mono);
+  font-size: 0.75rem;
+  font-variant-numeric: tabular-nums;
+  color: var(--text-muted);
+  letter-spacing: 0.06em;
+}
+
+.notfound-link-main {
+  font-size: 1.0625rem;
+  font-weight: 500;
+  color: var(--text);
+}
+
+.notfound-link-sub {
+  font-size: 0.8125rem;
+  color: var(--text-muted);
+  justify-self: end;
+}
+
+@media (max-width: 640px) {
+  .notfound { padding: 4rem 24px; }
+  .notfound-link {
+    grid-template-columns: auto 1fr;
+    gap: 0.75rem 1rem;
+  }
+  .notfound-link-sub { display: none; }
+}
+</style>

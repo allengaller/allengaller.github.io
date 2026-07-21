@@ -1,0 +1,5 @@
+Contact: https://github.com/allengaller
+Contact: mailto:hello@allengaller.github.io
+Expires: 2027-12-31T23:59:59z
+Preferred-Languages: zh-CN, en
+Canonical: https://allengaller.github.io/.well-known/security.txt

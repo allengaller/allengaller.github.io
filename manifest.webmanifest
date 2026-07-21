@@ -1,0 +1,24 @@
+{
+  "name": "法喜 — 个人品牌总入口",
+  "short_name": "法喜",
+  "description": "Cloud Native SRE · AI Toolsmith · Knowledge Architect",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#ffffff",
+  "theme_color": "#111111",
+  "lang": "zh-CN",
+  "icons": [
+    {
+      "src": "/favicon-180.png",
+      "sizes": "180x180",
+      "type": "image/png",
+      "purpose": "any"
+    },
+    {
+      "src": "/favicon.svg",
+      "sizes": "any",
+      "type": "image/svg+xml",
+      "purpose": "any maskable"
+    }
+  ]
+}

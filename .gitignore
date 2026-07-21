@@ -23,3 +23,6 @@ backup_README.md
 *.swp
 *.swo
 .DS_Store
+
+# Dev previews
+.previews/

@@ -3,29 +3,70 @@ layout: default
 title: 法喜 | 高产开源黑客的个人品牌总入口
 description: 聚合 Cloud Native、AI Tooling、知识库、内容矩阵与合作路径的个人品牌首页，面向开发者、合作方、客户与国际受众。
 nav_active_home: is-active
+jsonld: |
+  {
+    "@context": "https://schema.org",
+    "@type": "Person",
+    "name": "法喜",
+    "alternateName": "Allen Galler",
+    "jobTitle": ["Cloud Native SRE", "AI Toolsmith", "Knowledge Architect"],
+    "url": "https://allengaller.github.io",
+    "sameAs": [
+      "https://github.com/allengaller"
+    ],
+    "knowsAbout": [
+      "Cloud Native", "Kubernetes", "SRE", "AIOps",
+      "AI Tooling", "MCP", "Agent Systems",
+      "Knowledge Architecture", "Open Source"
+    ],
+    "description": "高产开源黑客，在 Cloud Native、AI Tooling、Knowledge Architecture 交叉地带持续输出，把技术经验沉淀成可复用工具、可增长知识资产、可长期经营的个人品牌。"
+  }
 ---
 
 <div class="home">
 
-  <header class="home-header">
-    <h1>法喜</h1>
-    <p class="home-tagline">高产开源黑客 · Open Source Builder</p>
-    <p class="home-desc">
-      在 <strong>Cloud Native、AI Tooling、Knowledge Architecture</strong> 的交叉地带持续输出。
-      把技术经验沉淀成可复用的工具、可增长的知识资产，以及可长期经营的个人品牌。
-    </p>
-    <div class="home-actions">
-      <a href="#featured" class="btn btn-primary">代表项目</a>
-      <a href="/projects/" class="btn">完整导航</a>
-      <a href="/about/" class="btn">关于我</a>
+  <header class="home-hero">
+    <div class="home-hero-text">
+      <p class="home-eyebrow" data-stagger="1">
+        <span class="eyebrow-dot" aria-hidden="true"></span>
+        <span>Open Source Builder · 自 2020</span>
+      </p>
+      <h1 class="home-name" data-stagger="2">法喜</h1>
+      <p class="home-tagline" data-stagger="3">Cloud Native SRE · AI Toolsmith · Knowledge Architect</p>
     </div>
+    <aside class="home-hero-aside" data-stagger="4">
+      <p class="home-desc">
+        在 <em>Cloud Native</em>、<em>AI Tooling</em>、<em>Knowledge Architecture</em>
+        的交叉地带持续输出。<br>
+        把技术经验沉淀成可复用的工具、可增长的知识资产，以及可长期经营的个人品牌。
+      </p>
+      <div class="home-actions">
+        <a href="#featured" class="btn btn-primary">代表项目</a>
+        <a href="/projects/" class="btn">完整导航</a>
+        <a href="/about/" class="btn">关于我</a>
+      </div>
+    </aside>
   </header>
 
-  <section class="stats-grid">
-    <div class="stat"><span class="stat-num">4500+</span><span class="stat-label">文档与知识资产</span></div>
-    <div class="stat"><span class="stat-num">10+</span><span class="stat-label">开源工具与应用</span></div>
-    <div class="stat"><span class="stat-num">5+</span><span class="stat-label">年云原生实践</span></div>
-    <div class="stat"><span class="stat-num">Multi</span><span class="stat-label">开源组织与内容品牌</span></div>
+  <div class="ornament" aria-hidden="true">✦</div>
+
+  <section class="stats-grid" aria-label="数据概览">
+    <div class="stat" data-stagger="1">
+      <span class="stat-num">4500<sup>+</sup></span>
+      <span class="stat-label">文档与知识资产</span>
+    </div>
+    <div class="stat" data-stagger="2">
+      <span class="stat-num">10<sup>+</sup></span>
+      <span class="stat-label">开源工具与应用</span>
+    </div>
+    <div class="stat" data-stagger="3">
+      <span class="stat-num">5<sup>+</sup></span>
+      <span class="stat-label">年云原生实践</span>
+    </div>
+    <div class="stat" data-stagger="4">
+      <span class="stat-num">Multi</span>
+      <span class="stat-label">开源组织与内容品牌</span>
+    </div>
   </section>
 
   <section class="page-section" id="featured">
@@ -99,7 +140,7 @@ nav_active_home: is-active
     <div class="audience-grid">
 
       <a href="#featured" class="audience-card">
-        <span class="audience-icon">💻</span>
+        <span class="audience-icon" aria-hidden="true">⌘</span>
         <div>
           <h3>开发者 / 技术粉丝</h3>
           <p>先看我做过哪些工具、如何把知识和工程能力产品化。</p>
@@ -107,7 +148,7 @@ nav_active_home: is-active
       </a>
 
       <a href="/projects/" class="audience-card">
-        <span class="audience-icon">🗂️</span>
+        <span class="audience-icon" aria-hidden="true">❒</span>
         <div>
           <h3>想看全部项目的人</h3>
           <p>直接进入完整项目导航，查看所有保留但不在首页铺开的组织、语料库、应用与工具。</p>
@@ -115,7 +156,7 @@ nav_active_home: is-active
       </a>
 
       <a href="/about/" class="audience-card">
-        <span class="audience-icon">🤝</span>
+        <span class="audience-icon" aria-hidden="true">◊</span>
         <div>
           <h3>招聘方 / 合作方</h3>
           <p>快速判断我的强项、代表战绩、适合怎样的合作方式。</p>
@@ -123,7 +164,7 @@ nav_active_home: is-active
       </a>
 
       <a href="/topic/links/" class="audience-card">
-        <span class="audience-icon">📰</span>
+        <span class="audience-icon" aria-hidden="true">✦</span>
         <div>
           <h3>自媒体读者 / 内容用户</h3>
           <p>内容矩阵、外部链接、知识专题和长期输出从这里汇聚。</p>

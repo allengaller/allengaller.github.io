@@ -1,4 +1,7 @@
 User-agent: *
 Allow: /
 
+# Block internal pages that shouldn't be indexed
+Disallow: /404.html
+
 Sitemap: https://allengaller.github.io/sitemap.xml

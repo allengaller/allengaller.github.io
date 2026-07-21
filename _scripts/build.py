@@ -5,14 +5,18 @@ Static site builder — processes Jekyll-style HTML with layouts.
 Supports:
   * Incremental builds (skip unchanged files) via content-hash cache
   * Nav active state
-  * --clean: wipe _site/ before building
-  * --no-sitemap: skip sitemap generation
+  * --clean:    wipe _site/ before building
+  * --force:    rebuild all pages (ignore cache)
+  * --strict:   fail on broken internal links
+  * --no-sitemap:   skip sitemap generation
+  * --no-link-check: skip internal link verification
   * Sitemap auto-generated from the page registry
 
 Usage:
   python3 _scripts/build.py             # incremental build
   python3 _scripts/build.py --force     # rebuild all pages (ignore cache)
   python3 _scripts/build.py --clean     # wipe _site/ then incremental build
+  python3 _scripts/build.py --strict    # fail on broken internal links
 """
 import os
 import re
@@ -35,6 +39,7 @@ PAGES = [
     ("topic/links/index.html",           "topic/links/index.html",           0.6, "monthly"),
     ("topic/ai-tools/index.html",        "topic/ai-tools/index.html",        0.6, "monthly"),
     ("topic/archive/index.html",         "topic/archive/index.html",         0.5, "yearly"),
+    ("404.html",                         "404.html",                         None, None),  # not in sitemap
 ]
 
 NAV_PAGES = {
@@ -50,11 +55,15 @@ STATIC_FILES = [
     ("assets/css/main.css",   "assets/css/main.css"),
     ("assets/css/corpus.css", "assets/css/corpus.css"),
     ("sitemap.xml",           "sitemap.xml"),
+    ("robots.txt",            "robots.txt"),
+    ("humans.txt",            "humans.txt"),
+    ("manifest.webmanifest",  "manifest.webmanifest"),
     ("favicon.svg",           "favicon.svg"),
     ("favicon-32.png",        "favicon-32.png"),
     ("favicon-180.png",       "favicon-180.png"),
     ("og-default.png",        "og-default.png"),
-    ("robots.txt",            "robots.txt"),
+    ("404.html",              "404.html"),
+    (".well-known/security.txt", ".well-known/security.txt"),
 ]
 
 
@@ -132,13 +141,27 @@ def render_page(src_path, layout_html, page_url):
     meta, content = extract_frontmatter(src)
 
     out = layout_html
-    out = out.replace('{{ page.title }}', meta.get('title', ''))
-    out = out.replace('{{ page.description }}', meta.get('description', ''))
+    out = out.replace('{{ page.title }}', str(meta.get('title', '')))
+    out = out.replace('{{ page.description }}', str(meta.get('description', '')))
     out = out.replace('{{ page.url }}', page_url)
+
+    # Handle `{{ page.robots | default: 'index,follow' }}` pattern
+    robots_value = meta.get('robots', 'index,follow')
+    if not robots_value:
+        robots_value = 'index,follow'
+    out = out.replace("{{ page.robots | default: 'index,follow' }}", str(robots_value))
+    out = out.replace('{{ page.robots }}', str(robots_value))
 
     for key in NAV_PAGES.values():
         placeholder = '{{ page.' + key + ' }}'
-        out = out.replace(placeholder, meta.get(key, ''))
+        out = out.replace(placeholder, str(meta.get(key, '')))
+
+    # JSON-LD (optional; defaults to empty string)
+    jsonld = meta.get('jsonld', '')
+    if jsonld is None:
+        jsonld = ''
+    jsonld = str(jsonld).strip()
+    out = out.replace('{{ page.jsonld }}', jsonld)
 
     out = out.replace('{{ content }}', content)
     return out
@@ -182,6 +205,9 @@ def generate_sitemap(cache, force=False):
 
     url_entries = []
     for src_rel, dst_rel, priority, changefreq in PAGES:
+        # Skip pages with None priority (e.g. 404)
+        if priority is None:
+            continue
         page_url = "/" + dst_rel.replace("index.html", "").rstrip("/")
         if page_url == "/":
             page_url = ""
@@ -205,6 +231,41 @@ def generate_sitemap(cache, force=False):
         f.write(body)
     cache[cache_key] = new_hash
     print("  Built: sitemap.xml")
+
+
+def check_internal_links(strict=False):
+    """Verify every internal href in _site/ resolves to a real file. Returns (issues, total)."""
+    issues = []
+    total = 0
+    if not os.path.isdir(SITE_DIR):
+        return issues, total
+
+    for root, _, files in os.walk(SITE_DIR):
+        for fname in files:
+            if not fname.endswith(".html"):
+                continue
+            path = os.path.join(root, fname)
+            with open(path) as f:
+                html = f.read()
+            for href in re.findall(r'href="([^"]+)"', html):
+                if href.startswith(("http://", "https://", "mailto:", "tel:", "javascript:", "#")):
+                    continue
+                target = href.split("#")[0].split("?")[0]
+                if not target:
+                    continue
+                total += 1
+                if target.startswith("/"):
+                    resolved = os.path.normpath(os.path.join(SITE_DIR, target.lstrip("/")))
+                else:
+                    resolved = os.path.normpath(os.path.join(os.path.dirname(path), target))
+                if not os.path.exists(resolved):
+                    if not resolved.endswith("/") and os.path.exists(resolved + "/index.html"):
+                        continue
+                    if not resolved.endswith(".html") and os.path.exists(resolved + ".html"):
+                        continue
+                    issues.append((path, href))
+
+    return issues, total
 
 
 def main():
@@ -235,6 +296,21 @@ def main():
         generate_sitemap(cache, force)
 
     save_cache(cache)
+
+    # Link check (always run; warn unless --strict)
+    skip_links = "--no-link-check" in args
+    if not skip_links:
+        issues, total = check_internal_links()
+        if issues:
+            print(f"\n  ⚠️  {len(issues)} broken internal link(s) (out of {total} checked):")
+            for src, href in issues:
+                rel_src = os.path.relpath(src, SITE_DIR)
+                print(f"     {rel_src}  →  {href}")
+            if "--strict" in args:
+                print("\n  ❌ --strict: aborting due to broken links")
+                sys.exit(1)
+        else:
+            print(f"\n  ✅ Link check: {total} internal link(s) resolve")
 
     summary = f"\n  {built} built, {skipped} unchanged"
     if force:
