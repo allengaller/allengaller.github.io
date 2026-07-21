@@ -1,0 +1,42 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 600 200" preserveAspectRatio="xMidYMid slice" role="img">
+  <defs>
+    <radialGradient id="rg" cx="80%" cy="20%" r="60%">
+      <stop offset="0%" stop-color="#c8553d" stop-opacity="0.55"/>
+      <stop offset="100%" stop-color="#c8553d" stop-opacity="0"/>
+    </radialGradient>
+    <pattern id="grid" width="20" height="20" patternUnits="userSpaceOnUse">
+      <path d="M 20 0 L 0 0 0 20" fill="none" stroke="#f5f3ee" stroke-opacity="0.06" stroke-width="0.5"/>
+    </pattern>
+    <pattern id="diagonal" width="14" height="14" patternUnits="userSpaceOnUse" patternTransform="rotate(45)">
+      <line x1="0" y1="0" x2="0" y2="14" stroke="#f5f3ee" stroke-opacity="0.05" stroke-width="1"/>
+    </pattern>
+    <pattern id="dots" width="24" height="24" patternUnits="userSpaceOnUse">
+      <circle cx="12" cy="12" r="1" fill="#f5f3ee" fill-opacity="0.12"/>
+    </pattern>
+  </defs>
+  <rect width="600" height="200" fill="#1a1d29"/>
+  <rect width="600" height="200" fill="url(#rg)"/>
+  <rect width="600" height="200" fill="url(#diagonal)"/>
+  <line x1="100" y1="100" x2="260" y2="60" stroke="#f5f3ee" stroke-opacity="0.25" stroke-width="0.8"/>
+  <line x1="100" y1="100" x2="260" y2="140" stroke="#f5f3ee" stroke-opacity="0.25" stroke-width="0.8"/>
+  <line x1="260" y1="60" x2="420" y2="100" stroke="#f5f3ee" stroke-opacity="0.25" stroke-width="0.8"/>
+  <line x1="260" y1="140" x2="420" y2="100" stroke="#f5f3ee" stroke-opacity="0.25" stroke-width="0.8"/>
+  <line x1="420" y1="100" x2="500" y2="100" stroke="#f5f3ee" stroke-opacity="0.25" stroke-width="0.8"/>
+  <line x1="100" y1="100" x2="180" y2="30" stroke="#f5f3ee" stroke-opacity="0.25" stroke-width="0.8"/>
+  <line x1="100" y1="100" x2="180" y2="170" stroke="#f5f3ee" stroke-opacity="0.25" stroke-width="0.8"/>
+  <line x1="420" y1="100" x2="340" y2="30" stroke="#f5f3ee" stroke-opacity="0.25" stroke-width="0.8"/>
+  <line x1="420" y1="100" x2="340" y2="170" stroke="#f5f3ee" stroke-opacity="0.25" stroke-width="0.8"/>
+  <line x1="260" y1="60" x2="180" y2="30" stroke="#f5f3ee" stroke-opacity="0.25" stroke-width="0.8"/>
+  <line x1="260" y1="60" x2="340" y2="30" stroke="#f5f3ee" stroke-opacity="0.25" stroke-width="0.8"/>
+  <line x1="260" y1="140" x2="180" y2="170" stroke="#f5f3ee" stroke-opacity="0.25" stroke-width="0.8"/>
+  <line x1="260" y1="140" x2="340" y2="170" stroke="#f5f3ee" stroke-opacity="0.25" stroke-width="0.8"/>
+  <rect x="90" y="90" width="20" height="20" rx="3" fill="#c8553d" fill-opacity="1.0" transform="rotate(45 100 100)"/>
+  <rect x="250" y="50" width="20" height="20" rx="3" fill="#f5f3ee" fill-opacity="0.85" transform="rotate(45 260 60)"/>
+  <rect x="250" y="130" width="20" height="20" rx="3" fill="#f5f3ee" fill-opacity="0.85" transform="rotate(45 260 140)"/>
+  <rect x="410" y="90" width="20" height="20" rx="3" fill="#c8553d" fill-opacity="1.0" transform="rotate(45 420 100)"/>
+  <rect x="170" y="20" width="20" height="20" rx="3" fill="#f5f3ee" fill-opacity="0.5" transform="rotate(45 180 30)"/>
+  <rect x="170" y="160" width="20" height="20" rx="3" fill="#f5f3ee" fill-opacity="0.5" transform="rotate(45 180 170)"/>
+  <rect x="330" y="20" width="20" height="20" rx="3" fill="#f5f3ee" fill-opacity="0.5" transform="rotate(45 340 30)"/>
+  <rect x="330" y="160" width="20" height="20" rx="3" fill="#f5f3ee" fill-opacity="0.5" transform="rotate(45 340 170)"/>
+  <rect x="490" y="90" width="20" height="20" rx="3" fill="#f5f3ee" fill-opacity="0.7" transform="rotate(45 500 100)"/>
+</svg>

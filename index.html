@@ -25,16 +25,25 @@ jsonld: |
 
 <div class="home">
 
+  <!-- Scroll progress indicator -->
+  <div class="scroll-progress" aria-hidden="true">
+    <div class="scroll-progress-bar" id="scroll-progress"></div>
+  </div>
+
   <header class="home-hero">
     <div class="home-hero-text">
-      <p class="home-eyebrow" data-stagger="1">
-        <span class="eyebrow-dot" aria-hidden="true"></span>
+      <p class="home-eyebrow">
+        <span class="eyebrow-dot"></span>
         <span>Open Source Builder · 自 2020</span>
+        <span class="home-status" aria-label="当前在做什么">
+          <span class="status-dot"></span>
+          <span>当前：v2 重构进行中</span>
+        </span>
       </p>
-      <h1 class="home-name" data-stagger="2">法喜</h1>
-      <p class="home-tagline" data-stagger="3">Cloud Native SRE · AI Toolsmith · Knowledge Architect</p>
+      <h1 class="home-name">法喜</h1>
+      <p class="home-tagline">Cloud Native SRE · AI Toolsmith · Knowledge Architect</p>
     </div>
-    <aside class="home-hero-aside" data-stagger="4">
+    <aside class="home-hero-aside">
       <p class="home-desc">
         在 <em>Cloud Native</em>、<em>AI Tooling</em>、<em>Knowledge Architecture</em>
         的交叉地带持续输出。<br>
@@ -50,7 +59,7 @@ jsonld: |
 
   <div class="ornament" aria-hidden="true">✦</div>
 
-  <section class="stats-grid" aria-label="数据概览">
+  <section class="stats-grid reveal" data-reveal aria-label="数据概览">
     <div class="stat" data-stagger="1">
       <span class="stat-num">4500<sup>+</sup></span>
       <span class="stat-label">文档与知识资产</span>
@@ -77,63 +86,93 @@ jsonld: |
     <div class="project-grid">
 
       <a href="https://github.com/ai-guru-global/resolve-agent" target="_blank" rel="noopener" class="project-card">
-        <span class="project-type">AIOPS · AGENT</span>
-        <h3>ResolveAgent</h3>
-        <p>故障树分析、RAG 知识检索与智能体交互结合到 AIOps 场景。</p>
-        <div class="project-tags">
-          <span>故障分析</span><span>知识检索</span><span>AI 工具化</span>
+        <div class="project-banner">
+          <img src="/assets/banners/resolve-agent.svg" alt="" loading="lazy" decoding="async">
+        </div>
+        <div class="project-body">
+          <span class="project-type">AIOPS · AGENT</span>
+          <h3>ResolveAgent</h3>
+          <p>故障树分析、RAG 知识检索与智能体交互结合到 AIOps 场景。</p>
+          <div class="project-tags">
+            <span>故障分析</span><span>知识检索</span><span>AI 工具化</span>
+          </div>
         </div>
       </a>
 
       <a href="https://github.com/kudig-io/kudig" target="_blank" rel="noopener" class="project-card">
-        <span class="project-type">CLOUD NATIVE</span>
-        <h3>Kudig</h3>
-        <p>K8s 节点诊断工具，覆盖 70+ 分析器与 eBPF 诊断能力。</p>
-        <div class="project-tags">
-          <span>Kubernetes</span><span>eBPF</span><span>诊断自动化</span>
+        <div class="project-banner">
+          <img src="/assets/banners/kudig.svg" alt="" loading="lazy" decoding="async">
+        </div>
+        <div class="project-body">
+          <span class="project-type">CLOUD NATIVE</span>
+          <h3>Kudig</h3>
+          <p>K8s 节点诊断工具，覆盖 70+ 分析器与 eBPF 诊断能力。</p>
+          <div class="project-tags">
+            <span>Kubernetes</span><span>eBPF</span><span>诊断自动化</span>
+          </div>
         </div>
       </a>
 
       <a href="https://github.com/kudig-io/etcd-guardian" target="_blank" rel="noopener" class="project-card">
-        <span class="project-type">OPERATOR</span>
-        <h3>EtcdGuardian</h3>
-        <p>专注 etcd 备份与恢复的 Kubernetes Operator，服务生产级基础设施。</p>
-        <div class="project-tags">
-          <span>Operator</span><span>备份恢复</span><span>SRE</span>
+        <div class="project-banner">
+          <img src="/assets/banners/etcd-guardian.svg" alt="" loading="lazy" decoding="async">
+        </div>
+        <div class="project-body">
+          <span class="project-type">OPERATOR</span>
+          <h3>EtcdGuardian</h3>
+          <p>专注 etcd 备份与恢复的 Kubernetes Operator，服务生产级基础设施。</p>
+          <div class="project-tags">
+            <span>Operator</span><span>备份恢复</span><span>SRE</span>
+          </div>
         </div>
       </a>
 
       <a href="https://github.com/standup-coder/leetcast" target="_blank" rel="noopener" class="project-card">
-        <span class="project-type">EDU · MEDIA</span>
-        <h3>LeetCast</h3>
-        <p>把"每日一题"做成 AI 对话式播客，展示技术内容产品化能力。</p>
-        <div class="project-tags">
-          <span>AI 内容生成</span><span>产品化</span><span>自媒体</span>
+        <div class="project-banner">
+          <img src="/assets/banners/leetcast.svg" alt="" loading="lazy" decoding="async">
+        </div>
+        <div class="project-body">
+          <span class="project-type">EDU · MEDIA</span>
+          <h3>LeetCast</h3>
+          <p>把"每日一题"做成 AI 对话式播客，展示技术内容产品化能力。</p>
+          <div class="project-tags">
+            <span>AI 内容生成</span><span>产品化</span><span>自媒体</span>
+          </div>
         </div>
       </a>
 
       <a href="https://github.com/standup-coder/mcp4coder" target="_blank" rel="noopener" class="project-card">
-        <span class="project-type">DEV TOOLING</span>
-        <h3>mcp4coder</h3>
-        <p>聚合 MCP 工具生态，把 AI Agent 真正可调用的工具链做成开发者可消费的资产。</p>
-        <div class="project-tags">
-          <span>MCP</span><span>Agent</span><span>开发者生态</span>
+        <div class="project-banner">
+          <img src="/assets/banners/mcp4coder.svg" alt="" loading="lazy" decoding="async">
+        </div>
+        <div class="project-body">
+          <span class="project-type">DEV TOOLING</span>
+          <h3>mcp4coder</h3>
+          <p>聚合 MCP 工具生态，把 AI Agent 真正可调用的工具链做成开发者可消费的资产。</p>
+          <div class="project-tags">
+            <span>MCP</span><span>Agent</span><span>开发者生态</span>
+          </div>
         </div>
       </a>
 
       <a href="https://github.com/opendemo-work/opendemo" target="_blank" rel="noopener" class="project-card">
-        <span class="project-type">SHOWCASE</span>
-        <h3>OpenDemo</h3>
-        <p>技术演示平台，沉淀 518+ 案例，把知识输出升级为可浏览、可复用、可展示的 demo 资产。</p>
-        <div class="project-tags">
-          <span>案例库</span><span>技术演示</span><span>知识资产化</span>
+        <div class="project-banner">
+          <img src="/assets/banners/opendemo.svg" alt="" loading="lazy" decoding="async">
+        </div>
+        <div class="project-body">
+          <span class="project-type">SHOWCASE</span>
+          <h3>OpenDemo</h3>
+          <p>技术演示平台，沉淀 518+ 案例，把知识输出升级为可浏览、可复用、可展示的 demo 资产。</p>
+          <div class="project-tags">
+            <span>案例库</span><span>技术演示</span><span>知识资产化</span>
+          </div>
         </div>
       </a>
 
     </div>
   </section>
 
-  <section class="page-section audience-section">
+  <section class="page-section audience-section reveal" data-reveal>
     <div class="section-header">
       <h2 class="section-title">从不同入口认识我</h2>
     </div>
@@ -174,7 +213,7 @@ jsonld: |
     </div>
   </section>
 
-  <section class="page-section collab-section">
+  <section class="page-section collab-section reveal" data-reveal>
     <div class="section-header">
       <h2 class="section-title">最适合的合作场景</h2>
     </div>
@@ -195,3 +234,9 @@ jsonld: |
   </section>
 
 </div>
+
+<button class="back-to-top" id="back-to-top" aria-label="回到顶部">
+  <svg viewBox="0 0 16 16" width="14" height="14" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+    <path d="M8 13 V3 M3 8 L8 3 L13 8"/>
+  </svg>
+</button>

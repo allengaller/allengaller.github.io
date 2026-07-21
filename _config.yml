@@ -35,8 +35,6 @@ relative_links:
 exclude:
   - backup_*/
   - vendor/
-  - Gemfile
-  - Gemfile.lock
   - README.md
   - backup_README.md
   - skills-lock.json

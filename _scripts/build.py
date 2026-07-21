@@ -53,7 +53,13 @@ NAV_PAGES = {
 
 STATIC_FILES = [
     ("assets/css/main.css",   "assets/css/main.css"),
-    ("assets/css/corpus.css", "assets/css/corpus.css"),
+    ("assets/js/site.js",     "assets/js/site.js"),
+    ("assets/banners/resolve-agent.svg", "assets/banners/resolve-agent.svg"),
+    ("assets/banners/kudig.svg",          "assets/banners/kudig.svg"),
+    ("assets/banners/etcd-guardian.svg",  "assets/banners/etcd-guardian.svg"),
+    ("assets/banners/leetcast.svg",       "assets/banners/leetcast.svg"),
+    ("assets/banners/mcp4coder.svg",      "assets/banners/mcp4coder.svg"),
+    ("assets/banners/opendemo.svg",       "assets/banners/opendemo.svg"),
     ("sitemap.xml",           "sitemap.xml"),
     ("robots.txt",            "robots.txt"),
     ("humans.txt",            "humans.txt"),

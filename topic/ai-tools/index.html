@@ -2,796 +2,959 @@
 layout: default
 nav_active_ai_tools: is-active
 title: AI Tools | AI 工具链
-description: Allen 的 AI 工具链清单，包含编程开发、对话助手、创作工具等订阅与用量信息。
+description: 我正在用的 AI 工具链：编程、对话、创作、陪伴、Agent 五大类共 36 款，其中付费订阅 29 款、开源免费 7 款。
 ---
 
-<div class="ai-tools-v3">
+<div class="ai-tools">
 
   <header class="ai-hero">
-    <span class="ai-badge">AI TOOLCHAIN</span>
-    <h1 class="ai-title">我的 AI 工具链</h1>
-    <p class="ai-subtitle">29 paid · 7 free</p>
+    <div class="ai-hero-text">
+      <p class="ai-eyebrow">
+        <span class="eyebrow-dot" aria-hidden="true"></span>
+        <span>Toolchain · 实时更新</span>
+      </p>
+      <h1 class="ai-name" data-stagger="1">AI 工具链</h1>
+      <p class="ai-tagline" data-stagger="2">36 tools · 5 categories</p>
+    </div>
+    <aside class="ai-hero-aside" data-stagger="3">
+      <p class="ai-desc">
+        实际在用、可被点开验证的 AI 工具订阅清单。<br>
+        按 <em>编程</em>、<em>对话</em>、<em>创作</em>、<em>陪伴</em>、<em>Agent</em> 五个维度整理。
+      </p>
+      <div class="ai-meta-grid">
+        <div class="ai-meta">
+          <span class="ai-meta-num">29</span>
+          <span class="ai-meta-label">付费订阅</span>
+        </div>
+        <div class="ai-meta">
+          <span class="ai-meta-num">7</span>
+          <span class="ai-meta-label">免费 / 开源</span>
+        </div>
+        <div class="ai-meta">
+          <span class="ai-meta-num">5</span>
+          <span class="ai-meta-label">类别</span>
+        </div>
+      </div>
+    </aside>
   </header>
 
-  <main class="ai-main">
+  <div class="ornament" aria-hidden="true">✦</div>
 
-    <!-- PAID SUBSCRIPTIONS -->
-    <section class="ai-section">
-      <div class="section-header">
-        <span class="section-num">01</span>
-        <h2 class="section-title">付费订阅</h2>
-        <span class="section-count">29</span>
-      </div>
-      <div class="tool-grid">
+  <!-- ──────────────── 编程开发 ──────────────── -->
+  <section class="ai-section" id="ai-coding">
+    <div class="section-header">
+      <span class="ai-section-num">01</span>
+      <h2 class="section-title">编程开发</h2>
+      <span class="section-count">22</span>
+    </div>
 
-        <article class="tool-card" style="--delay: 0.000s">
-          <div class="card-top">
-            <span class="card-icon">⌨️</span>
-            <span class="card-name">OpenCode</span>
-          </div>
-          <div class="card-plan">Pro 版</div>
-          <div class="card-links">
-            <div class="link-row">
-              <span class="link-label">URL</span>
-              <a href="https://opencode.ai" target="_blank" rel="noopener" class="link-val link-url">opencode.ai</a>
-            </div>
-            <div class="link-row">
-              <span class="link-label">用量</span>
-              <span class="link-val">终端 AI 编程助手</span>
-            </div>
-          </div>
-        </article>
+    <div class="tool-grid">
 
-        <article class="tool-card" style="--delay: 0.025s">
-          <div class="card-top">
-            <span class="card-icon">⚡</span>
-            <span class="card-name">Kilo</span>
+      <article class="tool-card featured">
+        <div class="tool-banner" style="--c1: #1a1d29; --c2: #c8553d">
+          <span class="tool-mark">CC</span>
+          <span class="tool-pattern"></span>
+        </div>
+        <div class="tool-body">
+          <div class="tool-top">
+            <h3 class="tool-name">Claude Code</h3>
+            <span class="tool-badge accent">FEATURED</span>
           </div>
-          <div class="card-plan">高级版</div>
-          <div class="card-links">
-            <div class="link-row">
-              <span class="link-label">URL</span>
-              <a href="https://kilo.ai" target="_blank" rel="noopener" class="link-val link-url">kilo.ai</a>
-            </div>
-            <div class="link-row">
-              <span class="link-label">用量</span>
-              <span class="link-val">AI 编程工具</span>
-            </div>
+          <p class="tool-desc">Anthropic 官方 CLI 编程工具，长上下文 + Agent Loop + MCP 生态。</p>
+          <div class="tool-meta">
+            <span class="tool-plan">Claude Pro</span>
+            <span class="tool-price">$20/mo</span>
+            <a href="https://claude.ai" target="_blank" rel="noopener" class="tool-link">claude.ai ↗</a>
           </div>
-        </article>
+        </div>
+      </article>
 
-        <article class="tool-card" style="--delay: 0.050s">
-          <div class="card-top">
-            <span class="card-icon">🔍</span>
-            <span class="card-name">Qoder</span>
+      <article class="tool-card">
+        <div class="tool-body">
+          <div class="tool-top">
+            <h3 class="tool-name">Cursor</h3>
+            <span class="tool-badge">Pro</span>
           </div>
-          <div class="card-plan">团队版</div>
-          <div class="card-links">
-            <div class="link-row">
-              <span class="link-label">URL</span>
-              <a href="https://qoder.ai" target="_blank" rel="noopener" class="link-val link-url">qoder.ai</a>
-            </div>
-            <div class="link-row">
-              <span class="link-label">用量</span>
-              <span class="link-val">AI 代码搜索</span>
-            </div>
+          <p class="tool-desc">AI-first 代码编辑器，Composer 多文件编辑。</p>
+          <div class="tool-meta">
+            <span class="tool-plan">Pro 版</span>
+            <span class="tool-price">$20/mo</span>
+            <a href="https://cursor.sh" target="_blank" rel="noopener" class="tool-link">cursor.sh ↗</a>
           </div>
-        </article>
+        </div>
+      </article>
 
-        <article class="tool-card" style="--delay: 0.075s">
-          <div class="card-top">
-            <span class="card-icon">🤝</span>
-            <span class="card-name">CodeBuddy</span>
+      <article class="tool-card">
+        <div class="tool-body">
+          <div class="tool-top">
+            <h3 class="tool-name">GitHub Copilot</h3>
+            <span class="tool-badge">PRO</span>
           </div>
-          <div class="card-plan">企业版</div>
-          <div class="card-links">
-            <div class="link-row">
-              <span class="link-label">URL</span>
-              <a href="https://codebuddy.ai" target="_blank" rel="noopener" class="link-val link-url">codebuddy.ai</a>
-            </div>
-            <div class="link-row">
-              <span class="link-label">用量</span>
-              <span class="link-val">AI 编程协作</span>
-            </div>
+          <p class="tool-desc">GitHub 官方 AI 编程助手，全 IDE 覆盖。</p>
+          <div class="tool-meta">
+            <span class="tool-plan">个人版</span>
+            <span class="tool-price">$10/mo</span>
+            <a href="https://github.com/features/copilot" target="_blank" rel="noopener" class="tool-link">github.com ↗</a>
           </div>
-        </article>
+        </div>
+      </article>
 
-        <article class="tool-card" style="--delay: 0.100s">
-          <div class="card-top">
-            <span class="card-icon">🌊</span>
-            <span class="card-name">Windsurf</span>
+      <article class="tool-card">
+        <div class="tool-body">
+          <div class="tool-top">
+            <h3 class="tool-name">OpenCode</h3>
+            <span class="tool-badge">CLI</span>
           </div>
-          <div class="card-plan">Pro 版</div>
-          <div class="card-links">
-            <div class="link-row">
-              <span class="link-label">URL</span>
-              <a href="https://windsurf.ai" target="_blank" rel="noopener" class="link-val link-url">windsurf.ai</a>
-            </div>
-            <div class="link-row">
-              <span class="link-label">用量</span>
-              <span class="link-val">AI IDE</span>
-            </div>
+          <p class="tool-desc">终端 AI 编程助手，开源。</p>
+          <div class="tool-meta">
+            <span class="tool-plan">Pro 版</span>
+            <a href="https://opencode.ai" target="_blank" rel="noopener" class="tool-link">opencode.ai ↗</a>
           </div>
-        </article>
+        </div>
+      </article>
 
-        <article class="tool-card" style="--delay: 0.125s">
-          <div class="card-top">
-            <span class="card-icon">🧠</span>
-            <span class="card-name">Codemate 文心快码</span>
+      <article class="tool-card">
+        <div class="tool-body">
+          <div class="tool-top">
+            <h3 class="tool-name">Kilo</h3>
+            <span class="tool-badge">IDE</span>
           </div>
-          <div class="card-plan">会员</div>
-          <div class="card-links">
-            <div class="link-row">
-              <span class="link-label">URL</span>
-              <a href="https://codemate.baidu.com" target="_blank" rel="noopener" class="link-val link-url">codemate.baidu.com</a>
-            </div>
-            <div class="link-row">
-              <span class="link-label">用量</span>
-              <span class="link-val">百度 AI 编程助手</span>
-            </div>
+          <p class="tool-desc">轻量级 AI 编程助手，多 IDE 兼容。</p>
+          <div class="tool-meta">
+            <span class="tool-plan">高级版</span>
+            <a href="https://kilo.ai" target="_blank" rel="noopener" class="tool-link">kilo.ai ↗</a>
           </div>
-        </article>
+        </div>
+      </article>
 
-        <article class="tool-card featured" style="--delay: 0.150s">
-          <div class="card-top">
-            <span class="card-icon">✦</span>
-            <span class="card-name">Cursor</span>
+      <article class="tool-card">
+        <div class="tool-body">
+          <div class="tool-top">
+            <h3 class="tool-name">Qoder</h3>
+            <span class="tool-badge">TEAM</span>
           </div>
-          <div class="card-plan">Pro 版 · $20/mo</div>
-          <div class="card-links">
-            <div class="link-row">
-              <span class="link-label">URL</span>
-              <a href="https://cursor.sh" target="_blank" rel="noopener" class="link-val link-url">cursor.sh</a>
-            </div>
-            <div class="link-row">
-              <span class="link-label">用量</span>
-              <span class="link-val">AI-first 代码编辑器</span>
-            </div>
+          <p class="tool-desc">AI 代码库语义搜索，跨文件依赖分析。</p>
+          <div class="tool-meta">
+            <span class="tool-plan">团队版</span>
+            <a href="https://qoder.ai" target="_blank" rel="noopener" class="tool-link">qoder.ai ↗</a>
           </div>
-        </article>
+        </div>
+      </article>
 
-        <article class="tool-card" style="--delay: 0.175s">
-          <div class="card-top">
-            <span class="card-icon">©</span>
-            <span class="card-name">GitHub Copilot</span>
+      <article class="tool-card">
+        <div class="tool-body">
+          <div class="tool-top">
+            <h3 class="tool-name">CodeBuddy</h3>
+            <span class="tool-badge">ENT</span>
           </div>
-          <div class="card-plan">个人版 · $10/mo</div>
-          <div class="card-links">
-            <div class="link-row">
-              <span class="link-label">URL</span>
-              <a href="https://github.com/features/copilot" target="_blank" rel="noopener" class="link-val link-url">github.com/features/copilot</a>
-            </div>
-            <div class="link-row">
-              <span class="link-label">用量</span>
-              <span class="link-val">GitHub AI 编程助手</span>
-            </div>
+          <p class="tool-desc">AI 编程协作平台，代码审查 + Bug 预测。</p>
+          <div class="tool-meta">
+            <span class="tool-plan">企业版</span>
+            <a href="https://codebuddy.ai" target="_blank" rel="noopener" class="tool-link">codebuddy.ai ↗</a>
           </div>
-        </article>
+        </div>
+      </article>
 
-        <article class="tool-card featured" style="--delay: 0.200s">
-          <div class="card-top">
-            <span class="card-icon">◈</span>
-            <span class="card-name">Claude Code</span>
+      <article class="tool-card">
+        <div class="tool-body">
+          <div class="tool-top">
+            <h3 class="tool-name">Windsurf</h3>
+            <span class="tool-badge">IDE</span>
           </div>
-          <div class="card-plan">Claude Pro · $20/mo</div>
-          <div class="card-links">
-            <div class="link-row">
-              <span class="link-label">URL</span>
-              <a href="https://claude.ai" target="_blank" rel="noopener" class="link-val link-url">claude.ai</a>
-            </div>
-            <div class="link-row">
-              <span class="link-label">用量</span>
-              <span class="link-val">Anthropic CLI 编程工具</span>
-            </div>
+          <p class="tool-desc">Codeium 推出的 AI IDE，Cascade 多文件编辑。</p>
+          <div class="tool-meta">
+            <span class="tool-plan">Pro 版</span>
+            <a href="https://windsurf.ai" target="_blank" rel="noopener" class="tool-link">windsurf.ai ↗</a>
           </div>
-        </article>
+        </div>
+      </article>
 
-        <article class="tool-card" style="--delay: 0.225s">
-          <div class="card-top">
-            <span class="card-icon">⚙️</span>
-            <span class="card-name">Trae</span>
+      <article class="tool-card">
+        <div class="tool-body">
+          <div class="tool-top">
+            <h3 class="tool-name">Codemate 文心快码</h3>
+            <span class="tool-badge">BAIDU</span>
           </div>
-          <div class="card-plan">已付费订阅</div>
-          <div class="card-links">
-            <div class="link-row">
-              <span class="link-label">URL</span>
-              <a href="https://trae.ai" target="_blank" rel="noopener" class="link-val link-url">trae.ai</a>
-            </div>
-            <div class="link-row">
-              <span class="link-label">用量</span>
-              <span class="link-val">AI 编程平台</span>
-            </div>
+          <p class="tool-desc">百度 AI 编程助手，文心大模型集成。</p>
+          <div class="tool-meta">
+            <span class="tool-plan">会员</span>
+            <a href="https://codemate.baidu.com" target="_blank" rel="noopener" class="tool-link">codemate.baidu.com ↗</a>
           </div>
-        </article>
+        </div>
+      </article>
 
-        <article class="tool-card" style="--delay: 0.250s">
-          <div class="card-top">
-            <span class="card-icon">🔮</span>
-            <span class="card-name">Trae Intel</span>
+      <article class="tool-card">
+        <div class="tool-body">
+          <div class="tool-top">
+            <h3 class="tool-name">Trae</h3>
+            <span class="tool-badge">IDE</span>
           </div>
-          <div class="card-plan">已付费订阅</div>
-          <div class="card-links">
-            <div class="link-row">
-              <span class="link-label">URL</span>
-              <a href="https://trae.ai" target="_blank" rel="noopener" class="link-val link-url">trae.ai</a>
-            </div>
-            <div class="link-row">
-              <span class="link-label">用量</span>
-              <span class="link-val">Trae Intel 版本</span>
-            </div>
+          <p class="tool-desc">字节跳动 AI 编程平台。</p>
+          <div class="tool-meta">
+            <span class="tool-plan">已付费订阅</span>
+            <a href="https://trae.ai" target="_blank" rel="noopener" class="tool-link">trae.ai ↗</a>
           </div>
-        </article>
+        </div>
+      </article>
 
-        <article class="tool-card" style="--delay: 0.275s">
-          <div class="card-top">
-            <span class="card-icon">🌙</span>
-            <span class="card-name">Kimi CLI</span>
+      <article class="tool-card">
+        <div class="tool-body">
+          <div class="tool-top">
+            <h3 class="tool-name">Trae Intel</h3>
+            <span class="tool-badge">IDE</span>
           </div>
-          <div class="card-plan">Kimi 会员</div>
-          <div class="card-links">
-            <div class="link-row">
-              <span class="link-label">URL</span>
-              <a href="https://kimi.moonshot.cn" target="_blank" rel="noopener" class="link-val link-url">kimi.moonshot.cn</a>
-            </div>
-            <div class="link-row">
-              <span class="link-label">用量</span>
-              <span class="link-val">月之暗面终端工具</span>
-            </div>
+          <p class="tool-desc">Trae 高级版本，Intel 优化。</p>
+          <div class="tool-meta">
+            <span class="tool-plan">已付费订阅</span>
+            <a href="https://trae.ai" target="_blank" rel="noopener" class="tool-link">trae.ai ↗</a>
           </div>
-        </article>
+        </div>
+      </article>
 
-        <article class="tool-card" style="--delay: 0.300s">
-          <div class="card-top">
-            <span class="card-icon">🔗</span>
-            <span class="card-name">OpenCode+GLM</span>
+      <article class="tool-card">
+        <div class="tool-body">
+          <div class="tool-top">
+            <h3 class="tool-name">Kimi CLI</h3>
+            <span class="tool-badge">CLI</span>
           </div>
-          <div class="card-plan">GLM-4 API 订阅</div>
-          <div class="card-links">
-            <div class="link-row">
-              <span class="link-label">URL</span>
-              <a href="https://open.bigmodel.cn" target="_blank" rel="noopener" class="link-val link-url">open.bigmodel.cn</a>
-            </div>
-            <div class="link-row">
-              <span class="link-label">用量</span>
-              <span class="link-val">智谱 GLM API + OpenCode</span>
-            </div>
+          <p class="tool-desc">月之暗面终端工具，长上下文场景。</p>
+          <div class="tool-meta">
+            <span class="tool-plan">Kimi 会员</span>
+            <a href="https://kimi.moonshot.cn" target="_blank" rel="noopener" class="tool-link">kimi.moonshot.cn ↗</a>
           </div>
-        </article>
+        </div>
+      </article>
 
-        <article class="tool-card" style="--delay: 0.325s">
-          <div class="card-top">
-            <span class="card-icon">◉</span>
-            <span class="card-name">Claude+Minimax</span>
+      <article class="tool-card">
+        <div class="tool-body">
+          <div class="tool-top">
+            <h3 class="tool-name">OpenCode + GLM</h3>
+            <span class="tool-badge">API</span>
           </div>
-          <div class="card-plan">双平台订阅</div>
-          <div class="card-links">
-            <div class="link-row">
-              <span class="link-label">URL</span>
-              <a href="https://minimax.chat" target="_blank" rel="noopener" class="link-val link-url">minimax.chat</a>
-            </div>
-            <div class="link-row">
-              <span class="link-label">用量</span>
-              <span class="link-val">Claude + Minimax 双平台</span>
-            </div>
+          <p class="tool-desc">智谱 GLM-4 API 接入 OpenCode 终端。</p>
+          <div class="tool-meta">
+            <span class="tool-plan">GLM-4 API</span>
+            <a href="https://open.bigmodel.cn" target="_blank" rel="noopener" class="tool-link">open.bigmodel.cn ↗</a>
           </div>
-        </article>
+        </div>
+      </article>
 
-        <article class="tool-card featured wide" style="--delay: 0.350s">
-          <div class="card-top">
-            <span class="card-icon">◆</span>
-            <span class="card-name">Claude CLI + cc-switch + Minimax</span>
+      <article class="tool-card">
+        <div class="tool-body">
+          <div class="tool-top">
+            <h3 class="tool-name">Claude + Minimax</h3>
+            <span class="tool-badge">DUAL</span>
           </div>
-          <div class="card-plan">全平台订阅</div>
-          <div class="card-links">
-            <div class="link-row">
-              <span class="link-label">URL</span>
-              <a href="https://github.com/anthropics/claude-code" target="_blank" rel="noopener" class="link-val link-url">github.com/anthropics/claude-code</a>
-            </div>
-            <div class="link-row">
-              <span class="link-label">用量</span>
-              <span class="link-val">全栈 AI 编程组合</span>
-            </div>
+          <p class="tool-desc">Claude + Minimax 双平台订阅。</p>
+          <div class="tool-meta">
+            <span class="tool-plan">双平台订阅</span>
+            <a href="https://minimax.chat" target="_blank" rel="noopener" class="tool-link">minimax.chat ↗</a>
           </div>
-        </article>
+        </div>
+      </article>
 
-        <article class="tool-card" style="--delay: 0.375s">
-          <div class="card-top">
-            <span class="card-icon">☽</span>
-            <span class="card-name">kimi-cli</span>
+      <article class="tool-card wide">
+        <div class="tool-body">
+          <div class="tool-top">
+            <h3 class="tool-name">Claude CLI + cc-switch + Minimax</h3>
+            <span class="tool-badge accent">STACK</span>
           </div>
-          <div class="card-plan">Kimi 会员</div>
-          <div class="card-links">
-            <div class="link-row">
-              <span class="link-label">URL</span>
-              <a href="https://kimi.moonshot.cn" target="_blank" rel="noopener" class="link-val link-url">kimi.moonshot.cn</a>
-            </div>
-            <div class="link-row">
-              <span class="link-label">用量</span>
-              <span class="link-val">Kimi 命令行工具</span>
-            </div>
+          <p class="tool-desc">全栈 AI 编程组合：Claude Code 主力 + cc-switch 切换模型 + Minimax 备份。</p>
+          <div class="tool-meta">
+            <span class="tool-plan">全平台订阅</span>
+            <a href="https://github.com/anthropics/claude-code" target="_blank" rel="noopener" class="tool-link">github.com ↗</a>
           </div>
-        </article>
+        </div>
+      </article>
 
-        <article class="tool-card" style="--delay: 0.400s">
-          <div class="card-top">
-            <span class="card-icon">☾</span>
-            <span class="card-name">kimi-cli + Kimi Coding Plan</span>
+      <article class="tool-card">
+        <div class="tool-body">
+          <div class="tool-top">
+            <h3 class="tool-name">kimi-cli</h3>
+            <span class="tool-badge">CLI</span>
           </div>
-          <div class="card-plan">Kimi 会员</div>
-          <div class="card-links">
-            <div class="link-row">
-              <span class="link-label">URL</span>
-              <a href="https://kimi.moonshot.cn" target="_blank" rel="noopener" class="link-val link-url">kimi.moonshot.cn</a>
-            </div>
-            <div class="link-row">
-              <span class="link-label">用量</span>
-              <span class="link-val">Kimi CLI + 编程计划</span>
-            </div>
+          <p class="tool-desc">Kimi 命令行工具，独立订阅。</p>
+          <div class="tool-meta">
+            <span class="tool-plan">Kimi 会员</span>
+            <a href="https://kimi.moonshot.cn" target="_blank" rel="noopener" class="tool-link">kimi.moonshot.cn ↗</a>
           </div>
-        </article>
+        </div>
+      </article>
 
-        <article class="tool-card featured" style="--delay: 0.425s">
-          <div class="card-top">
-            <span class="card-icon">◇</span>
-            <span class="card-name">Crush CLI + 智谱 Coding Plan</span>
+      <article class="tool-card">
+        <div class="tool-body">
+          <div class="tool-top">
+            <h3 class="tool-name">kimi-cli + Coding Plan</h3>
+            <span class="tool-badge">CLI</span>
           </div>
-          <div class="card-plan">Pro 版 + Coding Plan</div>
-          <div class="card-links">
-            <div class="link-row">
-              <span class="link-label">URL</span>
-              <a href="https://open.bigmodel.cn" target="_blank" rel="noopener" class="link-val link-url">open.bigmodel.cn</a>
-            </div>
-            <div class="link-row">
-              <span class="link-label">用量</span>
-              <span class="link-val">Crush CLI + 智谱编程</span>
-            </div>
+          <p class="tool-desc">Kimi CLI + 编程计划套餐。</p>
+          <div class="tool-meta">
+            <span class="tool-plan">Kimi 会员</span>
+            <a href="https://kimi.moonshot.cn" target="_blank" rel="noopener" class="tool-link">kimi.moonshot.cn ↗</a>
           </div>
-        </article>
+        </div>
+      </article>
 
-        <article class="tool-card" style="--delay: 0.450s">
-          <div class="card-top">
-            <span class="card-icon">◎</span>
-            <span class="card-name">Kimi</span>
+      <article class="tool-card featured">
+        <div class="tool-body">
+          <div class="tool-top">
+            <h3 class="tool-name">Crush CLI + 智谱 Coding Plan</h3>
+            <span class="tool-badge accent">FEATURED</span>
           </div>
-          <div class="card-plan">会员</div>
-          <div class="card-links">
-            <div class="link-row">
-              <span class="link-label">URL</span>
-              <a href="https://kimi.moonshot.cn" target="_blank" rel="noopener" class="link-val link-url">kimi.moonshot.cn</a>
-            </div>
-            <div class="link-row">
-              <span class="link-label">用量</span>
-              <span class="link-val">月之暗面 AI 助手</span>
-            </div>
+          <p class="tool-desc">Crush CLI + 智谱 GLM Coding Plan，国产模型主力编程组合。</p>
+          <div class="tool-meta">
+            <span class="tool-plan">Pro + Coding Plan</span>
+            <a href="https://open.bigmodel.cn" target="_blank" rel="noopener" class="tool-link">open.bigmodel.cn ↗</a>
           </div>
-        </article>
+        </div>
+      </article>
 
-        <article class="tool-card" style="--delay: 0.475s">
-          <div class="card-top">
-            <span class="card-icon">⬡</span>
-            <span class="card-name">Minimax</span>
+      <article class="tool-card free">
+        <div class="tool-body">
+          <div class="tool-top">
+            <h3 class="tool-name">CC-Switch</h3>
+            <span class="tool-badge free">FREE</span>
           </div>
-          <div class="card-plan">已付费订阅</div>
-          <div class="card-links">
-            <div class="link-row">
-              <span class="link-label">URL</span>
-              <a href="https://minimax.chat" target="_blank" rel="noopener" class="link-val link-url">minimax.chat</a>
-            </div>
-            <div class="link-row">
-              <span class="link-label">用量</span>
-              <span class="link-val">MiniMax AI 对话</span>
-            </div>
+          <p class="tool-desc">Claude Code 模型切换工具，一键切 API。</p>
+          <div class="tool-meta">
+            <span class="tool-plan">开源免费</span>
+            <a href="https://github.com/anthropics/claude-code" target="_blank" rel="noopener" class="tool-link">github.com ↗</a>
           </div>
-        </article>
+        </div>
+      </article>
 
-        <article class="tool-card" style="--delay: 0.500s">
-          <div class="card-top">
-            <span class="card-icon">⬢</span>
-            <span class="card-name">GLM</span>
+      <article class="tool-card free">
+        <div class="tool-body">
+          <div class="tool-top">
+            <h3 class="tool-name">Cline</h3>
+            <span class="tool-badge free">FREE</span>
           </div>
-          <div class="card-plan">GLM-4 API 订阅</div>
-          <div class="card-links">
-            <div class="link-row">
-              <span class="link-label">URL</span>
-              <a href="https://open.bigmodel.cn" target="_blank" rel="noopener" class="link-val link-url">open.bigmodel.cn</a>
-            </div>
-            <div class="link-row">
-              <span class="link-label">用量</span>
-              <span class="link-val">智谱 GLM-4 API</span>
-            </div>
+          <p class="tool-desc">VS Code AI 插件，MCP 协议支持，自备 API。</p>
+          <div class="tool-meta">
+            <span class="tool-plan">开源免费</span>
+            <a href="https://github.com/cline/cline" target="_blank" rel="noopener" class="tool-link">github.com ↗</a>
           </div>
-        </article>
+        </div>
+      </article>
 
-        <article class="tool-card" style="--delay: 0.525s">
-          <div class="card-top">
-            <span class="card-icon">▽</span>
-            <span class="card-name">Venice</span>
+      <article class="tool-card free">
+        <div class="tool-body">
+          <div class="tool-top">
+            <h3 class="tool-name">kilo-cli</h3>
+            <span class="tool-badge free">FREE</span>
           </div>
-          <div class="card-plan">已付费订阅</div>
-          <div class="card-links">
-            <div class="link-row">
-              <span class="link-label">URL</span>
-              <a href="https://venice.ai" target="_blank" rel="noopener" class="link-val link-url">venice.ai</a>
-            </div>
-            <div class="link-row">
-              <span class="link-label">用量</span>
-              <span class="link-val">隐私优先 AI 平台</span>
-            </div>
+          <p class="tool-desc">Kilo 命令行工具，开源。</p>
+          <div class="tool-meta">
+            <span class="tool-plan">开源免费</span>
+            <a href="https://github.com/kilo-org/kilo-cli" target="_blank" rel="noopener" class="tool-link">github.com ↗</a>
           </div>
-        </article>
+        </div>
+      </article>
 
-        <article class="tool-card" style="--delay: 0.550s">
-          <div class="card-top">
-            <span class="card-icon">✧</span>
-            <span class="card-name">Manus</span>
+      <article class="tool-card free">
+        <div class="tool-body">
+          <div class="tool-top">
+            <h3 class="tool-name">Hermes Agent</h3>
+            <span class="tool-badge free">FREE</span>
           </div>
-          <div class="card-plan">内测资格 + 订阅中</div>
-          <div class="card-links">
-            <div class="link-row">
-              <span class="link-label">URL</span>
-              <a href="https://manus.im" target="_blank" rel="noopener" class="link-val link-url">manus.im</a>
-            </div>
-            <div class="link-row">
-              <span class="link-label">用量</span>
-              <span class="link-val">AI Agent 平台</span>
-            </div>
+          <p class="tool-desc">Nous Research 开源 AI Agent。</p>
+          <div class="tool-meta">
+            <span class="tool-plan">免费使用</span>
+            <a href="https://github.com/NousResearch/hermes-agent" target="_blank" rel="noopener" class="tool-link">github.com ↗</a>
           </div>
-        </article>
+        </div>
+      </article>
 
-        <article class="tool-card" style="--delay: 0.575s">
-          <div class="card-top">
-            <span class="card-icon">✿</span>
-            <span class="card-name">Monica</span>
-          </div>
-          <div class="card-plan">Pro 版</div>
-          <div class="card-links">
-            <div class="link-row">
-              <span class="link-label">URL</span>
-              <a href="https://monica.im" target="_blank" rel="noopener" class="link-val link-url">monica.im</a>
-            </div>
-            <div class="link-row">
-              <span class="link-label">用量</span>
-              <span class="link-val">AI 浏览器助手</span>
-            </div>
-          </div>
-        </article>
+    </div>
+  </section>
 
-        <article class="tool-card" style="--delay: 0.600s">
-          <div class="card-top">
-            <span class="card-icon">✗</span>
-            <span class="card-name">Grok</span>
-          </div>
-          <div class="card-plan">X Premium+ · $16/mo</div>
-          <div class="card-links">
-            <div class="link-row">
-              <span class="link-label">URL</span>
-              <a href="https://x.com/i/grok" target="_blank" rel="noopener" class="link-val link-url">x.com/i/grok</a>
-            </div>
-            <div class="link-row">
-              <span class="link-label">用量</span>
-              <span class="link-val">xAI Grok 对话</span>
-            </div>
-          </div>
-        </article>
+  <!-- ──────────────── 对话助手 ──────────────── -->
+  <section class="ai-section" id="ai-chat">
+    <div class="section-header">
+      <span class="ai-section-num">02</span>
+      <h2 class="section-title">对话助手</h2>
+      <span class="section-count">6</span>
+    </div>
 
-        <article class="tool-card" style="--delay: 0.625s">
-          <div class="card-top">
-            <span class="card-icon">♫</span>
-            <span class="card-name">Suno</span>
-          </div>
-          <div class="card-plan">Pro 版 · $10/mo</div>
-          <div class="card-links">
-            <div class="link-row">
-              <span class="link-label">URL</span>
-              <a href="https://suno.com" target="_blank" rel="noopener" class="link-val link-url">suno.com</a>
-            </div>
-            <div class="link-row">
-              <span class="link-label">用量</span>
-              <span class="link-val">AI 音乐生成</span>
-            </div>
-          </div>
-        </article>
+    <div class="tool-grid">
 
-        <article class="tool-card" style="--delay: 0.650s">
-          <div class="card-top">
-            <span class="card-icon">⟐</span>
-            <span class="card-name">Kling 可灵</span>
+      <article class="tool-card">
+        <div class="tool-body">
+          <div class="tool-top">
+            <h3 class="tool-name">Kimi</h3>
+            <span class="tool-badge">CHAT</span>
           </div>
-          <div class="card-plan">会员</div>
-          <div class="card-links">
-            <div class="link-row">
-              <span class="link-label">URL</span>
-              <a href="https://klingai.com" target="_blank" rel="noopener" class="link-val link-url">klingai.com</a>
-            </div>
-            <div class="link-row">
-              <span class="link-label">用量</span>
-              <span class="link-val">快手 AI 视频生成</span>
-            </div>
+          <p class="tool-desc">月之暗面 AI 助手，长上下文 + 文件解析。</p>
+          <div class="tool-meta">
+            <span class="tool-plan">会员</span>
+            <a href="https://kimi.moonshot.cn" target="_blank" rel="noopener" class="tool-link">kimi.moonshot.cn ↗</a>
           </div>
-        </article>
+        </div>
+      </article>
 
-        <article class="tool-card" style="--delay: 0.675s">
-          <div class="card-top">
-            <span class="card-icon">❋</span>
-            <span class="card-name">今天学点啥 (Metaso 秘塔)</span>
+      <article class="tool-card">
+        <div class="tool-body">
+          <div class="tool-top">
+            <h3 class="tool-name">Minimax</h3>
+            <span class="tool-badge">CHAT</span>
           </div>
-          <div class="card-plan">会员</div>
-          <div class="card-links">
-            <div class="link-row">
-              <span class="link-label">URL</span>
-              <a href="https://metaso.cn" target="_blank" rel="noopener" class="link-val link-url">metaso.cn</a>
-            </div>
-            <div class="link-row">
-              <span class="link-label">用量</span>
-              <span class="link-val">AI 学习工具</span>
-            </div>
+          <p class="tool-desc">MiniMax AI 对话，长文 + 多模态。</p>
+          <div class="tool-meta">
+            <span class="tool-plan">已付费订阅</span>
+            <a href="https://minimax.chat" target="_blank" rel="noopener" class="tool-link">minimax.chat ↗</a>
           </div>
-        </article>
+        </div>
+      </article>
 
-        <article class="tool-card" style="--delay: 0.700s">
-          <div class="card-top">
-            <span class="card-icon">❂</span>
-            <span class="card-name">Nomi.ai</span>
+      <article class="tool-card">
+        <div class="tool-body">
+          <div class="tool-top">
+            <h3 class="tool-name">GLM</h3>
+            <span class="tool-badge">API</span>
           </div>
-          <div class="card-plan">Premium</div>
-          <div class="card-links">
-            <div class="link-row">
-              <span class="link-label">URL</span>
-              <a href="https://nomi.ai" target="_blank" rel="noopener" class="link-val link-url">nomi.ai</a>
-            </div>
-            <div class="link-row">
-              <span class="link-label">用量</span>
-              <span class="link-val">AI 伴侣/角色</span>
-            </div>
+          <p class="tool-desc">智谱 GLM-4 API 接入对话场景。</p>
+          <div class="tool-meta">
+            <span class="tool-plan">GLM-4 API</span>
+            <a href="https://open.bigmodel.cn" target="_blank" rel="noopener" class="tool-link">open.bigmodel.cn ↗</a>
           </div>
-        </article>
-      </div>
-    </section>
+        </div>
+      </article>
 
-    <!-- FREE TOOLS -->
-    <section class="ai-section">
-      <div class="section-header">
-        <span class="section-num">02</span>
-        <h2 class="section-title">免费工具</h2>
-        <span class="section-count">7</span>
-      </div>
-      <div class="tool-grid free-grid">
+      <article class="tool-card">
+        <div class="tool-body">
+          <div class="tool-top">
+            <h3 class="tool-name">Venice</h3>
+            <span class="tool-badge accent">PRIVACY</span>
+          </div>
+          <p class="tool-desc">隐私优先 AI 平台，去中心化基础设施。</p>
+          <div class="tool-meta">
+            <span class="tool-plan">已付费订阅</span>
+            <a href="https://venice.ai" target="_blank" rel="noopener" class="tool-link">venice.ai ↗</a>
+          </div>
+        </div>
+      </article>
 
-        <article class="tool-card free-card" style="--delay: 0.800s">
-          <div class="card-top">
-            <span class="card-icon">⇄</span>
-            <span class="card-name">CC-Switch</span>
+      <article class="tool-card">
+        <div class="tool-body">
+          <div class="tool-top">
+            <h3 class="tool-name">Grok</h3>
+            <span class="tool-badge">X</span>
           </div>
-          <div class="card-plan">开源免费</div>
-          <div class="card-links">
-            <div class="link-row">
-              <span class="link-label">URL</span>
-              <a href="https://github.com/anthropics/claude-code" target="_blank" rel="noopener" class="link-val link-url">github.com/anthropics/claude-code</a>
-            </div>
-            <div class="link-row">
-              <span class="link-label">用量</span>
-              <span class="link-val">Claude Code 模型切换</span>
-            </div>
+          <p class="tool-desc">xAI Grok 对话，X Premium+ 集成。</p>
+          <div class="tool-meta">
+            <span class="tool-plan">X Premium+</span>
+            <span class="tool-price">$16/mo</span>
+            <a href="https://x.com/i/grok" target="_blank" rel="noopener" class="tool-link">x.com ↗</a>
           </div>
-        </article>
+        </div>
+      </article>
 
-        <article class="tool-card free-card" style="--delay: 0.840s">
-          <div class="card-top">
-            <span class="card-icon">↟</span>
-            <span class="card-name">Cline</span>
+      <article class="tool-card free">
+        <div class="tool-body">
+          <div class="tool-top">
+            <h3 class="tool-name">Coze</h3>
+            <span class="tool-badge free">FREE</span>
           </div>
-          <div class="card-plan">开源免费</div>
-          <div class="card-links">
-            <div class="link-row">
-              <span class="link-label">URL</span>
-              <a href="https://github.com/cline/cline" target="_blank" rel="noopener" class="link-val link-url">github.com/cline/cline</a>
-            </div>
-            <div class="link-row">
-              <span class="link-label">用量</span>
-              <span class="link-val">VS Code AI 编程插件</span>
-            </div>
+          <p class="tool-desc">字节跳动 AI Bot 平台，零代码搭建。</p>
+          <div class="tool-meta">
+            <span class="tool-plan">免费使用</span>
+            <a href="https://coze.com" target="_blank" rel="noopener" class="tool-link">coze.com ↗</a>
           </div>
-        </article>
+        </div>
+      </article>
 
-        <article class="tool-card free-card" style="--delay: 0.880s">
-          <div class="card-top">
-            <span class="card-icon">⚡</span>
-            <span class="card-name">kilo-cli</span>
-          </div>
-          <div class="card-plan">开源免费</div>
-          <div class="card-links">
-            <div class="link-row">
-              <span class="link-label">URL</span>
-              <a href="https://github.com/kilo-org/kilo-cli" target="_blank" rel="noopener" class="link-val link-url">github.com/kilo-org/kilo-cli</a>
-            </div>
-            <div class="link-row">
-              <span class="link-label">用量</span>
-              <span class="link-val">Kilo 命令行工具</span>
-            </div>
-          </div>
-        </article>
+    </div>
+  </section>
 
-        <article class="tool-card free-card" style="--delay: 0.920s">
-          <div class="card-top">
-            <span class="card-icon">⧖</span>
-            <span class="card-name">Hermes Agent</span>
-          </div>
-          <div class="card-plan">免费使用</div>
-          <div class="card-links">
-            <div class="link-row">
-              <span class="link-label">URL</span>
-              <a href="https://github.com/NousResearch/hermes-agent" target="_blank" rel="noopener" class="link-val link-url">github.com/NousResearch/hermes-agent</a>
-            </div>
-            <div class="link-row">
-              <span class="link-label">用量</span>
-              <span class="link-val">Nous Research AI Agent</span>
-            </div>
-          </div>
-        </article>
+  <!-- ──────────────── Agent / 平台 ──────────────── -->
+  <section class="ai-section" id="ai-agent">
+    <div class="section-header">
+      <span class="ai-section-num">03</span>
+      <h2 class="section-title">Agent · 平台</h2>
+      <span class="section-count">2</span>
+    </div>
 
-        <article class="tool-card free-card" style="--delay: 0.960s">
-          <div class="card-top">
-            <span class="card-icon">◎</span>
-            <span class="card-name">Coze</span>
-          </div>
-          <div class="card-plan">免费使用</div>
-          <div class="card-links">
-            <div class="link-row">
-              <span class="link-label">URL</span>
-              <a href="https://coze.com" target="_blank" rel="noopener" class="link-val link-url">coze.com</a>
-            </div>
-            <div class="link-row">
-              <span class="link-label">用量</span>
-              <span class="link-val">字节跳动 AI Bot 平台</span>
-            </div>
-          </div>
-        </article>
+    <div class="tool-grid">
 
-        <article class="tool-card free-card" style="--delay: 1.000s">
-          <div class="card-top">
-            <span class="card-icon">⬡</span>
-            <span class="card-name">Ollama + OpenClaw</span>
+      <article class="tool-card featured wide">
+        <div class="tool-banner" style="--c1: #2d1b69; --c2: #c8553d">
+          <span class="tool-mark">M</span>
+          <span class="tool-pattern"></span>
+        </div>
+        <div class="tool-body">
+          <div class="tool-top">
+            <h3 class="tool-name">Manus</h3>
+            <span class="tool-badge accent">FEATURED</span>
           </div>
-          <div class="card-plan">开源免费</div>
-          <div class="card-links">
-            <div class="link-row">
-              <span class="link-label">URL</span>
-              <a href="https://ollama.com" target="_blank" rel="noopener" class="link-val link-url">ollama.com</a>
-            </div>
-            <div class="link-row">
-              <span class="link-label">用量</span>
-              <span class="link-val">本地 LLM 推理</span>
-            </div>
+          <p class="tool-desc">AI Agent 平台，自主任务执行 + 多工具协同。个人内测资格 + 订阅中。</p>
+          <div class="tool-meta">
+            <span class="tool-plan">内测 + 订阅</span>
+            <a href="https://manus.im" target="_blank" rel="noopener" class="tool-link">manus.im ↗</a>
           </div>
-        </article>
+        </div>
+      </article>
 
-        <article class="tool-card free-card" style="--delay: 1.040s">
-          <div class="card-top">
-            <span class="card-icon">◆</span>
-            <span class="card-name">Ollama + OpenClaw + Gemma4</span>
+      <article class="tool-card">
+        <div class="tool-body">
+          <div class="tool-top">
+            <h3 class="tool-name">Monica</h3>
+            <span class="tool-badge">ASSIST</span>
           </div>
-          <div class="card-plan">开源免费</div>
-          <div class="card-links">
-            <div class="link-row">
-              <span class="link-label">URL</span>
-              <a href="https://ollama.com" target="_blank" rel="noopener" class="link-val link-url">ollama.com</a>
-            </div>
-            <div class="link-row">
-              <span class="link-label">用量</span>
-              <span class="link-val">本地 Gemma4 推理</span>
-            </div>
+          <p class="tool-desc">AI 浏览器助手，全网接入 + 多模型。</p>
+          <div class="tool-meta">
+            <span class="tool-plan">Pro 版</span>
+            <a href="https://monica.im" target="_blank" rel="noopener" class="tool-link">monica.im ↗</a>
           </div>
-        </article>
-      </div>
-    </section>
+        </div>
+      </article>
 
-  </main>
+    </div>
+  </section>
+
+  <!-- ──────────────── 创作工具 ──────────────── -->
+  <section class="ai-section" id="ai-creative">
+    <div class="section-header">
+      <span class="ai-section-num">04</span>
+      <h2 class="section-title">创作工具</h2>
+      <span class="section-count">3</span>
+    </div>
+
+    <div class="tool-grid">
+
+      <article class="tool-card">
+        <div class="tool-body">
+          <div class="tool-top">
+            <h3 class="tool-name">Suno</h3>
+            <span class="tool-badge">MUSIC</span>
+          </div>
+          <p class="tool-desc">AI 音乐生成，文本/音频一键成曲。</p>
+          <div class="tool-meta">
+            <span class="tool-plan">Pro 版</span>
+            <span class="tool-price">$10/mo</span>
+            <a href="https://suno.com" target="_blank" rel="noopener" class="tool-link">suno.com ↗</a>
+          </div>
+        </div>
+      </article>
+
+      <article class="tool-card">
+        <div class="tool-body">
+          <div class="tool-top">
+            <h3 class="tool-name">Kling 可灵</h3>
+            <span class="tool-badge">VIDEO</span>
+          </div>
+          <p class="tool-desc">快手 AI 视频生成，文生视频 + 图生视频。</p>
+          <div class="tool-meta">
+            <span class="tool-plan">会员</span>
+            <a href="https://klingai.com" target="_blank" rel="noopener" class="tool-link">klingai.com ↗</a>
+          </div>
+        </div>
+      </article>
+
+      <article class="tool-card">
+        <div class="tool-body">
+          <div class="tool-top">
+            <h3 class="tool-name">今天学点啥 · Metaso</h3>
+            <span class="tool-badge">LEARN</span>
+          </div>
+          <p class="tool-desc">秘塔 AI 搜索 + 学习工具。</p>
+          <div class="tool-meta">
+            <span class="tool-plan">会员</span>
+            <a href="https://metaso.cn" target="_blank" rel="noopener" class="tool-link">metaso.cn ↗</a>
+          </div>
+        </div>
+      </article>
+
+    </div>
+  </section>
+
+  <!-- ──────────────── 陪伴 ──────────────── -->
+  <section class="ai-section" id="ai-companion">
+    <div class="section-header">
+      <span class="ai-section-num">05</span>
+      <h2 class="section-title">陪伴</h2>
+      <span class="section-count">1</span>
+    </div>
+
+    <div class="tool-grid">
+
+      <article class="tool-card">
+        <div class="tool-body">
+          <div class="tool-top">
+            <h3 class="tool-name">Nomi.ai</h3>
+            <span class="tool-badge accent">COMPANION</span>
+          </div>
+          <p class="tool-desc">AI 伴侣 / 角色长期记忆。</p>
+          <div class="tool-meta">
+            <span class="tool-plan">Premium</span>
+            <a href="https://nomi.ai" target="_blank" rel="noopener" class="tool-link">nomi.ai ↗</a>
+          </div>
+        </div>
+      </article>
+
+    </div>
+  </section>
+
+  <!-- ──────────────── 本地推理 ──────────────── -->
+  <section class="ai-section" id="ai-local">
+    <div class="section-header">
+      <span class="ai-section-num">06</span>
+      <h2 class="section-title">本地推理</h2>
+      <span class="section-count">2</span>
+    </div>
+
+    <div class="tool-grid">
+
+      <article class="tool-card free">
+        <div class="tool-body">
+          <div class="tool-top">
+            <h3 class="tool-name">Ollama + OpenClaw</h3>
+            <span class="tool-badge free">FREE</span>
+          </div>
+          <p class="tool-desc">本地 LLM 推理，零云端依赖。</p>
+          <div class="tool-meta">
+            <span class="tool-plan">开源免费</span>
+            <a href="https://ollama.com" target="_blank" rel="noopener" class="tool-link">ollama.com ↗</a>
+          </div>
+        </div>
+      </article>
+
+      <article class="tool-card free">
+        <div class="tool-body">
+          <div class="tool-top">
+            <h3 class="tool-name">Ollama + OpenClaw + Gemma4</h3>
+            <span class="tool-badge free">FREE</span>
+          </div>
+          <p class="tool-desc">本地 Gemma4 推理，Apple Silicon 友好。</p>
+          <div class="tool-meta">
+            <span class="tool-plan">开源免费</span>
+            <a href="https://ollama.com" target="_blank" rel="noopener" class="tool-link">ollama.com ↗</a>
+          </div>
+        </div>
+      </article>
+
+    </div>
+  </section>
+
+  <footer class="ai-foot">
+    <p>📦 数据每月整理一次。订阅状态可能与实际有偏差，以你的账单为准。</p>
+  </footer>
+
 </div>
 
 <style>
-.ai-tools-v3 {
-  background: var(--bg);
-  color: var(--text);
-  min-height: 100vh;
-}
+/* ── AI Tools page (uses tokens from main.css) ────────── */
+.ai-tools { width: 100%; }
+
 .ai-hero {
-  max-width: 1100px;
-  margin: 0 auto;
-  padding: 5rem 2rem 3.5rem;
+  display: grid;
+  grid-template-columns: minmax(0, 1.4fr) minmax(0, 1fr);
+  gap: 4rem 5rem;
+  align-items: end;
+  padding: 5rem 0 4rem;
   border-bottom: 1px solid var(--border);
+  margin-bottom: 3rem;
 }
-.ai-badge {
-  display: inline-block;
-  font-size: 0.65rem;
-  letter-spacing: 0.2em;
-  color: var(--text-muted);
+
+.ai-hero-text { min-width: 0; }
+
+.ai-eyebrow {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.6rem;
+  font-family: var(--font-mono);
+  font-size: 0.6875rem;
+  font-weight: 500;
   text-transform: uppercase;
-  margin-bottom: 1.25rem;
-  animation: fadeUp 0.5s ease-out both;
-}
-.ai-title {
-  font-size: clamp(2rem, 5vw, 3.25rem);
-  font-weight: 600;
-  letter-spacing: -0.03em;
-  line-height: 1.1;
-  margin-bottom: 0.6rem;
-  animation: fadeUp 0.5s ease-out 0.05s both;
-}
-.ai-subtitle {
-  font-size: 0.875rem;
+  letter-spacing: 0.14em;
   color: var(--text-muted);
+  margin-bottom: 2rem;
+  opacity: 0;
+  animation: fadeUp 0.6s var(--ease-out) 0.05s forwards;
+}
+
+.ai-name {
+  font-family: var(--font-display);
+  font-size: clamp(3.5rem, 10vw, 6.5rem);
   font-weight: 400;
-  letter-spacing: 0.02em;
-  animation: fadeUp 0.5s ease-out 0.1s both;
+  font-variation-settings: "opsz" 144, "SOFT" 30, "WONK" 0;
+  letter-spacing: -0.04em;
+  line-height: 0.9;
+  color: var(--text);
+  margin: 0;
+  opacity: 0;
+  animation: fadeUp 0.8s var(--ease-out) 0.15s forwards;
 }
-.ai-main {
-  max-width: 1100px;
-  margin: 0 auto;
-  padding: 3rem 2rem 6rem;
+
+.ai-tagline {
+  font-family: var(--font-body);
+  font-size: 0.875rem;
+  font-weight: 500;
+  text-transform: uppercase;
+  letter-spacing: 0.14em;
+  color: var(--text-secondary);
+  margin-top: 1.5rem;
+  opacity: 0;
+  animation: fadeUp 0.6s var(--ease-out) 0.35s forwards;
 }
-.ai-section {
-  margin-bottom: 4rem;
+
+.ai-hero-aside {
+  padding-bottom: 0.5rem;
+  opacity: 0;
+  animation: fadeUp 0.7s var(--ease-out) 0.45s forwards;
 }
-.section-header {
-  display: flex;
-  align-items: baseline;
-  gap: 0.75rem;
+
+.ai-desc {
+  font-family: var(--font-display);
+  font-size: clamp(1rem, 1.3vw, 1.125rem);
+  font-weight: 300;
+  font-style: italic;
+  line-height: 1.55;
+  color: var(--text-secondary);
+  letter-spacing: -0.005em;
   margin-bottom: 1.5rem;
 }
-.section-num {
-  font-size: 0.65rem;
-  color: var(--text-muted);
-  letter-spacing: 0.1em;
-}
-.section-title {
-  font-size: 0.95rem;
+
+.ai-desc em {
+  font-style: normal;
+  color: var(--text);
   font-weight: 500;
-  letter-spacing: -0.01em;
+  background: linear-gradient(transparent 65%, var(--accent-soft) 65%);
+  padding: 0 0.05em;
 }
-.section-count {
-  font-size: 0.75rem;
-  color: var(--text-muted);
-  margin-left: auto;
-}
-.tool-grid {
+
+.ai-meta-grid {
   display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+  grid-template-columns: repeat(3, 1fr);
   gap: 1px;
   background: var(--border);
   border: 1px solid var(--border);
-  border-radius: 6px;
+  border-radius: var(--radius);
   overflow: hidden;
 }
+
+.ai-meta {
+  background: var(--bg);
+  padding: 0.875rem 1rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.2rem;
+}
+
+.ai-meta-num {
+  font-family: var(--font-display);
+  font-size: 1.5rem;
+  font-weight: 500;
+  font-variation-settings: "opsz" 144;
+  letter-spacing: -0.03em;
+  line-height: 1;
+  color: var(--text);
+}
+
+.ai-meta-label {
+  font-size: 0.6875rem;
+  color: var(--text-muted);
+  letter-spacing: 0.02em;
+}
+
+/* ── Section + numbered header ── */
+.ai-section { margin-bottom: 4.5rem; }
+
+.section-header .ai-section-num {
+  font-family: var(--font-mono);
+  font-size: 0.6875rem;
+  font-weight: 500;
+  color: var(--text-muted);
+  font-variant-numeric: tabular-nums;
+  letter-spacing: 0.06em;
+  margin-right: 0.5rem;
+}
+
+/* ── Tool grid + card ── */
+.tool-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+  gap: 1px;
+  background: var(--border);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  overflow: hidden;
+}
+
 .tool-card {
-  background: var(--bg-subtle);
-  padding: 1.25rem;
+  background: var(--bg);
+  display: flex;
+  flex-direction: column;
+  transition: background var(--dur-fast) var(--ease-out);
+  position: relative;
+}
+
+.tool-card:hover { background: var(--bg-subtle); }
+
+.tool-card.wide {
+  grid-column: 1 / -1;
+}
+
+.tool-banner {
+  height: 100px;
+  background: var(--c1, #1a1d29);
+  position: relative;
+  overflow: hidden;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-bottom: 1px solid var(--border);
+}
+
+.tool-mark {
+  font-family: var(--font-display);
+  font-size: 2.5rem;
+  font-weight: 500;
+  color: rgba(255, 255, 255, 0.95);
+  letter-spacing: -0.05em;
+  z-index: 2;
+}
+
+.tool-pattern {
+  position: absolute;
+  inset: 0;
+  background:
+    radial-gradient(circle at 80% 20%, var(--c2, var(--accent)) 0%, transparent 50%),
+    radial-gradient(circle at 20% 80%, var(--c2, var(--accent)) 0%, transparent 60%);
+  opacity: 0.6;
+}
+
+.tool-pattern::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background-image:
+    linear-gradient(45deg, rgba(255,255,255,0.04) 25%, transparent 25%),
+    linear-gradient(-45deg, rgba(255,255,255,0.04) 25%, transparent 25%);
+  background-size: 16px 16px;
+  background-position: 0 0, 8px 8px;
+}
+
+.tool-body {
+  padding: 1.25rem 1.5rem 1.25rem;
   display: flex;
   flex-direction: column;
   gap: 0.6rem;
-  transition: background 0.15s ease;
-  animation: cardReveal 0.4s ease-out var(--delay, 0s) both;
+  flex: 1;
 }
-.tool-card:hover { background: var(--bg-hover); }
-.tool-card.wide { grid-column: span 2; }
-@media (max-width: 540px) { .tool-card.wide { grid-column: span 1; } }
-.card-top { display: flex; align-items: center; gap: 0.6rem; }
-.card-icon { font-size: 0.9rem; flex-shrink: 0; opacity: 0.6; }
-.card-name { font-size: 0.875rem; font-weight: 500; }
-.card-plan { font-size: 0.75rem; color: var(--text-muted); }
-.card-links { display: flex; flex-direction: column; gap: 0.3rem; padding-top: 0.75rem; border-top: 1px solid var(--border); }
-.link-row { display: flex; justify-content: space-between; gap: 0.5rem; align-items: center; }
-.link-label { font-size: 0.65rem; text-transform: uppercase; letter-spacing: 0.08em; color: var(--text-muted); flex-shrink: 0; }
-.link-val { font-size: 0.75rem; color: var(--text-secondary); text-align: right; word-break: break-all; }
-.link-url {
+
+.tool-top {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 0.75rem;
+}
+
+.tool-name {
+  font-family: var(--font-display);
+  font-size: 1.0625rem;
+  font-weight: 500;
+  letter-spacing: -0.015em;
+  line-height: 1.2;
+  color: var(--text);
+  margin: 0;
+}
+
+.tool-card:hover .tool-name { color: var(--accent); }
+
+.tool-badge {
+  font-family: var(--font-mono);
+  font-size: 0.625rem;
+  font-weight: 500;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  color: var(--text-muted);
+  padding: 0.15rem 0.45rem;
+  background: var(--bg-subtle);
+  border: 1px solid var(--border);
+  border-radius: 2rem;
+  white-space: nowrap;
+  flex-shrink: 0;
+}
+
+.tool-badge.accent {
+  color: var(--accent);
+  background: var(--accent-soft);
+  border-color: transparent;
+}
+
+.tool-badge.free {
+  color: var(--text);
+  background: transparent;
+  border-color: var(--border-strong);
+  border-style: dashed;
+}
+
+.tool-desc {
+  font-size: 0.8125rem;
+  color: var(--text-secondary);
+  line-height: 1.55;
+  margin: 0;
+  flex: 1;
+}
+
+.tool-meta {
+  display: flex;
+  align-items: center;
+  gap: 0.625rem;
+  padding-top: 0.625rem;
+  border-top: 1px solid var(--border);
+  font-size: 0.75rem;
+  flex-wrap: wrap;
+}
+
+.tool-plan {
+  font-family: var(--font-mono);
+  font-size: 0.6875rem;
+  color: var(--text-muted);
+  letter-spacing: 0.02em;
+}
+
+.tool-price {
+  font-family: var(--font-mono);
+  font-size: 0.75rem;
+  color: var(--text);
+  font-variant-numeric: tabular-nums;
+  font-weight: 500;
+}
+
+.tool-link {
+  font-size: 0.75rem;
+  color: var(--text-secondary);
+  margin-left: auto;
   text-decoration: none;
-  transition: color 0.15s ease;
+  transition: color var(--dur-fast) var(--ease-out);
+  font-family: var(--font-mono);
 }
-.link-url:hover { color: var(--text); opacity: 1; }
-.placeholder { color: var(--text-muted); font-style: italic; }
-@keyframes cardReveal { from { opacity: 0; transform: translateY(4px); } to { opacity: 1; transform: translateY(0); } }
+
+.tool-link:hover { color: var(--accent); opacity: 1; }
+
+/* ── Footer ── */
+.ai-foot {
+  padding: 2rem 0 4rem;
+  border-top: 1px solid var(--border);
+  font-size: 0.8125rem;
+  color: var(--text-muted);
+  font-style: italic;
+}
+
+/* ── Responsive ── */
+@media (max-width: 900px) {
+  .ai-hero {
+    grid-template-columns: 1fr;
+    gap: 2.5rem;
+    padding: 3.5rem 0 2.5rem;
+  }
+  .ai-name { font-size: clamp(2.75rem, 14vw, 4.5rem); }
+  .tool-card.wide { grid-column: auto; }
+}
+
 @media (max-width: 640px) {
-  .ai-hero { padding: 3.5rem 1.25rem 2.5rem; }
-  .ai-main { padding: 2rem 1.25rem 4rem; }
-  .tool-grid { grid-template-columns: 1fr; }
+  .ai-meta-grid { grid-template-columns: 1fr; }
+  .ai-meta { padding: 0.625rem 0.875rem; }
 }
 </style>

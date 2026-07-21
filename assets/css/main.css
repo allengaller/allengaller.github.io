@@ -120,6 +120,21 @@ body {
 }
 ::-webkit-scrollbar-thumb:hover { background: var(--border-hover); }
 
+/* Subtle noise texture overlay — adds depth on close inspection */
+body::before {
+  content: "";
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  z-index: 1;
+  opacity: 0.025;
+  background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='160' height='160'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2' stitchTiles='stitch'/></filter><rect width='100%' height='100%' filter='url(%23n)'/></svg>");
+}
+
+@media (prefers-color-scheme: dark) {
+  body::before { opacity: 0.04; }
+}
+
 /* ── Typography ─────────────────────────────────── */
 h1, h2, h3, h4, h5, h6 {
   font-weight: 500;
@@ -345,10 +360,10 @@ strong { font-weight: 600; color: var(--text); }
   letter-spacing: 0.02em;
 }
 
-/* ── Project Card Grid ─────────────────────────── */
+/* ── Project Card Grid (with banner) ─────────── */
 .project-grid {
   display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+  grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
   gap: 1px;
   background: var(--border);
   border: 1px solid var(--border);
@@ -358,15 +373,43 @@ strong { font-weight: 600; color: var(--text); }
 
 .project-card {
   background: var(--bg);
-  padding: 1.5rem;
   display: flex;
   flex-direction: column;
-  gap: 0.5rem;
   transition: background var(--dur-fast) var(--ease-out);
   position: relative;
+  overflow: hidden;
 }
 
 .project-card:hover { background: var(--bg-subtle); }
+
+.project-card:hover .project-banner img {
+  transform: scale(1.04);
+}
+
+.project-banner {
+  width: 100%;
+  aspect-ratio: 3 / 1;
+  overflow: hidden;
+  background: var(--bg-subtle);
+  border-bottom: 1px solid var(--border);
+  position: relative;
+}
+
+.project-banner img {
+  width: 100%;
+  height: 100%;
+  display: block;
+  object-fit: cover;
+  transition: transform var(--dur-slow) var(--ease-out);
+}
+
+.project-body {
+  padding: 1.25rem 1.5rem 1.5rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  flex: 1;
+}
 
 .project-type {
   font-family: var(--font-mono);
@@ -383,7 +426,10 @@ strong { font-weight: 600; color: var(--text); }
   font-weight: 500;
   letter-spacing: -0.02em;
   margin-top: 0.25rem;
+  transition: color var(--dur-fast) var(--ease-out);
 }
+
+.project-card:hover h3 { color: var(--accent); }
 
 .project-card p {
   font-size: 0.8125rem;
@@ -872,8 +918,9 @@ strong { font-weight: 600; color: var(--text); }
 .home-hero-text { min-width: 0; }
 
 .home-eyebrow {
-  display: inline-flex;
+  display: flex;
   align-items: center;
+  flex-wrap: wrap;
   gap: 0.6rem;
   font-family: var(--font-mono);
   font-size: 0.6875rem;
@@ -980,6 +1027,121 @@ strong { font-weight: 600; color: var(--text); }
   to { opacity: 1; transform: translateY(0); }
 }
 
+@keyframes revealUp {
+  from { opacity: 0; transform: translateY(24px); filter: blur(4px); }
+  to { opacity: 1; transform: translateY(0); filter: blur(0); }
+}
+
+/* ── v2 · Scroll-triggered reveal (IntersectionObserver) ─── */
+[data-reveal] {
+  opacity: 0;
+  transform: translateY(24px);
+  transition: opacity var(--dur-slow) var(--ease-out), transform var(--dur-slow) var(--ease-out), filter var(--dur-slow) var(--ease-out);
+  filter: blur(4px);
+}
+
+[data-reveal].is-revealed {
+  opacity: 1;
+  transform: translateY(0);
+  filter: blur(0);
+}
+
+/* ── v2 · Scroll progress (top edge) ─── */
+.scroll-progress {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 2px;
+  z-index: 200;
+  pointer-events: none;
+  background: transparent;
+}
+
+.scroll-progress-bar {
+  height: 100%;
+  background: var(--accent);
+  transform-origin: left;
+  transform: scaleX(0);
+  transition: transform 80ms linear;
+  will-change: transform;
+}
+
+/* ── v2 · Back to top button ─── */
+.back-to-top {
+  position: fixed;
+  right: 24px;
+  bottom: 24px;
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  background: var(--bg);
+  color: var(--text);
+  border: 1px solid var(--border);
+  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.04), 0 4px 12px rgba(0, 0, 0, 0.06);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  opacity: 0;
+  transform: translateY(8px);
+  pointer-events: none;
+  transition: opacity var(--dur-base) var(--ease-out), transform var(--dur-base) var(--ease-out), background var(--dur-fast) var(--ease-out), border-color var(--dur-fast) var(--ease-out);
+  z-index: 90;
+}
+
+.back-to-top.is-visible {
+  opacity: 1;
+  transform: translateY(0);
+  pointer-events: auto;
+}
+
+.back-to-top:hover {
+  background: var(--text);
+  color: var(--bg);
+  border-color: var(--text);
+}
+
+.back-to-top:focus-visible {
+  outline: none;
+  box-shadow: var(--focus-ring);
+}
+
+/* ── v2 · Home status badge ("now") ─── */
+.home-status {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  margin-left: 0.75rem;
+  padding-left: 0.75rem;
+  border-left: 1px solid var(--border);
+  font-family: var(--font-body);
+  font-size: 0.6875rem;
+  font-weight: 500;
+  text-transform: none;
+  letter-spacing: 0.02em;
+  color: var(--text-secondary);
+}
+
+.status-dot {
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: var(--accent);
+  position: relative;
+  flex-shrink: 0;
+}
+
+.status-dot::after {
+  content: "";
+  position: absolute;
+  inset: -3px;
+  border-radius: 50%;
+  background: var(--accent);
+  opacity: 0.3;
+  animation: pulse 2.4s var(--ease-out) infinite;
+}
+
 /* ── Responsive ─────────────────────────── */
 @media (max-width: 900px) {
   .home-hero {
@@ -1016,11 +1178,20 @@ strong { font-weight: 600; color: var(--text); }
     opacity: 1 !important;
     animation: none !important;
   }
+  [data-reveal] {
+    opacity: 1 !important;
+    transform: none !important;
+    filter: none !important;
+  }
+  .back-to-top { transition: opacity 0.01ms !important; }
+  .scroll-progress-bar { transition: none !important; }
 }
 
 /* ── Print ─────────────────────────── */
 @media print {
-  .site-nav-wrap, .site-footer, .skip-link { display: none; }
+  .site-nav-wrap, .site-footer, .skip-link, .back-to-top, .scroll-progress, .home-status { display: none; }
   body { background: white; color: black; }
+  body::before { display: none; }
   a { color: black; text-decoration: underline; }
+  [data-reveal] { opacity: 1 !important; transform: none !important; filter: none !important; }
 }

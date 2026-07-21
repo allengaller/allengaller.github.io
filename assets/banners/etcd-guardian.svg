@@ -1,0 +1,34 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 600 200" preserveAspectRatio="xMidYMid slice" role="img">
+  <defs>
+    <radialGradient id="rg" cx="80%" cy="20%" r="60%">
+      <stop offset="0%" stop-color="#c8553d" stop-opacity="0.55"/>
+      <stop offset="100%" stop-color="#c8553d" stop-opacity="0"/>
+    </radialGradient>
+    <pattern id="grid" width="20" height="20" patternUnits="userSpaceOnUse">
+      <path d="M 20 0 L 0 0 0 20" fill="none" stroke="#f5f3ee" stroke-opacity="0.06" stroke-width="0.5"/>
+    </pattern>
+    <pattern id="diagonal" width="14" height="14" patternUnits="userSpaceOnUse" patternTransform="rotate(45)">
+      <line x1="0" y1="0" x2="0" y2="14" stroke="#f5f3ee" stroke-opacity="0.05" stroke-width="1"/>
+    </pattern>
+    <pattern id="dots" width="24" height="24" patternUnits="userSpaceOnUse">
+      <circle cx="12" cy="12" r="1" fill="#f5f3ee" fill-opacity="0.12"/>
+    </pattern>
+  </defs>
+  <rect width="600" height="200" fill="#1a1d29"/>
+  <rect width="600" height="200" fill="url(#rg)"/>
+  <rect width="600" height="200" fill="url(#grid)"/>
+  <circle cx="300" cy="100" r="80" fill="none" stroke="#f5f3ee" stroke-opacity="0.2" stroke-width="1"/><circle cx="300" cy="100" r="60" fill="none" stroke="#f5f3ee" stroke-opacity="0.2" stroke-width="1"/><circle cx="300" cy="100" r="40" fill="none" stroke="#f5f3ee" stroke-opacity="0.2" stroke-width="1"/>
+  
+  <path d="M 300 30 L 370 60 L 370 130 L 300 170 L 230 130 L 230 60 Z"
+        fill="#c8553d" fill-opacity="0.18" stroke="#c8553d" stroke-width="1.5" stroke-opacity="0.9"/>
+  <path d="M 300 50 L 350 70 L 350 120 L 300 150 L 250 120 L 250 70 Z"
+        fill="none" stroke="#f5f3ee" stroke-opacity="0.5" stroke-width="1"/>
+  <circle cx="300" cy="95" r="8" fill="#f5f3ee"/>
+  <rect x="295" y="95" width="10" height="20" fill="#f5f3ee"/>
+
+  
+  <path d="M 80 40 l 25 15 m -25 -15 l 15.0 9.0 m -15.0 -9.0 l 25 15" fill="none" stroke="#f5f3ee" stroke-opacity="0.4" stroke-width="1"/>
+  <path d="M 520 40 l -25 15 m --25 -15 l 15.0 9.0 m -15.0 -9.0 l 25 15" fill="none" stroke="#f5f3ee" stroke-opacity="0.4" stroke-width="1"/>
+  <path d="M 80 160 l 25 -15 m -25 --15 l 15.0 9.0 m -15.0 -9.0 l 25 -15" fill="none" stroke="#f5f3ee" stroke-opacity="0.4" stroke-width="1"/>
+  <path d="M 520 160 l -25 -15 m --25 --15 l 15.0 9.0 m -15.0 -9.0 l 25 -15" fill="none" stroke="#f5f3ee" stroke-opacity="0.4" stroke-width="1"/>
+</svg>
