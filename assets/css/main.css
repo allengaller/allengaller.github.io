@@ -877,12 +877,25 @@ strong { font-weight: 600; color: var(--text); }
   border-top: 1px solid var(--border);
   font-size: 0.75rem;
   color: var(--text-muted);
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
 }
 
 .footer-row {
   display: flex;
   justify-content: space-between;
   align-items: center;
+  gap: 1rem;
+}
+
+.footer-row-sub {
+  font-family: var(--font-mono);
+  font-size: 0.6875rem;
+  letter-spacing: 0.02em;
+  color: var(--text-faint);
+  flex-wrap: wrap;
+  justify-content: flex-start;
   gap: 1rem;
 }
 
@@ -897,10 +910,23 @@ strong { font-weight: 600; color: var(--text); }
   font-style: italic;
 }
 
+.footer-text-sub {
+  font-family: var(--font-mono);
+  color: var(--text-faint);
+}
+
 .footer-meta {
   font-family: var(--font-mono);
   font-variant-numeric: tabular-nums;
 }
+
+.footer-link {
+  color: var(--text-muted);
+  text-decoration: none;
+  transition: color var(--dur-fast) var(--ease-out);
+}
+
+.footer-link:hover { color: var(--text); opacity: 1; }
 
 /* ── HOME PAGE (asymmetric hero) ─────────────────────────── */
 .home { width: 100%; }
@@ -1163,6 +1189,7 @@ strong { font-weight: 600; color: var(--text); }
   .project-item .item-tags { display: none; }
   .project-item:hover { margin: 0 -20px; padding-left: 20px; padding-right: 20px; }
   .footer-row { flex-direction: column; align-items: flex-start; gap: 0.5rem; }
+  .footer-row-sub { gap: 0.75rem; }
   .about-header, .projects-header, .links-header, .archive-header { padding: 3rem 0 2rem; }
 }
 

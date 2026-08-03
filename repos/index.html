@@ -1,0 +1,922 @@
+---
+layout: default
+title: Repos | 本地仓库总览
+description: 我本地克隆的所有 GitHub 仓库镜像：按组织、类型、最近活动多维度索引。自动从 ~/Documents/GitHub/ 扫描。
+nav_active_repos: is-active
+---
+
+<div class="repos">
+
+  <header class="repos-hero">
+    <div class="repos-hero-text">
+      <p class="repos-eyebrow">
+        <span class="eyebrow-dot"></span>
+        <span>Local Mirror · 自动扫描</span>
+        <span class="repos-meta-inline" id="repos-scan-stamp">…</span>
+      </p>
+      <h1 class="repos-name" data-stagger="1">Repos</h1>
+      <p class="repos-tagline" data-stagger="2">
+        <span id="repos-total">—</span> repositories · <span id="repos-orgs">—</span> orgs
+      </p>
+    </div>
+    <aside class="repos-hero-aside" data-stagger="3">
+      <p class="repos-desc">
+        本地 <em>~/Documents/GitHub/</em> 下的所有 git 仓库镜像。<br>
+        包含 <em>自有组织</em>、<em>外部克隆</em>、<em>深度嵌套</em> 的子项目。
+      </p>
+      <div class="repos-meta-grid">
+        <div class="repos-meta">
+          <span class="repos-meta-num" id="repos-own">—</span>
+          <span class="repos-meta-label">自有</span>
+        </div>
+        <div class="repos-meta">
+          <span class="repos-meta-num" id="repos-ext">—</span>
+          <span class="repos-meta-label">外部</span>
+        </div>
+        <div class="repos-meta">
+          <span class="repos-meta-num" id="repos-size">—</span>
+          <span class="repos-meta-label">总大小</span>
+        </div>
+        <div class="repos-meta">
+          <span class="repos-meta-num" id="repos-types">—</span>
+          <span class="repos-meta-label">类型</span>
+        </div>
+      </div>
+    </aside>
+  </header>
+
+  <div class="ornament" aria-hidden="true">✦</div>
+
+  <!-- ──────────── Filter Bar ──────────── -->
+  <section class="repos-filter" aria-label="仓库筛选">
+    <div class="repos-filter-row">
+      <div class="repos-search">
+        <svg class="repos-search-icon" viewBox="0 0 16 16" width="14" height="14" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true">
+          <circle cx="7" cy="7" r="5"/>
+          <path d="M11 11 L14 14" stroke-linecap="round"/>
+        </svg>
+        <input type="search" id="repos-search-input" placeholder="搜索仓库名 / 描述 / 语言" aria-label="搜索仓库" autocomplete="off">
+        <span class="repos-search-count" id="repos-search-count">—</span>
+      </div>
+      <div class="repos-sort">
+        <label for="repos-sort-select" class="repos-sort-label">排序</label>
+        <select id="repos-sort-select" aria-label="排序方式">
+          <option value="recent">最近活跃</option>
+          <option value="name">名称</option>
+          <option value="size">大小</option>
+          <option value="commits">提交数</option>
+        </select>
+      </div>
+    </div>
+
+    <div class="repos-chips" id="repos-chips" role="tablist" aria-label="按类型筛选">
+      <button class="chip is-active" data-filter="all" role="tab" aria-selected="true">全部 <span class="chip-count" data-count-for="all">0</span></button>
+      <button class="chip" data-filter="own" role="tab" aria-selected="false">自有 <span class="chip-count" data-count-for="own">0</span></button>
+      <button class="chip" data-filter="external" role="tab" aria-selected="false">外部 <span class="chip-count" data-count-for="external">0</span></button>
+      <span class="chips-divider" aria-hidden="true"></span>
+      <button class="chip chip-type" data-filter="type:tool" role="tab">工具 / CLI <span class="chip-count" data-count-for="type:tool">0</span></button>
+      <button class="chip chip-type" data-filter="type:database" role="tab">知识库 <span class="chip-count" data-count-for="type:database">0</span></button>
+      <button class="chip chip-type" data-filter="type:site" role="tab">站点 <span class="chip-count" data-count-for="type:site">0</span></button>
+      <button class="chip chip-type" data-filter="type:book" role="tab">书 <span class="chip-count" data-count-for="type:book">0</span></button>
+      <button class="chip chip-type" data-filter="type:personal" role="tab">个人 <span class="chip-count" data-count-for="type:personal">0</span></button>
+    </div>
+
+    <div class="repos-orgs" id="repos-orgs-chips" aria-label="按组织筛选">
+      <span class="orgs-divider-label" aria-hidden="true">组织</span>
+    </div>
+  </section>
+
+  <!-- ──────────── Repo List ──────────── -->
+  <section class="repos-list" id="repos-list" aria-label="仓库列表">
+    <p class="repos-loading">加载中…</p>
+    <noscript>
+      <p class="repos-empty">
+        本页需要启用 JavaScript 才能浏览。<br>
+        数据源在 <code><a href="https://github.com/allengaller/allengaller.github.io/blob/master/_data/repos.json" target="_blank" rel="noopener">_data/repos.json</a></code>，
+        完整列表请直接打开该文件查看。
+      </p>
+    </noscript>
+  </section>
+
+  <footer class="repos-foot">
+    <p>
+      📦 数据由 <code>_scripts/scan-repos.py</code> 自动生成。
+      重新扫描：<code>python3 _scripts/scan-repos.py --json</code>。
+    </p>
+  </footer>
+
+</div>
+
+<script>
+/* ─────────────────────────────────────────────────────────
+   Repos — client-side data loading + filter/search/sort
+   Data: /_data/repos.json (generated by scan-repos.py)
+   ───────────────────────────────────────────────────────── */
+(function () {
+  'use strict';
+
+  const DATA_URL = '/_data/repos.json';
+  const list = document.getElementById('repos-list');
+  const searchInput = document.getElementById('repos-search-input');
+  const searchCount = document.getElementById('repos-search-count');
+  const sortSelect = document.getElementById('repos-sort-select');
+  const chipsEl = document.getElementById('repos-chips');
+  const orgsChipsEl = document.getElementById('repos-orgs-chips');
+  const stamp = document.getElementById('repos-scan-stamp');
+
+  // Hero stat targets
+  const els = {
+    total: document.getElementById('repos-total'),
+    orgs: document.getElementById('repos-orgs'),
+    own: document.getElementById('repos-own'),
+    ext: document.getElementById('repos-ext'),
+    size: document.getElementById('repos-size'),
+    types: document.getElementById('repos-types'),
+  };
+
+  let data = null;
+  let filter = 'all';      // 'all' | 'own' | 'external' | 'org:NAME' | 'type:NAME'
+  let query = '';
+  let sortBy = 'recent';
+
+  // ── Load ──
+  fetch(DATA_URL, { cache: 'no-cache' })
+    .then((r) => r.ok ? r.json() : Promise.reject(new Error(`HTTP ${r.status}`)))
+    .then((d) => { data = d; hydrate(); bind(); render(); })
+    .catch((err) => {
+      list.innerHTML = `<p class="repos-error">⚠️ 加载失败：${err.message}<br><small>请运行 <code>python3 _scripts/scan-repos.py --json</code> 生成 <code>_data/repos.json</code>。</small></p>`;
+    });
+
+  function hydrate() {
+    if (!data) return;
+    // Hero stats
+    els.total.textContent = data.total;
+    els.orgs.textContent = Object.keys(data.orgs).length;
+    els.own.textContent = data.own;
+    els.ext.textContent = data.external;
+    els.size.textContent = data.total_size_mb.toFixed(1) + ' MB';
+    els.types.textContent = Object.keys(data.types).length;
+    // Scan stamp
+    if (data.scanned_at) {
+      const d = new Date(data.scanned_at);
+      const rel = relativeTime(d);
+      stamp.textContent = `· 扫描于 ${rel}`;
+    }
+    // Counts on chips
+    setChipCount('all', data.total);
+    setChipCount('own', data.own);
+    setChipCount('external', data.external);
+    setChipCount('type:tool', data.types.tool || 0);
+    setChipCount('type:database', data.types.database || 0);
+    setChipCount('type:site', data.types.site || 0);
+    setChipCount('type:book', data.types.book || 0);
+    setChipCount('type:personal', data.types.personal || 0);
+    // Org chips
+    Object.entries(data.orgs).forEach(([org, count]) => {
+      const btn = document.createElement('button');
+      btn.className = 'chip chip-org';
+      btn.dataset.filter = `org:${org}`;
+      btn.setAttribute('role', 'tab');
+      btn.innerHTML = `${escapeHtml(org)} <span class="chip-count">${count}</span>`;
+      orgsChipsEl.appendChild(btn);
+    });
+  }
+
+  function setChipCount(key, n) {
+    const el = document.querySelector(`[data-count-for="${key}"]`);
+    if (el) el.textContent = n;
+  }
+
+  function bind() {
+    searchInput.addEventListener('input', (e) => {
+      query = e.target.value.trim().toLowerCase();
+      render();
+    });
+    sortSelect.addEventListener('change', (e) => {
+      sortBy = e.target.value;
+      render();
+    });
+    chipsEl.addEventListener('click', (e) => {
+      const btn = e.target.closest('.chip');
+      if (!btn) return;
+      filter = btn.dataset.filter;
+      document.querySelectorAll('#repos-chips .chip').forEach((c) => {
+        c.classList.toggle('is-active', c === btn);
+        c.setAttribute('aria-selected', c === btn);
+      });
+      // reset orgs
+      document.querySelectorAll('#repos-orgs-chips .chip').forEach((c) => c.classList.remove('is-active'));
+      render();
+    });
+    orgsChipsEl.addEventListener('click', (e) => {
+      const btn = e.target.closest('.chip');
+      if (!btn) return;
+      const isOn = btn.classList.contains('is-active');
+      // clear top-level chip active
+      document.querySelectorAll('#repos-chips .chip').forEach((c) => c.classList.remove('is-active'));
+      if (isOn) {
+        filter = 'all';
+        document.querySelector('[data-filter="all"]').classList.add('is-active');
+      } else {
+        document.querySelectorAll('#repos-orgs-chips .chip').forEach((c) => c.classList.remove('is-active'));
+        btn.classList.add('is-active');
+        filter = btn.dataset.filter;
+      }
+      render();
+    });
+  }
+
+  function getFilteredRepos() {
+    if (!data) return [];
+    return data.repos.filter((r) => {
+      // Filter
+      if (filter === 'own' && !r.is_own) return false;
+      if (filter === 'external' && r.is_own) return false;
+      if (filter.startsWith('org:')) {
+        if (r.org !== filter.slice(4)) return false;
+      }
+      if (filter.startsWith('type:')) {
+        if (r.repo_type !== filter.slice(5)) return false;
+      }
+      // Search
+      if (query) {
+        const hay = `${r.name} ${r.org} ${r.description} ${r.readme_excerpt} ${(r.languages || []).join(' ')}`.toLowerCase();
+        if (!hay.includes(query)) return false;
+      }
+      return true;
+    });
+  }
+
+  function sortRepos(repos) {
+    const arr = repos.slice();
+    if (sortBy === 'name') {
+      arr.sort((a, b) => a.name.localeCompare(b.name, 'zh'));
+    } else if (sortBy === 'size') {
+      arr.sort((a, b) => (b.size_kb || 0) - (a.size_kb || 0));
+    } else if (sortBy === 'commits') {
+      arr.sort((a, b) => (b.commits_total || 0) - (a.commits_total || 0));
+    } else {
+      // 'recent'
+      arr.sort((a, b) => {
+        const ta = a.last_commit_iso ? new Date(a.last_commit_iso).getTime() : 0;
+        const tb = b.last_commit_iso ? new Date(b.last_commit_iso).getTime() : 0;
+        return tb - ta;
+      });
+    }
+    return arr;
+  }
+
+  function render() {
+    if (!data) return;
+    const filtered = sortRepos(getFilteredRepos());
+    searchCount.textContent = `${filtered.length} / ${data.total}`;
+    if (filtered.length === 0) {
+      list.innerHTML = '<p class="repos-empty">没有匹配的仓库。试试别的关键词或筛选条件。</p>';
+      return;
+    }
+    // Group by org
+    const groups = {};
+    filtered.forEach((r) => {
+      const key = r.org || '—';
+      (groups[key] = groups[key] || []).push(r);
+    });
+    // Sort orgs: own first (by count), then external
+    const orgOrder = Object.keys(groups).sort((a, b) => {
+      const ao = data.orgs[a] || 0, bo = data.orgs[b] || 0;
+      const aw = groups[a].some((r) => r.is_own) ? 0 : 1;
+      const bw = groups[b].some((r) => r.is_own) ? 0 : 1;
+      if (aw !== bw) return aw - bw;
+      return bo - ao;
+    });
+    list.innerHTML = orgOrder.map((org) => {
+      const repos = groups[org];
+      const isExternal = orgsChipsEl.querySelector(`[data-filter="org:${org}"]`) == null
+        && Object.keys(data.orgs).indexOf(org) === -1;
+      const header = `<header class="repo-group-header">
+          <h3 class="repo-group-name">${escapeHtml(org)}</h3>
+          <span class="repo-group-count">${repos.length} ${repos.length === 1 ? 'repo' : 'repos'}</span>
+        </header>`;
+      const cards = repos.map(renderCard).join('');
+      return `<section class="repo-group">${header}<div class="repo-cards">${cards}</div></section>`;
+    }).join('');
+  }
+
+  function renderCard(r) {
+    const ownClass = r.is_own ? 'is-own' : 'is-ext';
+    const typeLabel = r.repo_type || 'other';
+    const lang = r.language_top || '—';
+    const desc = (r.description || r.readme_excerpt || '').slice(0, 140);
+    const lastDate = r.last_commit_iso ? formatDate(new Date(r.last_commit_iso)) : '—';
+    const lastRel = r.last_commit_rel || '';
+    const url = r.is_github ? `https://github.com/${r.full_name}` : '#';
+    const branch = r.default_branch && r.default_branch !== '（非分支）' ? r.default_branch : '';
+    return `
+      <a class="repo-card ${ownClass}" href="${url}" target="_blank" rel="noopener" data-repo="${escapeHtml(r.full_name)}">
+        <div class="repo-card-top">
+          <span class="repo-name">${escapeHtml(r.name)}</span>
+          <span class="repo-type-badge" data-type="${typeLabel}">${typeLabel}</span>
+        </div>
+        <p class="repo-desc">${escapeHtml(desc) || '<span class="muted">—</span>'}</p>
+        <div class="repo-card-meta">
+          <span class="repo-meta-item">
+            <span class="meta-label">Lang</span>
+            <span class="meta-val">${escapeHtml(lang)}</span>
+          </span>
+          <span class="repo-meta-item">
+            <span class="meta-label">Commits</span>
+            <span class="meta-val">${r.commits_total || 0}</span>
+          </span>
+          <span class="repo-meta-item">
+            <span class="meta-label">Size</span>
+            <span class="meta-val">${formatSize(r.size_kb)}</span>
+          </span>
+          ${branch ? `<span class="repo-meta-item">
+            <span class="meta-label">Branch</span>
+            <span class="meta-val">${escapeHtml(branch)}</span>
+          </span>` : ''}
+        </div>
+        <div class="repo-card-foot">
+          <span class="repo-last-commit" title="${escapeHtml(r.last_commit_subject || '')}">
+            <span class="last-dot"></span>
+            <span class="last-rel">${escapeHtml(lastRel || lastDate)}</span>
+            <span class="last-subject">${escapeHtml((r.last_commit_subject || '').slice(0, 60))}</span>
+          </span>
+          ${r.is_own ? '' : '<span class="repo-ext-tag">EXT</span>'}
+        </div>
+      </a>
+    `;
+  }
+
+  // ── Utils ──
+  function escapeHtml(s) {
+    if (s == null) return '';
+    return String(s).replace(/[&<>"']/g, (c) => ({
+      '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;',
+    }[c]));
+  }
+  function formatSize(kb) {
+    if (!kb) return '—';
+    if (kb < 1024) return kb.toFixed(0) + ' KB';
+    return (kb / 1024).toFixed(1) + ' MB';
+  }
+  function formatDate(d) {
+    const y = d.getFullYear();
+    const m = String(d.getMonth() + 1).padStart(2, '0');
+    const day = String(d.getDate()).padStart(2, '0');
+    return `${y}-${m}-${day}`;
+  }
+  function relativeTime(d) {
+    const diff = Date.now() - d.getTime();
+    const min = Math.round(diff / 60000);
+    if (min < 1) return '刚刚';
+    if (min < 60) return `${min} 分钟前`;
+    const hr = Math.round(min / 60);
+    if (hr < 24) return `${hr} 小时前`;
+    const day = Math.round(hr / 24);
+    if (day < 30) return `${day} 天前`;
+    return formatDate(d);
+  }
+})();
+</script>
+
+<style>
+/* ──────────── Repos page ──────────── */
+.repos { width: 100%; }
+
+.repos-hero {
+  display: grid;
+  grid-template-columns: minmax(0, 1.4fr) minmax(0, 1fr);
+  gap: 4rem 5rem;
+  align-items: end;
+  padding: 5rem 0 4rem;
+  border-bottom: 1px solid var(--border);
+  margin-bottom: 2rem;
+}
+
+.repos-eyebrow {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 0.6rem;
+  font-family: var(--font-mono);
+  font-size: 0.6875rem;
+  font-weight: 500;
+  text-transform: uppercase;
+  letter-spacing: 0.14em;
+  color: var(--text-muted);
+  margin-bottom: 2rem;
+  opacity: 0;
+  animation: fadeUp 0.6s var(--ease-out) 0.05s forwards;
+}
+
+.repos-meta-inline {
+  font-family: var(--font-mono);
+  text-transform: none;
+  letter-spacing: 0.02em;
+  color: var(--text-muted);
+  font-style: italic;
+  font-weight: 400;
+}
+
+.repos-name {
+  font-family: var(--font-display);
+  font-size: clamp(4.5rem, 14vw, 9rem);
+  font-weight: 400;
+  font-variation-settings: "opsz" 144, "SOFT" 30, "WONK" 0;
+  letter-spacing: -0.05em;
+  line-height: 0.85;
+  color: var(--text);
+  margin: 0;
+  opacity: 0;
+  animation: fadeUp 0.8s var(--ease-out) 0.15s forwards;
+}
+
+.repos-tagline {
+  font-family: var(--font-body);
+  font-size: 0.875rem;
+  font-weight: 500;
+  text-transform: uppercase;
+  letter-spacing: 0.14em;
+  color: var(--text-secondary);
+  margin-top: 1.5rem;
+  opacity: 0;
+  animation: fadeUp 0.6s var(--ease-out) 0.35s forwards;
+}
+
+.repos-tagline span {
+  font-variant-numeric: tabular-nums;
+}
+
+.repos-hero-aside {
+  padding-bottom: 0.5rem;
+  opacity: 0;
+  animation: fadeUp 0.7s var(--ease-out) 0.45s forwards;
+}
+
+.repos-desc {
+  font-family: var(--font-display);
+  font-size: clamp(1rem, 1.3vw, 1.125rem);
+  font-weight: 300;
+  font-style: italic;
+  line-height: 1.55;
+  color: var(--text-secondary);
+  letter-spacing: -0.005em;
+  margin-bottom: 1.5rem;
+}
+
+.repos-desc em {
+  font-style: normal;
+  color: var(--text);
+  font-weight: 500;
+  font-family: var(--font-mono);
+  font-size: 0.9em;
+  background: linear-gradient(transparent 65%, var(--accent-soft) 65%);
+  padding: 0 0.05em;
+}
+
+.repos-meta-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 1px;
+  background: var(--border);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  overflow: hidden;
+}
+
+.repos-meta {
+  background: var(--bg);
+  padding: 0.875rem 1rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.2rem;
+}
+
+.repos-meta-num {
+  font-family: var(--font-display);
+  font-size: 1.5rem;
+  font-weight: 500;
+  font-variation-settings: "opsz" 144;
+  letter-spacing: -0.03em;
+  line-height: 1;
+  color: var(--text);
+  font-variant-numeric: tabular-nums;
+}
+
+.repos-meta-label {
+  font-size: 0.6875rem;
+  color: var(--text-muted);
+  letter-spacing: 0.02em;
+}
+
+/* ─── Filter bar ─── */
+.repos-filter {
+  margin-bottom: 2.5rem;
+  padding: 1.25rem;
+  background: var(--bg-subtle);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+.repos-filter-row {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  flex-wrap: wrap;
+}
+
+.repos-search {
+  flex: 1;
+  min-width: 240px;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.5rem 0.75rem;
+  background: var(--bg);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  position: relative;
+  transition: border-color var(--dur-fast) var(--ease-out);
+}
+
+.repos-search:focus-within { border-color: var(--text); }
+
+.repos-search-icon { color: var(--text-muted); flex-shrink: 0; }
+
+.repos-search input {
+  flex: 1;
+  background: none;
+  border: none;
+  outline: none;
+  font: inherit;
+  color: var(--text);
+  font-size: 0.875rem;
+  padding: 0.25rem 0;
+}
+
+.repos-search input::placeholder { color: var(--text-muted); }
+
+.repos-search-count {
+  font-family: var(--font-mono);
+  font-size: 0.6875rem;
+  color: var(--text-muted);
+  font-variant-numeric: tabular-nums;
+  white-space: nowrap;
+}
+
+.repos-sort {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.repos-sort-label {
+  font-size: 0.75rem;
+  color: var(--text-muted);
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+}
+
+.repos-sort select {
+  font: inherit;
+  font-size: 0.8125rem;
+  background: var(--bg);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  padding: 0.4rem 0.6rem;
+  color: var(--text);
+  cursor: pointer;
+}
+
+.repos-sort select:focus-visible {
+  outline: none;
+  border-color: var(--text);
+  box-shadow: var(--focus-ring);
+}
+
+/* Chips */
+.repos-chips, .repos-orgs {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.375rem;
+  align-items: center;
+}
+
+.repos-orgs {
+  padding-top: 0.75rem;
+  border-top: 1px solid var(--border);
+  margin-top: 0.25rem;
+}
+
+.orgs-divider-label {
+  font-family: var(--font-mono);
+  font-size: 0.625rem;
+  text-transform: uppercase;
+  letter-spacing: 0.12em;
+  color: var(--text-muted);
+  margin-right: 0.5rem;
+  font-weight: 500;
+}
+
+.chips-divider {
+  display: inline-block;
+  width: 1px;
+  height: 1rem;
+  background: var(--border);
+  margin: 0 0.25rem;
+}
+
+.chip {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+  padding: 0.35rem 0.7rem;
+  font-size: 0.75rem;
+  font-weight: 500;
+  background: var(--bg);
+  border: 1px solid var(--border);
+  border-radius: 2rem;
+  color: var(--text-secondary);
+  cursor: pointer;
+  transition: all var(--dur-fast) var(--ease-out);
+  font-family: inherit;
+}
+
+.chip:hover {
+  background: var(--bg-hover);
+  border-color: var(--border-hover);
+  color: var(--text);
+}
+
+.chip.is-active {
+  background: var(--text);
+  border-color: var(--text);
+  color: var(--bg);
+}
+
+.chip-count {
+  font-family: var(--font-mono);
+  font-size: 0.625rem;
+  color: var(--text-muted);
+  font-variant-numeric: tabular-nums;
+  padding: 0.1rem 0.35rem;
+  background: var(--bg);
+  border-radius: 2rem;
+}
+
+.chip.is-active .chip-count {
+  background: rgba(255, 255, 255, 0.15);
+  color: rgba(255, 255, 255, 0.7);
+}
+
+/* ─── Repo list ─── */
+.repos-list { min-height: 240px; }
+
+.repos-loading, .repos-empty, .repos-error {
+  padding: 3rem 1.5rem;
+  text-align: center;
+  color: var(--text-muted);
+  font-size: 0.875rem;
+  border: 1px dashed var(--border);
+  border-radius: var(--radius);
+  background: var(--bg-subtle);
+}
+
+.repos-error code {
+  background: var(--bg);
+  border-color: var(--border-hover);
+}
+
+.repo-group { margin-bottom: 3rem; }
+
+.repo-group-header {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  padding-bottom: 0.75rem;
+  margin-bottom: 1rem;
+  border-bottom: 1px solid var(--border);
+  gap: 1rem;
+}
+
+.repo-group-name {
+  font-family: var(--font-mono);
+  font-size: 0.875rem;
+  font-weight: 500;
+  color: var(--text);
+  letter-spacing: 0;
+}
+
+.repo-group-count {
+  font-family: var(--font-mono);
+  font-size: 0.6875rem;
+  color: var(--text-muted);
+  font-variant-numeric: tabular-nums;
+}
+
+.repo-cards {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+  gap: 1px;
+  background: var(--border);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  overflow: hidden;
+}
+
+.repo-card {
+  background: var(--bg);
+  padding: 1.25rem 1.5rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.6rem;
+  transition: background var(--dur-fast) var(--ease-out);
+  position: relative;
+}
+
+.repo-card:hover { background: var(--bg-subtle); }
+
+.repo-card.is-ext {
+  background: var(--bg-subtle);
+}
+
+.repo-card.is-ext::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  border-left: 2px solid var(--text-faint);
+  pointer-events: none;
+}
+
+.repo-card-top {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 0.5rem;
+}
+
+.repo-name {
+  font-family: var(--font-display);
+  font-size: 1.0625rem;
+  font-weight: 500;
+  letter-spacing: -0.015em;
+  color: var(--text);
+  line-height: 1.2;
+  word-break: break-all;
+}
+
+.repo-card:hover .repo-name { color: var(--accent); }
+
+.repo-type-badge {
+  font-family: var(--font-mono);
+  font-size: 0.625rem;
+  font-weight: 500;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  color: var(--text-muted);
+  padding: 0.15rem 0.45rem;
+  background: var(--bg);
+  border: 1px solid var(--border);
+  border-radius: 2rem;
+  white-space: nowrap;
+  flex-shrink: 0;
+}
+
+.repo-type-badge[data-type="tool"] { color: var(--accent); border-color: var(--accent); }
+.repo-type-badge[data-type="database"] { color: var(--text-muted); }
+.repo-type-badge[data-type="site"] { color: var(--text); background: var(--bg-hover); }
+
+.repo-desc {
+  font-size: 0.8125rem;
+  color: var(--text-secondary);
+  line-height: 1.55;
+  margin: 0;
+  flex: 1;
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+
+.repo-desc .muted { color: var(--text-muted); }
+
+.repo-card-meta {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.875rem 1.25rem;
+  padding-top: 0.6rem;
+  border-top: 1px solid var(--border);
+}
+
+.repo-meta-item {
+  display: inline-flex;
+  align-items: baseline;
+  gap: 0.35rem;
+  font-size: 0.75rem;
+}
+
+.meta-label {
+  font-family: var(--font-mono);
+  font-size: 0.625rem;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  color: var(--text-muted);
+}
+
+.meta-val {
+  font-family: var(--font-mono);
+  font-size: 0.75rem;
+  color: var(--text);
+  font-variant-numeric: tabular-nums;
+}
+
+.repo-card-foot {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  font-size: 0.6875rem;
+  color: var(--text-muted);
+  flex-wrap: wrap;
+}
+
+.repo-last-commit {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+  flex: 1;
+  min-width: 0;
+}
+
+.last-dot {
+  width: 5px;
+  height: 5px;
+  border-radius: 50%;
+  background: var(--accent);
+  flex-shrink: 0;
+}
+
+.last-rel {
+  font-family: var(--font-mono);
+  font-size: 0.6875rem;
+  color: var(--text);
+  white-space: nowrap;
+}
+
+.last-subject {
+  color: var(--text-muted);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  flex: 1;
+  min-width: 0;
+}
+
+.repo-ext-tag {
+  font-family: var(--font-mono);
+  font-size: 0.625rem;
+  font-weight: 500;
+  letter-spacing: 0.08em;
+  color: var(--text-muted);
+  padding: 0.1rem 0.35rem;
+  border: 1px dashed var(--border);
+  border-radius: 2rem;
+  flex-shrink: 0;
+}
+
+/* ─── Footer ─── */
+.repos-foot {
+  margin-top: 3rem;
+  padding-top: 2rem;
+  border-top: 1px solid var(--border);
+  font-size: 0.8125rem;
+  color: var(--text-muted);
+  line-height: 1.7;
+}
+
+.repos-foot code {
+  font-size: 0.75rem;
+  background: var(--bg-subtle);
+  border-color: var(--border-hover);
+}
+
+/* ─── Responsive ─── */
+@media (max-width: 900px) {
+  .repos-hero {
+    grid-template-columns: 1fr;
+    gap: 2.5rem;
+    padding: 3.5rem 0 2.5rem;
+  }
+  .repos-name { font-size: clamp(3.5rem, 18vw, 6rem); }
+  .repos-meta-grid { grid-template-columns: repeat(2, 1fr); }
+}
+
+@media (max-width: 640px) {
+  .repos-filter { padding: 1rem; }
+  .repos-search-count { display: none; }
+  .repo-cards { grid-template-columns: 1fr; }
+  .repos-card-meta { gap: 0.5rem 0.75rem; }
+}
+</style>

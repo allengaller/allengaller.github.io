@@ -25,6 +25,7 @@ import json
 import yaml
 import shutil
 import hashlib
+import subprocess
 
 BASE = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 SITE_DIR = os.path.join(BASE, "_site")
@@ -36,6 +37,7 @@ PAGES = [
     ("index.html",                       "index.html",                       1.0, "weekly"),
     ("about/index.html",                 "about/index.html",                 0.8, "monthly"),
     ("projects/index.html",              "projects/index.html",              0.8, "weekly"),
+    ("repos/index.html",                 "repos/index.html",                 0.7, "daily"),
     ("topic/links/index.html",           "topic/links/index.html",           0.6, "monthly"),
     ("topic/ai-tools/index.html",        "topic/ai-tools/index.html",        0.6, "monthly"),
     ("topic/archive/index.html",         "topic/archive/index.html",         0.5, "yearly"),
@@ -46,6 +48,7 @@ NAV_PAGES = {
     "index.html":                "nav_active_home",
     "about/index.html":          "nav_active_about",
     "projects/index.html":       "nav_active_projects",
+    "repos/index.html":          "nav_active_repos",
     "topic/links/index.html":    "nav_active_links",
     "topic/ai-tools/index.html": "nav_active_ai_tools",
     "topic/archive/index.html":  "nav_active_archive",
@@ -54,6 +57,8 @@ NAV_PAGES = {
 STATIC_FILES = [
     ("assets/css/main.css",   "assets/css/main.css"),
     ("assets/js/site.js",     "assets/js/site.js"),
+    ("_data/repos.json",      "_data/repos.json"),
+    ("_data/repos.yml",       "_data/repos.yml"),
     ("assets/banners/resolve-agent.svg", "assets/banners/resolve-agent.svg"),
     ("assets/banners/kudig.svg",          "assets/banners/kudig.svg"),
     ("assets/banners/etcd-guardian.svg",  "assets/banners/etcd-guardian.svg"),
@@ -256,6 +261,9 @@ def check_internal_links(strict=False):
             for href in re.findall(r'href="([^"]+)"', html):
                 if href.startswith(("http://", "https://", "mailto:", "tel:", "javascript:", "#")):
                     continue
+                # Skip template-literal placeholders (e.g. ${url} in inline JS)
+                if "${" in href or "`" in href:
+                    continue
                 target = href.split("#")[0].split("?")[0]
                 if not target:
                     continue
@@ -279,6 +287,7 @@ def main():
     force = "--force" in args
     do_clean = "--clean" in args
     no_sitemap = "--no-sitemap" in args
+    auto_scan = "--auto-scan" in args
 
     if do_clean:
         clean_site()
@@ -287,6 +296,24 @@ def main():
 
     with open(os.path.join(BASE, "_layouts/default.html")) as f:
         layout_html = f.read()
+
+    # Pre-build sanity: ensure _data/repos.json exists; auto-scan if missing
+    repos_json = os.path.join(BASE, "_data", "repos.json")
+    if not os.path.exists(repos_json):
+        if auto_scan:
+            print("  ⚙️  _data/repos.json missing — running scan-repos.py --json")
+            r = subprocess.run(
+                [sys.executable, os.path.join(BASE, "_scripts", "scan-repos.py"), "--json", "--quiet"],
+                cwd=BASE, capture_output=True, text=True,
+            )
+            if r.returncode != 0:
+                print(f"  ⚠️  scan-repos failed (exit {r.returncode}); the /repos/ page will show an error")
+            else:
+                print("  ✓ scan-repos completed")
+        else:
+            print("  ⚠️  _data/repos.json not found. The /repos/ page will show a load error.")
+            print("     → Run: python3 _scripts/scan-repos.py --json")
+            print("     → Or:  python3 _scripts/build.py --auto-scan")
 
     copy_static_files(cache, force)
 
