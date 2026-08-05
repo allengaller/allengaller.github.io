@@ -308,10 +308,14 @@ nav_active_repos: is-active
     const desc = (r.description || r.readme_excerpt || '').slice(0, 140);
     const lastDate = r.last_commit_iso ? formatDate(new Date(r.last_commit_iso)) : '—';
     const lastRel = r.last_commit_rel || '';
-    const url = r.is_github ? `https://github.com/${r.full_name}` : '#';
+    // Own repos → local detail page; external → GitHub (no detail page generated)
+    const url = r.is_own
+      ? `/repos/${encodeURIComponent(r.org)}/${encodeURIComponent(r.name)}/`
+      : (r.is_github ? `https://github.com/${r.full_name}` : '#');
+    const target = r.is_own ? '' : ' target="_blank" rel="noopener"';
     const branch = r.default_branch && r.default_branch !== '（非分支）' ? r.default_branch : '';
     return `
-      <a class="repo-card ${ownClass}" href="${url}" target="_blank" rel="noopener" data-repo="${escapeHtml(r.full_name)}">
+      <a class="repo-card ${ownClass}" href="${url}"${target} data-repo="${escapeHtml(r.full_name)}">
         <div class="repo-card-top">
           <span class="repo-name">${escapeHtml(r.name)}</span>
           <span class="repo-type-badge" data-type="${typeLabel}">${typeLabel}</span>
@@ -341,7 +345,7 @@ nav_active_repos: is-active
             <span class="last-rel">${escapeHtml(lastRel || lastDate)}</span>
             <span class="last-subject">${escapeHtml((r.last_commit_subject || '').slice(0, 60))}</span>
           </span>
-          ${r.is_own ? '' : '<span class="repo-ext-tag">EXT</span>'}
+          ${r.is_own ? '<span class="repo-own-arrow" aria-hidden="true">→</span>' : '<span class="repo-ext-tag">EXT</span>'}
         </div>
       </a>
     `;
@@ -884,6 +888,18 @@ nav_active_repos: is-active
   border: 1px dashed var(--border);
   border-radius: 2rem;
   flex-shrink: 0;
+}
+
+.repo-own-arrow {
+  font-family: var(--font-mono);
+  font-size: 0.85rem;
+  color: var(--text-muted);
+  flex-shrink: 0;
+  transition: transform 0.2s var(--ease-out), color 0.2s;
+}
+.repo-card:hover .repo-own-arrow {
+  color: var(--accent);
+  transform: translateX(3px);
 }
 
 /* ─── Footer ─── */

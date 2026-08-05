@@ -30,6 +30,9 @@
   <link rel="alternate" hreflang="zh-CN" href="https://allengaller.github.io{{ page.url }}">
   <link rel="alternate" hreflang="x-default" href="https://allengaller.github.io{{ page.url }}">
 
+  <!-- RSS / Atom feed -->
+  <link rel="alternate" type="application/atom+xml" title="法喜 — Repos" href="/feed.xml">
+
   <!-- Open Graph -->
   <meta property="og:type" content="website">
   <meta property="og:site_name" content="法喜">
@@ -64,6 +67,7 @@
 
   <link rel="stylesheet" href="/assets/css/main.css">
   <script src="/assets/js/site.js" defer></script>
+  <script src="/assets/js/palette.js" defer></script>
 </head>
 <body>
 
@@ -78,6 +82,7 @@
       <a href="/topic/ai-tools/" class="{{ page.nav_active_ai_tools }}"{% if page.nav_active_ai_tools %} aria-current="page"{% endif %}>AI Tools</a>
       <a href="/about/" class="{{ page.nav_active_about }}"{% if page.nav_active_about %} aria-current="page"{% endif %}>About</a>
       <a href="https://github.com/allengaller" target="_blank" rel="noopener">GitHub ↗</a>
+      <a href="#" class="palette-hint" data-palette-trigger aria-label="打开命令面板 (Cmd+K)">⌘ K</a>
     </nav>
   </header>
 

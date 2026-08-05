@@ -13,9 +13,27 @@ robots: noindex,follow
   <h1 class="notfound-title">这里没有东西</h1>
 
   <p class="notfound-desc">
-    你访问的页面可能已被移除、改名，或者从未存在。<br>
-    从下面几个入口继续：
+    你访问的页面 <code class="notfound-path" id="notfound-path" data-nf-path>/…</code>
+    可能已被移除、改名，或者从未存在。
   </p>
+
+  <script>
+    /* set the path early, before the main suggestion script runs */
+    (function () {
+      var el = document.getElementById('notfound-path');
+      if (!el) return;
+      var p = window.location.pathname + window.location.search;
+      el.setAttribute('data-nf-path', p);
+      el.textContent = p.length > 80 ? p.slice(0, 77) + '…' : p;
+    })();
+  </script>
+
+  <section class="notfound-suggest" id="notfound-suggest" hidden>
+    <p class="notfound-suggest-h">你是不是要找：</p>
+    <ul class="notfound-suggest-list" id="notfound-suggest-list"></ul>
+  </section>
+
+  <p class="notfound-desc-secondary">从下面几个入口继续：</p>
 
   <nav class="notfound-nav" aria-label="主导航">
     <a href="/" class="notfound-link">
@@ -28,19 +46,88 @@ robots: noindex,follow
       <span class="notfound-link-main">浏览全部项目</span>
       <span class="notfound-link-sub">36 个项目 / 11 个工作室</span>
     </a>
-    <a href="/topic/links/" class="notfound-link">
+    <a href="/repos/" class="notfound-link">
       <span class="notfound-link-num">03</span>
+      <span class="notfound-link-main">仓库总览</span>
+      <span class="notfound-link-sub">85 个本地 GitHub 镜像</span>
+    </a>
+    <a href="/topic/links/" class="notfound-link">
+      <span class="notfound-link-num">04</span>
       <span class="notfound-link-main">资源导航</span>
       <span class="notfound-link-sub">云原生 / 数据 / AI 外链</span>
     </a>
     <a href="/topic/archive/" class="notfound-link">
-      <span class="notfound-link-num">04</span>
+      <span class="notfound-link-num">05</span>
       <span class="notfound-link-main">归档知识库</span>
       <span class="notfound-link-sub">33 篇早期技术写作</span>
     </a>
   </nav>
 
 </div>
+
+<script>
+/* ── 404: suggest similar pages/repos by URL segments ── */
+(function () {
+  'use strict';
+  var pathEl = document.getElementById('notfound-path');
+  var suggestEl = document.getElementById('notfound-suggest');
+  var listEl = document.getElementById('notfound-suggest-list');
+  if (!pathEl || !suggestEl || !listEl) return;
+
+  var path = pathEl.getAttribute('data-nf-path') || window.location.pathname;
+  pathEl.textContent = path.length > 80 ? path.slice(0, 77) + '…' : path;
+
+  // Try to load repo index for fuzzy match
+  fetch('/_data/repos.json', { cache: 'no-cache' })
+    .then(function (r) { return r.ok ? r.json() : null; })
+    .then(function (data) {
+      if (!data || !data.repos) return;
+      var seg = (path || '').toLowerCase().split('/').filter(Boolean);
+      if (seg.length === 0) return;
+      // Score each repo: does any segment match name/org?
+      var scored = data.repos.map(function (r) {
+        var s = 0;
+        var rname = (r.name || '').toLowerCase();
+        var rorg = (r.org || '').toLowerCase();
+        seg.forEach(function (piece) {
+          if (!piece) return;
+          if (rname === piece) s += 100;
+          else if (rname.indexOf(piece) >= 0) s += 50;
+          else if (rorg === piece) s += 30;
+          else if (rorg.indexOf(piece) >= 0) s += 15;
+          else if ((r.description || '').toLowerCase().indexOf(piece) >= 0) s += 5;
+        });
+        return { r: r, s: s };
+      }).filter(function (x) { return x.s > 0; })
+        .sort(function (a, b) { return b.s - a.s; })
+        .slice(0, 4);
+
+      if (scored.length === 0) return;
+      suggestEl.hidden = false;
+      listEl.innerHTML = scored.map(function (x) {
+        var r = x.r;
+        var href = r.is_own
+          ? '/repos/' + encodeURIComponent(r.org) + '/' + encodeURIComponent(r.name) + '/'
+          : (r.is_github ? 'https://github.com/' + r.full_name : '#');
+        var target = r.is_own ? '' : ' target="_blank" rel="noopener"';
+        return '<li class="nf-suggest-item">'
+          + '<a class="nf-suggest-link" href="' + href + '"' + target + '>'
+          + '<span class="nf-suggest-org">' + escapeHtml(r.org) + '</span>'
+          + '<span class="nf-suggest-sep">/</span>'
+          + '<span class="nf-suggest-name">' + escapeHtml(r.name) + '</span>'
+          + '<span class="nf-suggest-meta">' + escapeHtml(r.language_top || '—') + ' · ' + (r.commits_total || 0) + ' commits</span>'
+          + '</a></li>';
+      }).join('');
+    })
+    .catch(function () { /* silent */ });
+
+  function escapeHtml(s) {
+    return String(s == null ? '' : s).replace(/[&<>"']/g, function (c) {
+      return { '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c];
+    });
+  }
+})();
+</script>
 
 <style>
 .notfound {
@@ -74,8 +161,88 @@ robots: noindex,follow
   font-size: 0.9375rem;
   color: var(--text-secondary);
   line-height: 1.7;
-  margin-bottom: 3rem;
+  margin-bottom: 1rem;
   animation: fadeUp 0.5s ease-out 0.1s both;
+}
+
+.notfound-path {
+  font-family: var(--font-mono);
+  font-size: 0.85em;
+  background: var(--bg-subtle);
+  padding: 0.15rem 0.45rem;
+  border-radius: 3px;
+  color: var(--accent);
+  word-break: break-all;
+  display: inline-block;
+  max-width: 100%;
+}
+
+.notfound-desc-secondary {
+  font-size: 0.875rem;
+  color: var(--text-muted);
+  margin: 2.5rem 0 1rem;
+  animation: fadeUp 0.5s ease-out 0.12s both;
+}
+
+.notfound-suggest {
+  margin-top: 1.5rem;
+  padding: 1.25rem 1.5rem;
+  background: var(--bg-subtle);
+  border: 1px solid var(--border);
+  border-left: 3px solid var(--accent);
+  border-radius: 0 var(--radius) var(--radius) 0;
+  animation: fadeUp 0.5s ease-out 0.12s both;
+}
+.notfound-suggest-h {
+  font-family: var(--font-mono);
+  font-size: 0.7rem;
+  font-weight: 500;
+  text-transform: uppercase;
+  letter-spacing: 0.14em;
+  color: var(--text-muted);
+  margin: 0 0 0.75rem;
+}
+.notfound-suggest-list {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 0.4rem;
+}
+.nf-suggest-link {
+  display: flex;
+  align-items: baseline;
+  gap: 0.5rem;
+  padding: 0.4rem 0;
+  text-decoration: none;
+  border-bottom: 1px dashed var(--border);
+  transition: color 0.2s;
+}
+.nf-suggest-link:hover { color: var(--accent); }
+.nf-suggest-link:hover .nf-suggest-name { color: var(--accent); }
+.nf-suggest-link:last-child { border-bottom: none; }
+.nf-suggest-org {
+  font-family: var(--font-mono);
+  font-size: 0.75rem;
+  color: var(--text-muted);
+  letter-spacing: 0.04em;
+}
+.nf-suggest-sep { color: var(--text-muted); opacity: 0.4; }
+.nf-suggest-name {
+  font-family: var(--font-display);
+  font-size: 0.95rem;
+  font-weight: 500;
+  color: var(--text);
+  letter-spacing: -0.01em;
+  flex: 0 0 auto;
+}
+.nf-suggest-meta {
+  margin-left: auto;
+  font-family: var(--font-mono);
+  font-size: 0.7rem;
+  color: var(--text-muted);
+  letter-spacing: 0.04em;
 }
 
 .notfound-nav {
@@ -129,5 +296,6 @@ robots: noindex,follow
     gap: 0.75rem 1rem;
   }
   .notfound-link-sub { display: none; }
+  .nf-suggest-meta { display: none; }
 }
 </style>

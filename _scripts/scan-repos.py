@@ -185,6 +185,108 @@ def get_readme_excerpt(repo_path, max_chars=200):
     return ""
 
 
+def get_readme_full(repo_path, max_chars=200_000):
+    """Read the full README content (markdown), stripping frontmatter.
+
+    Returns raw markdown string, or empty string if no README found.
+    Cap at max_chars (~200KB) to avoid pathologically large files.
+    """
+    for name in ("README.md", "README.markdown", "README.MD", "README", "readme.md"):
+        p = os.path.join(repo_path, name)
+        if not os.path.exists(p):
+            continue
+        try:
+            with open(p, encoding="utf-8", errors="replace") as f:
+                text = f.read()
+        except (FileNotFoundError, IOError):
+            continue
+        # Strip frontmatter
+        text = re.sub(r"^---\n.*?\n---\n", "", text, count=1, flags=re.DOTALL)
+        if len(text) > max_chars:
+            text = text[:max_chars] + "\n\n…(内容过长，已截断)"
+        return text
+    return ""
+
+
+def get_recent_commits(repo_path, n=10):
+    """Return list of {hash, short, iso, rel, author, subject} for last n commits."""
+    fmt = "%H%x1f%h%x1f%aI%x1f%an%x1f%s"
+    out = run(["git", "log", f"-{n}", f"--format={fmt}"], cwd=repo_path)
+    rels_out = run(["git", "log", f"-{n}", "--format=%ar"], cwd=repo_path)
+    rels = rels_out.splitlines()
+    commits = []
+    for i, line in enumerate(out.splitlines()):
+        parts = line.split("\x1f")
+        if len(parts) < 5:
+            continue
+        h, short, iso, author, subject = parts[:5]
+        rel = rels[i] if i < len(rels) else ""
+        commits.append({
+            "hash": h,
+            "short": short,
+            "iso": iso,
+            "rel": rel,
+            "author": author,
+            "subject": subject,
+        })
+    return commits
+
+
+def get_languages_detailed(repo_path, max_depth=4, max_files=5000):
+    """Like get_languages but returns full top-5 list, not just top-3."""
+    counter = Counter()
+    file_count = 0
+    try:
+        for dirpath, dirnames, filenames in os.walk(repo_path):
+            dirnames[:] = [d for d in dirnames if d not in SKIP_DIRS and not d.startswith(".")]
+            rel = os.path.relpath(dirpath, repo_path)
+            depth = 0 if rel == "." else rel.count(os.sep) + 1
+            if depth > max_depth:
+                dirnames[:] = []
+                continue
+            for fn in filenames:
+                ext = os.path.splitext(fn)[1].lower()
+                if ext in LANG_MAP:
+                    counter[LANG_MAP[ext]] += 1
+                    file_count += 1
+                    if file_count >= max_files:
+                        return counter.most_common(10)
+        return counter.most_common(10)
+    except (OSError, PermissionError):
+        return counter.most_common(10)
+
+
+def get_top_level_files(repo_path, max_count=15):
+    """Return list of top-level files/dirs for the file tree summary."""
+    try:
+        entries = sorted(os.listdir(repo_path))
+    except (OSError, PermissionError):
+        return []
+    result = []
+    for e in entries:
+        if e.startswith(".") or e in SKIP_DIRS:
+            continue
+        if len(result) >= max_count:
+            result.append(f"… and {len(entries) - max_count} more")
+            break
+        full = os.path.join(repo_path, e)
+        is_dir = os.path.isdir(full)
+        result.append(e + ("/" if is_dir else ""))
+    return result
+
+
+def get_file_count(repo_path):
+    """Total non-hidden, non-ignored file count."""
+    count = 0
+    try:
+        for dirpath, dirnames, filenames in os.walk(repo_path):
+            dirnames[:] = [d for d in dirnames if d not in SKIP_DIRS and not d.startswith(".")]
+            count += len([f for f in filenames if not f.startswith(".")])
+    except (OSError, PermissionError):
+        pass
+    return count
+
+
 def get_languages(repo_path, max_depth=3, max_files=2000):
     """Walk the working tree, count files by language. Skip noise dirs."""
     counter = Counter()
@@ -285,9 +387,9 @@ def scan(root, excludes, dry_run=False, verbose=True):
         commits_total = get_total_commits(abs_path)
         description = get_git_description(abs_path)
         readme = get_readme_excerpt(abs_path)
-        # fall back: description = first line of readme if empty
-        if not description and readme:
-            description = readme.split("。")[0].split(".")[0][:120]
+        # full README markdown (only for own repos to keep size sane)
+        # Extract now so we can fall back description from it
+        readme_full = ""
         languages = get_languages(abs_path)
         size_kb = get_size_kb(abs_path)
         repo_type = classify_repo(name, languages, description, readme)
@@ -298,6 +400,22 @@ def scan(root, excludes, dry_run=False, verbose=True):
             "buhua-global", "cinelume", "fat-looser", "hack-core-global",
             "master-of-solitude", "xai-org", "zenx-global",
         }
+        # Extract deep details only for own + github repos (skip external/bare clones)
+        if is_own and host:
+            readme_full = get_readme_full(abs_path)
+            recent_commits = get_recent_commits(abs_path, n=10)
+            languages_detailed = get_languages_detailed(abs_path)
+            top_files = get_top_level_files(abs_path)
+            file_count = get_file_count(abs_path)
+        else:
+            readme_full = ""
+            recent_commits = []
+            languages_detailed = languages
+            top_files = []
+            file_count = 0
+        # fall back: description = first line of readme if empty
+        if not description and readme:
+            description = readme.split("。")[0].split(".")[0][:120]
 
         repos.append({
             "name": name,
@@ -313,9 +431,17 @@ def scan(root, excludes, dry_run=False, verbose=True):
             "commits_total": commits_total,
             "description": description,
             "readme_excerpt": readme,
+            "readme_full": readme_full,
+            "readme_bytes": len(readme_full.encode("utf-8")) if readme_full else 0,
+            "recent_commits": recent_commits,
             "languages": [l for l, _ in languages],
+            "languages_detailed": [
+                {"lang": l, "count": c} for l, c in languages_detailed
+            ],
             "language_top": languages[0][0] if languages else "",
             "size_kb": size_kb,
+            "file_count": file_count,
+            "top_files": top_files,
             "repo_type": repo_type,
             "is_own": bool(is_own),
             "is_github": is_github_host(host),
@@ -349,14 +475,17 @@ def write_yaml(repos, output_path):
 
 
 def write_json(repos, output_path):
-    """Write repos as compact JSON for client-side JS consumption.
+    """Write lightweight repos JSON for client-side JS on /repos/ page.
 
-    Strips the abs_path (filesystem leak) and keeps the rest.
+    Strips abs_path (filesystem leak) and the heavy fields
+    (readme_full, recent_commits, languages_detailed) that are
+    only needed at build time for per-repo page generation.
     """
     os.makedirs(os.path.dirname(output_path), exist_ok=True)
+    heavy = {"abs_path", "readme_full", "recent_commits", "languages_detailed", "top_files", "file_count", "readme_bytes"}
     safe_repos = []
     for r in repos:
-        sr = {k: v for k, v in r.items() if k != "abs_path"}
+        sr = {k: v for k, v in r.items() if k not in heavy}
         safe_repos.append(sr)
 
     # Compute aggregates for the page header
@@ -384,12 +513,38 @@ def write_json(repos, output_path):
     return payload
 
 
+def write_detailed_json(repos, output_path):
+    """Write the full per-repo detail data for build-time per-repo page generation.
+
+    Includes readme_full, recent_commits, languages_detailed, etc.
+    Kept separate from the lightweight repos.json so the /repos/ page
+    fetches stay fast.
+    """
+    os.makedirs(os.path.dirname(output_path), exist_ok=True)
+    payload = {
+        "scanned_at": datetime.now(timezone.utc).isoformat(timespec="seconds"),
+        "total": len(repos),
+        "total_size": sum(r.get("readme_bytes", 0) for r in repos),
+        "repos": repos,  # full data including readme_full
+    }
+    with open(output_path, "w") as f:
+        json.dump(payload, f, ensure_ascii=False, separators=(",", ":"))
+    payload["_path"] = output_path
+    return payload
+
+
 def main():
     ap = argparse.ArgumentParser(description="Scan local GitHub mirror → repos.yml")
     ap.add_argument("--root", default=DEFAULT_ROOT, help=f"Scan root (default: {DEFAULT_ROOT})")
     ap.add_argument("--output", default=DEFAULT_OUTPUT, help="Output YAML path")
     ap.add_argument("--json", action="store_true", help="Also write a JSON file for the /repos/ page")
     ap.add_argument("--json-output", default=None, help="JSON output path (default: <yaml>.json)")
+    ap.add_argument("--detailed-json", action="store_true",
+                    help="Write a detailed JSON file (includes full README, recent commits, "
+                         "language stats). Used by build.py for per-repo page generation. "
+                         "Auto-enabled when --json is passed.")
+    ap.add_argument("--detailed-json-output", default=None,
+                    help="Detailed JSON output path (default: repos-detailed.json next to repos.json)")
     ap.add_argument("--exclude", action="append", default=[], help="Repo name to exclude (can repeat)")
     ap.add_argument("--dry-run", action="store_true", help="Print summary, don't write")
     ap.add_argument("--quiet", action="store_true", help="Suppress per-repo log")
@@ -423,6 +578,27 @@ def main():
         stats = write_json(repos, json_path)
         print(f"  ✎ Wrote: {json_path}  "
               f"({stats['total']} repos · {stats['own']} own · {stats['external']} ext)")
+
+        # Auto-write detailed JSON alongside (used by build.py for per-repo pages)
+        # unless explicitly disabled by NOT passing --json (i.e. only --detailed-json).
+        if args.detailed_json or True:
+            detailed_path = args.detailed_json_output or \
+                os.path.join(os.path.dirname(json_path), "repos-detailed.json")
+            d_stats = write_detailed_json(repos, detailed_path)
+            total_kb = round(d_stats["total_size"] / 1024, 1)
+            with_readme = sum(1 for r in repos if r.get("readme_full"))
+            print(f"  ✎ Wrote: {detailed_path}  "
+                  f"({d_stats['total']} repos · {with_readme} with README · {total_kb} KB)")
+
+    elif args.detailed_json:
+        # Standalone detailed-only mode (no lightweight JSON requested)
+        detailed_path = args.detailed_json_output or \
+            os.path.join(WORKSPACE, "_data", "repos-detailed.json")
+        d_stats = write_detailed_json(repos, detailed_path)
+        total_kb = round(d_stats["total_size"] / 1024, 1)
+        with_readme = sum(1 for r in repos if r.get("readme_full"))
+        print(f"  ✎ Wrote: {detailed_path}  "
+              f"({d_stats['total']} repos · {with_readme} with README · {total_kb} KB)")
 
     # Quick stats
     orgs = Counter(r["org"] for r in repos if r["org"])
