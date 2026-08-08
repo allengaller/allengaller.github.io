@@ -7,27 +7,40 @@
 /* ── Tokens (Light) ─────────────────────────────────── */
 :root {
   /* Surface */
-  --bg: #ffffff;
-  --bg-subtle: #faf9f7;
-  --bg-hover: #f3f1ed;
-  --surface: #ffffff;
+  --bg: #fbfaf7;            /* off-white paper */
+  --bg-subtle: #f3f1ec;
+  --bg-hover: #ebe8e1;
+  --surface: #fbfaf7;
   --surface-elev: #ffffff;
 
   /* Ink */
-  --text: #0e0e0e;
-  --text-secondary: #4a4a48;
-  --text-muted: #8a8880;
-  --text-faint: #b8b6ae;
+  --ink: #14130f;           /* deep ink — true primary text */
+  --ink-soft: #2b2a26;      /* secondary ink */
+  --text: #14130f;
+  --text-secondary: #4a4842;
+  --text-muted: #8a877e;
+  --text-faint: #b8b5ac;
 
   /* Lines */
-  --border: #e8e6e0;
-  --border-hover: #d2cfc7;
-  --border-strong: #0e0e0e;
+  --border: #e2dfd6;
+  --border-hover: #cdc9bc;
+  --border-strong: #14130f;
 
   /* Single warm accent — used very sparingly */
-  --accent: #c8553d;
+  --accent: #c8553d;        /* terracotta */
   --accent-soft: rgba(200, 85, 61, 0.08);
   --accent-fg: #ffffff;
+
+  /* Secondary accent — gold, used only for tiny highlights (chapter marks, dots) */
+  --gold: #b08a3e;
+  --gold-soft: rgba(176, 138, 62, 0.14);
+
+  /* Atmospheric — used in hero glows */
+  --atmosphere: radial-gradient(
+    ellipse 90% 60% at 80% -10%,
+    rgba(200, 85, 61, 0.06) 0%,
+    transparent 60%
+  );
 
   /* Selection */
   --selection-bg: #c8553d;
@@ -52,6 +65,7 @@
   /* Motion */
   --ease-out: cubic-bezier(0.16, 1, 0.3, 1);
   --ease-in-out: cubic-bezier(0.65, 0, 0.35, 1);
+  --ease-spring: cubic-bezier(0.34, 1.56, 0.64, 1);
   --dur-fast: 180ms;
   --dur-base: 320ms;
   --dur-slow: 600ms;
@@ -60,11 +74,13 @@
 /* ── Dark mode (auto) ───────────────────────────────── */
 @media (prefers-color-scheme: dark) {
   :root {
-    --bg: #0a0a0a;
-    --bg-subtle: #131311;
+    --bg: #0b0a08;
+    --bg-subtle: #131210;
     --bg-hover: #1c1b18;
-    --surface: #131311;
+    --surface: #131210;
     --surface-elev: #1a1916;
+    --ink: #f5f3ee;
+    --ink-soft: #d4d1c8;
     --text: #f5f3ee;
     --text-secondary: #b4b1a8;
     --text-muted: #7a7872;
@@ -74,7 +90,14 @@
     --border-strong: #f5f3ee;
     --accent: #e07858;
     --accent-soft: rgba(224, 120, 88, 0.12);
-    --accent-fg: #0a0a0a;
+    --accent-fg: #0b0a08;
+    --gold: #d4a857;
+    --gold-soft: rgba(212, 168, 87, 0.16);
+    --atmosphere: radial-gradient(
+      ellipse 90% 60% at 80% -10%,
+      rgba(224, 120, 88, 0.08) 0%,
+      transparent 60%
+    );
     --focus-ring: 0 0 0 2px var(--bg), 0 0 0 4px var(--accent);
   }
 }
@@ -104,6 +127,33 @@ body {
   min-height: 100vh;
   font-variant-numeric: tabular-nums;
   transition: background-color var(--dur-base) var(--ease-out), color var(--dur-base) var(--ease-out);
+  position: relative;
+  overflow-x: hidden;
+}
+
+/* Paper grain — extremely subtle SVG noise overlay (1.4% opacity)
+   Adds the "printed page" feel without distracting from content. */
+body::before {
+  content: "";
+  position: fixed;
+  inset: 0;
+  z-index: 0;
+  pointer-events: none;
+  background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='180' height='180'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='2' stitchTiles='stitch'/><feColorMatrix values='0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0.18 0'/></filter><rect width='100%25' height='100%25' filter='url(%23n)'/></svg>");
+  background-size: 180px 180px;
+  opacity: 0.5;
+  mix-blend-mode: multiply;
+}
+
+@media (prefers-color-scheme: dark) {
+  body::before {
+    mix-blend-mode: screen;
+    opacity: 0.35;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  body::before { transition: none; }
 }
 
 ::selection {
@@ -198,10 +248,11 @@ strong { font-weight: 600; color: var(--text); }
 
 /* ── Navigation ─────────────────────────────────── */
 .site-nav-wrap {
+  position: -webkit-sticky;
   position: sticky;
   top: 0;
   z-index: 100;
-  background: color-mix(in srgb, var(--bg) 88%, transparent);
+  background: color-mix(in srgb, var(--bg) 82%, transparent);
   backdrop-filter: saturate(180%) blur(16px);
   -webkit-backdrop-filter: saturate(180%) blur(16px);
   border-bottom: 1px solid var(--border);
@@ -256,6 +307,8 @@ strong { font-weight: 600; color: var(--text); }
   max-width: var(--max-width-wide);
   margin: 0 auto;
   padding: 3rem var(--gutter) 6rem;
+  position: relative;
+  z-index: 1;
 }
 
 .site-main .narrow,
@@ -880,6 +933,8 @@ strong { font-weight: 600; color: var(--text); }
   display: flex;
   flex-direction: column;
   gap: 0.75rem;
+  position: relative;
+  z-index: 1;
 }
 
 .footer-row {
