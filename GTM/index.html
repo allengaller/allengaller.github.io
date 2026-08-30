@@ -1,0 +1,302 @@
+---
+layout: default
+title: Go to Market — 法喜 · 三重飞轮
+description: 一次合作如何进入法喜的飞轮：Cloud Native SRE 的深度、可复用的知识资产、可调用的 AI 工具。面向合作方、招聘方与开发者，全部证据公开可验证。
+robots: index,follow
+jsonld: |
+  {
+    "@context": "https://schema.org",
+    "@type": "ProfilePage",
+    "mainEntity": {
+      "@type": "Person",
+      "name": "法喜",
+      "alternateName": "Allen Galler",
+      "jobTitle": ["Cloud Native SRE", "AI Toolsmith", "Knowledge Architect"],
+      "url": "https://allengaller.github.io",
+      "sameAs": ["https://github.com/allengaller"]
+    },
+    "about": "法喜的 Go to Market 页面：三重飞轮（SRE 深度 / 知识资产 / AI 工具化）与合作入口。"
+  }
+---
+
+<!-- DIRECTION CONTRACT (seed 212ddfd5 · persuade · surface roll: dealt 6/4/2, 6 leads)
+THESIS: 个人品牌不是项目清单，而是一台互相喂养的飞轮——SRE 深度产出知识，知识喂养工具，工具反哺深度。
+        拒绝品类默认：hero + 统计条 + 同款卡片网格 + 联系按钮（首页已覆盖，GTM 页不复读）。
+OWN-WORLD: 继承站点既有体系——纸白底 / 墨色字 / 陶土红单强调 / 金色章节点；Fraunces 展示、Geist 正文、
+        JetBrains Mono 数据；发丝线分区；明暗双模式。不引入新色、新字、新材质。
+STORY: 访客在第一屏理解"三重身份是一台飞轮"，在三站点看到每环的真实仓库与数字，
+        在输出登记条看到复利仍在转动，最后在合作方式里找到自己的入口并行动。
+FIRST VIEWPORT: 左 55% 三行大号 Fraunces 论点（"深度喂养知识，知识喂养工具，工具反哺深度"）+ 一行身份
+        + 主按钮"谈一次合作"指向 #engage；右 45% 飞轮 SVG（三节点+流转弧线），节点即锚点。
+        无统计条，无卡片网格。
+FORM: Flywheel ledger——自有候选列表第 6 位（共 7 位）。种子 212ddfd5。
+FINISH: unreviewed and undocumented is unfinished; this build ends with the finish review, the verdict,
+        DESIGN.md, and every shipping raster carrying its provenance.
+-->
+
+<div class="gtm">
+
+  <!-- Scroll progress indicator (site grammar) -->
+  <div class="scroll-progress" aria-hidden="true">
+    <div class="scroll-progress-bar" id="scroll-progress"></div>
+  </div>
+
+  <!-- ── 第一屏：论点 + 飞轮 ─────────────────────────── -->
+  <header class="gtm-opening">
+    <div class="gtm-opening-text">
+      <h1 class="gtm-h1">
+        深度喂养知识，<br>
+        知识喂养工具，<br>
+        工具<em>反哺</em>深度。
+      </h1>
+      <p class="gtm-sub">
+        我是法喜，Cloud Native SRE · AI Toolsmith · Knowledge Architect。
+        这一页不讲情怀，只说明一件事：一次合作如何进入这台已经转动多年的飞轮，
+        以及它为什么不会停。
+      </p>
+      <div class="gtm-actions">
+        <a href="#engage" class="btn btn-primary">谈一次合作</a>
+        <a href="#station-sre" class="btn">先看证据</a>
+      </div>
+      <p class="gtm-proofline">
+        <span>4500<sup>+</sup> 文档与知识资产</span>
+        <span aria-hidden="true">·</span>
+        <span>60<sup>+</sup> 原创开源仓库</span>
+        <span aria-hidden="true">·</span>
+        <span>全部公开可验证</span>
+      </p>
+    </div>
+
+    <div class="gtm-wheel-wrap">
+      <svg class="gtm-wheel" viewBox="0 0 480 480" role="img"
+           aria-label="飞轮：Cloud Native SRE、Knowledge Architecture、AI Toolsmith 三环互相喂养">
+        <defs>
+          <marker id="gtm-arrow" viewBox="0 0 8 8" refX="6" refY="4" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+            <path d="M0 0 L8 4 L0 8 z" fill="var(--accent)"/>
+          </marker>
+        </defs>
+
+        <!-- 轨道 -->
+        <circle cx="240" cy="240" r="160" fill="none" stroke="var(--border)" stroke-width="1"/>
+
+        <!-- 三段流转弧（顺时针） -->
+        <path class="gtm-arc" d="M331.8 109 A160 160 0 0 1 399.4 226" marker-end="url(#gtm-arrow)"/>
+        <path class="gtm-arc" d="M307.6 385 A160 160 0 0 1 172.4 385" marker-end="url(#gtm-arrow)"/>
+        <path class="gtm-arc" d="M80.6 226 A160 160 0 0 1 148.2 109" marker-end="url(#gtm-arrow)"/>
+
+        <!-- 轴心 -->
+        <circle cx="240" cy="240" r="34" fill="var(--surface-elev)" stroke="var(--gold)" stroke-width="1.5"/>
+        <text class="gtm-hub" x="240" y="236" text-anchor="middle">SINCE</text>
+        <text class="gtm-hub" x="240" y="252" text-anchor="middle">2020</text>
+
+        <!-- 站点 I：SRE（顶） -->
+        <a href="#station-sre" class="gtm-node-link">
+          <g class="gtm-node">
+            <circle cx="240" cy="80" r="58" fill="var(--surface-elev)" stroke="var(--border-strong)" stroke-width="1"/>
+            <text class="gtm-node-num" x="240" y="62" text-anchor="middle">I</text>
+            <text class="gtm-node-title" x="240" y="84" text-anchor="middle">SRE</text>
+            <text class="gtm-node-sub" x="240" y="102" text-anchor="middle">CLOUD NATIVE</text>
+          </g>
+        </a>
+
+        <!-- 站点 II：知识（右下） -->
+        <a href="#station-knowledge" class="gtm-node-link">
+          <g class="gtm-node">
+            <circle cx="378.6" cy="320" r="58" fill="var(--surface-elev)" stroke="var(--border-strong)" stroke-width="1"/>
+            <text class="gtm-node-num" x="378.6" y="302" text-anchor="middle">II</text>
+            <text class="gtm-node-title" x="378.6" y="324" text-anchor="middle">知识</text>
+            <text class="gtm-node-sub" x="378.6" y="342" text-anchor="middle">KNOWLEDGE</text>
+          </g>
+        </a>
+
+        <!-- 站点 III：工具（左下） -->
+        <a href="#station-tools" class="gtm-node-link">
+          <g class="gtm-node">
+            <circle cx="101.4" cy="320" r="58" fill="var(--surface-elev)" stroke="var(--border-strong)" stroke-width="1"/>
+            <text class="gtm-node-num" x="101.4" y="302" text-anchor="middle">III</text>
+            <text class="gtm-node-title" x="101.4" y="324" text-anchor="middle">工具</text>
+            <text class="gtm-node-sub" x="101.4" y="342" text-anchor="middle">AI TOOLSMITH</text>
+          </g>
+        </a>
+      </svg>
+    </div>
+  </header>
+
+  <!-- ── 方法论一句 ─────────────────────────────────── -->
+  <section class="gtm-method reveal" data-reveal>
+    <p class="gtm-method-line">
+      每一个生产故障被写成文档，每一份文档成为下一个工具可调用的语料，
+      每一个工具在真实场景里暴露新的深度问题——<span>闭环不是比喻，是工作方式。</span>
+    </p>
+  </section>
+
+  <!-- ── 站点 I：Cloud Native SRE ───────────────────── -->
+  <section class="gtm-station reveal" data-reveal id="station-sre">
+    <div class="gtm-station-mark">
+      <span class="gtm-station-num">I</span>
+      <h2 class="gtm-station-name">Cloud Native SRE</h2>
+      <p class="gtm-station-role">信任的地基</p>
+    </div>
+    <div class="gtm-station-body">
+      <p class="gtm-station-claim">
+        飞轮的第一环是生产环境里磨出来的深度：诊断、备份、网络、故障复盘。
+        合作方得到的不是演示级方案，而是见过真实故障的人写的方案。
+      </p>
+      <ul class="gtm-evi">
+        <li class="gtm-evi-row">
+          <span class="gtm-evi-kind">诊断</span>
+          <span class="gtm-evi-text"><strong>Kudig</strong> —— K8s 节点诊断，70+ 分析器与 eBPF 能力，"挖掘集群的真相"。</span>
+          <a class="gtm-evi-link" href="https://github.com/kudig-io" target="_blank" rel="noopener">kudig-io ↗</a>
+        </li>
+        <li class="gtm-evi-row">
+          <span class="gtm-evi-kind">Operator</span>
+          <span class="gtm-evi-text"><strong>EtcdGuardian</strong> —— 专注 etcd 备份与恢复的 Kubernetes Operator。</span>
+          <a class="gtm-evi-link" href="https://github.com/kudig-io/etcd-guardian" target="_blank" rel="noopener">仓库 ↗</a>
+        </li>
+        <li class="gtm-evi-row">
+          <span class="gtm-evi-kind">故障库</span>
+          <span class="gtm-evi-text"><strong>kuba</strong> —— 全网故障库，SRE / CRE / FDE / SA 四个视角交叉索引。</span>
+          <a class="gtm-evi-link" href="https://github.com/kudig-io/kuba" target="_blank" rel="noopener">仓库 ↗</a>
+        </li>
+        <li class="gtm-evi-row">
+          <span class="gtm-evi-kind">平台</span>
+          <span class="gtm-evi-text"><strong>klaw</strong> —— K8s 智能运维平台，Go + React。</span>
+          <a class="gtm-evi-link" href="https://github.com/kudig-io/klaw" target="_blank" rel="noopener">仓库 ↗</a>
+        </li>
+      </ul>
+      <p class="gtm-station-note">对你的意义：方案评审、架构设计、故障应急，都建立在 5+ 年云原生一线实践之上。</p>
+    </div>
+  </section>
+
+  <!-- ── 站点 II：Knowledge Architecture ────────────── -->
+  <section class="gtm-station reveal" data-reveal id="station-knowledge">
+    <div class="gtm-station-mark">
+      <span class="gtm-station-num">II</span>
+      <h2 class="gtm-station-name">Knowledge Architect</h2>
+      <p class="gtm-station-role">飞轮的惯量</p>
+    </div>
+    <div class="gtm-station-body">
+      <p class="gtm-station-claim">
+        经验不沉淀就会蒸发。我把每个领域的输出做成 <em>-database</em> 知识库：
+        docs-as-code，一作品一文档，既是人读的手册，也是 Agent 可直接检索的 RAG 语料。
+        这是飞轮转得动的原因——惯量来自 4500+ 份持续更新的文档。
+      </p>
+      <div class="gtm-corpus">
+        <a class="gtm-corpus-tag" href="https://github.com/allengaller/task-database" target="_blank" rel="noopener">task-database<span>SRE 运维</span></a>
+        <a class="gtm-corpus-tag" href="https://github.com/kudig-io/kudig-database" target="_blank" rel="noopener">kudig-database<span>云原生</span></a>
+        <a class="gtm-corpus-tag" href="https://github.com/ai-guru-global/ai-guru-database" target="_blank" rel="noopener">ai-guru-database<span>AI 原生</span></a>
+        <a class="gtm-corpus-tag" href="https://github.com/standup-coder/cmd-database" target="_blank" rel="noopener">cmd-database<span>CLI</span></a>
+        <a class="gtm-corpus-tag" href="https://github.com/standup-coder/mcp-database" target="_blank" rel="noopener">mcp-database<span>MCP</span></a>
+        <a class="gtm-corpus-tag" href="https://github.com/standup-coder/skills-database" target="_blank" rel="noopener">skills-database<span>Agent Skills</span></a>
+        <a class="gtm-corpus-tag" href="https://github.com/standup-coder/ai-news-database" target="_blank" rel="noopener">ai-news-database<span>AI 要闻</span></a>
+        <a class="gtm-corpus-tag" href="https://github.com/allengaller/podcast-database" target="_blank" rel="noopener">podcast-database<span>技术播客</span></a>
+        <a class="gtm-corpus-tag" href="https://github.com/allengaller/oran-database" target="_blank" rel="noopener">oran-database<span>O-RAN</span></a>
+        <a class="gtm-corpus-tag" href="https://github.com/allengaller/dude-database" target="_blank" rel="noopener">dude-database<span>生活方式</span></a>
+      </div>
+      <p class="gtm-station-note">对你的意义：合作沉淀下来的不只是交付物，还是一座你未来可以继续检索、继续增长的知识资产。</p>
+    </div>
+  </section>
+
+  <!-- ── 站点 III：AI Toolsmith ─────────────────────── -->
+  <section class="gtm-station reveal" data-reveal id="station-tools">
+    <div class="gtm-station-mark">
+      <span class="gtm-station-num">III</span>
+      <h2 class="gtm-station-name">AI Toolsmith</h2>
+      <p class="gtm-station-role">知识的复利</p>
+    </div>
+    <div class="gtm-station-body">
+      <p class="gtm-station-claim">
+        知识和工程经验最终要变成可以直接调用的东西。这一环把前两环的积累
+        产品化为 Agent、MCP 工具链与内容产品——并在使用中暴露下一批深度问题。
+      </p>
+      <ul class="gtm-evi">
+        <li class="gtm-evi-row">
+          <span class="gtm-evi-kind">AIOps</span>
+          <span class="gtm-evi-text"><strong>ResolveAgent</strong> —— Agentic AIOps 平台：故障树分析 × RAG 知识检索 × 智能体交互。</span>
+          <a class="gtm-evi-link" href="https://github.com/ai-guru-global/resolve-agent" target="_blank" rel="noopener">仓库 ↗</a>
+        </li>
+        <li class="gtm-evi-row">
+          <span class="gtm-evi-kind">MCP</span>
+          <span class="gtm-evi-text"><strong>mcp4coder</strong> —— 聚合 MCP 工具生态，把 Agent 可调用的工具链做成开发者资产。</span>
+          <a class="gtm-evi-link" href="https://github.com/standup-coder/mcp-database" target="_blank" rel="noopener">仓库 ↗</a>
+        </li>
+        <li class="gtm-evi-row">
+          <span class="gtm-evi-kind">内容产品</span>
+          <span class="gtm-evi-text"><strong>LeetCast</strong> —— 把"每日一题"做成 AI 对话式播客，技术内容产品化样本。</span>
+          <a class="gtm-evi-link" href="https://github.com/standup-coder/leetcast" target="_blank" rel="noopener">仓库 ↗</a>
+        </li>
+        <li class="gtm-evi-row">
+          <span class="gtm-evi-kind">演示资产</span>
+          <span class="gtm-evi-text"><strong>OpenDemo</strong> —— 技术演示平台，沉淀 518+ 案例，知识输出升级为可浏览资产。</span>
+          <a class="gtm-evi-link" href="https://github.com/opendemo-work/opendemo" target="_blank" rel="noopener">仓库 ↗</a>
+        </li>
+      </ul>
+      <p class="gtm-station-note">对你的意义：Agent、RAG、MCP、CLI 类合作，你得到的是做过同类产品的工程师，不是从零试错。</p>
+    </div>
+  </section>
+
+  <!-- ── 输出登记条：飞轮仍在转 ──────────────────────── -->
+  <section class="gtm-ledger reveal" data-reveal aria-label="近期公开输出登记">
+    <div class="gtm-ledger-inner">
+      <p class="gtm-ledger-head">飞轮仍在转 —— 最近 10 次公开输出</p>
+      <ol class="gtm-ledger-rows">
+        <li><span class="gtm-l-date">08-28</span><span class="gtm-l-kind">AGENT</span><a href="https://github.com/ai-guru-global/fde-scope" target="_blank" rel="noopener">fde-scope</a><span class="gtm-l-desc">Forward Deployed Engineer 的现场操作系统</span></li>
+        <li><span class="gtm-l-date">08-28</span><span class="gtm-l-kind">CONTENT</span><a href="https://github.com/standup-coder/ai-news-database" target="_blank" rel="noopener">ai-news-database</a><span class="gtm-l-desc">面向开发者的 AI 要闻线索库</span></li>
+        <li><span class="gtm-l-date">08-27</span><span class="gtm-l-kind">AIOps</span><a href="https://github.com/ai-guru-global/resolve-agent" target="_blank" rel="noopener">resolve-agent</a><span class="gtm-l-desc">Agentic AIOps 平台</span></li>
+        <li><span class="gtm-l-date">08-27</span><span class="gtm-l-kind">TOOL</span><a href="https://github.com/standup-coder/vibe-flow" target="_blank" rel="noopener">vibe-flow</a><span class="gtm-l-desc">程序员命令行音乐播放器</span></li>
+        <li><span class="gtm-l-date">08-27</span><span class="gtm-l-kind">CORPUS</span><a href="https://github.com/kudig-io/kudig-database" target="_blank" rel="noopener">kudig-database</a><span class="gtm-l-desc">云原生语料库，兼作 Agent RAG</span></li>
+        <li><span class="gtm-l-date">08-27</span><span class="gtm-l-kind">DEMO</span><a href="https://github.com/opendemo-work/opendemo-database" target="_blank" rel="noopener">opendemo-database</a><span class="gtm-l-desc">技术演示案例库与 CLI</span></li>
+        <li><span class="gtm-l-date">08-25</span><span class="gtm-l-kind">CORPUS</span><a href="https://github.com/kudig-io/kuba" target="_blank" rel="noopener">kuba</a><span class="gtm-l-desc">全网故障库，四视角索引</span></li>
+        <li><span class="gtm-l-date">08-21</span><span class="gtm-l-kind">OPERATOR</span><a href="https://github.com/kudig-io/etcd-guardian" target="_blank" rel="noopener">etcd-guardian</a><span class="gtm-l-desc">etcd 备份恢复 Operator</span></li>
+        <li><span class="gtm-l-date">08-21</span><span class="gtm-l-kind">CLI</span><a href="https://github.com/standup-coder/cmd-database" target="_blank" rel="noopener">cmd-database</a><span class="gtm-l-desc">开发者 CLI 速查全集</span></li>
+        <li><span class="gtm-l-date">08-21</span><span class="gtm-l-kind">SKILLS</span><a href="https://github.com/standup-coder/skills-database" target="_blank" rel="noopener">skills-database</a><span class="gtm-l-desc">Agent Skills 库</span></li>
+      </ol>
+      <p class="gtm-ledger-foot">这只是最近一周。完整索引在 <a href="/repos/">Repos ↗</a></p>
+    </div>
+  </section>
+
+  <!-- ── 合作方式 ───────────────────────────────────── -->
+  <section class="gtm-engage reveal" data-reveal id="engage">
+    <div class="section-header">
+      <h2 class="section-title">三种进入飞轮的方式</h2>
+    </div>
+    <div class="gtm-engage-rows">
+      <article class="gtm-engage-row">
+        <h3 class="gtm-engage-name">AI 工具与开发者产品共创</h3>
+        <div class="gtm-engage-meta">
+          <p><span class="gtm-meta-key">适合</span>要把 Agent、RAG、MCP、CLI 或 AI Native Workflow 做成真正可用产品的团队。</p>
+          <p><span class="gtm-meta-key">交付</span>可运行的工具 + 文档 + 可持续维护的知识库，而不是一次性代码。</p>
+        </div>
+        <a class="gtm-engage-link" href="https://github.com/allengaller" target="_blank" rel="noopener">从 GitHub 发起 →</a>
+      </article>
+      <article class="gtm-engage-row">
+        <h3 class="gtm-engage-name">Cloud Native / SRE 顾问</h3>
+        <div class="gtm-engage-meta">
+          <p><span class="gtm-meta-key">适合</span>围绕 Kubernetes、可观测性、故障分析、运维自动化需要实战导向方案的团队。</p>
+          <p><span class="gtm-meta-key">交付</span>方案设计、架构评审、故障复盘工作坊——全部基于真实生产案例。</p>
+        </div>
+        <a class="gtm-engage-link" href="https://github.com/allengaller" target="_blank" rel="noopener">从 GitHub 发起 →</a>
+      </article>
+      <article class="gtm-engage-row">
+        <h3 class="gtm-engage-name">知识体系与技术内容产品化</h3>
+        <div class="gtm-engage-meta">
+          <p><span class="gtm-meta-key">适合</span>要把文档、专题、课程、案例库做成持续增长资产，而非一次性输出的组织。</p>
+          <p><span class="gtm-meta-key">交付</span>docs-as-code 体系 + 内容生产线 + 可被 Agent 消费的结构化语料。</p>
+        </div>
+        <a class="gtm-engage-link" href="https://github.com/allengaller" target="_blank" rel="noopener">从 GitHub 发起 →</a>
+      </article>
+    </div>
+  </section>
+
+  <!-- ── 收尾 ───────────────────────────────────────── -->
+  <section class="gtm-close reveal" data-reveal>
+    <p class="gtm-close-line">飞轮已经转了很多年。<br>下一次加速，可以是你的问题。</p>
+    <div class="gtm-actions gtm-actions-center">
+      <a href="https://github.com/allengaller" target="_blank" rel="noopener" class="btn btn-primary">GitHub 上找我 ↗</a>
+      <a href="/projects/" class="btn">全部项目</a>
+      <a href="/about/" class="btn">关于我</a>
+    </div>
+    <p class="gtm-close-micro">招聘、共创、咨询皆宜 · 回复以 GitHub 消息为准</p>
+  </section>
+
+</div>

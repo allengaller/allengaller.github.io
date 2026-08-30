@@ -49,6 +49,7 @@ PAGES = [
     ("topic/links/index.html",           "topic/links/index.html",           0.6, "monthly"),
     ("topic/ai-tools/index.html",        "topic/ai-tools/index.html",        0.6, "monthly"),
     ("topic/archive/index.html",         "topic/archive/index.html",         0.5, "yearly"),
+    ("GTM/index.html",                   "GTM/index.html",                   0.7, "weekly"),
     ("404.html",                         "404.html",                         None, None),  # not in sitemap
 ]
 
