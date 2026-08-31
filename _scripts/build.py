@@ -49,9 +49,15 @@ PAGES = [
     ("topic/links/index.html",           "topic/links/index.html",           0.6, "monthly"),
     ("topic/ai-tools/index.html",        "topic/ai-tools/index.html",        0.6, "monthly"),
     ("topic/archive/index.html",         "topic/archive/index.html",         0.5, "yearly"),
-    ("GTM/index.html",                   "GTM/index.html",                   0.7, "weekly"),
+    ("GTM/index.html",                   "GTM/index.html",                   0.8, "weekly"),
+    ("GTM/personal/index.html",          "GTM/products/allengaller/index.html", 0.7, "weekly"),
     ("404.html",                         "404.html",                         None, None),  # not in sitemap
 ]
+
+# Pages whose build must also depend on other files (portal cards come from the manifest)
+EXTRA_DEPS = {
+    "GTM/index.html": ["_data/gtm-products.json"],
+}
 
 NAV_PAGES = {
     "index.html":                "nav_active_home",
@@ -61,6 +67,7 @@ NAV_PAGES = {
     "topic/links/index.html":    "nav_active_links",
     "topic/ai-tools/index.html": "nav_active_ai_tools",
     "topic/archive/index.html":  "nav_active_archive",
+    "GTM/index.html":            "nav_active_gtm",
 }
 
 STATIC_FILES = [
@@ -186,6 +193,11 @@ def render_page(src_path, layout_html, page_url):
     out = out.replace('{{ page.jsonld }}', jsonld)
 
     out = out.replace('{{ content }}', content)
+
+    # GTM portal injections (no-op on pages without the placeholders);
+    # must run after content substitution — the placeholders live in page bodies
+    out = out.replace('{{ gtm_total }}', str(_gtm_total()))
+    out = out.replace('{{ gtm_cards }}', _gtm_cards_html())
     return out
 
 
@@ -199,11 +211,12 @@ def build_page(src_rel, dst_rel, layout_html, cache, force=False):
         return False
 
     src_h = file_hash(src_path)
+    dep_h = "".join(file_hash(os.path.join(BASE, d)) for d in EXTRA_DEPS.get(src_rel, []))
     layout_h = file_hash(os.path.join(BASE, "_layouts/default.html"))
 
     cache_key = f"page:{src_rel}:src"
     layout_key = f"page:{src_rel}:layout"
-    if not force and cache.get(cache_key) == src_h and cache.get(layout_key) == layout_h:
+    if not force and cache.get(cache_key) == src_h + dep_h and cache.get(layout_key) == layout_h:
         return False  # unchanged
 
     page_url = "/" + dst_rel.replace("index.html", "").rstrip("/")
@@ -216,7 +229,7 @@ def build_page(src_rel, dst_rel, layout_html, cache, force=False):
     with open(dst_path, 'w') as f:
         f.write(rendered)
 
-    cache[cache_key] = src_h
+    cache[cache_key] = src_h + dep_h
     cache[layout_key] = layout_h
     return True
 
@@ -240,6 +253,15 @@ def generate_sitemap(cache, force=False):
     for repo_url, iso in repo_pages:
         url_entries.append((repo_url, 0.5, "monthly"))
 
+    # Append GTM portal product pages (page / docs ship under /GTM/products/;
+    # the internal product's URL is already in PAGES)
+    for product in load_gtm_manifest():
+        if product.get("type") == "internal":
+            continue
+        slug = product.get("slug", "")
+        if slug:
+            url_entries.append((f"/GTM/products/{slug}/", 0.6, "weekly"))
+
     body = '<?xml version="1.0" encoding="UTF-8"?>\n'
     body += '<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">\n'
     for url, priority, changefreq in url_entries:
@@ -258,6 +280,131 @@ def generate_sitemap(cache, force=False):
         f.write(body)
     cache[cache_key] = new_hash
     print("  Built: sitemap.xml")
+
+
+# ─────────────────────────────────────────────────────────
+# GTM portal (manifest-driven)
+# ─────────────────────────────────────────────────────────
+
+def load_gtm_manifest():
+    """Load the GTM products manifest (_data/gtm-products.json)."""
+    path = os.path.join(BASE, "_data", "gtm-products.json")
+    if not os.path.exists(path):
+        print("  ⚠️  _data/gtm-products.json missing — GTM portal cards will be empty")
+        return []
+    with open(path) as f:
+        data = json.load(f)
+    return data.get("products", [])
+
+
+_GTM_CARDS_CACHE = {}
+
+
+def _gtm_total():
+    """Total number of GTM products listed in the manifest."""
+    if "total" not in _GTM_CARDS_CACHE:
+        _GTM_CARDS_CACHE["total"] = len(load_gtm_manifest())
+    return _GTM_CARDS_CACHE["total"]
+
+
+def _gtm_cards_html():
+    """Render the GTM portal card groups from the manifest (memoized per build).
+
+    Emits one section per group (tools / knowledge / content); products with
+    type=internal are owned by their own pages and are not listed.
+    """
+    if "html" in _GTM_CARDS_CACHE:
+        return _GTM_CARDS_CACHE["html"]
+
+    products = [p for p in load_gtm_manifest() if p.get("type") != "internal"]
+    groups = [
+        ("tools", "产品与工具"),
+        ("knowledge", "知识库"),
+        ("content", "内容作品"),
+    ]
+    sections = []
+    for key, label in groups:
+        items = [p for p in products if p.get("group") == key]
+        if not items:
+            continue
+        cards = []
+        for p in items:
+            org = p.get("repo", "").split("/")[0] if p.get("repo") else ""
+            badge = '<span class="gtmp-card-badge">内部</span>' if p.get("private") else ""
+            cards.append(
+                f'<a class="gtmp-card" href="/GTM/products/{_h(p.get("slug", ""))}/">'
+                f'<span class="gtmp-card-name">{_h(p.get("name") or p.get("slug", ""))}</span>'
+                f'<span class="gtmp-card-tagline">{_h(p.get("tagline", ""))}</span>'
+                f'<span class="gtmp-card-meta"><span class="gtmp-card-org">{_h(org)}</span>{badge}</span>'
+                f'</a>'
+            )
+        sections.append(
+            f'<section class="gtmp-group reveal" data-reveal id="{key}">'
+            f'<h2 class="gtmp-group-title">{_h(label)}'
+            f'<span class="gtmp-group-count">{len(items)}</span></h2>'
+            f'<div class="gtmp-grid">{"".join(cards)}</div>'
+            f'</section>'
+        )
+
+    _GTM_CARDS_CACHE["html"] = "".join(sections)
+    return _GTM_CARDS_CACHE["html"]
+
+
+def copy_gtm_products(cache, force=False):
+    """Mirror synced GTM product pages (GTM/products/) into _site/, hash-incremental.
+
+    Skips dotfiles and directories reserved for build_page-rendered products
+    (their _site/ copies come from build_page instead).
+    """
+    src_root = os.path.join(BASE, "GTM", "products")
+    dst_root = os.path.join(SITE_DIR, "GTM", "products")
+    if not os.path.isdir(src_root):
+        return
+    protected = {
+        p.get("slug")
+        for p in load_gtm_manifest()
+        if p.get("type") in ("internal", "docs")
+    }
+
+    seen = set()
+    copied = 0
+    for root, dirs, files in os.walk(src_root):
+        dirs[:] = [d for d in dirs if not d.startswith(".")]
+        for fname in sorted(files):
+            if fname.startswith("."):
+                continue
+            src_path = os.path.join(root, fname)
+            rel = os.path.relpath(src_path, src_root)
+            if rel.split(os.sep)[0] in protected:
+                continue
+            seen.add(rel)
+            dst_path = os.path.join(dst_root, rel)
+            src_h = file_hash(src_path)
+            if not force and cache.get(f"gtmprod:{rel}") == src_h and os.path.exists(dst_path):
+                continue
+            os.makedirs(os.path.dirname(dst_path), exist_ok=True)
+            shutil.copy2(src_path, dst_path)
+            cache[f"gtmprod:{rel}"] = src_h
+            copied += 1
+
+    removed = 0
+    if os.path.isdir(dst_root):
+        for root, dirs, files in os.walk(dst_root, topdown=False):
+            for fname in files:
+                dst_path = os.path.join(root, fname)
+                rel = os.path.relpath(dst_path, dst_root)
+                if rel in seen or rel.split(os.sep)[0] in protected:
+                    continue
+                os.remove(dst_path)
+                cache.pop(f"gtmprod:{rel}", None)
+                removed += 1
+            for d in dirs:
+                dir_path = os.path.join(root, d)
+                if not os.listdir(dir_path):
+                    os.rmdir(dir_path)
+
+    if copied or removed:
+        print(f"  GTM products: {copied} copied, {removed} removed")
 
 
 # ─────────────────────────────────────────────────────────
@@ -1354,21 +1501,34 @@ def check_external_links(timeout=8, max_links=80):
 
 
 def check_internal_links(strict=False):
-    """Verify every internal href in _site/ resolves to a real file. Returns (issues, total)."""
+    """Verify every internal href in _site/ resolves to a real file. Returns (issues, total).
+
+    Pages under GTM/products/ that were verbatim-synced from their source repos
+    are skipped: their links are relative to the origin checkout, not this site.
+    """
     issues = []
     total = 0
     if not os.path.isdir(SITE_DIR):
         return issues, total
+
+    built_products = {
+        f"GTM/products/{p.get('slug')}/index.html"
+        for p in load_gtm_manifest()
+        if p.get("type") in ("internal", "docs")
+    }
 
     for root, _, files in os.walk(SITE_DIR):
         for fname in files:
             if not fname.endswith(".html"):
                 continue
             path = os.path.join(root, fname)
+            rel_path = os.path.relpath(path, SITE_DIR)
+            if rel_path.startswith("GTM/products/") and rel_path not in built_products:
+                continue
             with open(path) as f:
                 html = f.read()
             for href in re.findall(r'href="([^"]+)"', html):
-                if href.startswith(("http://", "https://", "mailto:", "tel:", "javascript:", "#")):
+                if href.startswith(("http://", "https://", "mailto:", "tel:", "javascript:", "data:", "#")):
                     continue
                 # Skip template-literal placeholders (e.g. ${url} in inline JS)
                 if "${" in href or "`" in href:
@@ -1431,6 +1591,7 @@ def main():
             print("     → Or:  python3 _scripts/build.py --auto-scan")
 
     copy_static_files(cache, force)
+    copy_gtm_products(cache, force)
 
     built, skipped = 0, 0
     for src_rel, dst_rel, _priority, _changefreq in PAGES:
@@ -1439,6 +1600,15 @@ def main():
             built += 1
         else:
             skipped += 1
+
+    # Generate GTM docs pages (markdown strategic docs rendered via the site layout)
+    docs_built = 0
+    for product in load_gtm_manifest():
+        if product.get("type") == "docs":
+            slug = product.get("slug", "")
+            if build_page(f"_gtm_docs/{slug}/index.html", f"GTM/products/{slug}/index.html", layout_html, cache, force):
+                print(f"  Built: GTM/products/{slug}/ (docs)")
+                docs_built += 1
 
     # Generate per-repo detail pages (only when repos-detailed.json exists)
     build_repo_pages(cache, force, layout_html=layout_html)

@@ -2021,3 +2021,195 @@ strong { font-weight: 600; color: var(--text); }
   .gtm-corpus-tag:hover { transform: none; }
   .gtm-ledger-rows li:hover { transform: none; }
 }
+
+/* ── v2 · GTM 门户索引（/GTM/）───────────────────────────
+   .gtmp-group / .gtmp-card 结构由 _scripts/build.py 注入 */
+.gtmp {
+  position: relative;
+  max-width: var(--max-width-wide);
+  margin: 0 auto;
+  padding: calc(var(--nav-height) + 3.5rem) var(--gutter) 5rem;
+}
+
+.gtmp-opening { max-width: 860px; }
+
+.gtmp-eyebrow {
+  font-family: var(--font-mono);
+  font-size: 0.72rem;
+  letter-spacing: 0.22em;
+  color: var(--gold);
+  margin-bottom: 1.4rem;
+}
+
+.gtmp-h1 {
+  font-family: var(--font-display);
+  font-size: clamp(2.4rem, 5vw, 3.9rem);
+  font-weight: 560;
+  line-height: 1.08;
+  letter-spacing: -0.015em;
+  margin: 0 0 1.6rem;
+}
+
+.gtmp-h1 em {
+  font-style: italic;
+  color: var(--accent);
+}
+
+.gtmp-sub {
+  max-width: 640px;
+  color: var(--text-secondary);
+  font-size: 1.02rem;
+  line-height: 1.75;
+}
+
+/* 特色卡：唯一起点 */
+.gtmp-featured { margin-top: 3.2rem; }
+
+.gtmp-featured-card {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto;
+  align-items: end;
+  gap: 1.5rem;
+  padding: 1.8rem 1.9rem;
+  border-top: 1px solid var(--border-strong);
+  border-bottom: 1px solid var(--border);
+  transition: background var(--dur-fast) var(--ease-out);
+}
+
+.gtmp-featured-card:hover { background: var(--bg-subtle); }
+
+.gtmp-featured-kind {
+  font-family: var(--font-mono);
+  font-size: 0.68rem;
+  letter-spacing: 0.2em;
+  color: var(--gold);
+  margin-bottom: 0.7rem;
+}
+
+.gtmp-featured-name {
+  font-family: var(--font-display);
+  font-size: 1.6rem;
+  font-weight: 560;
+  letter-spacing: -0.01em;
+  margin-bottom: 0.55rem;
+  transition: color var(--dur-fast) var(--ease-out);
+}
+
+.gtmp-featured-card:hover .gtmp-featured-name { color: var(--accent); }
+
+.gtmp-featured-tagline {
+  max-width: 560px;
+  color: var(--text-secondary);
+  font-size: 0.92rem;
+  line-height: 1.7;
+}
+
+.gtmp-featured-arrow {
+  font-family: var(--font-mono);
+  font-size: 0.8rem;
+  color: var(--text-muted);
+  white-space: nowrap;
+  transition: color var(--dur-fast) var(--ease-out), transform var(--dur-fast) var(--ease-out);
+}
+
+.gtmp-featured-card:hover .gtmp-featured-arrow {
+  color: var(--accent);
+  transform: translateX(4px);
+}
+
+/* 索引组 */
+.gtmp-groups {
+  margin-top: 4.2rem;
+  display: grid;
+  gap: 3.4rem;
+}
+
+.gtmp-group-title {
+  display: flex;
+  align-items: baseline;
+  gap: 0.6rem;
+  font-family: var(--font-display);
+  font-size: 1.25rem;
+  font-weight: 560;
+  margin-bottom: 1.1rem;
+}
+
+.gtmp-group-count {
+  font-family: var(--font-mono);
+  font-size: 0.72rem;
+  color: var(--text-muted);
+}
+
+/* 发丝线网格：容器给上/左线，卡片给右/下线（空位不露底色） */
+.gtmp-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(235px, 1fr));
+  border-top: 1px solid var(--border);
+  border-left: 1px solid var(--border);
+}
+
+.gtmp-card {
+  display: flex;
+  flex-direction: column;
+  gap: 0.45rem;
+  padding: 1.15rem 1.2rem;
+  background: var(--bg);
+  border-right: 1px solid var(--border);
+  border-bottom: 1px solid var(--border);
+  transition: background var(--dur-fast) var(--ease-out);
+}
+
+.gtmp-card:hover { background: var(--bg-subtle); }
+
+.gtmp-card-name {
+  font-family: var(--font-display);
+  font-size: 1.02rem;
+  font-weight: 560;
+  transition: color var(--dur-fast) var(--ease-out);
+}
+
+.gtmp-card:hover .gtmp-card-name { color: var(--accent); }
+
+.gtmp-card-tagline {
+  flex-grow: 1;
+  color: var(--text-muted);
+  font-size: 0.84rem;
+  line-height: 1.65;
+}
+
+.gtmp-card-meta {
+  display: flex;
+  align-items: center;
+  gap: 0.6rem;
+  font-family: var(--font-mono);
+  font-size: 0.68rem;
+  letter-spacing: 0.04em;
+  color: var(--text-faint);
+}
+
+.gtmp-card-badge {
+  border: 1px solid var(--gold);
+  color: var(--gold);
+  font-size: 0.66rem;
+  padding: 0.1rem 0.4rem;
+  border-radius: var(--radius-sm);
+  letter-spacing: 0.12em;
+}
+
+@media (max-width: 640px) {
+  .gtmp-featured-card {
+    grid-template-columns: 1fr;
+    align-items: start;
+  }
+  .gtmp-featured-arrow { justify-self: end; }
+  .gtmp-grid { grid-template-columns: 1fr; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .gtmp-featured-card,
+  .gtmp-featured-name,
+  .gtmp-featured-arrow,
+  .gtmp-card,
+  .gtmp-card-name { transition: none; }
+  .gtmp-featured-card:hover .gtmp-featured-arrow { transform: none; }
+}
