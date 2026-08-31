@@ -73,7 +73,7 @@ def sync_page(entry, problems):
         os.makedirs(dst, exist_ok=True)
         shutil.copy2(src, os.path.join(dst, "index.html"))
     else:
-        shutil.copytree(src, dst, ignore=shutil.ignore_patterns(".DS_Store"))
+        shutil.copytree(src, dst, ignore=shutil.ignore_patterns(".*"))
     index_path = os.path.join(dst, "index.html")
     if not os.path.exists(index_path):
         problems.append(f"{slug}: no index.html after copy")
