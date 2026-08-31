@@ -1,0 +1,944 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>GTM/001 · Podcast Database 上市策略</title>
+<meta name="description" content="Podcast Database 的 Go-To-Market 总纲:定位、客户、竞争、话术、定价、渠道、90 天节奏与北极星指标。">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' fill='%23f4efe4'/%3E%3Cg fill='%23d64b1e'%3E%3Crect x='6' y='13' width='3' height='6'/%3E%3Crect x='11' y='9' width='3' height='14'/%3E%3Crect x='16' y='5' width='3' height='22'/%3E%3Crect x='21' y='11' width='3' height='10'/%3E%3C/g%3E%3C/svg%3E">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,500;0,9..144,600;0,9..144,700;1,9..144,400&family=IBM+Plex+Mono:wght@400;500;600&family=Noto+Sans+SC:wght@400;500;700&family=Noto+Serif+SC:wght@500;600;700;900&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --paper:#f4efe4;
+    --paper-2:#ece4d0;
+    --card:#fbf7ec;
+    --ink:#221d13;
+    --ink-2:#6f6450;
+    --line:#d9cfb8;
+    --line-2:#c4b795;
+    --acc:#d64b1e;
+    --acc-deep:#a83a15;
+    --green:#2e6b4f;
+    --mustard:#a97f1c;
+    --serif:"Fraunces","Noto Serif SC",Georgia,serif;
+    --sans:"Noto Sans SC",-apple-system,sans-serif;
+    --mono:"IBM Plex Mono","Noto Sans SC",monospace;
+  }
+  *{margin:0;padding:0;box-sizing:border-box}
+  html{scroll-behavior:smooth}
+  body{
+    background:var(--paper);
+    color:var(--ink);
+    font-family:var(--sans);
+    font-size:16px;
+    line-height:1.75;
+    -webkit-font-smoothing:antialiased;
+  }
+  ::selection{background:var(--acc);color:var(--paper)}
+
+  /* ---------- 纸面颗粒 ---------- */
+  .grain{
+    position:fixed;inset:0;z-index:99;pointer-events:none;
+    opacity:.05;mix-blend-mode:multiply;
+    background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='240' height='240'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2'/%3E%3C/filter%3E%3Crect width='240' height='240' filter='url(%23n)'/%3E%3C/svg%3E");
+  }
+
+  /* ---------- 报头 ---------- */
+  .masthead{
+    position:fixed;top:0;left:0;right:0;z-index:50;
+    background:rgba(244,239,228,.92);
+    backdrop-filter:blur(8px);
+    border-bottom:1px solid var(--line-2);
+  }
+  .masthead-in{
+    max-width:1180px;margin:0 auto;padding:0 32px;
+    height:54px;display:flex;align-items:center;justify-content:space-between;gap:24px;
+  }
+  .brand{
+    font-family:var(--mono);font-size:12px;font-weight:600;letter-spacing:.08em;
+    white-space:nowrap;color:var(--ink);text-decoration:none;
+  }
+  .brand em{font-style:normal;color:var(--acc)}
+  .masthead nav{display:flex;gap:18px;overflow-x:auto;scrollbar-width:none}
+  .masthead nav::-webkit-scrollbar{display:none}
+  .masthead nav a{
+    font-family:var(--mono);font-size:11px;letter-spacing:.04em;
+    color:var(--ink-2);text-decoration:none;white-space:nowrap;padding:4px 0;
+    border-bottom:2px solid transparent;transition:color .2s,border-color .2s;
+  }
+  .masthead nav a:hover{color:var(--ink)}
+  .masthead nav a.cur{color:var(--acc);border-bottom-color:var(--acc)}
+
+  /* ---------- 版心 ---------- */
+  main{max-width:1180px;margin:0 auto;padding:0 32px}
+  section{padding:104px 0 24px}
+  .sec-head{
+    display:flex;align-items:baseline;gap:22px;
+    border-top:2px solid var(--ink);padding-top:18px;margin-bottom:14px;
+  }
+  .sec-no{
+    font-family:var(--mono);font-size:13px;font-weight:600;color:var(--acc);
+    letter-spacing:.12em;white-space:nowrap;
+  }
+  .sec-head h2{
+    font-family:var(--serif);font-weight:700;font-size:clamp(26px,3.4vw,38px);
+    line-height:1.2;letter-spacing:.01em;
+  }
+  .deck{color:var(--ink-2);max-width:760px;margin-bottom:40px;font-size:15.5px}
+  .deck strong{color:var(--ink)}
+  .en{font-family:var(--serif);font-style:italic}
+
+  /* ---------- Hero ---------- */
+  .hero{
+    min-height:100vh;display:flex;flex-direction:column;justify-content:center;
+    padding:120px 0 0;position:relative;
+    background-image:
+      linear-gradient(90deg,transparent 84px,rgba(214,75,30,.30) 84px,rgba(214,75,30,.30) 85px,transparent 85px),
+      repeating-linear-gradient(180deg,transparent 0,transparent 35px,rgba(34,29,19,.075) 35px,rgba(34,29,19,.075) 36px);
+  }
+  .hero-kicker{
+    font-family:var(--mono);font-size:12.5px;font-weight:500;letter-spacing:.14em;
+    color:var(--ink-2);display:flex;flex-wrap:wrap;gap:8px 26px;margin-bottom:34px;
+  }
+  .hero-kicker b{color:var(--acc);font-weight:600}
+  .hero h1{
+    font-family:var(--serif);font-weight:900;
+    font-size:clamp(29px,6.6vw,86px);line-height:1.14;letter-spacing:.01em;
+    max-width:19em;
+  }
+  .hero h1 .u{color:var(--acc);position:relative;white-space:nowrap}
+  .hero h1 .u::after{
+    content:"";position:absolute;left:0;right:0;bottom:.04em;height:.08em;
+    background:var(--acc);opacity:.35;
+  }
+  .hero .deck{font-size:17px;margin:30px 0 8px;max-width:640px}
+  .wave{display:flex;align-items:center;gap:3px;height:64px;margin:36px 0 40px;overflow:hidden}
+  .wave i{
+    width:4px;background:var(--ink);opacity:.82;border-radius:1px;
+    height:calc(var(--h)*1%);transform:scaleY(0);transform-origin:center;
+    animation:rise .9s cubic-bezier(.2,.8,.2,1) forwards;animation-delay:var(--d);
+  }
+  .wave i:nth-child(4n){background:var(--acc)}
+  @keyframes rise{to{transform:scaleY(1)}}
+  .stats{
+    display:grid;grid-template-columns:repeat(4,1fr);gap:1px;
+    background:var(--line-2);border:1px solid var(--line-2);max-width:820px;
+  }
+  .stats div{background:var(--paper);padding:18px 22px 14px}
+  .stats b{display:block;font-family:var(--serif);font-weight:700;font-size:34px;line-height:1.1}
+  .stats b small{font-family:var(--mono);font-size:13px;font-weight:500;color:var(--ink-2);margin-left:2px}
+  .stats span{font-family:var(--mono);font-size:11px;letter-spacing:.1em;color:var(--ink-2)}
+  .hero-meta{
+    margin-top:34px;font-family:var(--mono);font-size:11.5px;color:var(--ink-2);
+    display:flex;flex-wrap:wrap;gap:6px 28px;letter-spacing:.05em;
+  }
+  .hero-meta i{font-style:normal;color:var(--acc)}
+  .stamp{
+    position:absolute;top:120px;right:0;
+    font-family:var(--mono);font-weight:600;font-size:14px;letter-spacing:.22em;
+    color:var(--acc);border:2.5px solid var(--acc);padding:10px 18px 9px;
+    transform:rotate(6deg);border-radius:3px;opacity:0;text-align:center;line-height:1.5;
+    animation:stampIn .5s cubic-bezier(.2,1.6,.4,1) .9s forwards;
+  }
+  .stamp small{display:block;font-size:9.5px;letter-spacing:.3em;font-weight:500}
+  @keyframes stampIn{
+    0%{opacity:0;transform:rotate(6deg) scale(1.8)}
+    100%{opacity:.85;transform:rotate(6deg) scale(1)}
+  }
+  .scroll-cue{
+    position:absolute;bottom:26px;left:0;
+    font-family:var(--mono);font-size:10.5px;letter-spacing:.3em;color:var(--ink-2);
+  }
+  .scroll-cue::after{
+    content:"";display:block;width:1px;height:34px;background:var(--ink-2);
+    margin:10px auto 0;animation:drip 1.6s ease-in-out infinite;
+  }
+  @keyframes drip{0%{transform:scaleY(0);transform-origin:top}55%{transform:scaleY(1);transform-origin:top}56%{transform-origin:bottom}100%{transform:scaleY(0);transform-origin:bottom}}
+
+  /* ---------- 通用组件 ---------- */
+  .rv{opacity:0;transform:translateY(20px)}
+  .rv.in{opacity:1;transform:none;transition:opacity .7s ease,transform .7s cubic-bezier(.2,.8,.2,1);transition-delay:var(--d,0s)}
+  .note{
+    font-family:var(--mono);font-size:12px;color:var(--ink-2);
+    border-left:3px solid var(--mustard);padding:6px 0 6px 16px;margin:26px 0 0;line-height:1.8;
+  }
+  .note i{font-style:normal;color:var(--mustard);font-weight:600}
+  .tag{
+    display:inline-block;font-family:var(--mono);font-size:10.5px;font-weight:500;
+    letter-spacing:.08em;border:1px solid var(--line-2);border-radius:2px;
+    padding:2px 8px;color:var(--ink-2);white-space:nowrap;
+  }
+  .tag.acc{border-color:var(--acc);color:var(--acc)}
+  .tag.grn{border-color:var(--green);color:var(--green)}
+  .tblwrap{overflow-x:auto}
+  table{width:100%;border-collapse:collapse;min-width:640px}
+  th{
+    font-family:var(--mono);font-size:11px;font-weight:600;letter-spacing:.12em;
+    text-align:left;color:var(--ink-2);border-bottom:2px solid var(--ink);
+    padding:10px 14px 10px 0;white-space:nowrap;
+  }
+  td{
+    border-bottom:1px solid var(--line);padding:14px 14px 14px 0;
+    font-size:14.5px;line-height:1.7;vertical-align:top;
+  }
+  tr:hover td{background:rgba(236,228,208,.4)}
+  td.k{font-family:var(--mono);font-size:12.5px;font-weight:600;white-space:nowrap}
+  .num{font-family:var(--mono);font-size:13px}
+
+  /* ---------- 01 摘要 ---------- */
+  .tl{display:grid;grid-template-columns:repeat(3,1fr);gap:22px;margin-bottom:44px}
+  .tl-card{background:var(--card);border:1px solid var(--line-2);padding:26px 26px 22px;position:relative}
+  .tl-card::before{
+    content:"";position:absolute;top:-1px;left:-1px;right:-1px;height:4px;background:var(--ink);
+  }
+  .tl-card:nth-child(2)::before{background:var(--acc)}
+  .tl-card:nth-child(3)::before{background:var(--green)}
+  .tl-card h3{font-family:var(--serif);font-size:20px;font-weight:700;margin:10px 0 8px}
+  .tl-card p{font-size:14px;color:var(--ink-2)}
+  .tl-card .tag{position:absolute;top:-12px;left:22px;background:var(--card)}
+  .arrowflow{display:flex;align-items:stretch;gap:0;flex-wrap:wrap}
+  .af-step{
+    flex:1;min-width:220px;border:1px dashed var(--line-2);padding:18px 22px;position:relative;
+  }
+  .af-step + .af-step{border-left:none}
+  .af-step b{font-family:var(--mono);font-size:11px;letter-spacing:.14em;color:var(--acc);display:block;margin-bottom:4px}
+  .af-step h4{font-family:var(--serif);font-size:19px;font-weight:700}
+  .af-step p{font-size:13px;color:var(--ink-2);margin-top:4px}
+  .af-step::after{
+    content:"→";position:absolute;right:-9px;top:50%;transform:translateY(-50%);
+    font-family:var(--mono);color:var(--acc);font-size:16px;z-index:1;background:var(--paper);
+  }
+  .af-step:last-child::after{display:none}
+
+  /* ---------- 02 市场 ---------- */
+  .grid3{display:grid;grid-template-columns:repeat(3,1fr);gap:22px}
+  .mk-card{border-top:2px solid var(--ink);padding-top:18px}
+  .mk-card .no{font-family:var(--mono);font-size:12px;color:var(--acc);letter-spacing:.15em}
+  .mk-card h3{font-family:var(--serif);font-size:23px;font-weight:700;margin:8px 0 10px}
+  .mk-card p{font-size:14px;color:var(--ink-2)}
+  .verdict{
+    margin-top:44px;background:var(--ink);color:var(--paper);
+    padding:30px 36px;display:flex;align-items:baseline;gap:24px;flex-wrap:wrap;
+  }
+  .verdict b{font-family:var(--mono);font-size:11px;letter-spacing:.2em;color:var(--acc);white-space:nowrap}
+  .verdict p{font-family:var(--serif);font-size:clamp(18px,2.2vw,24px);font-weight:600;line-height:1.5}
+
+  /* ---------- 03 定位 ---------- */
+  .pos-card{
+    background:var(--card);border:1px solid var(--line-2);
+    padding:44px 48px;position:relative;max-width:900px;
+  }
+  .pos-card::before{content:"";position:absolute;inset:8px;border:1px dashed var(--line);pointer-events:none}
+  .pos-line{font-family:var(--serif);font-size:clamp(17px,2vw,21px);line-height:2.1;font-weight:500}
+  .blank{
+    border-bottom:1.5px solid var(--acc);padding:0 6px;color:var(--acc-deep);
+    font-weight:700;white-space:nowrap;
+  }
+  .slogan{display:flex;gap:22px;margin:48px 0 44px;flex-wrap:wrap}
+  .slogan div{flex:1;min-width:280px;border-left:3px solid var(--acc);padding-left:22px}
+  .slogan small{font-family:var(--mono);font-size:10.5px;letter-spacing:.2em;color:var(--ink-2)}
+  .slogan p{font-family:var(--serif);font-size:24px;font-weight:700;margin-top:6px;line-height:1.4}
+  .pillars{display:grid;grid-template-columns:repeat(3,1fr);gap:22px}
+  .pillar{border:1px solid var(--line-2);padding:24px}
+  .pillar b{font-family:var(--mono);font-size:11px;color:var(--acc);letter-spacing:.18em}
+  .pillar h3{font-family:var(--serif);font-size:21px;font-weight:700;margin:8px 0 6px}
+  .pillar p{font-size:13.5px;color:var(--ink-2)}
+
+  /* ---------- 04 客户 ---------- */
+  .personas{display:grid;grid-template-columns:1fr 1fr;gap:22px;margin-top:48px}
+  .persona{
+    background:var(--card);border:1px solid var(--line-2);padding:26px 28px 22px;position:relative;
+  }
+  .persona::before{
+    content:"";position:absolute;top:14px;bottom:14px;left:9px;
+    border-left:1px dotted var(--line-2);
+  }
+  .persona .pid{
+    font-family:var(--mono);font-size:11px;font-weight:600;color:var(--paper);
+    background:var(--ink);padding:3px 9px;letter-spacing:.1em;
+  }
+  .persona h3{font-family:var(--serif);font-size:21px;font-weight:700;margin:14px 0 2px}
+  .persona h3 small{font-family:var(--mono);font-size:11.5px;font-weight:400;color:var(--ink-2);margin-left:8px;letter-spacing:.05em}
+  .persona blockquote{
+    font-family:var(--serif);font-style:italic;font-size:15.5px;line-height:1.6;
+    color:var(--ink);margin:12px 0 14px;padding-left:14px;border-left:2px solid var(--acc);
+  }
+  .persona dl{display:grid;grid-template-columns:64px 1fr;gap:5px 14px;font-size:13px}
+  .persona dt{font-family:var(--mono);font-size:10.5px;color:var(--ink-2);letter-spacing:.1em;padding-top:3px}
+  .persona dd{color:var(--ink)}
+  .dots{letter-spacing:3px;color:var(--acc);font-size:12px}
+  .dots i{font-style:normal;color:var(--line-2)}
+
+  /* ---------- 05 竞争 ---------- */
+  .vs-you{color:var(--acc-deep);font-weight:500}
+
+  /* ---------- 06 话术 ---------- */
+  .house{max-width:900px;margin:0 auto}
+  .roof{
+    background:var(--ink);color:var(--paper);text-align:center;
+    padding:34px 30px;position:relative;
+  }
+  .roof small{font-family:var(--mono);font-size:10px;letter-spacing:.3em;color:var(--acc)}
+  .roof p{font-family:var(--serif);font-size:clamp(22px,3vw,32px);font-weight:900;margin-top:8px;letter-spacing:.02em}
+  .roof::after{
+    content:"";position:absolute;left:10%;right:10%;bottom:-9px;height:9px;
+    background:var(--ink);clip-path:polygon(0 0,100% 0,96% 100%,4% 100%);
+  }
+  .house-pillars{display:grid;grid-template-columns:repeat(3,1fr);gap:2px;margin:26px 0 0}
+  .hp{
+    border:1px solid var(--line-2);background:var(--card);padding:22px 22px 18px;text-align:center;
+  }
+  .hp h4{font-family:var(--serif);font-size:19px;font-weight:700}
+  .hp b{font-family:var(--mono);font-size:10px;color:var(--acc);letter-spacing:.2em;display:block;margin-bottom:6px}
+  .hp p{font-size:12.5px;color:var(--ink-2);margin-top:6px;line-height:1.65}
+  .foundation{
+    display:flex;flex-wrap:wrap;gap:10px;justify-content:center;
+    border:1px dashed var(--line-2);padding:18px;margin-top:22px;
+  }
+  .mtable td:first-child{font-family:var(--mono);font-size:12px;font-weight:600;white-space:nowrap}
+
+  /* ---------- 07 定价 ---------- */
+  .tiers{display:grid;grid-template-columns:repeat(3,1fr);gap:22px;align-items:stretch}
+  .tier{
+    border:1px solid var(--line-2);background:var(--card);padding:30px 30px 26px;
+    display:flex;flex-direction:column;position:relative;
+  }
+  .tier.hot{background:var(--ink);color:var(--paper);border-color:var(--ink)}
+  .tier .tname{font-family:var(--mono);font-size:11px;letter-spacing:.22em;color:var(--acc);font-weight:600}
+  .tier h3{font-family:var(--serif);font-size:23px;font-weight:700;margin:8px 0 4px}
+  .tier .price{font-family:var(--serif);font-size:34px;font-weight:700;margin:10px 0 2px}
+  .tier .price small{font-family:var(--mono);font-size:12px;font-weight:400;color:var(--ink-2)}
+  .tier.hot .price small{color:#b8ad97}
+  .tier .who{font-size:12.5px;color:var(--ink-2);margin-bottom:16px}
+  .tier.hot .who{color:#b8ad97}
+  .tier ul{list-style:none;margin:0 0 20px;flex:1}
+  .tier li{
+    font-size:13.5px;padding:7px 0 7px 20px;border-bottom:1px dashed var(--line);
+    position:relative;line-height:1.6;
+  }
+  .tier.hot li{border-bottom-color:#453d2c}
+  .tier li::before{content:"—";position:absolute;left:0;color:var(--acc);font-family:var(--mono)}
+  .redline{
+    margin-top:30px;border:2px solid var(--acc);padding:20px 26px;
+    display:flex;gap:20px;align-items:baseline;max-width:900px;
+  }
+  .redline b{font-family:var(--mono);font-size:11px;letter-spacing:.2em;color:var(--acc);white-space:nowrap}
+  .redline p{font-size:14.5px}
+
+  /* ---------- 08 渠道 ---------- */
+  .chgroups{display:grid;grid-template-columns:1fr 1fr;gap:22px;margin-bottom:34px}
+  .chgroup{border:1px solid var(--line-2);padding:26px 28px;background:var(--card)}
+  .chgroup.paid{grid-column:1/-1;background:transparent;border-style:dashed}
+  .chgroup h3{font-family:var(--serif);font-size:20px;font-weight:700;display:flex;align-items:baseline;gap:12px}
+  .chgroup h3 small{font-family:var(--mono);font-size:10.5px;color:var(--ink-2);letter-spacing:.1em;font-weight:400}
+  .ch{display:flex;gap:16px;padding:13px 0;border-bottom:1px dashed var(--line);align-items:baseline}
+  .ch:last-child{border-bottom:none}
+  .ch b{font-size:14.5px;font-weight:700;min-width:9.5em}
+  .ch p{font-size:13px;color:var(--ink-2);flex:1}
+  .pr{font-family:var(--mono);font-size:10px;font-weight:600;padding:2px 7px;border-radius:2px;letter-spacing:.05em}
+  .pr0{background:var(--acc);color:var(--paper)}
+  .pr1{background:var(--ink);color:var(--paper)}
+  .pr2{border:1px solid var(--ink);color:var(--ink)}
+  .pr3{border:1px solid var(--line-2);color:var(--ink-2)}
+
+  /* ---------- 09 节奏 ---------- */
+  .gantt{border:1px solid var(--line-2);background:var(--card);padding:26px 28px 30px;margin-bottom:30px}
+  .gantt .ruler{display:grid;grid-template-columns:170px repeat(12,1fr);margin-bottom:8px}
+  .gantt .ruler span{font-family:var(--mono);font-size:9.5px;color:var(--ink-2);text-align:center;letter-spacing:.05em}
+  .gantt .row{display:grid;grid-template-columns:170px repeat(12,1fr);align-items:center;row-gap:0;position:relative}
+  .gantt .row + .row{margin-top:14px}
+  .gantt .row::before{
+    content:"";position:absolute;left:170px;right:0;top:-7px;bottom:-7px;pointer-events:none;
+    background:repeating-linear-gradient(to right,var(--line) 0,var(--line) 1px,transparent 1px,transparent calc(100%/12));
+    opacity:.7;
+  }
+  .gantt .lbl{font-family:var(--mono);font-size:11.5px;font-weight:600;letter-spacing:.04em;padding-right:14px;position:relative;z-index:1}
+  .gantt .lbl small{display:block;font-weight:400;color:var(--ink-2);font-size:10px}
+  .gantt .bar{
+    height:30px;display:flex;align-items:center;padding:0 12px;position:relative;z-index:1;
+    font-family:var(--mono);font-size:10.5px;font-weight:600;letter-spacing:.08em;
+    color:var(--paper);white-space:nowrap;overflow:hidden;
+    transform:scaleX(0);transform-origin:left;
+  }
+  .gantt .bar.in{transform:scaleX(1);transition:transform .8s cubic-bezier(.2,.8,.2,1) var(--d,0s)}
+  .bar.p0{background:var(--ink-2);grid-column:2/span 2}
+  .bar.p1{background:var(--acc);grid-column:4/span 4}
+  .bar.p2{background:var(--green);grid-column:8/span 5}
+  .gantt .gridline{display:none}
+  .phase-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:22px}
+  .phase{border-top:3px solid var(--ink-2);padding-top:16px}
+  .phase.c1{border-color:var(--acc)}
+  .phase.c2{border-color:var(--green)}
+  .phase b{font-family:var(--mono);font-size:10.5px;letter-spacing:.16em;color:var(--ink-2)}
+  .phase h3{font-family:var(--serif);font-size:20px;font-weight:700;margin:6px 0 8px}
+  .phase ul{list-style:none;font-size:13px;color:var(--ink)}
+  .phase li{padding:4px 0 4px 16px;position:relative;line-height:1.6}
+  .phase li::before{content:"·";position:absolute;left:2px;font-weight:900;color:var(--acc)}
+  .phase .exit{
+    margin-top:12px;font-family:var(--mono);font-size:11px;line-height:1.7;
+    background:rgba(236,228,208,.6);padding:8px 12px;color:var(--ink-2);
+  }
+  .phase .exit i{font-style:normal;color:var(--green);font-weight:600}
+
+  /* ---------- 10 指标 ---------- */
+  .northstar{
+    background:var(--ink);color:var(--paper);padding:36px 40px;margin-bottom:36px;
+    display:grid;grid-template-columns:200px 1fr;gap:28px;align-items:center;
+  }
+  .northstar b{
+    font-family:var(--mono);font-size:11px;letter-spacing:.24em;color:var(--acc);
+    border:1px solid var(--acc);padding:10px 14px;display:inline-block;line-height:1.7;
+  }
+  .northstar h3{font-family:var(--serif);font-size:clamp(20px,2.6vw,28px);font-weight:700;line-height:1.45}
+  .northstar p{font-size:13.5px;color:#b8ad97;margin-top:8px}
+  .northstar p i{font-style:normal;color:var(--paper);border-bottom:1px solid var(--acc)}
+
+  /* ---------- 11 风险 ---------- */
+  .lvl{font-family:var(--mono);font-size:10.5px;font-weight:600;letter-spacing:.08em;padding:3px 8px;border-radius:2px}
+  .lvl-h{background:var(--acc);color:var(--paper)}
+  .lvl-m{border:1px solid var(--acc);color:var(--acc-deep)}
+
+  /* ---------- 12 行动 ---------- */
+  .todo-grid{display:grid;grid-template-columns:1fr 1fr;gap:6px 40px;max-width:960px}
+  .todo{
+    display:flex;gap:14px;align-items:flex-start;padding:11px 0;
+    border-bottom:1px dashed var(--line);cursor:pointer;user-select:none;
+  }
+  .todo:hover .box{border-color:var(--acc)}
+  .box{
+    width:16px;height:16px;border:1.5px solid var(--ink);flex:none;margin-top:4px;
+    position:relative;transition:border-color .15s;
+  }
+  .todo.done .box::after{
+    content:"✕";position:absolute;inset:0;display:flex;align-items:center;justify-content:center;
+    font-family:var(--mono);font-size:12px;color:var(--acc);font-weight:600;
+  }
+  .todo.done span{color:var(--ink-2);text-decoration:line-through;text-decoration-color:rgba(214,75,30,.5)}
+  .todo span{font-size:14px;line-height:1.6}
+  .todo span i{font-style:normal;font-family:var(--mono);font-size:10.5px;color:var(--acc);display:block;letter-spacing:.08em}
+
+  /* ---------- 页脚 ---------- */
+  footer{border-top:2px solid var(--ink);margin-top:100px;padding:40px 0 60px}
+  .foot-in{max-width:1180px;margin:0 auto;padding:0 32px;display:flex;justify-content:space-between;gap:30px;flex-wrap:wrap}
+  .foot-in .sig{font-family:var(--mono);font-size:12px;color:var(--ink-2);line-height:2;letter-spacing:.04em}
+  .foot-in .sig b{color:var(--ink)}
+  .foot-in .creed{
+    font-family:var(--serif);font-size:17px;font-weight:600;max-width:26em;line-height:1.8;
+  }
+  .foot-in .creed i{font-style:normal;color:var(--acc)}
+
+  /* ---------- 响应式 ---------- */
+  @media (max-width:960px){
+    .masthead nav{display:none}
+    main{padding:0 22px}
+    .foot-in{padding:0 22px}
+    .pos-card .blank{white-space:normal}
+    .gantt .bar{font-size:9px;padding:0 6px;letter-spacing:.02em}
+    .tl,.grid3,.pillars,.tiers,.phase-grid,.house-pillars{grid-template-columns:1fr}
+    .personas,.chgroups,.todo-grid{grid-template-columns:1fr}
+    .stats{grid-template-columns:repeat(2,1fr)}
+    .stamp{position:static;transform:rotate(-3deg);display:inline-block;margin-bottom:26px;animation:none;opacity:.85}
+    .northstar{grid-template-columns:1fr;padding:28px}
+    .pos-card{padding:30px 24px}
+    .af-step{min-width:100%}
+    .af-step::after{content:"↓";right:auto;left:24px;top:auto;bottom:-14px}
+    .gantt .ruler{grid-template-columns:110px repeat(12,1fr)}
+    .gantt .row{grid-template-columns:110px repeat(12,1fr)}
+    .gantt .row::before{left:110px}
+    .gantt .lbl small{display:none}
+    section{padding:80px 0 16px}
+  }
+</style>
+</head>
+<body>
+<div class="grain" aria-hidden="true"></div>
+
+<header class="masthead">
+  <div class="masthead-in">
+    <a class="brand" href="#top">PODCAST DATABASE <em>/</em> GTM·001</a>
+    <nav id="nav">
+      <a href="#s1">01 摘要</a>
+      <a href="#s2">02 市场</a>
+      <a href="#s3">03 定位</a>
+      <a href="#s4">04 客户</a>
+      <a href="#s5">05 竞争</a>
+      <a href="#s6">06 话术</a>
+      <a href="#s7">07 定价</a>
+      <a href="#s8">08 渠道</a>
+      <a href="#s9">09 节奏</a>
+      <a href="#s10">10 指标</a>
+      <a href="#s11">11 风险</a>
+      <a href="#s12">12 行动</a>
+    </nav>
+  </div>
+</header>
+
+<main>
+  <!-- ================= HERO ================= -->
+  <section class="hero" id="top" style="padding-top:0">
+    <div class="stamp">OPEN CORPUS<small>EST. 2026 · 165 档</small></div>
+    <p class="hero-kicker">
+      <b>GTM / 001</b><span>GO-TO-MARKET 总纲</span><span>v0.1</span><span>2026-08-29</span><span>内部策略 · 假设均已标注</span>
+    </p>
+    <h1>把播客研究,<br>做成行业的<span class="u">公共底稿</span>。</h1>
+    <p class="deck">
+      Podcast Database 的上市策略:先以<b>开放语料</b>赢得播客从业者与研究者的信任,
+      再以<b>数据产品</b>与<b>定制研究</b>完成变现——免费建口碑,结构换收入。
+    </p>
+    <div class="wave" id="wave" aria-hidden="true"></div>
+    <div class="stats">
+      <div><b>165<small>档</small></b><span>中英头部播客</span></div>
+      <div><b>19<small>条</small></b><span>赛道分类</span></div>
+      <div><b>79<small>+86</small></b><span>深档 + 待核 stub</span></div>
+      <div><b>2<small>语</small></b><span>中文 / 英文</span></div>
+    </div>
+    <p class="hero-meta">
+      <span>OWNER <i>TODO</i></span>
+      <span>复盘 <i>2026-09-29</i></span>
+      <span>数据截至 批次 8</span>
+    </p>
+    <p class="scroll-cue">SCROLL</p>
+  </section>
+
+  <!-- ================= 01 执行摘要 ================= -->
+  <section id="s1">
+    <div class="sec-head rv"><span class="sec-no">SEC 01</span><h2>执行摘要:这门生意是什么</h2></div>
+    <p class="deck rv">一分钟讲清:我们有什么、卖什么、先赢谁、12 个月后停在哪儿。</p>
+    <div class="tl">
+      <div class="tl-card rv" style="--d:.05s"><span class="tag">我们有什么</span>
+        <h3>一份稀缺的行业底稿</h3>
+        <p>全网 165 档中英头部播客的结构化研究语料:标准字段、逐档核查、批次更新。全网没有第二份同口径的公开版本。</p>
+      </div>
+      <div class="tl-card rv" style="--d:.15s"><span class="tag acc">卖什么</span>
+        <h3>开放语料 + 结构服务</h3>
+        <p>文本语料永久免费建立信任;收费的是结构(CSV/API)、时效(周更)与人力(定制研究)。三层产品,见 SEC 07。</p>
+      </div>
+      <div class="tl-card rv" style="--d:.25s"><span class="tag grn">先赢谁</span>
+        <h3>播客从业者的对标工具</h3>
+        <p>先服务「上新要对标」的策划人与「写报告要底稿」的研究者,再扩「投放要选台」的品牌与代理。见 SEC 04。</p>
+      </div>
+    </div>
+    <div class="arrowflow rv">
+      <div class="af-step"><b>PHASE A · 0–3 月</b><h4>信任</h4><p>语料补深、公开 launch、攒下第一批忠实研究者</p></div>
+      <div class="af-step"><b>PHASE B · 3–6 月</b><h4>触达</h4><p>SEO 档案页 + 半年报告 + Newsletter,形成稳定分发</p></div>
+      <div class="af-step"><b>PHASE C · 6–12 月</b><h4>变现</h4><p>Pro 数据包转正、首单定制研究跑通交付</p></div>
+    </div>
+  </section>
+
+  <!-- ================= 02 市场与时机 ================= -->
+  <section id="s2">
+    <div class="sec-head rv"><span class="sec-no">SEC 02</span><h2>市场与时机:为什么是现在</h2></div>
+    <p class="deck rv">GTM 的第一步不是「我们想卖什么」,而是「市场正在为什么买单」。</p>
+    <div class="grid3">
+      <div class="mk-card rv" style="--d:.05s"><span class="no">WHY-1</span>
+        <h3>钱在进场</h3>
+        <p>美国播客广告已是 20 亿美元量级(IAB 口径<i style="color:var(--mustard)">※</i>);中文品牌播客自 2023 年起密集上线,品牌预算正从「试水」转向「常规投放」。有投放,就有选台与对标需求。</p>
+      </div>
+      <div class="mk-card rv" style="--d:.15s"><span class="no">WHY-2</span>
+        <h3>人到场</h3>
+        <p>中文播客听众为亿级规模(各方口径不一<i style="color:var(--mustard)">※</i>),集中于高学历高线城市;从业者、研究者与内容专业的学生数量同步膨胀——他们都需要「看清赛道」的底稿。</p>
+      </div>
+      <div class="mk-card rv" style="--d:.25s"><span class="no">WHY-3</span>
+        <h3>数据缺位</h3>
+        <p>听众数据锁在平台手里,行业没有一份公开、结构化、可核查的「节目级」语料;研究靠散点截图、口头相传与一次性报告。这是明确的供给空位。</p>
+      </div>
+    </div>
+    <div class="verdict rv">
+      <b>位置判断</b>
+      <p>越是热钱多、从业者新的市场,越需要一份中立的底稿。<span class="en">We are not another chart — we are the working paper.</span></p>
+    </div>
+    <p class="note rv"><i>※ 待核实</i> — 涉及市场规模与听众数据的具体数字,launch 前须以 PodFest China 年度报告与 IAB 广告收入报告原文核准后方可对外引用。本页遵守仓库第一原则:只写确凿事实。</p>
+  </section>
+
+  <!-- ================= 03 定位 ================= -->
+  <section id="s3">
+    <div class="sec-head rv"><span class="sec-no">SEC 03</span><h2>定位:一句话说清我们是谁</h2></div>
+    <p class="deck rv">采用 Geoffrey Moore 定位模板。这句话决定官网第一屏、路演第一页、自我介绍第一句。</p>
+    <div class="pos-card rv">
+      <p class="pos-line">
+        对于<span class="blank">播客策划 / 品牌操盘 / 内容研究</span>者,<br>
+        他们需要<span class="blank">在上新、投放与研究之前,快速看清一个赛道</span>,<br>
+        Podcast Database 是<span class="blank">一个开放的中英双语播客研究语料库</span>,<br>
+        它<span class="blank">把头部播客整理成标准化、可检索、持续更新的节目档案</span>。<br>
+        不同于<span class="blank">平台榜单与一次性行业报告</span>,<br>
+        它<span class="blank">逐档核查、开源可复用、按批次持续维护</span>。
+      </p>
+    </div>
+    <div class="slogan">
+      <div class="rv" style="--d:.05s"><small>对外 slogan · 中文</small><p>研究播客,先查这一库。</p></div>
+      <div class="rv" style="--d:.15s"><small>对外 slogan · EN</small><p class="en">The open field guide to<br>the podcast landscape.</p></div>
+    </div>
+    <div class="pillars">
+      <div class="pillar rv" style="--d:.05s"><b>PILLAR 1</b><h3>结构化</h3><p>一档 = 一份标准档案:定位、主播、形式、受众、代表单集,20+ 字段统一口径,可检索、可比较。</p></div>
+      <div class="pillar rv" style="--d:.15s"><b>PILLAR 2</b><h3>双语</h3><p>中文生态与英文生态同库对照,是中文世界稀缺的跨市场视角——对标美档、寻找空位都从这里开始。</p></div>
+      <div class="pillar rv" style="--d:.25s"><b>PILLAR 3</b><h3>可信</h3><p>只写确凿事实,不确定一律标 TODO,全文公开可审查、可纠错。中立是我们的立身之本,也是护城河。</p></div>
+    </div>
+  </section>
+
+  <!-- ================= 04 目标客户 ================= -->
+  <section id="s4">
+    <div class="sec-head rv"><span class="sec-no">SEC 04</span><h2>目标客户:为谁解决什么问题</h2></div>
+    <p class="deck rv">先圈定 ICP(理想客户画像),再按「触发时刻」排优先级——GTM 不对「所有人」说话。</p>
+    <div class="tblwrap rv">
+      <table>
+        <thead><tr><th>场景</th><th>角色</th><th>触发时刻</th><th>付费主体</th></tr></thead>
+        <tbody>
+          <tr><td class="k">对标上新</td><td>播客策划人 / 独立创作者</td><td>准备开新节目或改版,需要赛道地图</td><td>个人 → 工作室(弱付费)</td></tr>
+          <tr><td class="k">投放选台</td><td>品牌操盘手 / 代理商媒介策划</td><td>制定季度播客投放计划,要提案支撑</td><td>品牌预算(强付费)</td></tr>
+          <tr><td class="k">研究报告</td><td>研究员 / 学生 / 咨询 / VC</td><td>写行业报告、画赛道 map、做尽调</td><td>机构订阅(中)</td></tr>
+          <tr><td class="k">采买监测</td><td>平台 / MCN 内容商务</td><td>版权采买评估、竞品节目例行监测</td><td>机构(强付费)</td></tr>
+        </tbody>
+      </table>
+    </div>
+    <div class="personas">
+      <div class="persona rv" style="--d:.05s">
+        <span class="pid">P1 · 服务优先</span>
+        <h3>播客策划人「阿澜」<small>独立 / 工作室</small></h3>
+        <blockquote>“我想开一档商业访谈播客,但不知道哪个细分还没被做透。”</blockquote>
+        <dl>
+          <dt>JTBD</dt><dd>上新前花一小时,把赛道 30 档对标读完</dd>
+          <dt>痛点</dt><dd>找齐对标要跨 5 个平台,口径全靠自己拼</dd>
+          <dt>触达</dt><dd>小宇宙 / 即刻 / 播客社群</dd>
+          <dt>付费意愿</dt><dd><span class="dots">●<i>●●</i></span> 免费为主,顺手转介绍</dd>
+        </dl>
+      </div>
+      <div class="persona rv" style="--d:.15s">
+        <span class="pid">P2 · 变现主力</span>
+        <h3>品牌操盘手「Kevin」<small>品牌方 / 代理商</small></h3>
+        <blockquote>“老板问我:投哪三档?凭什么?”</blockquote>
+        <dl>
+          <dt>JTBD</dt><dd>让每一页提案里的选台都有据可查</dd>
+          <dt>痛点</dt><dd>缺第三方节目档案与案例库,提案全靠截图</dd>
+          <dt>触达</dt><dd>Newsletter / LinkedIn / 行业报告</dd>
+          <dt>付费意愿</dt><dd><span class="dots">●●●</span> 为定制研究与数据包买单</dd>
+        </dl>
+      </div>
+      <div class="persona rv" style="--d:.25s">
+        <span class="pid">P3 · 信任放大器</span>
+        <h3>内容研究者「周老师」<small>高校 / 咨询 / VC</small></h3>
+        <blockquote>“写报告时,没有一份能引用、能复核的结构化底稿。”</blockquote>
+        <dl>
+          <dt>JTBD</dt><dd>找到口径统一、带版本、可核查的引用源</dd>
+          <dt>痛点</dt><dd>数据散、口径乱、出处不可考</dd>
+          <dt>触达</dt><dd>GitHub / 学术检索 / 知乎长文</dd>
+          <dt>付费意愿</dt><dd><span class="dots">●●<i>●</i></span> 机构订阅可覆盖</dd>
+        </dl>
+      </div>
+      <div class="persona rv" style="--d:.35s">
+        <span class="pid">P4 · 高客单价</span>
+        <h3>平台内容商务「Ivy」<small>平台 / MCN</small></h3>
+        <blockquote>“每月要过一遍新节目,手工表格快撑不住了。”</blockquote>
+        <dl>
+          <dt>JTBD</dt><dd>把例行竞品监测交给结构化数据源</dd>
+          <dt>痛点</dt><dd>无现成数据源,监测全靠人力盯</dd>
+          <dt>触达</dt><dd>行业会议 / 人脉引荐 / 直接销售</dd>
+          <dt>付费意愿</dt><dd><span class="dots">●●●</span> 年度合同型客户</dd>
+        </dl>
+      </div>
+    </div>
+  </section>
+
+  <!-- ================= 05 竞争 ================= -->
+  <section id="s5">
+    <div class="sec-head rv"><span class="sec-no">SEC 05</span><h2>竞争:和谁抢、凭什么赢</h2></div>
+    <p class="deck rv">真正的对手往往不是同类产品,而是用户现在的替代做法(alternatives)。</p>
+    <div class="tblwrap rv">
+      <table>
+        <thead><tr><th style="width:17em">替代方案</th><th>它给用户什么</th><th>差在哪</th><th>我们的机会</th></tr></thead>
+        <tbody>
+          <tr><td class="k">平台榜单<br><span class="tag">小宇宙 / Apple Charts</span></td><td>热度排名,更新快</td><td>只有排名,没有定位、形式与受众结构</td><td class="vs-you">用「深档」做榜单做不到的纵向研究</td></tr>
+          <tr><td class="k">行业报告<br><span class="tag">PodFest China 等</span></td><td>权威口径、宏观趋势</td><td>一年一次,不可检索,不落到节目级</td><td class="vs-you">让报告引用我们,而不是反过来</td></tr>
+          <tr><td class="k">通用 LLM 问答</td><td>秒回、免费、覆盖广</td><td>容易编造、无核查、无版本、不可引用</td><td class="vs-you">「可核查 + 带版本」即卖点;结构化语料本身就是 AI 时代的资产</td></tr>
+          <tr><td class="k">自建表格 / Notion</td><td>完全自主、贴合己用</td><td>一次性劳动,人走茶凉,不可持续</td><td class="vs-you">我们把维护变成公共品 + 批次制度</td></tr>
+          <tr><td class="k">商业播客数据库<br><span class="tag">ListenNotes 类</span></td><td>全量、可搜索</td><td>按数量堆料,缺研究视角,中文内容浅</td><td class="vs-you">垂直深度 + 双语对照 + 研究者社区</td></tr>
+        </tbody>
+      </table>
+    </div>
+    <p class="note rv"><i>护城河</i> — 单看每一项都可在数月内被模仿;真正的壁垒是「持续维护的社区 + 双语深档 + 公开纠错记录」三者叠加的时间成本。</p>
+  </section>
+
+  <!-- ================= 06 话术 ================= -->
+  <section id="s6">
+    <div class="sec-head rv"><span class="sec-no">SEC 06</span><h2>话术:一套对内对外的信息屋</h2></div>
+    <p class="deck rv">所有对外内容(README、launch 文案、报告、社媒)都从这张信息屋取材,不另起炉灶。</p>
+    <div class="house">
+      <div class="roof rv"><small>ROOF · 主信息</small><p>研究播客,先查这一库。</p></div>
+      <div class="house-pillars">
+        <div class="hp rv" style="--d:.05s"><b>PILLAR 1</b><h4>结构化</h4><p>20+ 标准字段统一口径<br>一档一档地读,一栏一栏地比</p></div>
+        <div class="hp rv" style="--d:.15s"><b>PILLAR 2</b><h4>双语</h4><p>中文 ↔ 英文同库对照<br>跨市场找空位、找范式</p></div>
+        <div class="hp rv" style="--d:.25s"><b>PILLAR 3</b><h4>可信</h4><p>只写确凿事实<br>不确定标 TODO,公开可纠错</p></div>
+      </div>
+      <div class="foundation rv">
+        <span class="tag acc">165 档</span><span class="tag acc">19 条赛道</span><span class="tag acc">批次 1–8 更新日志</span><span class="tag acc">字段规范全文公开</span><span class="tag acc">模板可复用</span>
+      </div>
+    </div>
+    <div class="tblwrap rv" style="margin-top:44px">
+      <table class="mtable">
+        <thead><tr><th>对谁说</th><th>一句话话术</th></tr></thead>
+        <tbody>
+          <tr><td>P1 策划人</td><td>开新节目前,先花一小时把赛道 30 档对标读一遍。</td></tr>
+          <tr><td>P2 品牌操盘</td><td>提案里的每一个选台,都有可核查的节目档案撑腰。</td></tr>
+          <tr><td>P3 研究者</td><td>一份能引用、能复核、带版本的行业底稿。</td></tr>
+          <tr><td>P4 内容商务</td><td>把竞品监测从手工表格,换成一次订阅。</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </section>
+
+  <!-- ================= 07 定价 ================= -->
+  <section id="s7">
+    <div class="sec-head rv"><span class="sec-no">SEC 07</span><h2>产品化与定价:open-core 三层</h2></div>
+    <p class="deck rv">免费层负责信任与获客,付费层收「结构、检索、时效与人力」的钱。价格为假设锚点,以 30 天定价访谈回填。</p>
+    <div class="tiers">
+      <div class="tier rv" style="--d:.05s">
+        <span class="tname">TIER 1 · FREE</span>
+        <h3>开放语料库</h3>
+        <p class="price">¥0 <small>/ 永久</small></p>
+        <p class="who">目标:信任与获客 · 面向 P1 / P3</p>
+        <ul>
+          <li>GitHub 全量 Markdown 语料</li>
+          <li>19 条赛道分类浏览</li>
+          <li>批次更新日志 + 字段规范</li>
+          <li>模板复用,社区 PR 共建</li>
+        </ul>
+        <span class="tag grn" style="align-self:flex-start">承诺:永不收费的部分</span>
+      </div>
+      <div class="tier hot rv" style="--d:.15s">
+        <span class="tname">TIER 2 · PRO</span>
+        <h3>数据包订阅</h3>
+        <p class="price">¥49<small> /月</small> · ¥499<small> /年</small> <small>※假设</small></p>
+        <p class="who">目标:第一批收入 · 面向 P2 / P3</p>
+        <ul>
+          <li>结构化导出(CSV / JSON)</li>
+          <li>按赛道 / 语言 / 状态筛选检索</li>
+          <li>周更 diff 通知(新档 / 变更)</li>
+          <li>《赛道地图》高清版</li>
+        </ul>
+        <span class="tag acc" style="align-self:flex-start">主推 · 90 天内启动内测</span>
+      </div>
+      <div class="tier rv" style="--d:.25s">
+        <span class="tname">TIER 3 · CUSTOM</span>
+        <h3>定制研究</h3>
+        <p class="price">¥50,000<small> 起 / 项目</small> <small>※假设</small></p>
+        <p class="who">目标:高客单价 · 面向 P2 / P4</p>
+        <ul>
+          <li>定制赛道对标研究</li>
+          <li>投放选台建议书</li>
+          <li>联合报告与冠名</li>
+          <li>交付:研究报告 + 讲解会</li>
+        </ul>
+        <span class="tag" style="align-self:flex-start">跑通一单再扩</span>
+      </div>
+    </div>
+    <div class="redline rv">
+      <b>边界红线</b>
+      <p>文本语料永久免费、可导出;收费的只是结构、检索、时效与人力。任何把免费层变差的改动,都必须先过这条红线——社区信任是这门生意的本金。</p>
+    </div>
+  </section>
+
+  <!-- ================= 08 渠道 ================= -->
+  <section id="s8">
+    <div class="sec-head rv"><span class="sec-no">SEC 08</span><h2>渠道:从哪里来,按什么顺序开</h2></div>
+    <p class="deck rv">资源有限,渠道按 P0→P3 分级开闸;付费投放压到 Pro 转化模型跑通之后。</p>
+    <div class="chgroups">
+      <div class="chgroup rv">
+        <h3>自有渠道 <small>OWNED · 低成本长坡</small></h3>
+        <div class="ch"><span class="pr pr0">P0</span><b>GitHub 仓库</b><p>开源信任入口,P1 / P3 的主渠道;README 即 landing page。</p></div>
+        <div class="ch"><span class="pr pr0">P0</span><b>SEO 档案页</b><p>每档播客一页 →「XX 播客 怎么样 / 对标」长尾词,165 档就是 165 个搜索入口。</p></div>
+        <div class="ch"><span class="pr pr1">P1</span><b>Newsletter《播客底稿》</b><p>双周一刊:新深档 + 赛道观察,沉淀私域、反复触达。</p></div>
+      </div>
+      <div class="chgroup rv" style="--d:.1s">
+        <h3>借力渠道 <small>EARNED · 借势放大</small></h3>
+        <div class="ch"><span class="pr pr0">P0</span><b>主播联动</b><p>被收录主播自发传播:「我们被收进数据库了」徽章与档案卡片。</p></div>
+        <div class="ch"><span class="pr pr1">P1</span><b>半年报告</b><p>《播客赛道地图》免费发布,lead magnet 兼 press 素材。</p></div>
+        <div class="ch"><span class="pr pr1">P1</span><b>社群发布</b><p>即刻 / 小宇宙 / Reddit r/podcasts / Product Hunt 按节奏轮发。</p></div>
+        <div class="ch"><span class="pr pr2">P2</span><b>行业会议</b><p>PodFest China 等场合申请议题或摊位,触达 P2 / P4。</p></div>
+      </div>
+      <div class="chgroup paid rv">
+        <h3>付费渠道 <small>PAID · 后置</small></h3>
+        <div class="ch"><span class="pr pr3">P3</span><b>搜索广告 / 社群赞助</b><p>待 Pro 转化模型跑通、LTV 可估算后再开;在此之前一切增长靠内容与社区。</p></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ================= 09 节奏 ================= -->
+  <section id="s9">
+    <div class="sec-head rv"><span class="sec-no">SEC 09</span><h2>上市节奏:90 天 Launch 计划</h2></div>
+    <p class="deck rv">三段式:预热蓄水 → 集中发布 → 内容放大。每段设过关指标(exit criteria),不过关不进下一段。</p>
+    <div class="gantt rv">
+      <div class="ruler">
+        <span></span><span>W1</span><span>W2</span><span>W3</span><span>W4</span><span>W5</span><span>W6</span><span>W7</span><span>W8</span><span>W9</span><span>W10</span><span>W11</span><span>W12</span>
+      </div>
+      <div class="row">
+        <span class="lbl">PHASE 0<small>预热蓄水</small></span><span class="bar p0" data-bar>预热 W1–2</span><span class="gridline"></span><span class="gridline"></span><span class="gridline"></span><span class="gridline"></span><span class="gridline"></span><span class="gridline"></span><span class="gridline"></span><span class="gridline"></span><span class="gridline"></span><span class="gridline"></span>
+      </div>
+      <div class="row">
+        <span class="lbl">PHASE 1<small>集中发布</small></span><span></span><span></span><span class="bar p1" data-bar>发布 + 主播联动 W3–6</span><span class="gridline"></span><span class="gridline"></span><span class="gridline"></span><span class="gridline"></span><span class="gridline"></span><span class="gridline"></span>
+      </div>
+      <div class="row">
+        <span class="lbl">PHASE 2<small>内容放大</small></span><span></span><span></span><span></span><span></span><span></span><span></span><span class="bar p2" data-bar>报告 + SEO + Pro 内测 W7–12</span><span class="gridline"></span>
+      </div>
+    </div>
+    <div class="phase-grid">
+      <div class="phase rv" style="--d:.05s"><b>PHASE 0 · W1–2</b><h3>预热蓄水</h3>
+        <ul><li>补齐 20 档 full 深档(优先投放热门赛道)</li><li>落地页与档案页模板上线</li><li>埋点接入,北极星口径公布</li></ul>
+        <p class="exit"><i>过关</i> — 深档 ≥ 100;埋点数据可用</p>
+      </div>
+      <div class="phase c1 rv" style="--d:.15s"><b>PHASE 1 · W3–6</b><h3>集中发布</h3>
+        <ul><li>Product Hunt + 即刻 / 小宇宙同步 launch</li><li>Newsletter 试刊 3 期</li><li>10 位主播联动传播</li><li>「申请收录」入口上线</li></ul>
+        <p class="exit"><i>过关</i> — GitHub star ≥ 500※;Newsletter 订阅 ≥ 300※</p>
+      </div>
+      <div class="phase c2 rv" style="--d:.25s"><b>PHASE 2 · W7–12</b><h3>内容放大</h3>
+        <ul><li>《2026 播客赛道地图》免费报告发布</li><li>SEO 档案页 30 篇</li><li>Pro 内测 50 人开闸</li><li>首场线上分享会</li></ul>
+        <p class="exit"><i>过关</i> — 内测付费转化 ≥ 10%※;月度被引用 ≥ 20 次※</p>
+      </div>
+    </div>
+    <p class="note rv"><i>※</i> 全部目标值为假设,launch 前按批次 9 数据校准;90 天复盘时用真实数据重写本节。</p>
+  </section>
+
+  <!-- ================= 10 指标 ================= -->
+  <section id="s10">
+    <div class="sec-head rv"><span class="sec-no">SEC 10</span><h2>指标:一个北极星,五层漏斗</h2></div>
+    <p class="deck rv">指标少而狠:一个北极星管方向,五层漏斗管执行。基线全部从零开始,目标值均为假设。</p>
+    <div class="northstar rv">
+      <b>北极星<br>NORTH STAR</b>
+      <div>
+        <h3>月度「语料被引用次数」——被文章、报告、节目 shownotes 与提案引用的总次数。</h3>
+        <p>选它的理由:同时度量<i>质量</i>与<i>分发</i>,难以刷量,且直接等价于「行业把这里当底稿」这件事本身。</p>
+      </div>
+    </div>
+    <div class="tblwrap rv">
+      <table>
+        <thead><tr><th>漏斗层</th><th>指标</th><th>90 天目标</th><th>主要动作</th></tr></thead>
+        <tbody>
+          <tr><td class="k">获客 Acquisition</td><td>月访客</td><td class="num">10,000 ※</td><td>SEO 档案页 + 发布脉冲</td></tr>
+          <tr><td class="k">激活 Activation</td><td>GitHub star / 档案页停留</td><td class="num">500 ※ / >60s</td><td>README 优化 + 主播联动</td></tr>
+          <tr><td class="k">留存 Retention</td><td>Newsletter 订阅</td><td class="num">300 ※</td><td>双周刊稳定更新</td></tr>
+          <tr><td class="k">收入 Revenue</td><td>Pro 内测付费</td><td class="num">5 人 ※</td><td>内测 50 人,验证价格锚点</td></tr>
+          <tr><td class="k">口碑 Referral</td><td>月度被引用次数(北极星)</td><td class="num">20 次 ※</td><td>半年报告 + 可引用档案页</td></tr>
+        </tbody>
+      </table>
+    </div>
+    <p class="note rv"><i>※ 假设</i> — 埋点方案:自托管 Plausible / Umami;北极星口径由人工月度登记(GitHub 引用 alert + Newsletter 回执)。</p>
+  </section>
+
+  <!-- ================= 11 风险 ================= -->
+  <section id="s11">
+    <div class="sec-head rv"><span class="sec-no">SEC 11</span><h2>风险与对策:先把丑话写下来</h2></div>
+    <p class="deck rv">GTM 最大的风险不是「没人来」,而是信任资产受损——它是这门生意唯一的本金。</p>
+    <div class="tblwrap rv">
+      <table>
+        <thead><tr><th style="width:20em">风险</th><th>等级</th><th>对策</th></tr></thead>
+        <tbody>
+          <tr><td class="k">数据时效衰减,档案过时</td><td><span class="lvl lvl-h">高</span></td><td>批次维护制度 + 社区 PR 通道;档案强制携带「最近核查」字段。</td></tr>
+          <tr><td class="k">事实错误损害可信度(立身之本)</td><td><span class="lvl lvl-h">高</span></td><td>TODO 机制 + 公开更正日志:错了就改、留痕、致谢纠错人。</td></tr>
+          <tr><td class="k">平台 / 大厂出同类产品</td><td><span class="lvl lvl-m">中</span></td><td>公共品定位 + 社区关系是差异;深档质量与双语对照短期难复制;必要时合作共建。</td></tr>
+          <tr><td class="k">变现过早反噬社区信任</td><td><span class="lvl lvl-m">中</span></td><td>执行 SEC 07 红线;前 6 个月保持纯免费,先攒信任再开付费。</td></tr>
+          <tr><td class="k">版权与公平使用争议</td><td><span class="lvl lvl-m">中</span></td><td>只存事实性元数据与短评,不转载音频与原文;档案页只链出处。</td></tr>
+          <tr><td class="k">维护人力断档</td><td><span class="lvl lvl-m">中</span></td><td>小批次滚动;模板 + 脚本持续降低单档成本;吸纳研究者共建分担。</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </section>
+
+  <!-- ================= 12 行动 ================= -->
+  <section id="s12">
+    <div class="sec-head rv"><span class="sec-no">SEC 12</span><h2>30 天行动清单:下周就能动手的事</h2></div>
+    <p class="deck rv">按依赖顺序排列,点击可勾选。做完这张清单,PHASE 0 结束。</p>
+    <div class="todo-grid rv" id="todos">
+      <div class="todo"><span class="box"></span><span><i>P0 · 基础</i>定义北极星口径,写进 podcasts/README 并公布</span></div>
+      <div class="todo"><span class="box"></span><span><i>P0 · 基础</i>接入自托管埋点(Plausible / Umami)</span></div>
+      <div class="todo"><span class="box"></span><span><i>P0 · 语料</i>补齐 20 档 full 深档(优先品牌投放热门赛道)</span></div>
+      <div class="todo"><span class="box"></span><span><i>P0 · 门面</i>落地页上线,仓库 README 增加档案导航</span></div>
+      <div class="todo"><span class="box"></span><span><i>P1 · 联动</i>列出 50 位联动主播名单,发出前 10 封自荐信</span></div>
+      <div class="todo"><span class="box"></span><span><i>P1 · 定价</i>完成 10 场定价访谈(以 P2 为主),回填 SEC 07 价格</span></div>
+      <div class="todo"><span class="box"></span><span><i>P1 · 内容</i>《播客赛道地图》大纲定稿</span></div>
+      <div class="todo"><span class="box"></span><span><i>P1 · 内测</i>Pro 内测候补名单页上线</span></div>
+      <div class="todo"><span class="box"></span><span><i>P2 · 触达</i>双周 Newsletter《播客底稿》试刊第 1 期</span></div>
+      <div class="todo"><span class="box"></span><span><i>P2 · 复盘</i>排期 90 天复盘会(<i style="display:inline;color:var(--acc)">2026-11-27</i>)</span></div>
+    </div>
+  </section>
+</main>
+
+<footer>
+  <div class="foot-in">
+    <p class="sig">
+      <b>GTM/001 · v0.1</b><br>
+      2026-08-29 编 · OWNER TODO · 复盘 2026-09-29<br>
+      podcasts · 165 档 · 批次 8
+    </p>
+    <p class="creed">本页遵守仓库第一原则:<i>只写确凿事实</i>。<br>所有 <i>※</i> 与「假设」之处,复盘时用真实数据替换,或删掉。</p>
+  </div>
+</footer>
+
+<script>
+  // 波形:确定性伪随机,页面加载时逐根升起
+  (function(){
+    var w = document.getElementById('wave'), n = 76;
+    var html = '';
+    for (var i = 0; i < n; i++){
+      var h = 18 + Math.abs(Math.sin(i*.7)*40) + Math.abs(Math.sin(i*.23)*38);
+      if (i > 6 && i < 12) h += 18;               // 主峰
+      if (i > 58 && i < 64) h += 12;
+      h = Math.min(h, 100);
+      html += '<i style="--h:' + h.toFixed(0) + ';--d:' + (0.35 + i*0.012).toFixed(3) + 's"></i>';
+    }
+    w.innerHTML = html;
+  })();
+
+  // 滚动显现 + 甘特条
+  var io = new IntersectionObserver(function(es){
+    es.forEach(function(e){
+      if (e.isIntersecting){ e.target.classList.add('in'); io.unobserve(e.target); }
+    });
+  }, {threshold:.12});
+  document.querySelectorAll('.rv').forEach(function(el){ io.observe(el); });
+  var io2 = new IntersectionObserver(function(es){
+    es.forEach(function(e){
+      if (e.isIntersecting){
+        document.querySelectorAll('[data-bar]').forEach(function(b,i){
+          b.style.setProperty('--d', (i*.15)+'s');
+          b.classList.add('in');
+        });
+        io2.disconnect();
+      }
+    });
+  }, {threshold:.3});
+  var g = document.querySelector('.gantt');
+  if (g) io2.observe(g);
+
+  // 导航 scroll-spy
+  var links = document.querySelectorAll('#nav a');
+  var secs = [].map.call(links, function(a){ return document.querySelector(a.getAttribute('href')); });
+  var spy = new IntersectionObserver(function(es){
+    es.forEach(function(e){
+      if (e.isIntersecting){
+        links.forEach(function(a){ a.classList.toggle('cur', a.getAttribute('href') === '#' + e.target.id); });
+      }
+    });
+  }, {rootMargin:'-30% 0px -60% 0px'});
+  secs.forEach(function(s){ if (s) spy.observe(s); });
+
+  // 行动清单可勾选
+  document.getElementById('todos').addEventListener('click', function(e){
+    var t = e.target.closest('.todo');
+    if (t) t.classList.toggle('done');
+  });
+</script>
+<!-- gtm-portal-backlink (managed by _scripts/sync-gtm.py) -->
+<a class="gtmp-back" href="/GTM/" aria-label="返回 GTM 门户">&#8617; GTM 门户</a>
+<style>
+.gtmp-back{position:fixed;right:1rem;bottom:1rem;z-index:2147483000;
+font:500 12px/1 ui-monospace,SFMono-Regular,Menlo,Consolas,monospace;
+letter-spacing:.05em;text-decoration:none;padding:.6rem .85rem;border-radius:999px;
+color:#14130f;background:rgba(251,250,247,.92);border:1px solid rgba(20,19,15,.16);
+box-shadow:0 2px 12px rgba(20,19,15,.14);backdrop-filter:blur(6px);
+transition:transform .15s ease,box-shadow .15s ease}
+.gtmp-back:hover{transform:translateY(-1px);box-shadow:0 4px 16px rgba(20,19,15,.22)}
+@media (prefers-color-scheme:dark){.gtmp-back{color:#f5f2ea;background:rgba(20,19,15,.88);
+border-color:rgba(245,242,234,.22)}}
+</style>
+</body>
+</html>

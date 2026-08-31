@@ -1,0 +1,938 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>FDE Scope: The Full FDE SOP, Enforced · 完整 FDE SOP，门禁强制执行</title>
+<meta name="description" content="FDE Scope turns the complete Forward-Deployed-Engineer SOP (4 zones, 18 phases, 10 executable gates) into a gate-enforced state machine. Software and factory floors alike. 把完整 FDE 作业流程固化为门禁强制的状态机。">
+<link rel="icon" href='data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 48 48"><path d="M5 11h21l18 13H23Z" fill="%2335C3F5"/><path d="M23 24h21L9 46l9-14Z" fill="%23FF7A1A"/></svg>'>
+<style>
+@font-face{font-family:"Big Shoulders Display";font-style:normal;font-weight:700;font-display:swap;src:url(fonts/big-shoulders-display-latin-700-normal.woff2) format("woff2")}
+@font-face{font-family:"Big Shoulders Display";font-style:normal;font-weight:800;font-display:swap;src:url(fonts/big-shoulders-display-latin-800-normal.woff2) format("woff2")}
+@font-face{font-family:"Big Shoulders Display";font-style:normal;font-weight:900;font-display:swap;src:url(fonts/big-shoulders-display-latin-900-normal.woff2) format("woff2")}
+@font-face{font-family:"Public Sans";font-style:normal;font-weight:400;font-display:swap;src:url(fonts/public-sans-latin-400-normal.woff2) format("woff2")}
+@font-face{font-family:"Public Sans";font-style:normal;font-weight:600;font-display:swap;src:url(fonts/public-sans-latin-600-normal.woff2) format("woff2")}
+@font-face{font-family:"Public Sans";font-style:normal;font-weight:700;font-display:swap;src:url(fonts/public-sans-latin-700-normal.woff2) format("woff2")}
+@font-face{font-family:"Spline Sans Mono";font-style:normal;font-weight:400;font-display:swap;src:url(fonts/spline-sans-mono-latin-400-normal.woff2) format("woff2")}
+@font-face{font-family:"Spline Sans Mono";font-style:normal;font-weight:600;font-display:swap;src:url(fonts/spline-sans-mono-latin-600-normal.woff2) format("woff2")}
+:root{
+  --steel-0:#0a0f1a;
+  --steel-1:#101827;
+  --steel-2:#16233a;
+  --steel-3:#22334d;
+  --line:#2a3b57;
+  --paper:#edf2f7;
+  --paper-dim:#d8e1ec;
+  --ink:#0b1220;
+  --ink-dim:#3c4c63;
+  --text:#e6edf6;
+  --text-dim:#9fb1c9;
+  --orange:#ff7a1a;
+  --orange-deep:#d95f00;
+  --cyan:#35c3f5;
+  --green:#2fd27d;
+  --red:#ff4136;
+  --amber:#ffb020;
+  --disp:"Big Shoulders Display",sans-serif;
+  --body:"Public Sans","Noto Sans SC","PingFang SC","Hiragino Sans GB","Microsoft YaHei",sans-serif;
+  --mono:"Spline Sans Mono",monospace;
+  --zh:"Noto Sans SC","PingFang SC","Hiragino Sans GB","Microsoft YaHei",sans-serif;
+}
+*{margin:0;padding:0;box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{
+  background:var(--steel-0);
+  color:var(--text);
+  font-family:var(--body);
+  font-size:16px;
+  line-height:1.6;
+  caret-color:var(--orange);
+  background-image:
+    repeating-linear-gradient(0deg,transparent 0 47px,rgba(53,195,245,.028) 47px 48px),
+    repeating-linear-gradient(90deg,transparent 0 47px,rgba(53,195,245,.028) 47px 48px);
+}
+::selection{background:var(--orange);color:var(--ink)}
+::-webkit-scrollbar{width:12px;background:var(--steel-1)}
+::-webkit-scrollbar-thumb{background:var(--steel-3);border:3px solid var(--steel-1);border-radius:6px}
+::-webkit-scrollbar-thumb:hover{background:var(--orange-deep)}
+:focus-visible{outline:2px solid var(--cyan);outline-offset:3px}
+a{color:var(--cyan)}
+.zh{font-family:var(--zh)}
+.mono{font-family:var(--mono)}
+.wrap{max-width:1240px;margin:0 auto;padding:0 28px}
+
+/* ── signage strip ─────────────────────────────── */
+.signage{border-bottom:1px solid var(--line);background:var(--steel-1)}
+.signage .wrap{display:flex;align-items:center;gap:16px;padding-top:14px;padding-bottom:14px}
+.mark{width:38px;height:38px;flex:none}
+.brand{font-family:var(--disp);font-weight:900;font-size:1.5rem;letter-spacing:.04em;line-height:1}
+.brand small{display:block;font-family:var(--mono);font-weight:400;font-size:.62rem;letter-spacing:.18em;color:var(--text-dim);margin-top:3px}
+.signage nav{margin-left:auto;display:flex;gap:22px;font-family:var(--mono);font-size:.78rem;letter-spacing:.06em}
+.signage nav a{color:var(--text-dim);text-decoration:none;border-bottom:1px solid transparent;padding-bottom:2px}
+.signage nav a:hover{color:var(--orange);border-bottom-color:var(--orange)}
+
+/* ── the board ─────────────────────────────────── */
+.board{padding:56px 0 0}
+.board-frame{
+  background:var(--steel-1);
+  border:1px solid var(--line);
+  border-radius:10px;
+  box-shadow:0 24px 60px -24px rgba(0,0,0,.8), inset 0 1px 0 rgba(230,237,246,.06);
+  position:relative;
+  overflow:hidden;
+}
+.board-frame::before,.board-frame::after{
+  content:"";position:absolute;width:7px;height:7px;border-radius:50%;
+  background:radial-gradient(circle at 35% 30%,var(--steel-3),var(--steel-0) 70%);
+  box-shadow:0 1px 0 rgba(230,237,246,.12);
+}
+.board-frame::before{top:12px;left:12px}
+.board-frame::after{top:12px;right:12px}
+.board-head{
+  display:grid;grid-template-columns:1fr auto;gap:32px;align-items:end;
+  padding:44px 44px 30px;border-bottom:1px solid var(--line);
+}
+h1{
+  font-family:var(--disp);font-weight:900;text-transform:uppercase;
+  font-size:clamp(2.6rem,5.4vw,5.4rem);line-height:.94;letter-spacing:.005em;
+  text-wrap:balance;
+}
+h1 .hot{color:var(--orange)}
+.h1-zh{font-family:var(--zh);font-weight:700;font-size:clamp(1.05rem,1.8vw,1.45rem);color:var(--text);margin-top:14px}
+.board-sub{max-width:68ch;color:var(--text-dim);margin-top:16px;font-size:.98rem}
+.board-sub .zh{display:block;margin-top:6px;font-size:.9rem}
+.profile-switch{display:flex;flex-direction:column;gap:10px;align-items:stretch;min-width:230px}
+.profile-switch .ps-label{font-family:var(--mono);font-size:.66rem;letter-spacing:.2em;color:var(--text-dim)}
+.ps-btn{
+  display:flex;align-items:center;gap:10px;
+  font-family:var(--mono);font-size:.8rem;letter-spacing:.08em;
+  background:var(--steel-2);color:var(--text-dim);
+  border:1px solid var(--line);border-radius:6px;
+  padding:10px 14px;cursor:pointer;text-align:left;
+  box-shadow:inset 0 2px 4px rgba(0,0,0,.5);
+  transition:color .15s,border-color .15s;
+}
+.ps-btn svg{width:18px;height:18px;stroke:currentColor;fill:none;stroke-width:1.8;flex:none}
+.ps-btn[aria-pressed="true"]{color:var(--ink);background:var(--orange);border-color:var(--orange-deep);box-shadow:0 2px 8px -2px rgba(0,0,0,.55)}
+.ps-btn[aria-pressed="true"].ps-ticket{background:var(--cyan);border-color:#1a90bd;box-shadow:0 2px 8px -2px rgba(0,0,0,.55)}
+.ps-btn:hover{border-color:var(--text-dim)}
+
+/* lanes */
+.lanes{display:grid;grid-template-columns:repeat(4,1fr);gap:0;padding:26px 22px 8px}
+.lane{padding:0 12px;border-left:1px dashed var(--line)}
+.lane:first-child{border-left:none}
+.lane-head{display:flex;align-items:baseline;gap:10px;margin-bottom:6px}
+.lane-letter{
+  font-family:var(--disp);font-weight:900;font-size:2.6rem;line-height:1;
+  color:transparent;-webkit-text-stroke:1.5px var(--orange);
+}
+.lane[data-zone="B"] .lane-letter{-webkit-text-stroke-color:var(--cyan)}
+.lane[data-zone="C"] .lane-letter{-webkit-text-stroke-color:var(--green)}
+.lane[data-zone="D"] .lane-letter{-webkit-text-stroke-color:var(--amber)}
+.lane-name{font-family:var(--mono);font-size:.66rem;letter-spacing:.16em;color:var(--text-dim);text-transform:uppercase}
+.lane-name .zh{display:block;letter-spacing:.06em;font-size:.72rem;color:var(--text-dim)}
+.rail{position:relative;padding:10px 0 22px}
+.rail::before{content:"";position:absolute;left:50%;top:0;bottom:12px;width:2px;background:var(--steel-3);transform:translateX(-50%)}
+
+/* T-cards */
+.tcard{
+  position:relative;background:var(--paper);color:var(--ink);
+  border-radius:5px;padding:12px 12px 10px;margin:0 0 14px;
+  box-shadow:0 6px 14px -6px rgba(0,0,0,.7), inset 0 -2px 0 rgba(11,18,32,.14);
+}
+.tcard::before{ /* slot tab */
+  content:attr(data-i);position:absolute;top:-9px;left:10px;
+  font-family:var(--mono);font-weight:600;font-size:.66rem;letter-spacing:.08em;
+  background:var(--ink);color:var(--paper);padding:2px 7px;border-radius:3px;
+}
+.tcard .en{display:block;font-weight:700;font-size:.82rem;letter-spacing:.02em;line-height:1.25;text-transform:uppercase}
+.tcard .zh{display:block;font-size:.78rem;color:var(--ink-dim);margin-top:2px;line-height:1.4}
+.tcard .lamp{position:absolute;top:10px;right:10px;width:10px;height:10px;border-radius:50%;background:var(--steel-3);box-shadow:inset 0 1px 2px rgba(0,0,0,.5)}
+.tcard .gates{display:flex;flex-wrap:wrap;gap:5px;margin-top:9px}
+.tcard .g{
+  font-family:var(--mono);font-size:.6rem;letter-spacing:.05em;
+  border:1px solid var(--paper-dim);border-radius:3px;padding:1px 6px;color:var(--ink-dim);
+  display:inline-flex;align-items:center;gap:4px;background:#fff;
+}
+.tcard .g i{width:6px;height:6px;border-radius:50%;background:var(--steel-3);flex:none}
+.tcard .ind-tag{
+  position:absolute;top:10px;right:28px;width:15px;height:15px;color:var(--ink-dim);
+}
+.tcard .ind-tag svg{width:100%;height:100%;stroke:currentColor;fill:none;stroke-width:1.8}
+/* statuses */
+.tcard[data-status="passed"] .lamp{background:radial-gradient(circle at 35% 30%,#b9f6d3,var(--green) 70%)}
+.tcard[data-status="passed"] .g i{background:var(--green)}
+.tcard[data-status="active"] .lamp{background:radial-gradient(circle at 35% 30%,#d2f2fe,var(--cyan) 70%);animation:blink 1.1s steps(2,jump-none) infinite}
+.tcard[data-status="blocked"] .lamp{background:radial-gradient(circle at 35% 30%,#ffc9c5,var(--red) 70%)}
+.tcard[data-status="blocked"] .g[data-g="functional_safety"] i{background:var(--red)}
+.tcard[data-status="blocked"] .g[data-g="fat_sat"] i{background:var(--green)}
+.tcard[data-status="blocked"] .g[data-g="conformity"] i{background:var(--amber)}
+.tcard[data-status="warn"] .lamp{background:radial-gradient(circle at 35% 30%,#ffe3b0,var(--amber) 70%)}
+.tcard[data-status="warn"] .g i{background:var(--amber)}
+.tcard[data-status="na"]{
+  background:transparent;color:var(--text-dim);
+  border:1px dashed var(--line);box-shadow:none;
+}
+.tcard[data-status="na"]::before{background:var(--steel-3);color:var(--text-dim)}
+.tcard[data-status="na"] .zh,.tcard[data-status="na"] .en{color:var(--text-dim)}
+.tcard[data-status="na"] .g{border-color:var(--line);background:transparent;color:var(--text-dim)}
+.tcard .verdict{
+  display:none;margin-top:9px;font-family:var(--mono);font-size:.64rem;letter-spacing:.04em;
+  color:var(--red);border-top:1px dashed var(--paper-dim);padding-top:7px;line-height:1.5;
+}
+.tcard[data-status="blocked"] .verdict{display:block}
+.tcard[data-status="na"] .verdict{display:block;color:var(--text-dim);border-top-color:var(--line)}
+@keyframes blink{0%{opacity:1}100%{opacity:.35}}
+
+/* readout + CTA strip */
+.board-readout{
+  display:flex;flex-wrap:wrap;align-items:center;gap:14px;
+  border-top:1px solid var(--line);padding:16px 44px;
+  font-family:var(--mono);font-size:.78rem;letter-spacing:.03em;
+}
+.board-readout .cmd{color:var(--text-dim)}
+.board-readout .res-refused{color:var(--red);font-weight:600}
+.board-readout .res-ok{color:var(--green);font-weight:600}
+.cta-strip{
+  display:flex;flex-wrap:wrap;align-items:center;gap:16px;
+  padding:22px 44px 30px;border-top:1px solid var(--line);
+}
+.pushbtn{
+  font-family:var(--mono);font-weight:600;font-size:.92rem;letter-spacing:.02em;
+  background:var(--orange);color:var(--ink);border:none;border-radius:7px;
+  padding:15px 26px;cursor:pointer;
+  box-shadow:0 5px 0 var(--orange-deep), 0 14px 26px -8px rgba(0,0,0,.6);
+  transition:transform .08s, box-shadow .08s;
+}
+.pushbtn:active{transform:translateY(4px);box-shadow:0 1px 0 var(--orange-deep)}
+.pushbtn .copied{display:none;font-size:.7rem;letter-spacing:.14em;margin-left:10px}
+.pushbtn.did .copied{display:inline}
+.steelbtn{
+  display:inline-flex;align-items:center;gap:9px;
+  font-family:var(--mono);font-size:.85rem;letter-spacing:.04em;text-decoration:none;
+  background:var(--steel-2);color:var(--text);border:1px solid var(--line);border-radius:7px;
+  padding:14px 22px;
+  box-shadow:0 4px 0 var(--steel-0), 0 10px 20px -8px rgba(0,0,0,.7);
+  transition:transform .08s, box-shadow .08s, border-color .15s;
+}
+.steelbtn:hover{border-color:var(--cyan)}
+.steelbtn:active{transform:translateY(3px);box-shadow:0 1px 0 var(--steel-0)}
+.steelbtn svg{width:16px;height:16px;stroke:var(--cyan);fill:none;stroke-width:1.8}
+.cta-note{font-family:var(--mono);font-size:.68rem;letter-spacing:.14em;color:var(--text-dim)}
+.cta-top{border-top:none;border-bottom:1px solid var(--line);padding-top:20px;padding-bottom:20px}
+.doclink{font-family:var(--mono);font-size:.8rem;color:var(--cyan);text-decoration:none;border-bottom:1px solid var(--steel-3)}
+.doclink:hover{border-bottom-color:var(--cyan)}
+
+/* ── section headers ───────────────────────────── */
+section{padding:96px 0 0}
+.sec-head{margin-bottom:40px;max-width:820px}
+.sec-head h2{
+  font-family:var(--disp);font-weight:800;text-transform:uppercase;
+  font-size:clamp(2rem,3.6vw,3.4rem);line-height:1;letter-spacing:.01em;text-wrap:balance;
+}
+.sec-head .zh-line{font-family:var(--zh);font-weight:700;font-size:1.05rem;color:var(--orange);margin-top:10px}
+.sec-head p.lede{color:var(--text-dim);margin-top:16px;max-width:70ch}
+.sec-head p.lede .zh{display:block;margin-top:6px;font-size:.9rem}
+
+/* ── shift log ─────────────────────────────────── */
+.log{border-top:1px solid var(--line)}
+.log-row{
+  display:grid;grid-template-columns:120px 1fr 300px;gap:26px;align-items:start;
+  padding:26px 0;border-bottom:1px solid var(--line);
+}
+.log-time{font-family:var(--mono);font-size:.78rem;letter-spacing:.08em;color:var(--cyan);padding-top:4px}
+.log-time small{display:block;color:var(--text-dim);letter-spacing:.16em;font-size:.62rem;margin-top:4px}
+.log-entry{font-size:1.02rem;font-weight:600;line-height:1.45}
+.log-entry .zh{display:block;font-weight:500;color:var(--text-dim);font-size:.88rem;margin-top:6px}
+.log-catch{
+  font-family:var(--mono);font-size:.72rem;letter-spacing:.04em;line-height:1.6;
+  color:var(--ink);background:var(--paper);border-radius:4px;padding:10px 14px;
+  transform:rotate(-.6deg);
+  box-shadow:0 5px 12px -5px rgba(0,0,0,.7), inset 0 -2px 0 rgba(11,18,32,.15);
+}
+.log-catch b{color:var(--orange-deep);letter-spacing:.1em}
+.log-catch .zh{display:block;color:var(--ink-dim);margin-top:3px}
+.log-src{display:block;margin-top:8px;color:#0d7ea8;text-decoration:none;letter-spacing:.12em}
+.log-src:hover{text-decoration:underline}
+.log-view{display:inline-block;margin-top:8px;font-size:.58rem;letter-spacing:.16em;border:1px solid currentColor;border-radius:3px;padding:2px 7px;color:var(--cyan)}
+.log-view.view-sa{color:var(--orange)}
+.lede a{color:var(--cyan);text-decoration:none;border-bottom:1px solid var(--line)}
+.lede a:hover{border-bottom-color:var(--cyan)}
+
+/* ── gate interlock panel ──────────────────────── */
+.gates-panel{border:1px solid var(--line);border-radius:8px;background:var(--steel-1);overflow:hidden}
+.gates-hint{
+  font-family:var(--mono);font-size:.66rem;letter-spacing:.18em;color:var(--text-dim);
+  padding:12px 22px;border-bottom:1px solid var(--line);background:var(--steel-2);
+  display:flex;justify-content:space-between;gap:12px;flex-wrap:wrap;
+}
+.gate-row{
+  display:grid;grid-template-columns:34px 18px 210px 30px 1fr;gap:16px;align-items:center;
+  padding:15px 22px;border-bottom:1px solid var(--line);
+  transition:background .15s;
+}
+.gate-row:last-child{border-bottom:none}
+.gate-row:hover,.gate-row.flash{background:var(--steel-2)}
+.gate-key{font-family:var(--mono);font-size:.72rem;color:var(--text-dim)}
+.gate-lamp{width:12px;height:12px;border-radius:50%;background:var(--steel-3);box-shadow:inset 0 1px 2px rgba(0,0,0,.6)}
+.gate-row:hover .gate-lamp{background:radial-gradient(circle at 35% 30%,#b9f6d3,var(--green) 70%)}
+.gate-row.is-blocked .gate-lamp{background:radial-gradient(circle at 35% 30%,#ffc9c5,var(--red) 70%)}
+.gate-row.is-warn .gate-lamp{background:radial-gradient(circle at 35% 30%,#ffe3b0,var(--amber) 70%)}
+.gate-slug{font-family:var(--mono);font-weight:600;font-size:.84rem;letter-spacing:.02em}
+.gate-applies{color:var(--text-dim)}
+.gate-applies svg{width:17px;height:17px;stroke:currentColor;fill:none;stroke-width:1.8}
+.gate-sem{color:var(--text-dim);font-size:.85rem;line-height:1.5}
+.gate-sem .zh{display:block;font-size:.78rem;margin-top:2px}
+.gate-why{
+  display:grid;grid-template-columns:1fr 1fr;margin-top:22px;
+  border:1px solid var(--line);border-radius:8px;background:var(--steel-1);overflow:hidden;
+}
+.why-col{padding:20px 22px 18px;border-right:1px solid var(--line)}
+.why-col:last-child{border-right:none}
+.why-tag{font-family:var(--mono);font-size:.66rem;letter-spacing:.18em;color:var(--text-dim);display:block;margin-bottom:8px}
+.why-col p{color:var(--text-dim);font-size:.85rem;line-height:1.55;margin:0}
+.why-col .zh{display:block;font-size:.78rem;margin-top:4px}
+.why-gate{background:var(--steel-2);box-shadow:inset 3px 0 0 var(--orange)}
+.why-gate .why-tag{color:var(--orange)}
+.why-gate p{color:var(--text)}
+@media (max-width:640px){
+  .gate-why{grid-template-columns:1fr}
+  .why-col{border-right:none;border-bottom:1px solid var(--line)}
+  .why-col:last-child{border-bottom:none}
+}
+
+/* ── work orders ───────────────────────────────── */
+.orders{display:grid;grid-template-columns:1fr 1fr;gap:34px;align-items:start}
+.order{
+  background:var(--paper);color:var(--ink);border-radius:6px;padding:30px 30px 26px;
+  box-shadow:0 18px 40px -16px rgba(0,0,0,.8), inset 0 -3px 0 rgba(11,18,32,.15);
+}
+.order.o-ticket{transform:rotate(-.5deg)}
+.order.o-mfg{transform:rotate(.5deg)}
+.order header{display:flex;align-items:center;justify-content:space-between;gap:12px;border-bottom:2px solid var(--ink);padding-bottom:14px;margin-bottom:18px}
+.order h3{font-family:var(--disp);font-weight:900;font-size:1.9rem;text-transform:uppercase;line-height:1}
+.order .stamp{
+  font-family:var(--mono);font-weight:600;font-size:.68rem;letter-spacing:.18em;
+  border:2px solid currentColor;border-radius:4px;padding:5px 10px;transform:rotate(4deg);
+}
+.o-ticket .stamp{color:#0d7ea8}
+.o-mfg .stamp{color:var(--orange-deep)}
+.order dl{display:grid;grid-template-columns:118px 1fr;gap:10px 18px;font-size:.88rem}
+.order dt{font-family:var(--mono);font-size:.66rem;letter-spacing:.14em;color:var(--ink-dim);padding-top:3px;text-transform:uppercase}
+.order dd{line-height:1.5}
+.order dd .zh{display:block;color:var(--ink-dim);font-size:.8rem;margin-top:2px}
+.order .kpi{font-family:var(--mono);font-size:.8rem}
+
+/* ── ledger ────────────────────────────────────── */
+.ledger{border:1px solid var(--line);border-radius:8px;overflow:hidden;background:var(--steel-1)}
+.ledger-head,.ledger-row{
+  display:grid;grid-template-columns:150px 130px 90px 1fr 110px;gap:18px;align-items:center;
+  padding:15px 24px;
+}
+.ledger-head{
+  font-family:var(--mono);font-size:.64rem;letter-spacing:.18em;color:var(--text-dim);
+  background:var(--steel-2);border-bottom:1px solid var(--line);text-transform:uppercase;
+}
+.ledger-row{border-bottom:1px solid var(--line);transition:background .15s}
+.ledger-row:last-child{border-bottom:none}
+.ledger-row:hover{background:var(--steel-2)}
+.ledger-cust{font-weight:700;font-size:.92rem}
+.ledger-prof{font-family:var(--mono);font-size:.7rem;letter-spacing:.08em;display:inline-flex;align-items:center;gap:7px;color:var(--text-dim)}
+.ledger-prof svg{width:15px;height:15px;stroke:currentColor;fill:none;stroke-width:1.8}
+.ledger-phase{font-family:var(--mono);font-size:.82rem;color:var(--cyan)}
+.ledger-story{color:var(--text-dim);font-size:.84rem;line-height:1.5}
+.ledger-story .zh{display:block;font-size:.76rem;margin-top:2px}
+.ledger-state{font-family:var(--mono);font-size:.66rem;letter-spacing:.12em;display:flex;align-items:center;gap:8px;justify-content:flex-end}
+.ledger-state i{width:9px;height:9px;border-radius:50%;flex:none}
+.st-passed i{background:radial-gradient(circle at 35% 30%,#b9f6d3,var(--green) 70%)}
+.st-blocked i{background:radial-gradient(circle at 35% 30%,#ffc9c5,var(--red) 70%)}
+.st-running i{background:radial-gradient(circle at 35% 30%,#d2f2fe,var(--cyan) 70%);animation:blink 1.1s steps(2,jump-none) infinite}
+.ledger-note{font-family:var(--mono);font-size:.66rem;letter-spacing:.1em;color:var(--text-dim);padding:12px 24px;border-top:1px solid var(--line)}
+
+/* ── shipped console shots ─────────────────────── */
+.shots{display:grid;gap:26px}
+.shot{
+  margin:0;border:1px solid var(--line);border-radius:10px;background:var(--steel-1);
+  overflow:hidden;box-shadow:0 24px 60px -24px rgba(0,0,0,.8), inset 0 1px 0 rgba(230,237,246,.06);
+}
+.shot figcaption{
+  display:flex;align-items:baseline;gap:12px;flex-wrap:wrap;
+  font-family:var(--mono);font-size:.68rem;letter-spacing:.12em;color:var(--text-dim);
+  padding:13px 18px;border-bottom:1px solid var(--line);background:var(--steel-2);
+}
+.shot figcaption b{color:var(--cyan);font-weight:600}
+.shot figcaption small{margin-left:auto;opacity:.65;letter-spacing:.08em}
+.shot img{display:block;width:100%;height:auto}
+
+/* ── tool crib ─────────────────────────────────── */
+.crib{border:1px solid var(--line);border-radius:8px;background:var(--steel-1);padding:26px}
+.crib-row{display:flex;align-items:center;gap:18px;padding:14px 6px;border-bottom:1px dashed var(--line)}
+.crib-row:last-of-type{border-bottom:none}
+.crib-label{width:200px;flex:none;font-size:.85rem;font-weight:600}
+.crib-label .zh{display:block;font-weight:500;color:var(--text-dim);font-size:.76rem}
+.crib-cmd{
+  flex:1;font-family:var(--mono);font-size:.82rem;color:var(--cyan);
+  background:var(--steel-0);border:1px solid var(--line);border-radius:5px;
+  padding:11px 16px;overflow-x:auto;white-space:nowrap;
+}
+.copybtn{
+  font-family:var(--mono);font-size:.66rem;letter-spacing:.14em;flex:none;
+  background:var(--steel-2);color:var(--text-dim);border:1px solid var(--line);border-radius:5px;
+  padding:9px 14px;cursor:pointer;transition:color .15s,border-color .15s;
+}
+.copybtn:hover{color:var(--orange);border-color:var(--orange)}
+.conveyor{display:flex;align-items:center;gap:0;margin-top:30px;flex-wrap:wrap}
+.station{
+  font-family:var(--mono);font-size:.72rem;letter-spacing:.08em;color:var(--text);
+  border:1px solid var(--line);border-radius:6px;background:var(--steel-2);
+  padding:10px 18px;display:flex;flex-direction:column;gap:2px;
+}
+.station .zh{font-size:.72rem;color:var(--text-dim)}
+.station b{color:var(--orange);letter-spacing:.14em;font-size:.62rem}
+.belt{flex:1;min-width:26px;height:2px;background:repeating-linear-gradient(90deg,var(--steel-3) 0 8px,transparent 8px 14px)}
+
+/* ── ship list ─────────────────────────────────── */
+.lists-grid{display:grid;grid-template-columns:1fr 1fr 1fr;gap:26px;align-items:start}
+.lists-col{
+  border:1px solid var(--line);border-radius:8px;background:var(--steel-1);
+  box-shadow:inset 0 1px 0 rgba(230,237,246,.06);
+  padding:22px 22px 16px;
+}
+.lists-col h3{
+  margin:0;font-family:var(--disp);font-weight:800;text-transform:uppercase;
+  font-size:1.35rem;letter-spacing:.03em;
+}
+.lists-col h3 i{font-style:normal;font-family:var(--mono);font-weight:500;font-size:.66rem;letter-spacing:.16em;color:var(--orange);margin-right:10px;vertical-align:middle}
+.lists-col .lists-zh{font-family:var(--zh);font-size:.82rem;font-weight:600;color:var(--orange);margin:3px 0 0}
+.lists-col ul{list-style:none;margin:14px 0 0;padding:0}
+.lists-col li{
+  display:flex;gap:10px;align-items:flex-start;
+  font-size:.85rem;line-height:1.55;color:var(--text);
+  padding:8px 0;border-bottom:1px dashed var(--line);
+}
+.lists-col li:last-child{border-bottom:none}
+.lists-col li::before{content:"✓";font-family:var(--mono);font-weight:700;color:var(--green);flex:none;line-height:1.55}
+.lists-col li b{color:var(--cyan);font-weight:600}
+.lists-col li .zh{display:block;color:var(--paper-dim);font-size:.78rem;line-height:1.6}
+.lists-note{font-family:var(--mono);font-size:.66rem;letter-spacing:.12em;color:var(--text-dim);margin-top:22px;border-top:1px solid var(--line);padding-top:14px}
+
+/* ── close ─────────────────────────────────────── */
+.close{padding:120px 0 90px;text-align:left}
+.close h2{
+  font-family:var(--disp);font-weight:900;text-transform:uppercase;
+  font-size:clamp(2.8rem,6vw,5.6rem);line-height:.95;letter-spacing:.005em;text-wrap:balance;
+}
+.close .zh-line{font-family:var(--zh);font-weight:700;font-size:clamp(1.1rem,2vw,1.5rem);color:var(--orange);margin-top:18px}
+.close .cta-strip{border:none;padding:34px 0 0}
+
+footer{border-top:1px solid var(--line);background:var(--steel-1);margin-top:40px}
+footer .wrap{display:flex;flex-wrap:wrap;gap:20px;align-items:center;padding-top:26px;padding-bottom:26px}
+footer nav{display:flex;gap:20px;flex-wrap:wrap;font-family:var(--mono);font-size:.72rem;letter-spacing:.06em}
+footer nav a{color:var(--text-dim);text-decoration:none}
+footer nav a:hover{color:var(--orange)}
+.colophon{margin-left:auto;font-family:var(--mono);font-size:.64rem;letter-spacing:.1em;color:var(--text-dim);text-align:right;line-height:1.8}
+
+/* entrance: visible by default, mechanical slot-in when observed */
+.slot.in{animation:slot-in .5s cubic-bezier(.16,1,.3,1) both}
+@keyframes slot-in{from{transform:translateY(10px) rotate(-.6deg);opacity:.4}to{transform:none;opacity:1}}
+.stamp-in.in{animation:thud .45s cubic-bezier(.16,1,.3,1) both}
+@keyframes thud{from{transform:scale(1.45) rotate(9deg);opacity:0}to{transform:scale(1) rotate(4deg);opacity:1}}
+
+/* ── responsive ────────────────────────────────── */
+@media (max-width:1020px){
+  .lanes{grid-template-columns:1fr 1fr}
+  .lane{border-left:none;border-top:1px dashed var(--line);padding-top:18px;margin-top:8px}
+  .lane:nth-child(-n+2){border-top:none;margin-top:0;padding-top:0}
+  .log-row{grid-template-columns:90px 1fr}
+  .log-catch{grid-column:2}
+  .orders{grid-template-columns:1fr}
+  .lists-grid{grid-template-columns:1fr}
+  .ledger-head{display:none}
+  .ledger-row{grid-template-columns:1fr 1fr;gap:8px 16px}
+  .ledger-story{grid-column:1/-1}
+  .ledger-state{justify-content:flex-start}
+}
+@media (max-width:640px){
+  .brand small{display:none}
+  .board-head{grid-template-columns:1fr;padding:32px 22px 24px}
+  .lanes{grid-template-columns:1fr;padding:18px 14px}
+  .lane{border-top:1px dashed var(--line);padding-top:18px;margin-top:8px}
+  .lane:first-child{border-top:none;margin-top:0;padding-top:0}
+  .board-readout,.cta-strip{padding-left:22px;padding-right:22px}
+  .gate-row{grid-template-columns:24px 16px 1fr;grid-auto-rows:auto}
+  .gate-applies{display:none}
+  .gate-sem{grid-column:1/-1}
+  .crib-row{flex-direction:column;align-items:stretch}
+  .crib-label{width:auto}
+  .colophon{margin-left:0;text-align:left}
+}
+@media (prefers-reduced-motion:reduce){
+  html{scroll-behavior:auto}
+  *,*::before,*::after{animation:none!important;transition:none!important}
+}
+</style>
+</head>
+<body>
+<!--
+DIRECTION CONTRACT · seed 773793ef · Shift Board
+THESIS: the page IS the plant shift board; the SOP is displayed working, never explained in a hero trio.
+OWN-WORLD: steel-blue-black board, safety-orange committed accent, signal-cyan live lamps, paper T-cards; Big Shoulders display, Public Sans body, Spline Sans Mono readouts, Noto Sans SC.
+STORY: visitor sees 18 phases gated live, believes enforcement, installs and stars.
+FIRST VIEWPORT: full-bleed board: signage headline left, profile switch right, four zone lanes with slotted T-cards, one blocked deploy card, CTA pushbutton strip below.
+FORM: Shift Board (assigned). Raises kept: window-box live artifacts (toy shelf), stamped states never vanish (ticket wallet), step-teaching shift log (zine), direct-key 1-0 to gates (teletext), provenance tags on every record (film/bazaar).
+FINISH: unreviewed and undocumented is unfinished; this build ends with the finish review, the verdict, DESIGN.md, and every shipping raster carrying its provenance.
+-->
+
+<header class="signage">
+  <div class="wrap">
+    <svg class="mark" viewBox="0 0 48 48" aria-hidden="true"><path d="M5 11h21l18 13H23Z" fill="#35c3f5"/><path d="M23 24h21L9 46l9-14Z" fill="#ff7a1a"/></svg>
+    <div class="brand">FDE SCOPE<small>FORWARD-DEPLOYED OPERATING SYSTEM · MIT</small></div>
+    <nav aria-label="Site">
+      <a href="https://github.com/ai-guru-global/fde-scope">GITHUB</a>
+      <a href="../docs/fde_sop_full.md">SOP DOCS</a>
+      <a href="#crib">QUICK START</a>
+    </nav>
+  </div>
+</header>
+
+<main>
+<!-- ══ THE BOARD ══ -->
+<section class="board" style="padding-top:44px" aria-label="Live SOP board">
+  <div class="wrap">
+    <div class="board-frame" id="board" data-profile="manufacturing">
+      <div class="board-head">
+        <div>
+          <h1>Checklists forget.<br><span class="hot">Gates don’t.</span></h1>
+          <p class="h1-zh" lang="zh">清单会遗漏，门禁不放行。</p>
+          <p class="board-sub">FDE Scope turns the complete Forward-Deployed-Engineer SOP (4 zones, 18 phases, 10 executable gates) into a state machine that refuses to advance until the proof is in. Software desks and factory floors run the same engine.
+            <span class="zh" lang="zh">把完整 FDE 作业流程（4 区、18 阶段、10 个可执行门禁）固化为状态机：证据不齐，拒绝推进。软件与车间共用一台引擎。</span>
+          </p>
+        </div>
+        <div class="profile-switch" role="group" aria-label="Scenario profile">
+          <span class="ps-label">SCENARIO PROFILE · 场景</span>
+          <button class="ps-btn ps-ticket" id="ps-ticket" aria-pressed="false">
+            <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 21V4h9v17M14 9h5v12M8.5 8h2M8.5 12h2M8.5 16h2M17 13h.01M17 17h.01"/></svg>
+            TICKET · 客服工单
+          </button>
+          <button class="ps-btn ps-mfg" id="ps-mfg" aria-pressed="true">
+            <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M3 21V10l6 4v-4l6 4V5h6v16H3Z"/></svg>
+            MANUFACTURING · 工厂
+          </button>
+        </div>
+      </div>
+
+      <div class="cta-strip cta-top">
+        <button class="pushbtn" id="install-btn" type="button">pip install -e ".[dev]"<span class="copied">COPIED ✓</span></button>
+        <a class="steelbtn" href="https://github.com/ai-guru-global/fde-scope"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="m12 3 2.7 5.8 6.3.8-4.6 4.3 1.2 6.1L12 17l-5.6 3 1.2-6.1L3 9.6l6.3-.8Z"/></svg>Star on GitHub</a>
+        <a class="doclink" href="../docs/fde_sop_full.md">Read the full 18-phase SOP · 完整 SOP →</a>
+        <span class="cta-note">NO LLM KEY · NO DOCKER · PYTHON ≥ 3.11</span>
+      </div>
+
+      <div class="lanes">
+        <div class="lane" data-zone="A">
+          <div class="lane-head"><span class="lane-letter">A</span><span class="lane-name">Pre-engagement<span class="zh" lang="zh">进场前</span></span></div>
+          <div class="rail">
+            <article class="tcard slot" data-i="01" data-phase="qualification" data-status="passed"><span class="lamp" aria-hidden="true"></span><span class="en">Qualification</span><span class="zh" lang="zh">项目立项与问题框定</span></article>
+            <article class="tcard slot" data-i="02" data-phase="site_survey" data-status="passed"><span class="lamp" aria-hidden="true"></span><span class="ind-tag"><svg viewBox="0 0 24 24"><path d="M3 21V10l6 4v-4l6 4V5h6v16H3Z"/></svg></span><span class="en">Site survey · Gemba</span><span class="zh" lang="zh">现场勘察</span><span class="gates"><span class="g"><i></i>site_survey</span></span></article>
+            <article class="tcard slot" data-i="03" data-phase="stakeholder_map" data-status="passed"><span class="lamp" aria-hidden="true"></span><span class="en">Stakeholder map</span><span class="zh" lang="zh">干系人地图与对齐</span></article>
+            <article class="tcard slot" data-i="04" data-phase="success_criteria" data-status="passed"><span class="lamp" aria-hidden="true"></span><span class="en">Success criteria</span><span class="zh" lang="zh">成功标准契约化</span><span class="gates"><span class="g"><i></i>success_criteria</span></span></article>
+          </div>
+        </div>
+        <div class="lane" data-zone="B">
+          <div class="lane-head"><span class="lane-letter">B</span><span class="lane-name">Build<span class="zh" lang="zh">构建</span></span></div>
+          <div class="rail">
+            <article class="tcard slot" data-i="05" data-phase="connect" data-status="passed"><span class="lamp" aria-hidden="true"></span><span class="en">Connect</span><span class="zh" lang="zh">数据接入</span><span class="gates"><span class="g"><i></i>air_gap</span></span></article>
+            <article class="tcard slot" data-i="06" data-phase="corpus" data-status="passed"><span class="lamp" aria-hidden="true"></span><span class="en">Corpus forge</span><span class="zh" lang="zh">语料锻造</span></article>
+            <article class="tcard slot" data-i="07" data-phase="prototype_real_data" data-status="passed"><span class="lamp" aria-hidden="true"></span><span class="en">Prototype · real data</span><span class="zh" lang="zh">真实未策展数据上原型</span></article>
+            <article class="tcard slot" data-i="08" data-phase="validate" data-status="passed"><span class="lamp" aria-hidden="true"></span><span class="en">Validate</span><span class="zh" lang="zh">干系人验证</span></article>
+            <article class="tcard slot" data-i="09" data-phase="deploy" data-status="blocked"><span class="lamp" aria-hidden="true"></span><span class="ind-tag"><svg viewBox="0 0 24 24"><path d="M3 21V10l6 4v-4l6 4V5h6v16H3Z"/></svg></span><span class="en">Deploy · FAT/SAT</span><span class="zh" lang="zh">部署上线</span><span class="gates"><span class="g" data-g="fat_sat"><i></i>fat_sat</span><span class="g" data-g="functional_safety"><i></i>functional_safety</span><span class="g" data-g="conformity"><i></i>conformity</span></span><span class="verdict">advance → REFUSED<br>hazard analysis missing</span></article>
+            <article class="tcard slot" data-i="10" data-phase="eval" data-status="pending"><span class="lamp" aria-hidden="true"></span><span class="en">Eval</span><span class="zh" lang="zh">评估交付</span></article>
+          </div>
+        </div>
+        <div class="lane" data-zone="C">
+          <div class="lane-head"><span class="lane-letter">C</span><span class="lane-name">Operationalization<span class="zh" lang="zh">运营化</span></span></div>
+          <div class="rail">
+            <article class="tcard slot" data-i="11" data-phase="slo_sla" data-status="pending"><span class="lamp" aria-hidden="true"></span><span class="en">SLO / on-call</span><span class="zh" lang="zh">SLO/SLA + 轮值</span><span class="gates"><span class="g"><i></i>slo</span><span class="g"><i></i>shift_handover</span></span></article>
+            <article class="tcard slot" data-i="12" data-phase="runbook" data-status="pending"><span class="lamp" aria-hidden="true"></span><span class="en">Runbook</span><span class="zh" lang="zh">Runbook 编写</span></article>
+            <article class="tcard slot" data-i="13" data-phase="monitoring_drift" data-status="pending"><span class="lamp" aria-hidden="true"></span><span class="en">Monitoring · drift</span><span class="zh" lang="zh">监控与漂移检测</span></article>
+            <article class="tcard slot" data-i="14" data-phase="change_mgmt_training" data-status="pending"><span class="lamp" aria-hidden="true"></span><span class="ind-tag"><svg viewBox="0 0 24 24"><path d="M3 21V10l6 4v-4l6 4V5h6v16H3Z"/></svg></span><span class="en">Change mgmt</span><span class="zh" lang="zh">变更管理 + 培训</span><span class="gates"><span class="g"><i></i>works_council</span></span></article>
+            <article class="tcard slot" data-i="15" data-phase="flywheel_productization" data-status="pending"><span class="lamp" aria-hidden="true"></span><span class="en">Flywheel → product</span><span class="zh" lang="zh">飞轮 → 产品化</span></article>
+          </div>
+        </div>
+        <div class="lane" data-zone="D">
+          <div class="lane-head"><span class="lane-letter">D</span><span class="lane-name">Handoff<span class="zh" lang="zh">交接退场</span></span></div>
+          <div class="rail">
+            <article class="tcard slot" data-i="16" data-phase="ops_handoff" data-status="pending"><span class="lamp" aria-hidden="true"></span><span class="en">Ops handoff</span><span class="zh" lang="zh">运维移交</span></article>
+            <article class="tcard slot" data-i="17" data-phase="knowledge_transfer" data-status="pending"><span class="lamp" aria-hidden="true"></span><span class="en">Knowledge transfer</span><span class="zh" lang="zh">知识转移</span></article>
+            <article class="tcard slot" data-i="18" data-phase="disengage" data-status="pending"><span class="lamp" aria-hidden="true"></span><span class="en">Disengage · signed</span><span class="zh" lang="zh">退场签收</span><span class="gates"><span class="g"><i></i>handoff_signoff</span></span></article>
+          </div>
+        </div>
+      </div>
+
+      <div class="board-readout" aria-live="polite">
+        <span class="cmd" id="readout"></span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ══ SHIFT LOG ══ -->
+<section aria-labelledby="log-h">
+  <div class="wrap">
+    <div class="sec-head">
+      <h2 id="log-h">Entries the gates caught</h2>
+      <p class="zh-line" lang="zh">门禁拦下的事故日志</p>
+      <p class="lede">Real incidents, synced from the public postmortem database <a href="https://github.com/kudig-io/kuba" target="_blank" rel="noopener">kuba-database ↗</a>. On a checklist they slip through; mapped onto the board, each one is a refusal the SOP now records.
+        <span class="zh" lang="zh">真实事故，同步自公开复盘库 <a href="https://github.com/kudig-io/kuba" target="_blank" rel="noopener">kuba-database</a>。在清单上它们会溜过去；映射到看板上，每一条都是一道会拒绝放行的门禁。</span>
+      </p>
+    </div>
+    <div class="log">
+<!-- log:sync:start · generated by sync_log.py from kuba-database; do not edit by hand -->
+      <div class="log-row slot">
+        <div class="log-time">2015·05·28<span class="log-view view-fde">FDE</span><small>INC-20150528-CTRIP · SEV-1</small></div>
+        <p class="log-entry">Production code deleted by hand on a busy evening; recovery ran all night on improvised steps.<span class="zh" lang="zh">携程 5·28 全站瘫痪（运维误删生产服务器执行代码，12 小时全业务中断）</span></p>
+        <div class="log-catch"><b>FDE · PHASE 12 · RUNBOOK</b>: rollback and safe failure modes defined before launch.<span class="zh" lang="zh">回滚路径与安全失败模式，先于上线存在。</span><a class="log-src" href="https://github.com/kudig-io/kuba/blob/main/incidents/saas-platforms/2015-05-28-ctrip-code-deletion.md" target="_blank" rel="noopener">CASE FILE ↗ 携程</a></div>
+      </div>
+      <div class="log-row slot">
+        <div class="log-time">2022·12·18<span class="log-view view-fde">FDE</span><small>INC-20221218-ALIYUN-HK · SEV-1</small></div>
+        <p class="log-entry">A chilled-water air lock plus group-control deadlock took a whole availability zone down for over 10 hours.<span class="zh" lang="zh">阿里云香港可用区 C 大规模服务中断（冷机水路气阻+群控死锁，运营十余年最长大故障）</span></p>
+        <div class="log-catch"><b>FDE · GATE fat_sat</b>: cooling and control interlocks pass on-site acceptance before launch.<span class="zh" lang="zh">冷却与群控联动必须通过现场验收，才能放行上线。</span><a class="log-src" href="https://github.com/kudig-io/kuba/blob/main/incidents/cloud-infrastructure/2022-12-18-aliyun-hongkong-outage.md" target="_blank" rel="noopener">CASE FILE ↗ 阿里云</a></div>
+      </div>
+      <div class="log-row slot">
+        <div class="log-time">2025·09·18<span class="log-view view-fde">FDE</span><small>INC-20250918-CLERK-DATABASE · SEV-1</small></div>
+        <p class="log-entry">A vendor auto-upgrade stormed connection pools for 4 days; monitoring sampling hid the diagnosis.<span class="zh" lang="zh">Clerk 数据库事件（供应商自动升级触发连接池同步回收，惊群效应致间歇性故障 4 天，诊断被监控采样率掩盖）</span></p>
+        <div class="log-catch"><b>FDE · GATE slo</b>: error budget + alert route; evidence that sampling cannot mask.<span class="zh" lang="zh">错误预算 + 告警路由；采样不能掩盖证据。</span><a class="log-src" href="https://github.com/kudig-io/kuba/blob/main/incidents/sa-architecture/2025-09-18-clerk-database-incident.md" target="_blank" rel="noopener">CASE FILE ↗ Clerk</a></div>
+      </div>
+      <div class="log-row slot">
+        <div class="log-time">2025·06·26<span class="log-view view-sa">SA</span><small>INC-20250626-CLERK-CLOUDRUN · SEV-1</small></div>
+        <p class="log-entry">Single-region auth trusted the vendor&#x27;s redundancy promise; one regional failure logged out every customer for 45 minutes.<span class="zh" lang="zh">Clerk 全服务中断 45 分钟（单区域架构 + 过度信任 Cloud Run 冗余承诺，认证基础设施整体不可用）</span></p>
+        <div class="log-catch"><b>SA · PHASE 07 · REAL DATA</b>: vendor promises are not verified facts; prove it on production-shaped reality.<span class="zh" lang="zh">供应商承诺不等于已验证事实，用生产形态的真实环境验证。</span><a class="log-src" href="https://github.com/kudig-io/kuba/blob/main/incidents/sa-architecture/2025-06-26-clerk-cloudrun-outage.md" target="_blank" rel="noopener">CASE FILE ↗ Clerk</a></div>
+      </div>
+      <div class="log-row slot">
+        <div class="log-time">2023·09·12<span class="log-view view-sa">SA</span><small>INC-20230912-UNITY-RUNTIME · SEV-2</small></div>
+        <p class="log-entry">An install-fee decision shipped without stakeholder alignment; the ecosystem revolted, the CEO left, the policy died.<span class="zh" lang="zh">Unity Runtime Fee 收费政策引爆开发者生态危机（按安装收费决策 + 傲慢沟通，CEO 下台、政策最终取消）</span></p>
+        <div class="log-catch"><b>SA · GATE success_criteria</b>: written criteria + ≥ 2 sponsors + aligned success metrics.<span class="zh" lang="zh">书面标准 + ≥2 发起人 + 干系人对齐的成功指标。</span><a class="log-src" href="https://github.com/kudig-io/kuba/blob/main/incidents/sa-architecture/2023-09-12-unity-runtime-fee.md" target="_blank" rel="noopener">CASE FILE ↗ Unity</a></div>
+      </div>
+      <div class="log-row slot">
+        <div class="log-time">2021·10·04<span class="log-view view-sa">SA</span><small>INC-20211004-FACEBOOK · SEV-1</small></div>
+        <p class="log-entry">A maintenance command withdrew every BGP route; engineers were locked out of the very building holding the recovery tools.<span class="zh" lang="zh">Facebook 全球中断（骨干网维护命令撤销全部 BGP 路由）</span></p>
+        <div class="log-catch"><b>SA · PHASE 12 · RUNBOOK</b>: an out-of-band recovery path that was rehearsed, not assumed.<span class="zh" lang="zh">带外恢复路径要演练过，不能假设它在。</span><a class="log-src" href="https://github.com/kudig-io/kuba/blob/main/incidents/networking-dns/2021-10-04-facebook-bgp.md" target="_blank" rel="noopener">CASE FILE ↗ Meta (Facebook)</a></div>
+      </div>
+<!-- log:sync:end -->
+  </div>
+</section>
+
+<!-- ══ GATE INTERLOCK PANEL ══ -->
+<section aria-labelledby="gates-h">
+  <div class="wrap">
+    <div class="sec-head">
+      <h2 id="gates-h">Ten gates, executable</h2>
+      <p class="zh-line" lang="zh">十个门禁，全部是可执行代码</p>
+      <p class="lede">Not checklist rows. <span class="mono">Gate.check(ctx)</span> returns passed, blockers, warnings, and <span class="mono">advance</span> refuses until clean. Seven exist only on the factory profile.
+        <span class="zh" lang="zh">不是清单条目。<span class="mono">Gate.check(ctx)</span> 返回通过/阻断/警告，<span class="mono">advance</span> 不干净就拒绝。其中七个只存在于工厂场景。</span>
+      </p>
+    </div>
+    <div class="gates-panel">
+      <div class="gates-hint"><span>INTERLOCK PANEL · 互锁面板</span><span>KEYS 1–0 JUMP TO GATE · 数字键直达</span></div>
+      <div class="gate-row" data-key="1"><span class="gate-key">1</span><span class="gate-lamp" aria-hidden="true"></span><span class="gate-slug">site_survey</span><span class="gate-applies"><svg viewBox="0 0 24 24"><path d="M3 21V10l6 4v-4l6 4V5h6v16H3Z"/></svg></span><span class="gate-sem">Site location required; empty assets or multi-shift without network → warning.<span class="zh" lang="zh">现场位置必填；资产为空或多班次无网络 → 警告。</span></span></div>
+      <div class="gate-row" data-key="2"><span class="gate-key">2</span><span class="gate-lamp" aria-hidden="true"></span><span class="gate-slug">success_criteria</span><span class="gate-applies"><svg viewBox="0 0 24 24"><path d="M5 21V4h9v17M14 9h5v12"/></svg></span><span class="gate-sem">Written criteria + ≥ 2 sponsors; sponsor without metric → warning.<span class="zh" lang="zh">书面标准 + ≥2 发起人；发起人无指标 → 警告。</span></span></div>
+      <div class="gate-row is-blocked" data-key="3"><span class="gate-key">3</span><span class="gate-lamp" aria-hidden="true"></span><span class="gate-slug">functional_safety</span><span class="gate-applies"><svg viewBox="0 0 24 24"><path d="M3 21V10l6 4v-4l6 4V5h6v16H3Z"/></svg></span><span class="gate-sem">Achieved PL/SIL ≥ required; ISO 10218 assessed; hazard analysis mandatory.<span class="zh" lang="zh">PL/SIL 达标；ISO 10218 评估；危害分析强制（阻断项）。</span></span></div>
+      <div class="gate-row" data-key="4"><span class="gate-key">4</span><span class="gate-lamp" aria-hidden="true"></span><span class="gate-slug">fat_sat</span><span class="gate-applies"><svg viewBox="0 0 24 24"><path d="M3 21V10l6 4v-4l6 4V5h6v16H3Z"/></svg></span><span class="gate-sem">FAT and SAT both passed, each signed off.<span class="zh" lang="zh">FAT 与 SAT 均通过且分别签核。</span></span></div>
+      <div class="gate-row is-warn" data-key="5"><span class="gate-key">5</span><span class="gate-lamp" aria-hidden="true"></span><span class="gate-slug">conformity</span><span class="gate-applies"><svg viewBox="0 0 24 24"><path d="M3 21V10l6 4v-4l6 4V5h6v16H3Z"/></svg></span><span class="gate-sem">EU-AI-Act high-risk ⇒ CE marking + technical construction file.<span class="zh" lang="zh">高风险 ⇒ CE 标志 + 技术构造文件 + 危害分析。</span></span></div>
+      <div class="gate-row" data-key="6"><span class="gate-key">6</span><span class="gate-lamp" aria-hidden="true"></span><span class="gate-slug">works_council</span><span class="gate-applies"><svg viewBox="0 0 24 24"><path d="M3 21V10l6 4v-4l6 4V5h6v16H3Z"/></svg></span><span class="gate-sem">Co-determination signed off where representatives exist (BetrVG §87).<span class="zh" lang="zh">有员工代表时须劳资共决签核。</span></span></div>
+      <div class="gate-row" data-key="7"><span class="gate-key">7</span><span class="gate-lamp" aria-hidden="true"></span><span class="gate-slug">air_gap</span><span class="gate-applies"><svg viewBox="0 0 24 24"><path d="M3 21V10l6 4v-4l6 4V5h6v16H3Z"/></svg></span><span class="gate-sem">Offline deployment posture settled at connect time; never phone-home.<span class="zh" lang="zh">离线部署形态在接入时定论，杜绝事后外联。</span></span></div>
+      <div class="gate-row" data-key="8"><span class="gate-key">8</span><span class="gate-lamp" aria-hidden="true"></span><span class="gate-slug">shift_handover</span><span class="gate-applies"><svg viewBox="0 0 24 24"><path d="M3 21V10l6 4v-4l6 4V5h6v16H3Z"/></svg></span><span class="gate-sem">Multi-shift sites need a digital handover log + per-shift runbook.<span class="zh" lang="zh">多班次现场须有数字交接日志 + 分班次 runbook。</span></span></div>
+      <div class="gate-row" data-key="9"><span class="gate-key">9</span><span class="gate-lamp" aria-hidden="true"></span><span class="gate-slug">slo</span><span class="gate-applies"><svg viewBox="0 0 24 24"><path d="M5 21V4h9v17M14 9h5v12"/></svg></span><span class="gate-sem">SLO/SLA + error budget + alert route; missing route → warning.<span class="zh" lang="zh">SLO/SLA + 错误预算 + 告警路由；缺路由 → 警告。</span></span></div>
+      <div class="gate-row" data-key="0"><span class="gate-key">0</span><span class="gate-lamp" aria-hidden="true"></span><span class="gate-slug">handoff_signoff</span><span class="gate-applies"><svg viewBox="0 0 24 24"><path d="M5 21V4h9v17M14 9h5v12"/></svg></span><span class="gate-sem">Runbook + eval report + SLO + training material, customer accepted.<span class="zh" lang="zh">交接包齐备（runbook/评估/SLO/培训）且客户签收。</span></span></div>
+    </div>
+    <div class="gate-why" role="note">
+      <div class="why-col">
+        <span class="why-tag">CHECKLIST · 清单</span>
+        <p>A record. Freshest the day it is filled in, then it rots as reality drifts: the box never learns the world changed.<span class="zh" lang="zh">一份记录。填完那天最准，此后随现实漂移单向腐化，勾选框不会知道世界变了。</span></p>
+      </div>
+      <div class="why-col why-gate">
+        <span class="why-tag">GATE · 门禁</span>
+        <p>A predicate. Re-run on every advance; a stale pass never counts. Even force evaluates and records, so the override itself stays on the audit log.<span class="zh" lang="zh">一个谓词。每次推进重新执行，过期通过一律不作数；强推也照常评估留痕，例外本身进审计。</span></p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ══ WORK ORDERS ══ -->
+<section aria-labelledby="orders-h">
+  <div class="wrap">
+    <div class="sec-head">
+      <h2 id="orders-h">One engine, two work orders</h2>
+      <p class="zh-line" lang="zh">一台引擎，两张工单</p>
+      <p class="lede">The same state machine runs a customer-service desk and an embodied-robotics line; the profile swaps connectors, KPIs and which gates apply.
+        <span class="zh" lang="zh">同一台状态机既跑客服台也跑机器人产线；场景配置切换连接器、KPI 与适用门禁。</span>
+      </p>
+    </div>
+    <div class="orders">
+      <article class="order o-ticket slot">
+        <header><h3>Ticket</h3><span class="stamp stamp-in">PROFILE · 客服</span></header>
+        <dl>
+          <dt>Phases</dt><dd>15 of 18; the 3 industrial-only phases stand down.<span class="zh" lang="zh">18 阶段中的 15 个；3 个工业专属阶段自动不适用。</span></dd>
+          <dt>Connectors</dt><dd>CSV · Zammad · Salesforce · MySQL</dd>
+          <dt>Gates</dt><dd>success_criteria · slo · handoff_signoff</dd>
+          <dt>Proof</dt><dd class="kpi">resolution rate · CSAT · deflection · bad-case miner<span class="zh" lang="zh">解决率 / 满意度 / 分流率 / 坏例挖掘</span></dd>
+        </dl>
+      </article>
+      <article class="order o-mfg slot">
+        <header><h3>Manufacturing</h3><span class="stamp stamp-in">PROFILE · 工厂</span></header>
+        <dl>
+          <dt>Phases</dt><dd>18 of 18: site survey, FAT/SAT deploy, works-council change management.<span class="zh" lang="zh">全 18 阶段，含现场勘察、FAT/SAT 部署与共决变更。</span></dd>
+          <dt>Connectors</dt><dd>OPC UA · MQTT-Sparkplug · ROS2 · MES · Historian</dd>
+          <dt>Gates</dt><dd>all 10 · 全部十个门禁</dd>
+          <dt>Proof</dt><dd class="kpi">OEE · MTBF/MTTR · FPY/DPMO · grasp success · collision rate<span class="zh" lang="zh">OEE / 平均故障间隔 / 良率 / 抓取成功率 / 碰撞率</span></dd>
+        </dl>
+      </article>
+    </div>
+  </div>
+</section>
+
+<!-- ══ CREW ROSTER ══ -->
+<section id="crew" aria-labelledby="crew-h">
+  <div class="wrap">
+    <div class="sec-head">
+      <h2 id="crew-h">One deploy, a whole crew</h2>
+      <p class="zh-line" lang="zh">一次部署，拉起一支 Agent 班组</p>
+      <p class="lede">Every name on the roster is a real AgentScope 2.0 <span class="mono">Agent</span> — wired model, role toolkit, permission rules injected via <span class="mono">AgentState</span>. The FDE names the crew; unknown roles degrade to corpus-only, and tools without a data source are reported unbound — never faked.
+        <span class="zh" lang="zh">点到的每个名字都是真实的 AgentScope 2.0 Agent——接线模型、角色工具包、经 AgentState 注入的权限规则。FDE 自己点名开 Agent；未知角色退化为语料工具，缺数据源的工具在清单里如实标注 unbound，绝不假装可用。</span>
+      </p>
+    </div>
+    <div class="crib">
+      <div class="crib-row"><span class="crib-label">Name the crew · 点名<span class="zh" lang="zh">名字:角色[:模型]，可重复</span></span><code class="crib-cmd">fde-scope deploy --tenant acme --agent 数据员:数据分析 --agent 日志员:日志分析:qwen3-14b --connector-source csv=sample.csv</code><button class="copybtn" data-copy="fde-scope deploy --tenant acme --agent 数据员:数据分析 --agent 日志员:日志分析:qwen3-14b --connector-source csv=sample.csv">COPY</button></div>
+      <div class="crib-row"><span class="crib-label">Pre-flight · 预检<span class="zh" lang="zh">发车前先看 plan：Web 控制台 /console#deploy「🤖 Agent 部署」（macOS App 同款标签页），同走 build_deploy_plan</span></span><code class="crib-cmd">fde-scope web</code><button class="copybtn" data-copy="fde-scope web">COPY</button></div>
+      <div class="conveyor" aria-label="Agent crew coordination">
+        <span class="station"><b>ROSTER</b>real Agent per spec<span class="zh" lang="zh">每个名字一个真实 Agent</span></span><span class="belt"></span>
+        <span class="station"><b>SUBAGENT TEMPLATE</b>blueprint → create_app<span class="zh" lang="zh">蓝图注册进真实 app</span></span><span class="belt"></span>
+        <span class="station"><b>AGENTCREATE · TEAM SAY</b>leader routes, members report<span class="zh" lang="zh">leader 派活，成员回报</span></span><span class="belt"></span>
+        <span class="station"><b>SERVE</b>--serve = real runtime<span class="zh" lang="zh">--serve 起真服务（Redis + 模型）</span></span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ══ LEDGER ══ -->
+<section aria-labelledby="ledger-h">
+  <div class="wrap">
+    <div class="sec-head">
+      <h2 id="ledger-h">The board, already worked</h2>
+      <p class="zh-line" lang="zh">一块已经跑起来的看板</p>
+      <p class="lede">Seed the console with six realistic engagements; every gate record below is produced by the engine itself, so the panels never lie.
+        <span class="zh" lang="zh">一条命令种入六个真实感项目；以下每条门禁记录都由引擎自身生成，面板不会说谎。</span>
+      </p>
+    </div>
+    <div class="ledger">
+      <div class="ledger-head"><span>Customer · 客户</span><span>Profile</span><span>Phase</span><span>Story · 状态故事</span><span>State</span></div>
+      <div class="ledger-row slot"><span class="ledger-cust">古茗 · tea chain</span><span class="ledger-prof"><svg viewBox="0 0 24 24"><path d="M5 21V4h9v17M14 9h5v12"/></svg>ticket</span><span class="ledger-phase">15/15</span><span class="ledger-story">Full handoff package, customer accepted.<span class="zh" lang="zh">完整交接包，客户签收。</span></span><span class="ledger-state st-passed"><i></i>SIGNED</span></div>
+      <div class="ledger-row slot"><span class="ledger-cust">一汽-大众 · automaker</span><span class="ledger-prof"><svg viewBox="0 0 24 24"><path d="M3 21V10l6 4v-4l6 4V5h6v16H3Z"/></svg>mfg</span><span class="ledger-phase">11/18</span><span class="ledger-story">9/9 industrial gates passed: 3 shifts, works council, PL d / SIL 2, HAZOP.<span class="zh" lang="zh">9/9 工业门禁通过：三班制、共决、PL d/SIL 2、HAZOP。</span></span><span class="ledger-state st-running"><i></i>RUNBOOK</span></div>
+      <div class="ledger-row slot"><span class="ledger-cust">广汽 · automaker</span><span class="ledger-prof"><svg viewBox="0 0 24 24"><path d="M3 21V10l6 4v-4l6 4V5h6v16H3Z"/></svg>mfg</span><span class="ledger-phase">9/18</span><span class="ledger-story">FAT/SAT + functional safety + conformity genuinely blocked → advance refused.<span class="zh" lang="zh">FAT/SAT、功能安全与合规真实阻断 → 拒绝推进。</span></span><span class="ledger-state st-blocked"><i></i>BLOCKED</span></div>
+      <div class="ledger-row slot"><span class="ledger-cust">一汽 · automaker</span><span class="ledger-prof"><svg viewBox="0 0 24 24"><path d="M5 21V4h9v17M14 9h5v12"/></svg>ticket</span><span class="ledger-phase">13/15</span><span class="ledger-story">Productization flywheel running.<span class="zh" lang="zh">产品化飞轮运转中。</span></span><span class="ledger-state st-running"><i></i>FLYWHEEL</span></div>
+      <div class="ledger-row slot"><span class="ledger-cust">曹操出行 · ride-hailing</span><span class="ledger-prof"><svg viewBox="0 0 24 24"><path d="M5 21V4h9v17M14 9h5v12"/></svg>ticket</span><span class="ledger-phase">8/15</span><span class="ledger-story">Real-data prototyping, SLO defined.<span class="zh" lang="zh">真实数据原型，SLO 已定义。</span></span><span class="ledger-state st-running"><i></i>PROTOTYPE</span></div>
+      <div class="ledger-row slot"><span class="ledger-cust">易点天下 · outbound SaaS</span><span class="ledger-prof"><svg viewBox="0 0 24 24"><path d="M5 21V4h9v17M14 9h5v12"/></svg>ticket</span><span class="ledger-phase">3/15</span><span class="ledger-story">Single-sponsor blocker: the Sponsor Collapse anti-pattern, caught.<span class="zh" lang="zh">单一发起人阻断，即 Sponsor Collapse 反模式，被门禁拦下。</span></span><span class="ledger-state st-blocked"><i></i>BLOCKED</span></div>
+      <div class="ledger-note">DEMO DATA · 演示数据 · seeded by examples/seed_mock_engagements.py; every record engine-generated.</div>
+    </div>
+  </div>
+</section>
+
+<!-- ══ SHIPPED CONSOLE ══ -->
+<section aria-labelledby="shots-h">
+  <div class="wrap">
+    <div class="sec-head">
+      <h2 id="shots-h">Shipped, not mocked</h2>
+      <p class="zh-line" lang="zh">真机界面 · macOS App 实拍</p>
+      <p class="lede">Live capture of the double-click macOS app — universal2, codesigned DMG, single-instance guard, SIGTERM-safe exit. The same engine the CLI drives, behind a desktop icon that needs no Python.
+        <span class="zh" lang="zh">双击即用的 macOS App 实机截图：universal2 双架构、codesign 签名 DMG、单实例守护、优雅退出。CLI 背后那台引擎，装进了一个免 Python 的桌面图标。</span>
+      </p>
+    </div>
+    <div class="shots">
+      <figure class="shot slot">
+        <figcaption><b>ENGAGEMENT CONSOLE · 工作台</b><small>cross-project matrix · gates · recent skills</small></figcaption>
+        <img src="../docs/images/console.png" alt="FDE Scope macOS app — engagement console with cross-project matrix" loading="lazy" width="1440" height="900">
+      </figure>
+      <figure class="shot slot">
+        <figcaption><b>FUNCTIONAL OVERVIEW · 功能总览</b><small>18 phases · 4 zones · 10 gates · 10 connectors</small></figcaption>
+        <img src="../docs/images/overview.png" alt="FDE Scope macOS app — 18-phase SOP functional overview" loading="lazy" width="1440" height="900">
+      </figure>
+    </div>
+    <div class="ledger-note" style="border-top:none">LIVE CAPTURE · 实机截图 · FDE-Scope-0.1.0-universal2.app · 1440×900 @2x · $ ./appbuild/build_release.sh</div>
+  </div>
+</section>
+
+<!-- ══ TOOL CRIB ══ -->
+<section id="crib" aria-labelledby="crib-h">
+  <div class="wrap">
+    <div class="sec-head">
+      <h2 id="crib-h">Zero-config crib</h2>
+      <p class="zh-line" lang="zh">零配置工具架</p>
+      <p class="lede">Core plus engagement layers carry no AgentScope dependency: no LLM key, no Docker. Green in five minutes.
+        <span class="zh" lang="zh">核心与 engagement 层零 AgentScope 依赖：无 LLM key、无 Docker，五分钟全绿。</span>
+      </p>
+    </div>
+    <div class="crib">
+      <div class="crib-row"><span class="crib-label">Install · 安装<span class="zh" lang="zh">核心 + 开发 + Web</span></span><code class="crib-cmd">pip install -e ".[dev]"</code><button class="copybtn" data-copy='pip install -e ".[dev]"'>COPY</button></div>
+      <div class="crib-row"><span class="crib-label">Seed demo · 种入演示<span class="zh" lang="zh">六个真实感 engagement</span></span><code class="crib-cmd">python examples/seed_mock_engagements.py</code><button class="copybtn" data-copy="python examples/seed_mock_engagements.py">COPY</button></div>
+      <div class="crib-row"><span class="crib-label">Open console · 控制台<span class="zh" lang="zh">http://127.0.0.1:8080</span></span><code class="crib-cmd">fde-scope web</code><button class="copybtn" data-copy="fde-scope web">COPY</button></div>
+      <div class="conveyor" aria-label="Skill capture lifecycle">
+        <span class="station"><b>SKILL CAPTURE</b>draft<span class="zh" lang="zh">现场沉淀草稿</span></span><span class="belt"></span>
+        <span class="station"><b>REVIEW</b>review<span class="zh" lang="zh">审阅队列</span></span><span class="belt"></span>
+        <span class="station"><b>PUBLISH</b>published<span class="zh" lang="zh">可检索复用</span></span><span class="belt"></span>
+        <span class="station"><b>EXPORT</b>AgentScope · QwenPaw<span class="zh" lang="zh">双格式导出</span></span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ══ SHIP LIST ══ -->
+<section id="lists" aria-labelledby="lists-h">
+  <div class="wrap">
+    <div class="sec-head">
+      <h2 id="lists-h">The ship list</h2>
+      <p class="zh-line" lang="zh">交付清单 · 功能 / 架构 / 最佳实践</p>
+      <p class="lede">Three ledgers, all verifiable today — not roadmap. What the product does, how it is layered, and the six engineering invariants pinned by contract tests.
+        <span class="zh" lang="zh">三本台账，今天即可验证——不是路线图：功能做什么、架构怎么分层、六条被契约测试钉住的工程不变式。</span>
+      </p>
+    </div>
+    <div class="lists-grid">
+      <div class="lists-col">
+        <h3><i>01</i>Product</h3>
+        <p class="lists-zh" lang="zh">功能清单</p>
+        <ul>
+          <li><span><b>18-phase SOP</b> · 4 zones · 10 executable gates<span class="zh" lang="zh">门禁是代码 Gate.check()，不是检查清单</span></span></li>
+          <li><span><b>2 profiles</b> — ticket &amp; manufacturing<span class="zh" lang="zh">工业门禁：FAT/SAT · ISO 13849 · CE/EU-AI-Act · BetrVG §87 · 气隙 · 换班</span></span></li>
+          <li><span><b>10 data connectors</b><span class="zh" lang="zh">CSV/MySQL/OPC UA 真实 · MQTT-Sparkplug/MES JSONL · Documents 解析延迟导入</span></span></li>
+          <li><span><b>Corpus forge</b> — synthesize to fill gaps, not to pad<span class="zh" lang="zh">脱敏→质量门→覆盖度→缺口检测→补盲区合成</span></span></li>
+          <li><span><b>Eval + industrial KPI</b><span class="zh" lang="zh">OEE / MTBF / 抓取成功率 / 碰撞率</span></span></li>
+          <li><span><b>Skills library</b> — draft→review→publish→export<span class="zh" lang="zh">AgentScope 与 QwenPaw 双格式导出</span></span></li>
+          <li><span><b>Deploy three-pillar</b> on real AgentScope 2.0<span class="zh" lang="zh">Agent 装配 · 权限上下文 · 沙箱 workspace</span></span></li>
+          <li><span><b>Handoff + flywheel</b>, optional MiMo LLM<span class="zh" lang="zh">无 key 全走规则路径，失败自动回退</span></span></li>
+        </ul>
+      </div>
+      <div class="lists-col">
+        <h3><i>02</i>Architecture</h3>
+        <p class="lists-zh" lang="zh">架构清单</p>
+        <ul>
+          <li><span><b>Core layers</b> — data / SOP / profiles / web<span class="zh" lang="zh">零顶层 agentscope 依赖：无 key、无 Docker 五分钟全绿</span></span></li>
+          <li><span><b>deploy/</b> — 5 modules lazy-import agentscope<span class="zh" lang="zh">三支柱运行时组装，optional extra</span></span></li>
+          <li><span><b>connectors/documents.py</b><span class="zh" lang="zh">PDF/Word/Excel/PPT 解析延迟用 agentscope.rag</span></span></li>
+          <li><span><b>Cross-cutting</b> — llm · config · templates · paths<span class="zh" lang="zh">唯一 LLM 出口 llm.py；data_root() 四级解析</span></span></li>
+          <li><span><b>4 surfaces</b><span class="zh" lang="zh">CLI · Web 控制台 27 路由 · PawApp 18 路由 · macOS DMG 双击即用</span></span></li>
+          <li><span><b>Evidence model</b> — docs/architecture-model/<span class="zh" lang="zh">Structurizr DSL + DOT 为事实源，Mermaid 沉淀可读图</span></span></li>
+        </ul>
+      </div>
+      <div class="lists-col">
+        <h3><i>03</i>Best practices</h3>
+        <p class="lists-zh" lang="zh">最佳实践 · 六条不变式</p>
+        <ul>
+          <li><span><b>Live gate re-evaluation</b><span class="zh" lang="zh">每次 advance 重评门禁，过期 passed 不放行</span></span></li>
+          <li><span><b>Server-generated IDs</b><span class="zh" lang="zh">外部输入永远不能指定记录 ID</span></span></li>
+          <li><span><b>Credentials env-only</b><span class="zh" lang="zh">密钥只走环境变量，绝不落 manifest/报告/日志</span></span></li>
+          <li><span><b>Atomic writes</b><span class="zh" lang="zh">所有落盘记录经 fsutil.atomic_write_text</span></span></li>
+          <li><span><b>Rule grants only</b><span class="zh" lang="zh">唯一权限通道；未匹配工具 DEFAULT→ASK · DONT_ASK→DENY</span></span></li>
+          <li><span><b>Measured AgentScope window</b><span class="zh" lang="zh">&gt;=2.0.4.post1,&lt;3 逐版本实测，契约测试钉住引用</span></span></li>
+        </ul>
+      </div>
+    </div>
+    <p class="lists-note">VERIFIED BY: CI-green suite · contract pins tests/test_architecture_guard.py · evidence model docs/architecture-model/architecture-map.md</p>
+  </div>
+</section>
+
+<!-- ══ CLOSE ══ -->
+<section class="close" aria-labelledby="close-h">
+  <div class="wrap">
+    <h2 id="close-h">Show up with<br>the whole SOP.</h2>
+    <p class="zh-line" lang="zh">带着完整 SOP 进场。</p>
+    <div class="cta-strip">
+      <a class="pushbtn" style="text-decoration:none;display:inline-block" href="https://github.com/ai-guru-global/fde-scope">Star · 安装 · 进场 →</a>
+      <a class="steelbtn" href="../docs/manufacturing_scenario.md"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M3 21V10l6 4v-4l6 4V5h6v16H3Z"/></svg>Factory walkthrough · 工厂 walkthrough</a>
+    </div>
+  </div>
+</section>
+</main>
+
+<footer>
+  <div class="wrap">
+    <nav aria-label="Footer">
+      <a href="https://github.com/ai-guru-global/fde-scope">GitHub</a>
+      <a href="../docs/fde_sop_full.md">SOP</a>
+      <a href="../docs/architecture.md">Architecture</a>
+      <a href="../docs/agentscope_api_mapping.md">AgentScope mapping</a>
+      <a href="../LICENSE">MIT License</a>
+    </nav>
+    <p class="colophon">FDE SCOPE · GTM BOARD<br>DIRECTION: SHIFT BOARD · SEED 773793EF<br><span lang="zh">门禁即工程 · 全程覆盖 · 现场优先</span></p>
+  </div>
+</footer>
+
+<script>
+(function(){
+  "use strict";
+  var STATUSES = {
+    manufacturing: {qualification:"passed",site_survey:"passed",stakeholder_map:"passed",success_criteria:"passed",connect:"passed",corpus:"passed",prototype_real_data:"passed",validate:"passed",deploy:"blocked",eval:"pending",slo_sla:"pending",runbook:"pending",monitoring_drift:"pending",change_mgmt_training:"pending",flywheel_productization:"pending",ops_handoff:"pending",knowledge_transfer:"pending",disengage:"pending"},
+    ticket: {qualification:"passed",site_survey:"na",stakeholder_map:"passed",success_criteria:"passed",connect:"passed",corpus:"passed",prototype_real_data:"passed",validate:"passed",deploy:"passed",eval:"passed",slo_sla:"active",runbook:"pending",monitoring_drift:"pending",change_mgmt_training:"na",flywheel_productization:"pending",ops_handoff:"pending",knowledge_transfer:"pending",disengage:"pending"}
+  };
+  var READOUT = {
+    manufacturing: '$ fde-scope engage advance <id>  →  <span class="res-refused">REFUSED · functional_safety: hazard analysis missing</span>',
+    ticket: '$ fde-scope engage advance <id>  →  <span class="res-ok">OK · phase 12 runbook</span>'
+  };
+  var NA_NOTE = "industrial-only · 工业专属，ticket 不适用";
+  var board = document.getElementById("board");
+  var readout = document.getElementById("readout");
+  function applyProfile(p){
+    board.dataset.profile = p;
+    document.querySelectorAll(".tcard").forEach(function(c){
+      var s = STATUSES[p][c.dataset.phase];
+      c.dataset.status = s;
+      var v = c.querySelector(".verdict");
+      if (v) v.innerHTML = (s === "na") ? NA_NOTE : (s === "blocked" ? "advance → REFUSED<br>hazard analysis missing" : "");
+    });
+    readout.innerHTML = READOUT[p];
+    document.getElementById("ps-ticket").setAttribute("aria-pressed", p === "ticket");
+    document.getElementById("ps-mfg").setAttribute("aria-pressed", p === "manufacturing");
+  }
+  document.getElementById("ps-ticket").addEventListener("click", function(){ applyProfile("ticket"); });
+  document.getElementById("ps-mfg").addEventListener("click", function(){ applyProfile("manufacturing"); });
+  applyProfile("manufacturing");
+
+  function copyText(t, btn){
+    function done(){ btn.classList.add("did"); var o = btn.textContent; btn.textContent = "COPIED"; setTimeout(function(){ btn.textContent = o; btn.classList.remove("did"); }, 1400); }
+    if (navigator.clipboard && navigator.clipboard.writeText) { navigator.clipboard.writeText(t).then(done, done); }
+    else { var ta = document.createElement("textarea"); ta.value = t; document.body.appendChild(ta); ta.select(); try { document.execCommand("copy"); } catch(e){} document.body.removeChild(ta); done(); }
+  }
+  var install = document.getElementById("install-btn");
+  install.addEventListener("click", function(){ copyText('pip install -e ".[dev]"', install); });
+  document.querySelectorAll(".copybtn").forEach(function(b){
+    b.addEventListener("click", function(){ copyText(b.dataset.copy, b); });
+  });
+
+  document.addEventListener("keydown", function(e){
+    if (e.metaKey || e.ctrlKey || e.altKey) return;
+    var row = document.querySelector('.gate-row[data-key="' + e.key + '"]');
+    if (!row) return;
+    row.scrollIntoView({block:"center", behavior:"smooth"});
+    row.classList.add("flash");
+    setTimeout(function(){ row.classList.remove("flash"); }, 900);
+  });
+
+  var io = new IntersectionObserver(function(es){
+    es.forEach(function(en){ if (en.isIntersecting){ en.target.classList.add("in"); io.unobserve(en.target); } });
+  }, {threshold:.15});
+  document.querySelectorAll(".slot,.stamp-in").forEach(function(el){ io.observe(el); });
+})();
+</script>
+<!-- gtm-portal-backlink (managed by _scripts/sync-gtm.py) -->
+<a class="gtmp-back" href="/GTM/" aria-label="返回 GTM 门户">&#8617; GTM 门户</a>
+<style>
+.gtmp-back{position:fixed;right:1rem;bottom:1rem;z-index:2147483000;
+font:500 12px/1 ui-monospace,SFMono-Regular,Menlo,Consolas,monospace;
+letter-spacing:.05em;text-decoration:none;padding:.6rem .85rem;border-radius:999px;
+color:#14130f;background:rgba(251,250,247,.92);border:1px solid rgba(20,19,15,.16);
+box-shadow:0 2px 12px rgba(20,19,15,.14);backdrop-filter:blur(6px);
+transition:transform .15s ease,box-shadow .15s ease}
+.gtmp-back:hover{transform:translateY(-1px);box-shadow:0 4px 16px rgba(20,19,15,.22)}
+@media (prefers-color-scheme:dark){.gtmp-back{color:#f5f2ea;background:rgba(20,19,15,.88);
+border-color:rgba(245,242,234,.22)}}
+</style>
+</body>
+</html>

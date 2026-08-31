@@ -1,0 +1,1076 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>《孤裂 / The Aporia》上市作战卷宗 · GTM Plan V1.0</title>
+<meta name="description" content="中文原创心理恐怖长篇《孤裂》的 Go-to-Market 方案：定位、受众、渠道、发布节奏、指标与风险。">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,500;0,600;1,500;1,600&family=IBM+Plex+Mono:wght@400;500&family=Noto+Serif+SC:wght@400;600;700;900&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --ink:#0c0a09;
+    --ink-2:#131010;
+    --ink-3:#1a1615;
+    --paper:#e8e0cf;
+    --paper-dim:rgba(232,224,207,.62);
+    --paper-faint:rgba(232,224,207,.38);
+    --rust:#c14a35;
+    --rust-hi:#e06a50;
+    --rust-dim:rgba(193,74,53,.16);
+    --line:rgba(232,224,207,.13);
+    --line-soft:rgba(232,224,207,.07);
+    --serif:"Noto Serif SC","Songti SC","STSong","SimSun",serif;
+    --mono:"IBM Plex Mono","PingFang SC","Microsoft YaHei",monospace;
+    --latin:"Cormorant Garamond","Noto Serif SC",serif;
+    --w:1060px;
+  }
+  *{margin:0;padding:0;box-sizing:border-box}
+  html{scroll-behavior:smooth}
+  body{
+    background:var(--ink);
+    color:var(--paper);
+    font-family:var(--serif);
+    font-size:16px;
+    line-height:1.9;
+    overflow-x:hidden;
+    -webkit-font-smoothing:antialiased;
+  }
+  ::selection{background:var(--rust);color:var(--ink)}
+  a{color:inherit}
+
+  /* ---------- grain ---------- */
+  body::after{
+    content:"";position:fixed;inset:-50%;z-index:99;pointer-events:none;
+    background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='240' height='240'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.5'/%3E%3C/svg%3E");
+    opacity:.05;animation:grain 9s steps(6) infinite;
+  }
+  @keyframes grain{
+    0%,100%{transform:translate(0,0)}20%{transform:translate(-3%,2%)}40%{transform:translate(2%,-3%)}
+    60%{transform:translate(-2%,-2%)}80%{transform:translate(3%,3%)}
+  }
+
+  /* ---------- top bar ---------- */
+  header{
+    position:fixed;top:0;left:0;right:0;z-index:50;
+    display:flex;justify-content:space-between;align-items:center;
+    padding:14px 28px;
+    background:rgba(12,10,9,.82);backdrop-filter:blur(10px);-webkit-backdrop-filter:blur(10px);
+    border-bottom:1px solid var(--line-soft);
+  }
+  .brand{font-family:var(--mono);font-size:12px;letter-spacing:.14em;color:var(--paper-dim);text-decoration:none}
+  .brand b{color:var(--rust-hi);font-weight:500}
+  nav{display:flex;gap:22px}
+  nav a{
+    font-family:var(--mono);font-size:11.5px;letter-spacing:.12em;
+    color:var(--paper-faint);text-decoration:none;transition:color .3s;
+  }
+  nav a:hover{color:var(--rust-hi)}
+  @media(max-width:820px){nav{display:none}}
+
+  /* ---------- side ruler (scroll progress = 1.5m) ---------- */
+  .ruler{
+    position:fixed;right:34px;top:50%;transform:translateY(-50%);z-index:40;
+    display:none;flex-direction:column;align-items:center;gap:10px;
+  }
+  @media(min-width:1180px){.ruler{display:flex}}
+  .ruler .track{
+    position:relative;width:1px;height:260px;background:var(--line);
+  }
+  .ruler .track i{position:absolute;left:-4px;width:9px;height:1px;background:var(--paper-faint)}
+  .ruler .track i:nth-child(1){top:0}.ruler .track i:nth-child(2){top:33%}
+  .ruler .track i:nth-child(3){top:66%}.ruler .track i:nth-child(4){bottom:0;width:14px;background:var(--rust)}
+  .ruler .dot{
+    position:absolute;left:-3.5px;top:0;width:8px;height:8px;border-radius:50%;
+    background:var(--rust);box-shadow:0 0 12px rgba(193,74,53,.9);
+    transition:top .12s linear;
+  }
+  .ruler .val{font-family:var(--mono);font-size:10.5px;color:var(--paper-faint);letter-spacing:.08em}
+  .ruler .val b{display:block;text-align:center;color:var(--rust-hi);font-weight:500;font-size:12px}
+  .ruler .cap{writing-mode:vertical-rl;font-family:var(--mono);font-size:10px;letter-spacing:.35em;color:var(--paper-faint);opacity:.7}
+
+  /* ---------- hero ---------- */
+  .hero{
+    position:relative;min-height:100vh;
+    display:flex;flex-direction:column;justify-content:center;
+    padding:150px 48px 110px;overflow:hidden;
+    background:
+      radial-gradient(ellipse 90% 70% at 50% 108%, rgba(193,74,53,.10), transparent 60%),
+      var(--ink);
+  }
+  /* 372-poster grid texture */
+  .hero::before{
+    content:"";position:absolute;inset:0;pointer-events:none;
+    background-image:
+      linear-gradient(var(--line-soft) 1px, transparent 1px),
+      linear-gradient(90deg, var(--line-soft) 1px, transparent 1px);
+    background-size:118px 158px;
+    mask-image:radial-gradient(ellipse 85% 90% at 50% 40%, #000 30%, transparent 78%);
+    -webkit-mask-image:radial-gradient(ellipse 85% 90% at 50% 40%, #000 30%, transparent 78%);
+    opacity:.9;
+  }
+  .hero-inner{position:relative;max-width:var(--w);margin:0 auto;width:100%;isolation:isolate}
+  .ghost-num{
+    position:absolute;right:-10px;top:-70px;z-index:-1;
+    font-family:var(--serif);font-weight:900;font-size:clamp(200px,30vw,400px);line-height:1;
+    color:transparent;-webkit-text-stroke:1px rgba(193,74,53,.28);
+    user-select:none;pointer-events:none;
+    transition:opacity .5s;
+  }
+  .ghost-num.fade{opacity:0}
+  .kicker{
+    display:flex;align-items:center;gap:14px;flex-wrap:wrap;
+    font-family:var(--mono);font-size:11.5px;letter-spacing:.22em;color:var(--paper-faint);
+    margin-bottom:34px;
+  }
+  .kicker .stamp{
+    color:var(--rust-hi);border:1px solid rgba(193,74,53,.5);
+    padding:3px 10px;transform:rotate(-2deg);letter-spacing:.28em;
+  }
+  .hero h1{
+    font-weight:900;font-size:clamp(64px,11vw,138px);line-height:1.04;letter-spacing:.02em;
+  }
+  .hero h1 .en{
+    display:block;font-family:var(--latin);font-style:italic;font-weight:500;
+    font-size:clamp(26px,3.6vw,44px);letter-spacing:.32em;color:var(--rust-hi);
+    margin-top:14px;
+  }
+  .hero .pos{
+    max-width:620px;margin-top:38px;font-size:17px;color:var(--paper-dim);
+  }
+  .hero .pos em{font-style:normal;color:var(--paper);border-bottom:1px solid var(--rust)}
+  .chips{display:flex;flex-wrap:wrap;gap:10px;margin-top:34px}
+  .chips span{
+    font-family:var(--mono);font-size:11.5px;letter-spacing:.1em;color:var(--paper-dim);
+    border:1px solid var(--line);padding:6px 14px;
+  }
+  .chips span.hot{color:var(--rust-hi);border-color:rgba(193,74,53,.45)}
+  .cta-row{display:flex;gap:16px;flex-wrap:wrap;margin-top:44px}
+  .cta{
+    font-family:var(--mono);font-size:12.5px;letter-spacing:.18em;text-decoration:none;
+    padding:14px 26px;border:1px solid var(--line);color:var(--paper-dim);
+    transition:all .35s;display:inline-flex;align-items:center;gap:10px;
+  }
+  .cta:hover{border-color:var(--rust);color:var(--paper)}
+  .cta.primary{background:var(--rust);border-color:var(--rust);color:var(--ink);font-weight:500}
+  .cta.primary:hover{background:var(--rust-hi);border-color:var(--rust-hi)}
+  .countdown{
+    margin-top:56px;display:flex;align-items:baseline;gap:18px;
+    font-family:var(--mono);font-size:11px;letter-spacing:.2em;color:var(--paper-faint);
+  }
+  .countdown .num{
+    font-family:var(--serif);font-weight:900;font-size:30px;letter-spacing:.05em;color:var(--rust-hi);
+    min-width:96px;
+  }
+  .hero-foot{
+    position:absolute;bottom:26px;left:0;right:0;text-align:center;
+    font-family:var(--mono);font-size:10px;letter-spacing:.4em;color:var(--paper-faint);opacity:.6;
+  }
+
+  /* ---------- layout ---------- */
+  main{max-width:var(--w);margin:0 auto;padding:0 48px}
+  @media(max-width:640px){main{padding:0 22px}.hero{padding:130px 22px 90px}}
+  section{padding:96px 0 30px;scroll-margin-top:80px}
+  .sec-head{
+    display:grid;grid-template-columns:180px 1fr;gap:30px;align-items:start;
+    padding-bottom:26px;border-bottom:1px solid var(--line);margin-bottom:44px;
+  }
+  @media(max-width:760px){.sec-head{grid-template-columns:1fr;gap:8px}}
+  .sec-idx{font-family:var(--mono);font-size:12px;letter-spacing:.2em;color:var(--rust-hi)}
+  .sec-idx .en{display:block;margin-top:6px;font-size:10.5px;color:var(--paper-faint);letter-spacing:.14em}
+  .sec-head h2{font-size:clamp(28px,4vw,40px);font-weight:900;letter-spacing:.03em;line-height:1.3}
+  .sec-head h2 small{
+    display:block;font-family:var(--mono);font-weight:400;font-size:11.5px;
+    letter-spacing:.2em;color:var(--paper-faint);margin-top:10px;
+  }
+  .note{
+    font-family:var(--mono);font-size:12px;line-height:2;color:var(--paper-faint);
+    border-left:2px solid var(--rust);padding:4px 0 4px 16px;margin-bottom:34px;max-width:640px;
+  }
+  .note b{color:var(--rust-hi);font-weight:500}
+
+  h3.block{
+    font-size:19px;font-weight:700;letter-spacing:.04em;margin:44px 0 18px;
+    display:flex;align-items:center;gap:12px;
+  }
+  h3.block::before{content:"";width:22px;height:1px;background:var(--rust)}
+  p.body{color:var(--paper-dim);max-width:720px;margin-bottom:14px}
+  p.body strong{color:var(--paper);font-weight:600}
+  p.body .rd{color:var(--rust-hi)}
+
+  /* 1.5m divider */
+  .m15{
+    display:flex;align-items:center;gap:16px;margin:74px 0 0;
+    font-family:var(--mono);font-size:10px;letter-spacing:.3em;color:var(--paper-faint);
+  }
+  .m15::before,.m15::after{content:"";flex:1;height:1px;background:var(--line)}
+  .m15 i{font-style:normal;color:var(--rust-hi)}
+
+  /* ---------- exec summary ---------- */
+  .calls{display:grid;grid-template-columns:repeat(3,1fr);gap:1px;background:var(--line-soft);border:1px solid var(--line-soft);margin-top:36px}
+  @media(max-width:860px){.calls{grid-template-columns:1fr}}
+  .call{background:var(--ink);padding:30px 26px;transition:background .4s}
+  .call:hover{background:var(--ink-2)}
+  .call .no{font-family:var(--mono);font-size:11px;letter-spacing:.2em;color:var(--rust-hi)}
+  .call h4{font-size:17px;font-weight:700;margin:14px 0 10px}
+  .call p{font-size:14px;color:var(--paper-dim);line-height:1.95}
+  .northstar{
+    margin-top:36px;border:1px solid rgba(193,74,53,.4);padding:26px 30px;
+    display:grid;grid-template-columns:200px 1fr;gap:26px;align-items:center;
+    background:linear-gradient(120deg, rgba(193,74,53,.09), transparent 60%);
+  }
+  @media(max-width:700px){.northstar{grid-template-columns:1fr}}
+  .northstar .lab{font-family:var(--mono);font-size:11px;letter-spacing:.26em;color:var(--rust-hi)}
+  .northstar p{font-size:16.5px}
+  .northstar p b{color:var(--rust-hi)}
+
+  /* ---------- personas ---------- */
+  .persona-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:22px;margin-top:8px}
+  @media(max-width:900px){.persona-grid{grid-template-columns:1fr}}
+  .persona{
+    border:1px solid var(--line);padding:28px 26px;position:relative;
+    background:var(--ink-2);transition:transform .4s,border-color .4s;
+  }
+  .persona:hover{transform:translateY(-5px);border-color:rgba(193,74,53,.55)}
+  .persona .tag{
+    position:absolute;top:-11px;left:22px;background:var(--ink);
+    font-family:var(--mono);font-size:10.5px;letter-spacing:.18em;color:var(--rust-hi);
+    border:1px solid rgba(193,74,53,.5);padding:2px 10px;
+  }
+  .persona h4{font-size:19px;font-weight:900;margin:10px 0 4px}
+  .persona .who{font-family:var(--mono);font-size:11px;color:var(--paper-faint);letter-spacing:.08em;margin-bottom:16px}
+  .persona dl{display:grid;grid-template-columns:64px 1fr;gap:8px 12px;font-size:13.5px}
+  .persona dt{font-family:var(--mono);font-size:10.5px;letter-spacing:.14em;color:var(--rust-hi);padding-top:3px}
+  .persona dd{color:var(--paper-dim);line-height:1.85}
+  .anti{
+    margin-top:30px;border:1px dashed var(--line);padding:20px 26px;
+    font-size:14px;color:var(--paper-faint);
+  }
+  .anti b{color:var(--paper);font-weight:600}
+  .anti .rd{color:var(--rust-hi);font-family:var(--mono);font-size:11px;letter-spacing:.2em;margin-right:14px}
+
+  /* ---------- messaging house ---------- */
+  .house{border:1px solid var(--line);margin-top:8px}
+  .house-roof{
+    background:linear-gradient(120deg, rgba(193,74,53,.16), rgba(193,74,53,.05));
+    padding:38px 34px;text-align:center;border-bottom:1px solid var(--line);
+  }
+  .house-roof .lab{font-family:var(--mono);font-size:10.5px;letter-spacing:.3em;color:var(--rust-hi);display:block;margin-bottom:14px}
+  .house-roof .msg{font-size:clamp(20px,3vw,28px);font-weight:900;line-height:1.6}
+  .pillars{display:grid;grid-template-columns:repeat(3,1fr);gap:1px;background:var(--line-soft)}
+  @media(max-width:860px){.pillars{grid-template-columns:1fr}}
+  .pillar{background:var(--ink);padding:28px 26px}
+  .pillar .no{font-family:var(--mono);font-size:11px;color:var(--rust-hi);letter-spacing:.2em}
+  .pillar h4{font-size:16.5px;font-weight:700;margin:12px 0 8px}
+  .pillar p{font-size:13.5px;color:var(--paper-dim);line-height:1.95}
+  .house-base{
+    border-top:1px solid var(--line);padding:26px 34px;display:flex;flex-wrap:wrap;gap:12px;justify-content:center;
+  }
+  .quote-chip{
+    font-size:13.5px;color:var(--paper-dim);border:1px solid var(--line);
+    padding:8px 18px;background:var(--ink-2);transition:border-color .3s,color .3s;
+  }
+  .quote-chip:hover{border-color:var(--rust);color:var(--paper)}
+
+  /* ---------- tables ---------- */
+  table{width:100%;border-collapse:collapse;font-size:14px}
+  th{
+    font-family:var(--mono);font-weight:500;font-size:11px;letter-spacing:.16em;color:var(--rust-hi);
+    text-align:left;padding:12px 16px;border-bottom:1px solid var(--line);
+  }
+  td{padding:15px 16px;border-bottom:1px solid var(--line-soft);color:var(--paper-dim);vertical-align:top;line-height:1.85}
+  td:first-child{color:var(--paper);font-weight:600;white-space:nowrap}
+  tr{transition:background .3s}
+  tbody tr:hover{background:rgba(193,74,53,.05)}
+  .tbl-wrap{overflow-x:auto}
+  .lvl{font-family:var(--mono);font-size:11px;letter-spacing:.14em;padding:2px 10px;border:1px solid}
+  .lvl.hi{color:var(--rust-hi);border-color:rgba(193,74,53,.6)}
+  .lvl.md{color:#d8b46a;border-color:rgba(216,180,106,.5)}
+  .lvl.lo{color:#8fae8b;border-color:rgba(143,174,139,.5)}
+
+  /* ---------- map (positioning 2x2) ---------- */
+  .posmap{
+    margin-top:34px;border:1px solid var(--line);background:var(--ink-2);
+    position:relative;height:340px;
+  }
+  .posmap .axis{position:absolute;background:var(--line)}
+  .posmap .ax-x{left:6%;right:6%;top:50%;height:1px}
+  .posmap .ax-y{top:8%;bottom:8%;left:50%;width:1px}
+  .posmap .lab{
+    position:absolute;font-family:var(--mono);font-size:10px;letter-spacing:.2em;color:var(--paper-faint);
+  }
+  .posmap .dot{
+    position:absolute;transform:translate(-50%,-50%);
+    font-size:12.5px;color:var(--paper-faint);white-space:nowrap;
+  }
+  .posmap .dot::before{
+    content:"";display:inline-block;width:6px;height:6px;border:1px solid var(--paper-faint);
+    border-radius:50%;margin-right:8px;vertical-align:1px;
+  }
+  .posmap .dot.us{
+    color:var(--rust-hi);font-weight:700;font-size:15px;
+  }
+  .posmap .dot.us::before{
+    width:11px;height:11px;background:var(--rust);border-color:var(--rust);
+    box-shadow:0 0 18px rgba(193,74,53,.8);
+  }
+  @media(max-width:640px){.posmap{display:none}.posmap-alt{display:block!important}}
+  .posmap-alt{display:none;font-size:13.5px;color:var(--paper-faint);margin-top:20px;line-height:2}
+
+  /* ---------- channels ---------- */
+  .chan-grid{display:grid;grid-template-columns:1fr 1fr;gap:1px;background:var(--line-soft);border:1px solid var(--line-soft)}
+  @media(max-width:820px){.chan-grid{grid-template-columns:1fr}}
+  .chan{background:var(--ink);padding:26px 28px;transition:background .4s}
+  .chan:hover{background:var(--ink-2)}
+  .chan .top{display:flex;justify-content:space-between;align-items:baseline;gap:10px;margin-bottom:10px}
+  .chan h4{font-size:18px;font-weight:900}
+  .chan .role{font-family:var(--mono);font-size:10px;letter-spacing:.16em;color:var(--ink);padding:3px 9px;white-space:nowrap}
+  .role.p0{background:var(--rust)}
+  .role.p1{background:rgba(232,224,207,.85)}
+  .role.p2{background:transparent;color:var(--paper-faint);border:1px solid var(--line)}
+  .chan p{font-size:13.5px;color:var(--paper-dim);line-height:1.95}
+  .chan p b{color:var(--paper);font-weight:600}
+
+  /* ---------- launch: six acts ---------- */
+  .acts{position:relative;margin-top:8px}
+  .acts::before{
+    content:"";position:absolute;left:29px;top:14px;bottom:14px;width:1px;
+    background:linear-gradient(var(--rust) 0%, var(--line) 85%);
+  }
+  @media(max-width:640px){.acts::before{left:14px}}
+  .act{
+    position:relative;display:grid;grid-template-columns:60px 1fr;gap:26px;padding:0 0 46px;
+  }
+  @media(max-width:640px){.act{grid-template-columns:30px 1fr;gap:14px}}
+  .act-dot{
+    width:60px;display:flex;flex-direction:column;align-items:center;gap:8px;
+    font-family:var(--mono);font-size:10px;color:var(--paper-faint);letter-spacing:.1em;
+  }
+  .act-dot i{
+    width:13px;height:13px;border-radius:50%;border:1px solid var(--rust);
+    background:var(--ink);font-style:normal;
+  }
+  .act:nth-child(odd) .act-dot i{background:var(--rust);box-shadow:0 0 14px rgba(193,74,53,.7)}
+  .act-body{border:1px solid var(--line);padding:26px 30px;background:var(--ink-2);transition:border-color .4s}
+  .act-body:hover{border-color:rgba(193,74,53,.5)}
+  .act-head{display:flex;flex-wrap:wrap;align-items:baseline;gap:14px;margin-bottom:6px}
+  .act-head h4{font-size:21px;font-weight:900}
+  .act-head .tw{font-family:var(--mono);font-size:11px;letter-spacing:.14em;color:var(--rust-hi)}
+  .act-body .goal{font-size:14.5px;color:var(--paper);margin-bottom:14px}
+  .act-body .goal b{color:var(--rust-hi);font-weight:700;font-family:var(--mono);font-size:11px;letter-spacing:.2em;margin-right:10px}
+  .act-body ul{list-style:none;font-size:13.5px;color:var(--paper-dim)}
+  .act-body ul li{padding:5px 0 5px 20px;position:relative;line-height:1.9}
+  .act-body ul li::before{content:"—";position:absolute;left:0;color:var(--rust)}
+  .gate{
+    margin-top:18px;padding:12px 18px;border:1px dashed rgba(193,74,53,.5);
+    font-family:var(--mono);font-size:12px;line-height:2;color:var(--paper-dim);
+  }
+  .gate b{color:var(--rust-hi);font-weight:500;letter-spacing:.18em;margin-right:10px}
+
+  /* ---------- funnel & kpi ---------- */
+  .funnel{display:grid;grid-template-columns:repeat(5,1fr);gap:1px;background:var(--line-soft);border:1px solid var(--line-soft);margin:34px 0 46px}
+  @media(max-width:860px){.funnel{grid-template-columns:repeat(2,1fr)}}
+  .fstep{background:var(--ink);padding:24px 20px;text-align:left;position:relative}
+  .fstep .pct{font-family:var(--latin);font-size:38px;font-weight:600;color:var(--rust-hi);line-height:1.1}
+  .fstep .nm{font-size:14px;font-weight:700;margin-top:8px}
+  .fstep .ds{font-family:var(--mono);font-size:10.5px;color:var(--paper-faint);letter-spacing:.08em;margin-top:6px;line-height:1.9}
+  .fstep::after{
+    content:"→";position:absolute;right:-9px;top:50%;transform:translateY(-50%);
+    color:var(--rust);font-family:var(--mono);font-size:14px;z-index:2;background:transparent;
+  }
+  .fstep:last-child::after{display:none}
+  @media(max-width:860px){.fstep::after{display:none}}
+
+  /* ---------- budget ---------- */
+  .budget{margin-top:10px;display:grid;gap:18px;max-width:760px}
+  .brow{display:grid;grid-template-columns:170px 1fr 60px;gap:16px;align-items:center;font-size:13.5px}
+  @media(max-width:640px){.brow{grid-template-columns:120px 1fr 50px;font-size:12.5px}}
+  .brow .bn{color:var(--paper-dim)}
+  .brow .bar{height:10px;background:var(--ink-3);border:1px solid var(--line-soft);position:relative}
+  .brow .bar i{
+    position:absolute;inset:1px auto 1px 1px;background:linear-gradient(90deg,var(--rust),#8e2c21);
+    width:0;transition:width 1.2s cubic-bezier(.2,.7,.2,1);
+  }
+  .brow .bv{font-family:var(--mono);font-size:12px;color:var(--rust-hi);text-align:right}
+
+  /* ---------- timeline ---------- */
+  .tl{margin-top:40px;border-top:1px solid var(--line);display:grid;grid-template-columns:repeat(4,1fr)}
+  @media(max-width:760px){.tl{grid-template-columns:1fr 1fr}}
+  .tl-cell{padding:22px 18px 8px;border-right:1px solid var(--line-soft);border-bottom:1px solid var(--line-soft);position:relative}
+  .tl-cell::before{content:"";position:absolute;top:-5px;left:18px;width:9px;height:9px;border-radius:50%;background:var(--ink);border:1px solid var(--rust)}
+  .tl-cell.hot::before{background:var(--rust);box-shadow:0 0 12px rgba(193,74,53,.8)}
+  .tl-cell .when{font-family:var(--mono);font-size:10.5px;letter-spacing:.18em;color:var(--rust-hi)}
+  .tl-cell h5{font-size:15.5px;font-weight:700;margin:8px 0 6px}
+  .tl-cell p{font-size:12.5px;color:var(--paper-faint);line-height:1.9}
+
+  /* ---------- pull quote ---------- */
+  .pull{
+    margin:110px auto 40px;max-width:760px;text-align:center;padding:0 22px;
+  }
+  .pull .q{
+    font-size:clamp(24px,4vw,36px);font-weight:900;line-height:1.7;letter-spacing:.04em;
+  }
+  .pull .q .rd{color:var(--rust-hi)}
+  .pull .src{font-family:var(--mono);font-size:11px;letter-spacing:.3em;color:var(--paper-faint);margin-top:22px}
+
+  /* ---------- footer ---------- */
+  footer{
+    border-top:1px solid var(--line);margin-top:70px;
+    padding:44px 48px 60px;display:flex;justify-content:space-between;align-items:center;gap:20px;flex-wrap:wrap;
+  }
+  footer .f-brand{font-family:var(--latin);font-style:italic;font-size:20px;letter-spacing:.2em;color:var(--paper-dim)}
+  footer .f-brand b{color:var(--rust-hi);font-weight:600}
+  footer .f-meta{font-family:var(--mono);font-size:10.5px;letter-spacing:.2em;color:var(--paper-faint);line-height:2.2;text-align:right}
+  @media(max-width:640px){footer{padding:40px 22px}.f-meta{text-align:left}}
+
+  /* ---------- reveal ---------- */
+  .reveal{opacity:0;transform:translateY(26px);transition:opacity .9s cubic-bezier(.2,.7,.2,1),transform .9s cubic-bezier(.2,.7,.2,1)}
+  .reveal.on{opacity:1;transform:none}
+  .d1{transition-delay:.08s}.d2{transition-delay:.16s}.d3{transition-delay:.24s}.d4{transition-delay:.32s}
+  @media(prefers-reduced-motion:reduce){
+    .reveal{opacity:1;transform:none;transition:none}
+    body::after{animation:none}
+    html{scroll-behavior:auto}
+  }
+</style>
+</head>
+<body>
+
+<header>
+  <a class="brand" href="#top">《孤裂》<b>/ THE APORIA</b> · GTM 卷宗</a>
+  <nav>
+    <a href="#summary">摘要</a>
+    <a href="#market">市场</a>
+    <a href="#audience">读者</a>
+    <a href="#positioning">信息</a>
+    <a href="#channels">渠道</a>
+    <a href="#launch">节奏</a>
+    <a href="#metrics">指标</a>
+    <a href="#risks">风险</a>
+  </nav>
+</header>
+
+<!-- scroll progress = the 1.5 meters -->
+<aside class="ruler" aria-hidden="true">
+  <div class="cap">THE DISTANCE</div>
+  <div class="val"><b id="rulerVal">0.00 m</b>/ 1.50 m</div>
+  <div class="track">
+    <i></i><i></i><i></i><i></i>
+    <span class="dot" id="rulerDot"></span>
+  </div>
+</aside>
+
+<!-- ================= HERO ================= -->
+<section class="hero" id="top" style="padding-top:0;padding-bottom:0">
+  <div class="hero-inner">
+    <div class="ghost-num" id="ghostNum">十四</div>
+    <div class="kicker reveal on">
+      <span class="stamp">内部方案 · 勿外传</span>
+      <span>GO-TO-MARKET PLAN — V1.0</span>
+      <span>2026.08.29 立卷</span>
+    </div>
+    <h1 class="reveal on d1">孤裂<span class="en">THE APORIA — απορία，无路可走</span></h1>
+    <p class="pos reveal on d2">
+      一部关于爱、囚禁与不可逃脱之命运的心理恐怖长篇。<em>你保护一个人，却成为囚禁她的人。</em>
+      本卷宗回答一个问题：如何让这本书，找到它命中注定的读者。
+    </p>
+    <div class="chips reveal on d3">
+      <span class="hot">心理恐怖长篇 · 中文原创</span>
+      <span>六幕 · 二十章 · 5446 行</span>
+      <span>372 张海报封死的阳光房</span>
+      <span>首发：微信读书</span>
+      <span>档期：万圣节周</span>
+    </div>
+    <div class="cta-row reveal on d4">
+      <a class="cta primary" href="#launch">查看六幕作战节奏 →</a>
+      <a class="cta" href="#positioning">先看一句话定位</a>
+    </div>
+    <div class="countdown reveal on d4">
+      <span class="num" id="cdNum">十四</span>
+      <span>海报上的数字，正在减少。<br>COUNTDOWN — 距首发 T-MINUS</span>
+    </div>
+  </div>
+  <div class="hero-foot">SCROLL — 跨越这一页的一米五</div>
+</section>
+
+<main>
+
+<!-- ================= 01 SUMMARY ================= -->
+<section id="summary">
+  <div class="sec-head reveal">
+    <div class="sec-idx">SEC.01<span class="en">EXECUTIVE SUMMARY</span></div>
+    <h2>执行摘要<small>先说结论 —— 本方案的一切动作，服务于一个北极星</small></h2>
+  </div>
+
+  <p class="body reveal">
+    <strong>一句话定位：</strong>《孤裂》是一部<span class="rd">中文原创心理恐怖长篇</span>——以"一米五的距离"为刀，
+    把"爱即囚禁"写进一个被 372 张电影海报封死的透明盒子。首发微信读书，以<span class="rd">口碑 + 议题</span>双引擎破圈，
+    走"电子首发 → 实体出版 → 有声 / 短剧"的 IP 路径。
+  </p>
+
+  <div class="calls">
+    <div class="call reveal d1">
+      <div class="no">判断 / 01</div>
+      <h4>品类空位真实存在</h4>
+      <p>心理恐怖在中文图书市场长期依赖翻译引进（斯蒂芬·金、日系恐怖）。国产原创、文学性过硬的心理恐怖长篇供给稀缺——读者被喂养多年，但选择很少。</p>
+    </div>
+    <div class="call reveal d2">
+      <div class="no">判断 / 02</div>
+      <h4>超级意象自带传播性</h4>
+      <p>"372 张海报封死的阳光房""一米五的距离""别吵，她刚睡着了"——这些是天然的记忆钩子，可直接转译为概念海报、短视频与金句物料，不需要发明营销话术。</p>
+    </div>
+    <div class="call reveal d3">
+      <div class="no">判断 / 03</div>
+      <h4>议题性是双刃剑</h4>
+      <p>家暴与控制型亲密关系是高敏感社会议题：既是流量入口，也是审核与舆情风险。全案以"批判控制之爱"为统一叙事口径，联动公益，绝不浪漫化。</p>
+    </div>
+  </div>
+
+  <div class="northstar reveal">
+    <div class="lab">北极星指标<br>NORTH STAR</div>
+    <p><b>30 日完读率 ≥ 55%</b> —— 恐怖文学的全部商业逻辑都建立在"读完并后背发凉"的人身上：完读催生书评，书评催生下一批读者。所有渠道、物料、节奏，皆为把读者送完最后一章。</p>
+  </div>
+
+  <div class="m15"><i>1.5 m</i> 一步之遥 · 生死之隔 <i>SEC.01 → 02</i></div>
+</section>
+
+<!-- ================= 02 MARKET ================= -->
+<section id="market">
+  <div class="sec-head reveal">
+    <div class="sec-idx">SEC.02<span class="en">MARKET &amp; CATEGORY</span></div>
+    <h2>市场与品类<small>我们不在红海里抢份额，我们在空位里定义品类</small></h2>
+  </div>
+
+  <p class="body reveal">
+    <strong>品类选择：心理恐怖 × 社会派悬疑。</strong>明确不做两件事——不做灵异驱魔的"鬼故事"，
+    也不做短平快的网文爽文。本书的恐怖来自人性与空间，竞争帧应锚定在<span class="rd">"严肃类型文学"</span>而非"网络小说"。
+  </p>
+
+  <h3 class="block reveal">三个市场事实</h3>
+  <p class="body reveal">
+    <strong>① 悬疑推理是中文电子阅读最稳定的常青品类。</strong>微信读书、豆瓣阅读的畅销与榜单长年由悬疑推理占据，
+    读者付费意愿明确、书评文化成熟，天然适合口碑型冷启动。
+  </p>
+  <p class="body reveal">
+    <strong>② 国产悬疑的受众已被影视教育完成。</strong>从《白夜行》到《隐秘的角落》《漫长的季节》，
+    过去十年完成了大规模的"国产悬疑受众训练"——他们能欣赏慢热、隐喻与道德灰度，正是本书的目标土壤。
+  </p>
+  <p class="body reveal">
+    <strong>③ 心理恐怖赛道几乎全靠引进。</strong>书店与平台的"恐怖"货架被欧美翻译作品占据，
+    中文原创长期缺位。<span class="rd">空位：一部"为影迷写的中文恐怖小说"</span>——《闪灵》《着魔》《2001 太空漫游》的互文是现成的锚点，
+    直接向影迷群体心智借力。
+  </p>
+
+  <div class="m15"><i>1.5 m</i> SEC.02 → 03</div>
+</section>
+
+<!-- ================= 03 AUDIENCE ================= -->
+<section id="audience">
+  <div class="sec-head reveal">
+    <div class="sec-idx">SEC.03<span class="en">TARGET AUDIENCE</span></div>
+    <h2>目标读者<small>三层同心圆 —— 种子层引爆，放大器扩散，破圈层收割</small></h2>
+  </div>
+
+  <div class="persona-grid">
+    <div class="persona reveal d1">
+      <span class="tag">P1 · 种子层 CORE</span>
+      <h4>悬疑深读者</h4>
+      <div class="who">22–40 岁 · 豆瓣悬疑组 / 微信读书书评区常驻</div>
+      <dl>
+        <dt>画像</dt><dd>东野圭吾、紫金陈、那多的熟读者；在意叙事结构与文学质感，愿意写长评。</dd>
+        <dt>钩子</dt><dd>免费试读 + "国产原创心理恐怖"的品类新鲜感。</dd>
+        <dt>触达</dt><dd>微信读书首发冲榜、书评人提前共读、豆瓣条目冷启动。</dd>
+      </dl>
+    </div>
+    <div class="persona reveal d2">
+      <span class="tag">P2 · 放大器 AMPLIFIER</span>
+      <h4>影迷与美学爱好者</h4>
+      <div class="who">20–35 岁 · 《闪灵》《着魔》影迷 · A24 恐怖受众</div>
+      <dl>
+        <dt>画像</dt><dd>在小红书 / B站消费电影解说与意象美学，对"文学电影感"高度敏感，乐于二创。</dd>
+        <dt>钩子</dt><dd>"为《闪灵》影迷写的小说"——电影互文即内容，海报即物料。</dd>
+        <dt>触达</dt><dd>概念海报三连、意象拆解视频、"372 张海报"视觉企划。</dd>
+      </dl>
+    </div>
+    <div class="persona reveal d3">
+      <span class="tag">P3 · 破圈层 BREAKOUT</span>
+      <h4>社会议题读者</h4>
+      <div class="who">25–45 岁 · 关注家暴 / 亲密关系控制议题 · 女性向为主</div>
+      <dl>
+        <dt>画像</dt><dd>播客与深度公众号的重度读者，为"说出真相"的作品自发传播。</dd>
+        <dt>钩子</dt><dd>"当拯救变成囚禁"——把小说作为讨论控制型关系的切口。</dd>
+        <dt>触达</dt><dd>议题文章、播客共读、反家暴公益联动、金句卡。</dd>
+      </dl>
+    </div>
+  </div>
+
+  <div class="anti reveal">
+    <span class="rd">反目标 ANTI-TARGET</span>
+    <b>追求短平快爽感的速读用户不是本书记录在案的读者。</b>不为其改变叙事节奏，不投泛流量——用渠道选择完成人群过滤，
+    让口碑集中在会"读完"的人手里。
+  </div>
+
+  <div class="m15"><i>1.5 m</i> SEC.03 → 04</div>
+</section>
+
+<!-- ================= 04 POSITIONING ================= -->
+<section id="positioning">
+  <div class="sec-head reveal">
+    <div class="sec-idx">SEC.04<span class="en">POSITIONING &amp; MESSAGING</span></div>
+    <h2>定位与信息<small>一座信息屋：一个屋顶，三根支柱，一堆证据</small></h2>
+  </div>
+
+  <p class="body reveal">
+    <strong>定位声明（Positioning Statement）：</strong>对于<span class="rd">想被"缓慢渗透的恐怖"击中的成熟读者</span>，
+    《孤裂》是一部<span class="rd">中文原创心理恐怖长篇</span>，它把"保护"写成"囚禁"——
+    因为你读过的恐怖来自鬼怪，<strong>而它来自爱</strong>。
+  </p>
+
+  <div class="house reveal">
+    <div class="house-roof">
+      <span class="lab">核心信息 · CORE MESSAGE</span>
+      <div class="msg">"你保护一个人，<br>却成为囚禁她的人。"</div>
+    </div>
+    <div class="pillars">
+      <div class="pillar">
+        <div class="no">支柱 / 壹</div>
+        <h4>空间即恐怖</h4>
+        <p>三层别墅是一套象征语法：一楼是腐朽的地基，二楼是表象的秩序，三楼是透明的囚笼。"一米五"是全书的道德阈值——一步之遥，生死之隔。</p>
+      </div>
+      <div class="pillar">
+        <div class="no">支柱 / 贰</div>
+        <h4>工程师式冷感</h4>
+        <p>第一人称、克制、精确到残忍。他计算风速与房屋结构，"我知道如何让一个人消失——不是靠暴力，靠设计"。理性与疯狂只隔一张图纸。</p>
+      </div>
+      <div class="pillar">
+        <div class="no">支柱 / 叁</div>
+        <h4>缓慢渗透的恐怖</h4>
+        <p>没有 jump scare。铁锈味、墙后的呼吸声、海报的温热——恐怖从感官缝隙里渗进来，读完后才在后背合拢。</p>
+      </div>
+    </div>
+    <div class="house-base">
+      <span class="quote-chip">"别吵，她刚睡着了。"</span>
+      <span class="quote-chip">"你懂得如何建造，也懂得如何摧毁。"</span>
+      <span class="quote-chip">"疼痛是其中一种方式。"</span>
+      <span class="quote-chip">"我本来想给你也做一枚。"</span>
+    </div>
+  </div>
+
+  <h3 class="block reveal">统一口径（所有对外发声必读）</h3>
+  <p class="body reveal">
+    <strong>✓ 这样说：</strong>这是一部<span class="rd">批判控制型爱</span>的作品——"保护即囚禁"是它的判词，不是它的糖。
+    讨论家暴、沉默与共谋，是我们主动选择的议题责任。
+  </p>
+  <p class="body reveal">
+    <strong>✗ 绝不说：</strong>不使用"病娇""虐恋""窒息感爱情"等浪漫化标签；不做"为爱藏起一个人"的猎奇化表达；
+    不在未经内容审校的渠道释放涉家暴细节的原文片段。
+  </p>
+
+  <div class="m15"><i>1.5 m</i> SEC.04 → 05</div>
+</section>
+
+<!-- ================= 05 LANDSCAPE ================= -->
+<section id="landscape">
+  <div class="sec-head reveal">
+    <div class="sec-idx">SEC.05<span class="en">COMPETITIVE LANDSCAPE</span></div>
+    <h2>对标与竞争<small>借成熟作品的读者心智，占一张没人坐的坐标</small></h2>
+  </div>
+
+  <div class="tbl-wrap reveal">
+    <table>
+      <thead><tr><th>对标作品</th><th>共享的读者资产</th><th>我们的差异化</th></tr></thead>
+      <tbody>
+        <tr><td>《白夜行》东野圭吾</td><td>病态共生之爱 + 罪案长线，验证了"恶之爱"在华语市场的号召力</td><td>更"恐怖"：叠加超自然第二重线（姐姐 / 墙后之声），心理压迫感更强</td></tr>
+        <tr><td>紫金陈"社会派"系列</td><td>国产罪案的读者基本盘与影视联动路径</td><td>文学性更强、节奏更慢——不卖诡计，卖意象与道德窒息</td></tr>
+        <tr><td>《消失的爱人》</td><td>婚姻惊悚的成熟受众，习惯叙事诡计与不可靠叙述</td><td>封闭空间叙事 + 第一人称囚笼视角，恐怖更贴身</td></tr>
+        <tr><td>《闪灵》金 / 库布里克</td><td>恐怖审美的心智原点：家庭空间里的疯狂</td><td>直接互文（书内三海报），可光明正大地向影迷群体借力导流</td></tr>
+        <tr><td>斯蒂芬·金系译作</td><td>中文"恐怖"货架的现存购买人群</td><td>母语写作的贴身恐惧 + 本土空间（三楼阳光房、露台、台风夜）</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <h3 class="block reveal">定位坐标</h3>
+  <p class="body reveal">
+    横轴：通俗类型 ↔ 文学严肃；纵轴：血腥奇观 ↔ 心理冷恐怖。<span class="rd">《孤裂》占据右上象限的空位</span>——
+    文学性与心理恐怖的双高区，这一格在中文原创市场长期无人落子。
+  </p>
+  <div class="posmap reveal">
+    <div class="axis ax-x"></div><div class="axis ax-y"></div>
+    <span class="lab" style="top:6px;left:50%;transform:translateX(-50%)">心理冷恐怖</span>
+    <span class="lab" style="bottom:6px;left:50%;transform:translateX(-50%)">血腥奇观</span>
+    <span class="lab" style="left:8px;top:50%;transform:translateY(-50%)">通俗类型</span>
+    <span class="lab" style="right:8px;top:50%;transform:translateY(-50%)">文学严肃</span>
+    <span class="dot" style="left:24%;top:74%">斯蒂芬·金译作</span>
+    <span class="dot" style="left:33%;top:30%">《闪灵》</span>
+    <span class="dot" style="left:62%;top:66%">紫金陈</span>
+    <span class="dot" style="left:70%;top:40%">《白夜行》</span>
+    <span class="dot" style="left:58%;top:80%">《消失的爱人》</span>
+    <span class="dot us" style="left:82%;top:18%">《孤裂》</span>
+  </div>
+  <p class="posmap-alt">（移动端摘要）坐标横轴为"通俗类型 ↔ 文学严肃"，纵轴为"血腥奇观 ↔ 心理冷恐怖"。《孤裂》落位：文学性高 × 心理恐怖强——中文原创市场的空位象限。</p>
+
+  <div class="m15"><i>1.5 m</i> SEC.05 → 06</div>
+</section>
+
+<!-- ================= 06 CHANNELS ================= -->
+<section id="channels">
+  <div class="sec-head reveal">
+    <div class="sec-idx">SEC.06<span class="en">CHANNELS &amp; DISTRIBUTION</span></div>
+    <h2>渠道与分发<small>一个主阵地，两个口碑池，一条第二曲线</small></h2>
+  </div>
+
+  <div class="chan-grid">
+    <div class="chan reveal d1">
+      <div class="top"><h4>微信读书</h4><span class="role p0">首发主阵地</span></div>
+      <p><b>已有导出版全本就绪。</b>独家首发 + 申报"出版精选"位；前 3 章免费试读，利用书评区与"在读人数"的社交显性做冷启动冲榜。书友的划线与热评区，是本书金句的天然放大器。</p>
+    </div>
+    <div class="chan reveal d2">
+      <div class="top"><h4>豆瓣阅读 / 豆瓣条目</h4><span class="role p0">口碑池</span></div>
+      <p>T-4 周建条目、铺"想读"；首发后邀请种子读者打分写长评。豆瓣评分是后续一切渠道谈判（实体出版、有声、影视）的<b>信任状</b>，必须死守基本盘。</p>
+    </div>
+    <div class="chan reveal d1">
+      <div class="top"><h4>知乎 / 盐选</h4><span class="role p1">引流</span></div>
+      <p>自布局"如何评价小说《孤裂》"等问题的深度回答；在"恐怖故事""心理惊悚"话题下投放<b>意象拆解长文</b>，文末挂试读引流。知乎的长尾搜索流量按年计。</p>
+    </div>
+    <div class="chan reveal d2">
+      <div class="top"><h4>小红书 / B站</h4><span class="role p1">内容营销</span></div>
+      <p>面向 P2 影迷群体：<b>概念海报三连</b>（仿电影海报规格）、《闪灵》互文解说、"372 张海报封死的房间"视觉企划。恐怖美学在小红书有稳定的高互动传统。</p>
+    </div>
+    <div class="chan reveal d1">
+      <div class="top"><h4>播客</h4><span class="role p1">议题纵深</span></div>
+      <p>面向 P3 破圈层：文化类、悬疑类播客共读与访谈，主题锁定"当拯救变成囚禁"。<b>联动反家暴公益</b>，让议题讨论落在正当的位置上——这是本案的道德护栏。</p>
+    </div>
+    <div class="chan reveal d2">
+      <div class="top"><h4>磨铁 / 浦睿 / 后浪</h4><span class="role p2">实体长尾</span></div>
+      <p>电子版口碑起来后洽谈实体出版。实体书是 IP 的<b>信任状与仪式感载体</b>——封面做成"阳光房海报"的可撕设计，是给核心读者的实体彩蛋。</p>
+    </div>
+    <div class="chan reveal d1">
+      <div class="top"><h4>有声书</h4><span class="role p2">第二曲线</span></div>
+      <p>第一人称独白的冷感文风<b>天然适配单人有声剧</b>：一个低沉的男声，一间安静的房。喜马拉雅 / 懒人听书渠道，T+2 月启动。</p>
+    </div>
+    <div class="chan reveal d2">
+      <div class="top"><h4>短剧 / 影视提案</h4><span class="role p2">IP 远期</span></div>
+      <p>封闭空间 + 单一楼盘场景 = <b>低成本高概念的影视原型</b>。T+3 月以"心理恐怖短剧"提案参加 IP 路演，带着豆瓣评分与完读率数据去谈。</p>
+    </div>
+  </div>
+
+  <div class="m15"><i>1.5 m</i> SEC.06 → 07</div>
+</section>
+
+<!-- ================= 07 LAUNCH ================= -->
+<section id="launch">
+  <div class="sec-head reveal">
+    <div class="sec-idx">SEC.07<span class="en">LAUNCH PLAN — SIX ACTS</span></div>
+    <h2>发布节奏 · 六幕<small>像这本书一样：每一幕有主题，每一幕有过闸指标</small></h2>
+  </div>
+
+  <p class="note reveal">
+    发布节奏照搬了小说自身的六幕结构——<b>预热是海报，首发是贴上最后一张</b>。
+    每一幕设"过闸指标（Gate）"，未过闸不进入下一幕：像工程师的图纸评审一样管理发布。
+  </p>
+
+  <div class="acts">
+    <div class="act reveal">
+      <div class="act-dot"><i></i>ACT 1</div>
+      <div class="act-body">
+        <div class="act-head"><h4>第一幕 · 造盒</h4><span class="tw">T-4 周 → T-1 周 · 预热</span></div>
+        <p class="goal"><b>目标</b>让市场知道"有一个被封死的房间，和一个还没上市的故事"。</p>
+        <ul>
+          <li>豆瓣条目上线，铺"想读"基本盘；#孤裂# 话题注册</li>
+          <li>概念海报三连发布（仿电影海报规格：《闪灵》式人脸 / 一米五露台俯拍 / 封死的玻璃盒）</li>
+          <li>20 位种子书评人提前共读（签署统一口径备忘）</li>
+          <li>确定试读策略：以第五章"管道里的头发"与第九章"跨越一米五"作为钩子章（见 SEC.09 风险）</li>
+        </ul>
+        <div class="gate"><b>过闸 GATE</b>想读 / 预约 ≥ 500，种子书评人确认 ≥ 15 人</div>
+      </div>
+    </div>
+
+    <div class="act reveal">
+      <div class="act-dot"><i></i>ACT 2</div>
+      <div class="act-body">
+        <div class="act-head"><h4>第二幕 · 开幕</h4><span class="tw">T-0 · 万圣节周首发</span></div>
+        <p class="goal"><b>目标</b>冲上微信读书新书榜，把"国产原创心理恐怖"钉进品类心智。</p>
+        <ul>
+          <li>微信读书独家首发，前 3 章免费；申报平台重点推荐位</li>
+          <li>档期锚定 10 月末——万圣节是心理恐怖品类的天然流量节点</li>
+          <li>发布"作者手记"：为什么用工程师的方式写恐怖</li>
+          <li>金句卡每日一投（划线区运营同步启动）</li>
+        </ul>
+        <div class="gate"><b>过闸 GATE</b>首周前 3 章试读完成率 ≥ 40%，新书榜分类 Top 10</div>
+      </div>
+    </div>
+
+    <div class="act reveal">
+      <div class="act-dot"><i></i>ACT 3</div>
+      <div class="act-body">
+        <div class="act-head"><h4>第三幕 · 裂缝</h4><span class="tw">T+1 → T+2 周 · 口碑</span></div>
+        <p class="goal"><b>目标</b>让读完的人开口，让开口的人被听见。</p>
+        <ul>
+          <li>种子书评人长评分批释放（豆瓣 / 微信读书书评区）</li>
+          <li>知乎问题矩阵上线："如何评价小说《孤裂》"及意象拆解文</li>
+          <li>B站 / 小红书投放 3–5 位中腰部读书区、恐怖美学区创作者</li>
+          <li>监控差评关键词，48 小时内响应统一口径</li>
+        </ul>
+        <div class="gate"><b>过闸 GATE</b>豆瓣 / 微信读书评分 ≥ 8.0，好评率 ≥ 85%</div>
+      </div>
+    </div>
+
+    <div class="act reveal">
+      <div class="act-dot"><i></i>ACT 4</div>
+      <div class="act-body">
+        <div class="act-head"><h4>第四幕 · 台风</h4><span class="tw">T+3 → T+6 周 · 议题破圈</span></div>
+        <p class="goal"><b>目标</b>把一本书的话题，变成一场关于"拯救与控制"的公共讨论。</p>
+        <ul>
+          <li>议题长文《当拯救变成囚禁》：投公众号 / 播客 show notes</li>
+          <li>2–3 档播客共读 + 作者访谈（统一口径：批判控制型爱）</li>
+          <li>反家暴公益联动：每万次完读捐赠一次援助热线服务</li>
+          <li>舆情 24h 监测，浪漫化误读第一时间纠偏</li>
+        </ul>
+        <div class="gate"><b>过闸 GATE</b>站外引流占比 ≥ 30%，负面舆情归零（无浪漫化定性发酵）</div>
+      </div>
+    </div>
+
+    <div class="act reveal">
+      <div class="act-dot"><i></i>ACT 5</div>
+      <div class="act-body">
+        <div class="act-head"><h4>第五幕 · 夹层</h4><span class="tw">T+2 → T+3 月 · 第二曲线</span></div>
+        <p class="goal"><b>目标</b>让故事长出第二种形态。</p>
+        <ul>
+          <li>有声书启动：单人有声剧形态，男声独白 + 极简音效</li>
+          <li>实体出版签约（磨铁 / 浦睿 / 后浪方向），封面可撕海报方案提案</li>
+          <li>短剧 / 影视 IP 路演：封闭空间低成本高概念提案</li>
+        </ul>
+        <div class="gate"><b>过闸 GATE</b>有声制作立项 + 实体或影视意向书 ≥ 1 份</div>
+      </div>
+    </div>
+
+    <div class="act reveal">
+      <div class="act-dot"><i></i>ACT 6</div>
+      <div class="act-body">
+        <div class="act-head"><h4>第六幕 · 长尾</h4><span class="tw">T+3 → T+6 月 · IP 与续作</span></div>
+        <p class="goal"><b>目标</b>从"一本书"变成"一个宇宙的入口"。</p>
+        <ul>
+          <li>实体书上市 + 限量周边（"青默"书签 / 一米五书尺）</li>
+          <li>世界观短篇 / 续作企划立项（陈曦的十五年、苏青的画室）</li>
+          <li>万圣节周年复刻运营：把档期变成年度仪式</li>
+        </ul>
+        <div class="gate"><b>过闸 GATE</b>累计读者 ≥ 5 万，30 日完读率 ≥ 55%，续作立项</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="m15"><i>1.5 m</i> SEC.07 → 08</div>
+</section>
+
+<!-- ================= 08 METRICS ================= -->
+<section id="metrics">
+  <div class="sec-head reveal">
+    <div class="sec-idx">SEC.08<span class="en">GROWTH MODEL &amp; KPI</span></div>
+    <h2>增长模型与指标<small>漏斗是冷的，但每一个环节都有名字</small></h2>
+  </div>
+
+  <div class="funnel reveal">
+    <div class="fstep"><div class="pct">5%</div><div class="nm">曝光 → 试读</div><div class="ds">物料点击率<br>海报 / 金句 / 解说</div></div>
+    <div class="fstep"><div class="pct">30%</div><div class="nm">试读 → 全本</div><div class="ds">前 3 章免费转全本<br>钩子章承接</div></div>
+    <div class="fstep"><div class="pct">55%</div><div class="nm">全本 → 完读</div><div class="ds">北极星<br>30 日口径</div></div>
+    <div class="fstep"><div class="pct">12%</div><div class="nm">完读 → 书评</div><div class="ds">长评 / 评分 / 划线</div></div>
+    <div class="fstep"><div class="pct">10%</div><div class="nm">书评 → 自传播</div><div class="ds">推荐给朋友<br>二创物料</div></div>
+  </div>
+
+  <div class="tbl-wrap reveal">
+    <table>
+      <thead><tr><th>指标</th><th>定义</th><th>T+30 天</th><th>T+90 天</th></tr></thead>
+      <tbody>
+        <tr><td>完读率（北极星）</td><td>开始阅读全本的用户中，30 日内读至第二十章的比例</td><td>≥ 45%</td><td>≥ 55%</td></tr>
+        <tr><td>想读 / 预约</td><td>豆瓣想读 + 微信读书预约累计</td><td>2,000</td><td>5,000</td></tr>
+        <tr><td>综合评分</td><td>豆瓣 / 微信读书加权</td><td>≥ 8.0</td><td>≥ 8.3</td></tr>
+        <tr><td>站外引流占比</td><td>知乎 / 小红书 / B站 / 播客渠道码归因的新增试读</td><td>≥ 30%</td><td>≥ 35%</td></tr>
+        <tr><td>长评数</td><td>豆瓣 + 微信读书 ≥ 300 字书评</td><td>80 篇</td><td>200 篇</td></tr>
+        <tr><td>衍生意向</td><td>有声 / 实体 / 影视任一环节的书面意向</td><td>—</td><td>≥ 2 项</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <h3 class="block reveal">度量机制</h3>
+  <p class="body reveal">
+    所有站外物料带<b>渠道码（UTM）</b>；每周一 30 分钟数据例会；每一幕结束做一次<span class="rd">闸门评审（Gate Review）</span>——
+    未过闸的幕不释放下一幕预算。像对待承重墙一样对待漏斗：任何一环开裂，整栋楼停工检修。
+  </p>
+
+  <div class="m15"><i>1.5 m</i> SEC.08 → 09</div>
+</section>
+
+<!-- ================= 09 RISKS ================= -->
+<section id="risks">
+  <div class="sec-head reveal">
+    <div class="sec-idx">SEC.09<span class="en">RISKS &amp; MITIGATION</span></div>
+    <h2>风险与应对<small>这栋房子的每一处裂缝，我们都提前看过</small></h2>
+  </div>
+
+  <div class="tbl-wrap reveal">
+    <table>
+      <thead><tr><th>风险</th><th>等级</th><th>应对</th></tr></thead>
+      <tbody>
+        <tr>
+          <td>内容审核：家暴、藏匿情节可能触发平台审校</td>
+          <td><span class="lvl hi">高</span></td>
+          <td>T-4 周前完成平台预审沟通；预备"审校版"删节预案（涉暴细节场景化弱化）；首发平台之外的分发版本单独标记版本号管理</td>
+        </tr>
+        <tr>
+          <td>开篇节奏慢：文学评估已指出前三章偏缓，可能损耗试读转化</td>
+          <td><span class="lvl md">中</span></td>
+          <td>试读策略改道：以第五章"管道里的头发"与第九章"跨越一米五"作为对外钩子章；推荐语直接标注"第 9 章起高能"；前 3 章免费保留入口但不承担钩子职能</td>
+        </tr>
+        <tr>
+          <td>议题反噬：被误读为"美化控制型关系"</td>
+          <td><span class="lvl hi">高</span></td>
+          <td>统一口径（SEC.04）写入所有合作方 brief；联动反家暴公益；作者手记前置申明批判立场；浪漫化标签舆情 24h 纠偏</td>
+        </tr>
+        <tr>
+          <td>单一平台依赖：首发集中于微信读书</td>
+          <td><span class="lvl md">中</span></td>
+          <td>T+2 周起分批上线豆瓣阅读；知乎 / 播客承担独立引流；渠道码周度监控占比，任一渠道超过 60% 即触发分散动作</td>
+        </tr>
+        <tr>
+          <td>超自然线分散：第二重恐怖线可能稀释主线口碑</td>
+          <td><span class="lvl md">中</span></td>
+          <td>营销物料聚焦主线意象（一米五 / 海报 / 阳光房）；超自然线作为"第二重恐怖"悬念极少提及，留给读者的惊喜即是长评的燃料</td>
+        </tr>
+        <tr>
+          <td>档期撞车：重点书目同期发布挤压推荐位</td>
+          <td><span class="lvl lo">低</span></td>
+          <td>T-6 周锁定平台排期；备选档期顺延一周的 B 计划；万圣节周之外，年末"年度恐怖书单"作为第二节点</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div class="m15"><i>1.5 m</i> SEC.09 → 10</div>
+</section>
+
+<!-- ================= 10 MILESTONES & BUDGET ================= -->
+<section id="milestones">
+  <div class="sec-head reveal">
+    <div class="sec-idx">SEC.10<span class="en">MILESTONES &amp; BUDGET</span></div>
+    <h2>里程碑与预算<small>时间表与钱，都围着档期转</small></h2>
+  </div>
+
+  <div class="tl reveal">
+    <div class="tl-cell">
+      <div class="when">2026.09 上旬</div>
+      <h5>定稿冻结</h5>
+      <p>全本终审 + 审校版预案完成；物料拍摄与概念海报交付。</p>
+    </div>
+    <div class="tl-cell">
+      <div class="when">2026.09 中旬</div>
+      <h5>第一幕 · 造盒</h5>
+      <p>豆瓣条目上线，种子书评人共读启动，预热内容开闸。</p>
+    </div>
+    <div class="tl-cell hot">
+      <div class="when">2026.10 末 · 万圣节周</div>
+      <h5>第二幕 · 首发</h5>
+      <p>微信读书独家首发，前 3 章免费，首周冲榜。</p>
+    </div>
+    <div class="tl-cell">
+      <div class="when">2026.11 → 2027.01</div>
+      <h5>三至六幕 · 滚动推进</h5>
+      <p>口碑 → 议题 → 有声 / 实体 / IP；年末书单收口，年度复刻立项。</p>
+    </div>
+  </div>
+
+  <h3 class="block reveal">首期推广预算分配（占首期推广总盘）</h3>
+  <div class="budget reveal">
+    <div class="brow"><span class="bn">内容与物料制作</span><span class="bar"><i data-w="30%"></i></span><span class="bv">30%</span></div>
+    <div class="brow"><span class="bn">书评人与 KOL</span><span class="bar"><i data-w="25%"></i></span><span class="bv">25%</span></div>
+    <div class="brow"><span class="bn">平台运营与精准投流</span><span class="bar"><i data-w="20%"></i></span><span class="bv">20%</span></div>
+    <div class="brow"><span class="bn">播客与议题合作</span><span class="bar"><i data-w="15%"></i></span><span class="bv">15%</span></div>
+    <div class="brow"><span class="bn">实体打样与限量周边</span><span class="bar"><i data-w="10%"></i></span><span class="bv">10%</span></div>
+  </div>
+  <p class="body reveal" style="margin-top:22px;font-size:13px">
+    ※ 每一幕闸门评审未通过时，下一幕预算冻结重排；议题与公益联动部分设为不可削减项——它是本案的道德护栏，不是营销费用。
+  </p>
+
+  <div class="m15"><i>1.5 m</i> SEC.10 / END</div>
+</section>
+
+<!-- ================= PULL QUOTE ================= -->
+<div class="pull reveal">
+  <div class="q">"别吵，<span class="rd">她刚睡着了</span>。"<br>——让每一个读者，在读到这一句时想起我们的封面。</div>
+  <div class="src">《孤裂》第十九章 · 全案的记忆锚点</div>
+</div>
+
+</main>
+
+<footer>
+  <div class="f-brand">APORIA <b>/ απορία</b></div>
+  <div class="f-meta">
+    《孤裂 / THE APORIA》GTM 作战卷宗 · V1.0 · 2026.08.29<br>
+    方案完 —— 剩下的，交给口碑。STRUCTURE IS READY. LET THE LIGHT IN.
+  </div>
+</footer>
+
+<script>
+  // ---------- scroll progress : the 1.5 meters ----------
+  const dot = document.getElementById('rulerDot');
+  const val = document.getElementById('rulerVal');
+  function onScroll(){
+    const max = document.documentElement.scrollHeight - innerHeight;
+    const p = max > 0 ? Math.min(1, Math.max(0, scrollY / max)) : 0;
+    dot.style.top = `calc(${(p*100).toFixed(2)}% - ${p*8}px)`;
+    val.textContent = (p*1.5).toFixed(2) + ' m';
+  }
+  addEventListener('scroll', onScroll, {passive:true});
+  addEventListener('resize', onScroll);
+  onScroll();
+
+  // ---------- hero countdown : the numbers on the posters ----------
+  const nums = ['十四','十三','十二','十一','十','九','八','七','六','五','四','三','二','一'];
+  const ghost = document.getElementById('ghostNum');
+  const cd = document.getElementById('cdNum');
+  let i = 0;
+  setInterval(() => {
+    ghost.classList.add('fade');
+    setTimeout(() => {
+      i = (i + 1) % nums.length;
+      ghost.textContent = nums[i];
+      cd.textContent = nums[i] + ' —';
+      ghost.classList.remove('fade');
+    }, 420);
+  }, 1600);
+
+  // ---------- reveal on scroll ----------
+  const io = new IntersectionObserver(entries => {
+    entries.forEach(e => { if (e.isIntersecting){ e.target.classList.add('on'); io.unobserve(e.target); } });
+  }, {threshold:.12, rootMargin:'0px 0px -6% 0px'});
+  document.querySelectorAll('.reveal').forEach(el => io.observe(el));
+
+  // ---------- budget bars ----------
+  const bio = new IntersectionObserver(entries => {
+    entries.forEach(e => {
+      if (e.isIntersecting){
+        e.target.querySelectorAll('i[data-w]').forEach((bar, k) => {
+          setTimeout(() => { bar.style.width = bar.dataset.w; }, 150 + k*140);
+        });
+        bio.unobserve(e.target);
+      }
+    });
+  }, {threshold:.4});
+  const budget = document.querySelector('.budget');
+  if (budget) bio.observe(budget);
+</script>
+<!-- gtm-portal-backlink (managed by _scripts/sync-gtm.py) -->
+<a class="gtmp-back" href="/GTM/" aria-label="返回 GTM 门户">&#8617; GTM 门户</a>
+<style>
+.gtmp-back{position:fixed;right:1rem;bottom:1rem;z-index:2147483000;
+font:500 12px/1 ui-monospace,SFMono-Regular,Menlo,Consolas,monospace;
+letter-spacing:.05em;text-decoration:none;padding:.6rem .85rem;border-radius:999px;
+color:#14130f;background:rgba(251,250,247,.92);border:1px solid rgba(20,19,15,.16);
+box-shadow:0 2px 12px rgba(20,19,15,.14);backdrop-filter:blur(6px);
+transition:transform .15s ease,box-shadow .15s ease}
+.gtmp-back:hover{transform:translateY(-1px);box-shadow:0 4px 16px rgba(20,19,15,.22)}
+@media (prefers-color-scheme:dark){.gtmp-back{color:#f5f2ea;background:rgba(20,19,15,.88);
+border-color:rgba(245,242,234,.22)}}
+</style>
+</body>
+</html>

@@ -1,0 +1,1017 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>小观 Xiao Guan · GTM 战略</title>
+<meta name="description" content="小观 — 开源冥想感知硬件的市场进入（Go-To-Market）战略：定位、人群、叙事、渠道、发布计划与度量体系。">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Serif+SC:wght@400;600;700;900&family=Noto+Sans+SC:wght@300;400;500;700&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+:root{
+  --ink:#0d1310;
+  --ink-2:#121a16;
+  --ink-3:#18231e;
+  --line:rgba(232,225,209,.13);
+  --line-soft:rgba(232,225,209,.07);
+  --paper:#e8e1d1;
+  --paper-dim:rgba(232,225,209,.58);
+  --paper-faint:rgba(232,225,209,.36);
+  --brass:#c9a45c;
+  --brass-soft:rgba(201,164,92,.14);
+  --sage:#93b2a0;
+  --clay:#c9835c;
+  --serif:'Noto Serif SC',serif;
+  --sans:'Noto Sans SC',sans-serif;
+  --mono:'IBM Plex Mono',monospace;
+}
+*{margin:0;padding:0;box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{
+  background:var(--ink);
+  color:var(--paper);
+  font-family:var(--sans);
+  font-weight:300;
+  line-height:1.75;
+  letter-spacing:.01em;
+  overflow-x:hidden;
+}
+::selection{background:var(--brass);color:var(--ink)}
+a{color:inherit}
+
+/* ---------- grain ---------- */
+body::before{
+  content:"";position:fixed;inset:0;z-index:999;pointer-events:none;opacity:.05;
+  background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+}
+
+/* ---------- nav ---------- */
+nav{
+  position:fixed;top:0;left:0;right:0;z-index:100;
+  display:flex;align-items:center;justify-content:space-between;
+  padding:14px 32px;
+  background:rgba(13,19,16,.72);backdrop-filter:blur(12px);-webkit-backdrop-filter:blur(12px);
+  border-bottom:1px solid var(--line-soft);
+}
+nav .brand{font-family:var(--serif);font-weight:700;font-size:17px;letter-spacing:.12em;text-decoration:none}
+nav .brand em{font-style:normal;color:var(--brass)}
+nav ul{display:flex;gap:22px;list-style:none}
+nav ul a{
+  font-family:var(--mono);font-size:11px;letter-spacing:.14em;color:var(--paper-dim);
+  text-decoration:none;transition:color .25s;
+}
+nav ul a:hover{color:var(--brass)}
+@media(max-width:1080px){nav ul{display:none}}
+
+/* ---------- shared ---------- */
+.wrap{max-width:1160px;margin:0 auto;padding:0 32px}
+section{scroll-margin-top:76px}
+.sec{padding:110px 0 40px}
+.sec-head{margin-bottom:56px;position:relative}
+.sec-head .idx{
+  font-family:var(--mono);font-size:13px;letter-spacing:.3em;color:var(--brass);margin-bottom:14px;
+  display:flex;align-items:center;gap:14px;
+}
+.sec-head .idx::after{content:"";height:1px;width:64px;background:var(--brass);opacity:.5}
+.sec-head h2{
+  font-family:var(--serif);font-weight:900;font-size:clamp(30px,4.2vw,46px);
+  letter-spacing:.04em;line-height:1.25;
+}
+.sec-head .en{
+  font-family:var(--mono);font-size:11px;letter-spacing:.32em;color:var(--paper-faint);
+  margin-top:10px;text-transform:uppercase;
+}
+.sec-head .lede{max-width:640px;color:var(--paper-dim);margin-top:18px;font-size:15.5px}
+.ghost{
+  position:absolute;right:0;top:-30px;font-family:var(--serif);font-weight:900;
+  font-size:clamp(90px,12vw,150px);line-height:1;color:transparent;
+  -webkit-text-stroke:1px rgba(232,225,209,.07);pointer-events:none;user-select:none;
+}
+.kicker{font-family:var(--mono);font-size:11px;letter-spacing:.22em;color:var(--brass)}
+.note{font-family:var(--mono);font-size:11.5px;color:var(--paper-faint);letter-spacing:.05em}
+
+/* reveal */
+.reveal{opacity:0;transform:translateY(26px);transition:opacity .9s cubic-bezier(.2,.6,.2,1),transform .9s cubic-bezier(.2,.6,.2,1)}
+.reveal.in{opacity:1;transform:none}
+
+/* ---------- hero ---------- */
+header.hero{
+  min-height:100vh;display:flex;flex-direction:column;justify-content:center;
+  position:relative;padding:130px 0 60px;
+  background:
+    radial-gradient(ellipse 70% 55% at 72% 42%,rgba(147,178,160,.08),transparent 60%),
+    radial-gradient(ellipse 50% 40% at 20% 85%,rgba(201,164,92,.06),transparent 60%),
+    var(--ink);
+  border-bottom:1px solid var(--line-soft);
+}
+.hero-grid{display:grid;grid-template-columns:1.15fr .85fr;gap:60px;align-items:center}
+@media(max-width:900px){.hero-grid{grid-template-columns:1fr}}
+.hero h1{
+  font-family:var(--serif);font-weight:900;
+  font-size:clamp(40px,6vw,72px);line-height:1.18;letter-spacing:.03em;margin:26px 0 8px;
+}
+.hero h1 .thin{font-weight:400;font-size:.55em;display:block;margin-top:10px;color:var(--paper-dim);letter-spacing:.14em}
+.hero .tag{
+  font-family:var(--serif);font-size:clamp(17px,2vw,21px);color:var(--sage);
+  letter-spacing:.12em;margin-top:22px;font-weight:600;
+}
+.hero .sub{color:var(--paper-dim);max-width:520px;margin-top:16px;font-size:15.5px}
+.hero .meta{
+  display:flex;flex-wrap:wrap;gap:10px 28px;margin-top:40px;padding-top:26px;
+  border-top:1px solid var(--line);font-family:var(--mono);font-size:11.5px;color:var(--paper-faint);letter-spacing:.08em;
+}
+.hero .meta b{color:var(--paper-dim);font-weight:500}
+
+/* breathing visual */
+.breath-stage{position:relative;width:min(380px,74vw);aspect-ratio:1;margin:0 auto}
+.breath-stage .ring{position:absolute;border-radius:50%;border:1px solid rgba(201,164,92,.22)}
+.breath-stage .r1{inset:0}
+.breath-stage .r2{inset:10%;border-color:rgba(147,178,160,.18)}
+.breath-stage .r3{inset:20%;border-color:rgba(232,225,209,.08)}
+.breath-core{
+  position:absolute;inset:27%;border-radius:50%;
+  background:radial-gradient(circle at 38% 32%,rgba(201,164,92,.5),rgba(201,164,92,.12) 58%,transparent 75%);
+  box-shadow:0 0 60px rgba(201,164,92,.18),inset 0 0 40px rgba(201,164,92,.12);
+  animation:breathe 9s ease-in-out infinite;
+}
+@keyframes breathe{0%,100%{transform:scale(.74)}42%,58%{transform:scale(1.04)}}
+.breath-word{
+  position:absolute;inset:0;display:flex;align-items:center;justify-content:center;
+  font-family:var(--serif);font-size:26px;letter-spacing:.5em;text-indent:.5em;color:var(--paper-dim);
+}
+.breath-word.w-in{animation:fadeA 9s ease-in-out infinite}
+.breath-word.w-out{animation:fadeB 9s ease-in-out infinite}
+@keyframes fadeA{0%{opacity:1}42%{opacity:1}54%{opacity:0}96%{opacity:0}100%{opacity:1}}
+@keyframes fadeB{0%{opacity:0}42%{opacity:0}54%{opacity:1}96%{opacity:1}100%{opacity:0}}
+.breath-bpm{
+  text-align:center;margin-top:26px;font-family:var(--mono);font-size:11px;
+  letter-spacing:.24em;color:var(--paper-faint);
+}
+
+/* strategy flow strip */
+.flow{margin-top:72px;border-top:1px solid var(--line);padding-top:26px}
+.flow ol{display:flex;flex-wrap:wrap;gap:8px 26px;list-style:none}
+.flow li{font-family:var(--mono);font-size:12px;letter-spacing:.14em;color:var(--paper-dim)}
+.flow li a{text-decoration:none;transition:color .25s}
+.flow li a:hover{color:var(--brass)}
+.flow li span{color:var(--brass);margin-right:8px}
+
+/* ---------- cards ---------- */
+.grid-3{display:grid;grid-template-columns:repeat(3,1fr);gap:22px}
+.grid-2{display:grid;grid-template-columns:repeat(2,1fr);gap:22px}
+@media(max-width:900px){.grid-3,.grid-2{grid-template-columns:1fr}}
+.card{
+  border:1px solid var(--line);background:linear-gradient(170deg,var(--ink-2),var(--ink));
+  padding:30px 28px;position:relative;transition:border-color .35s,transform .35s;
+}
+.card:hover{border-color:rgba(201,164,92,.4);transform:translateY(-3px)}
+.card .cn{font-family:var(--mono);font-size:11px;color:var(--brass);letter-spacing:.24em;margin-bottom:16px}
+.card h3{font-family:var(--serif);font-weight:700;font-size:19px;letter-spacing:.05em;margin-bottom:12px}
+.card p{font-size:14px;color:var(--paper-dim)}
+.card .hl{color:var(--sage)}
+
+/* ---------- positioning ---------- */
+.pos-box{
+  border:1px solid rgba(201,164,92,.35);background:var(--brass-soft);
+  padding:44px 46px;position:relative;
+}
+.pos-box::before{
+  content:"POSITIONING STATEMENT";position:absolute;top:-8px;left:32px;
+  background:var(--ink);padding:0 12px;font-family:var(--mono);font-size:10px;letter-spacing:.3em;color:var(--brass);
+}
+.pos-box dl{display:grid;grid-template-columns:120px 1fr;gap:16px 24px}
+@media(max-width:640px){.pos-box dl{grid-template-columns:1fr}.pos-box dt{margin-top:8px}}
+.pos-box dt{font-family:var(--mono);font-size:12px;color:var(--brass);letter-spacing:.12em;padding-top:3px}
+.pos-box dd{font-size:15.5px}
+.pos-box dd b{font-weight:500;color:var(--sage)}
+.oneliner{
+  margin-top:34px;display:flex;align-items:baseline;gap:22px;flex-wrap:wrap;
+  border-left:2px solid var(--brass);padding:6px 0 6px 26px;
+}
+.oneliner .lbl{font-family:var(--mono);font-size:10.5px;letter-spacing:.26em;color:var(--paper-faint)}
+.oneliner .txt{font-family:var(--serif);font-size:clamp(20px,2.6vw,28px);font-weight:700;letter-spacing:.06em}
+.nogos{margin-top:34px;display:grid;grid-template-columns:repeat(4,1fr);gap:14px}
+@media(max-width:900px){.nogos{grid-template-columns:repeat(2,1fr)}}
+.nogos div{
+  border:1px dashed rgba(201,131,92,.4);padding:14px 16px;font-size:12.5px;color:var(--paper-dim);
+}
+.nogos b{display:block;font-family:var(--mono);font-size:10px;letter-spacing:.2em;color:var(--clay);margin-bottom:6px;font-weight:500}
+
+/* ---------- personas ---------- */
+.persona{
+  border:1px solid var(--line);padding:32px 30px;background:var(--ink-2);
+  display:flex;flex-direction:column;gap:14px;position:relative;
+}
+.persona .role{
+  display:inline-block;font-family:var(--mono);font-size:10px;letter-spacing:.2em;
+  color:var(--ink);background:var(--brass);padding:4px 10px;align-self:flex-start;
+}
+.persona .role.sec2{background:var(--sage)}
+.persona h3{font-family:var(--serif);font-size:21px;font-weight:700;letter-spacing:.04em}
+.persona .who{font-family:var(--mono);font-size:11.5px;color:var(--paper-faint);letter-spacing:.06em}
+.persona ul{list-style:none;display:flex;flex-direction:column;gap:8px;font-size:13.5px;color:var(--paper-dim)}
+.persona ul li{padding-left:18px;position:relative}
+.persona ul li::before{content:"—";position:absolute;left:0;color:var(--brass);opacity:.7}
+.persona .hook{
+  margin-top:auto;padding-top:14px;border-top:1px solid var(--line-soft);
+  font-size:12.5px;color:var(--sage);
+}
+.persona .hook b{font-family:var(--mono);font-size:10px;letter-spacing:.2em;color:var(--paper-faint);font-weight:500;display:block;margin-bottom:4px}
+
+/* ---------- tables ---------- */
+.tbl{width:100%;border-collapse:collapse;font-size:13.5px}
+.tbl th,.tbl td{border:1px solid var(--line-soft);padding:13px 16px;text-align:left;vertical-align:top}
+.tbl th{
+  font-family:var(--mono);font-size:11px;letter-spacing:.14em;color:var(--paper-dim);font-weight:500;
+  background:var(--ink-2);
+}
+.tbl td{color:var(--paper-dim)}
+.tbl td:first-child{color:var(--paper);font-weight:400;white-space:nowrap}
+.tbl .us{background:rgba(201,164,92,.09);color:var(--paper)}
+.tbl th.us{color:var(--brass);background:rgba(201,164,92,.12)}
+.tbl-wrap{overflow-x:auto}
+.tick{color:var(--sage);font-weight:500}
+.cross{color:var(--clay);opacity:.85}
+
+/* ---------- message house ---------- */
+.house{display:flex;flex-direction:column;gap:0}
+.roof{
+  border:1px solid rgba(201,164,92,.4);background:var(--brass-soft);
+  text-align:center;padding:34px 40px;position:relative;
+}
+.roof .lbl{font-family:var(--mono);font-size:10px;letter-spacing:.3em;color:var(--brass);display:block;margin-bottom:12px}
+.roof .msg{font-family:var(--serif);font-size:clamp(19px,2.4vw,25px);font-weight:700;letter-spacing:.05em;line-height:1.6}
+.pillars{display:grid;grid-template-columns:repeat(3,1fr);gap:0;margin:0}
+@media(max-width:900px){.pillars{grid-template-columns:1fr}}
+.pillar{border:1px solid var(--line);border-top:none;padding:28px 26px;background:var(--ink-2)}
+.pillar+.pillar{border-left:none}
+@media(max-width:900px){.pillar+.pillar{border-left:1px solid var(--line);border-top:none}}
+.pillar .pnum{font-family:var(--mono);font-size:11px;color:var(--brass);letter-spacing:.2em}
+.pillar h4{font-family:var(--serif);font-size:19px;font-weight:700;margin:10px 0 10px;letter-spacing:.04em}
+.pillar p{font-size:13px;color:var(--paper-dim)}
+.pillar .proof{
+  margin-top:16px;padding-top:12px;border-top:1px solid var(--line-soft);
+  font-family:var(--mono);font-size:11px;color:var(--sage);letter-spacing:.04em;line-height:1.7;
+}
+.foundation{
+  border:1px solid var(--line);border-top:none;background:var(--ink-3);
+  padding:20px 28px;display:flex;flex-wrap:wrap;gap:10px 34px;align-items:center;
+}
+.foundation span{font-family:var(--mono);font-size:11.5px;color:var(--paper-faint);letter-spacing:.06em}
+.foundation span b{color:var(--sage);font-weight:500;margin-right:8px}
+.aud-msg{margin-top:30px}
+.aud-msg .tbl td:first-child{white-space:normal}
+
+/* ---------- pricing ---------- */
+.tier{display:flex;flex-direction:column;gap:12px}
+.tier .price{font-family:var(--serif);font-size:20px;font-weight:900;color:var(--brass);letter-spacing:.02em;white-space:nowrap}
+.tier .price small{font-size:13px;color:var(--paper-faint);font-weight:400}
+.tier .p-role{font-family:var(--mono);font-size:10.5px;letter-spacing:.18em;color:var(--sage)}
+.principles{margin-top:34px;display:flex;flex-wrap:wrap;gap:12px}
+.principles span{
+  border:1px solid var(--line);padding:10px 18px;font-size:13px;color:var(--paper-dim);
+}
+.principles span b{color:var(--brass);font-weight:500}
+
+/* ---------- channels ---------- */
+.channel{border:1px solid var(--line);padding:26px;background:var(--ink-2);transition:border-color .3s}
+.channel:hover{border-color:rgba(147,178,160,.45)}
+.channel .c-role{font-family:var(--mono);font-size:10px;letter-spacing:.22em;color:var(--sage)}
+.channel h4{font-family:var(--serif);font-size:17px;font-weight:700;margin:8px 0 10px;letter-spacing:.04em}
+.channel p{font-size:13px;color:var(--paper-dim)}
+.channel .kpi{margin-top:12px;font-family:var(--mono);font-size:11px;color:var(--paper-faint)}
+.channel .kpi b{color:var(--brass);font-weight:500}
+
+/* ---------- timeline ---------- */
+.timeline{list-style:none;position:relative;padding-left:36px}
+.timeline::before{content:"";position:absolute;left:8px;top:6px;bottom:6px;width:1px;background:var(--line)}
+.timeline>li{position:relative;padding:0 0 44px 24px}
+.timeline>li:last-child{padding-bottom:0}
+.timeline>li::before{
+  content:"";position:absolute;left:-33px;top:8px;width:11px;height:11px;border-radius:50%;
+  background:var(--ink);border:2px solid var(--brass);
+}
+.tl-date{font-family:var(--mono);font-size:11.5px;letter-spacing:.16em;color:var(--brass)}
+.timeline h3{font-family:var(--serif);font-size:22px;font-weight:700;margin:8px 0 6px;letter-spacing:.04em}
+.timeline h3 small{font-family:var(--mono);font-size:11px;color:var(--paper-faint);letter-spacing:.14em;font-weight:400;margin-left:14px}
+.timeline .goal{font-size:14px;color:var(--sage);margin-bottom:14px}
+.tl-cols{display:grid;grid-template-columns:1.3fr 1fr;gap:30px}
+@media(max-width:800px){.tl-cols{grid-template-columns:1fr}}
+.timeline ul{list-style:none;display:flex;flex-direction:column;gap:7px;font-size:13.5px;color:var(--paper-dim)}
+.timeline ul li{padding-left:16px;position:relative}
+.timeline ul li::before{content:"·";position:absolute;left:2px;color:var(--brass)}
+.exit{
+  border:1px dashed rgba(147,178,160,.35);padding:16px 18px;align-self:start;
+}
+.exit b{font-family:var(--mono);font-size:10px;letter-spacing:.24em;color:var(--sage);font-weight:500;display:block;margin-bottom:8px}
+.exit p{font-size:12.5px;color:var(--paper-dim);line-height:1.8}
+.exit p em{font-style:normal;color:var(--paper)}
+
+/* ---------- funnel & metrics ---------- */
+.metrics-grid{display:grid;grid-template-columns:1fr 1fr;gap:26px}
+@media(max-width:900px){.metrics-grid{grid-template-columns:1fr}}
+.ns-card{
+  border:1px solid rgba(201,164,92,.4);background:var(--brass-soft);padding:34px 32px;
+  display:flex;flex-direction:column;justify-content:center;gap:14px;
+}
+.ns-card .lbl{font-family:var(--mono);font-size:10px;letter-spacing:.28em;color:var(--brass)}
+.ns-card .big{font-family:var(--serif);font-size:clamp(22px,2.6vw,30px);font-weight:900;letter-spacing:.04em;line-height:1.5}
+.ns-card p{font-size:13.5px;color:var(--paper-dim)}
+.funnel{display:flex;flex-direction:column;gap:8px}
+.f-row{display:grid;grid-template-columns:150px 1fr 120px;gap:14px;align-items:center}
+@media(max-width:640px){.f-row{grid-template-columns:110px 1fr 90px}}
+.f-row .f-lbl{font-size:12.5px;color:var(--paper-dim);text-align:right}
+.f-bar{
+  height:38px;background:linear-gradient(90deg,rgba(201,164,92,.35),rgba(201,164,92,.12));
+  border-left:2px solid var(--brass);display:flex;align-items:center;padding:0 14px;
+  font-family:var(--mono);font-size:12px;color:var(--paper);
+}
+.f-row .f-cv{font-family:var(--mono);font-size:11px;color:var(--paper-faint)}
+.funnel .note{margin-top:14px}
+.privacy-note{
+  margin-top:26px;border-left:2px solid var(--clay);padding:8px 0 8px 22px;
+  font-size:13px;color:var(--paper-dim);max-width:760px;
+}
+.privacy-note b{color:var(--clay);font-weight:500}
+
+/* ---------- risks ---------- */
+.risk-level{font-family:var(--mono);font-size:10.5px;letter-spacing:.1em;padding:3px 9px;white-space:nowrap}
+.risk-hi{color:var(--clay);border:1px solid rgba(201,131,92,.5)}
+.risk-mid{color:var(--brass);border:1px solid rgba(201,164,92,.45)}
+.risk-lo{color:var(--sage);border:1px solid rgba(147,178,160,.45)}
+
+/* ---------- closing ---------- */
+.closing{padding:110px 0 40px;border-top:1px solid var(--line-soft);margin-top:60px;
+  background:radial-gradient(ellipse 60% 50% at 50% 0%,rgba(147,178,160,.06),transparent 65%);
+}
+.closing .final{
+  font-family:var(--serif);font-size:clamp(24px,3.4vw,38px);font-weight:700;letter-spacing:.05em;
+  line-height:1.6;max-width:840px;
+}
+.closing .final em{font-style:normal;color:var(--brass)}
+.next-steps{margin-top:52px;display:grid;grid-template-columns:repeat(4,1fr);gap:16px}
+@media(max-width:900px){.next-steps{grid-template-columns:repeat(2,1fr)}}
+.next-steps div{border:1px solid var(--line);padding:20px;font-size:13px;color:var(--paper-dim)}
+.next-steps b{font-family:var(--mono);font-size:10px;letter-spacing:.22em;color:var(--brass);font-weight:500;display:block;margin-bottom:8px}
+footer{
+  margin-top:80px;border-top:1px solid var(--line-soft);padding:28px 0 40px;
+  display:flex;justify-content:space-between;flex-wrap:wrap;gap:12px;
+  font-family:var(--mono);font-size:11px;color:var(--paper-faint);letter-spacing:.1em;
+}
+footer a{color:var(--paper-dim);text-decoration:none}
+footer a:hover{color:var(--brass)}
+
+@media(prefers-reduced-motion:reduce){
+  *{animation:none!important;transition:none!important}
+  .reveal{opacity:1;transform:none}
+}
+</style>
+</head>
+<body>
+
+<nav>
+  <a class="brand" href="#top">小观 <em>·</em> GTM</a>
+  <ul>
+    <li><a href="#s1">01 市场</a></li>
+    <li><a href="#s2">02 定位</a></li>
+    <li><a href="#s3">03 人群</a></li>
+    <li><a href="#s4">04 差异</a></li>
+    <li><a href="#s5">05 叙事</a></li>
+    <li><a href="#s6">06 商业</a></li>
+    <li><a href="#s7">07 渠道</a></li>
+    <li><a href="#s8">08 发布</a></li>
+    <li><a href="#s9">09 指标</a></li>
+    <li><a href="#s10">10 风险</a></li>
+  </ul>
+</nav>
+
+<!-- ============ HERO ============ -->
+<header class="hero" id="top">
+  <div class="wrap">
+    <div class="hero-grid">
+      <div>
+        <span class="kicker">PEACE LAB · 内部策略文档 · GO-TO-MARKET</span>
+        <h1>小观<span style="color:var(--brass)">。</span>
+          <span class="thin">开源冥想感知硬件 · 市场进入战略</span>
+        </h1>
+        <p class="tag">把呼吸变成看得见的数据。</p>
+        <p class="sub">
+          麦克风感知呼吸，陀螺仪感知定力。这份文档回答一个问题：
+          如何让第一批 1,000 位用户，在发布后的 90 天内真正用小观完成冥想。
+        </p>
+        <div class="meta">
+          <span>版本 <b>v1.0</b></span>
+          <span>日期 <b>2026-08-29</b></span>
+          <span>T0 发布日 <b>2026-10-10 · 世界精神卫生日</b></span>
+          <span>Owner <b>Peace Lab</b></span>
+        </div>
+      </div>
+      <div>
+        <div class="breath-stage" aria-hidden="true">
+          <div class="ring r1"></div><div class="ring r2"></div><div class="ring r3"></div>
+          <div class="breath-core"></div>
+          <div class="breath-word w-in">吸 气</div>
+          <div class="breath-word w-out">呼 气</div>
+        </div>
+        <p class="breath-bpm">≈ 6 BPM · 深呼吸节奏 · 页面随呼吸起伏</p>
+      </div>
+    </div>
+
+    <div class="flow">
+      <span class="kicker" style="display:block;margin-bottom:16px">策略主线</span>
+      <ol>
+        <li><span>01</span><a href="#s1">为什么是现在</a></li>
+        <li><span>02</span><a href="#s2">定位与品类</a></li>
+        <li><span>03</span><a href="#s3">目标人群</a></li>
+        <li><span>04</span><a href="#s4">差异化</a></li>
+        <li><span>05</span><a href="#s5">叙事信息</a></li>
+        <li><span>06</span><a href="#s6">商业模式</a></li>
+        <li><span>07</span><a href="#s7">渠道打法</a></li>
+        <li><span>08</span><a href="#s8">发布计划</a></li>
+        <li><span>09</span><a href="#s9">北极星与指标</a></li>
+        <li><span>10</span><a href="#s10">风险对策</a></li>
+      </ol>
+    </div>
+  </div>
+</header>
+
+<main>
+
+<!-- ============ 01 MARKET ============ -->
+<section class="sec" id="s1">
+  <div class="wrap">
+    <div class="sec-head reveal">
+      <span class="ghost">壹</span>
+      <div class="idx">01 · WHY NOW</div>
+      <h2>市场与时机</h2>
+      <p class="lede">好产品进错时机等于没有产品。三个结构性变化，让「便宜、可见、开源」的冥想硬件第一次成为一门成立的生意。</p>
+    </div>
+
+    <div class="grid-3">
+      <div class="card reveal">
+        <div class="cn">趋势一</div>
+        <h3>冥想从 App 走向硬件</h3>
+        <p>冥想 App 订阅疲劳显现——用户付费的是<span class="hl">「引导」</span>，但坚持不下去缺的是<span class="hl">「反馈」</span>。EEG 头环品类已验证付费意愿（Muse 累计销量达百万台量级），但价格与佩戴门槛把大多数人挡在门外。</p>
+      </div>
+      <div class="card reveal">
+        <div class="cn">趋势二</div>
+        <h3>生理数据的民主化</h3>
+        <p>手环和手表用十年时间教会了大众看心率与睡眠分。用户已经形成<span class="hl">「数字化的进步感」</span>的消费习惯，下一步自然延伸到呼吸与定力——而这恰恰是冥想练习最难自我感知的两件事。</p>
+      </div>
+      <div class="card reveal">
+        <div class="cn">趋势三</div>
+        <h3>开源硬件生态成熟</h3>
+        <p>M5Stack 等模块化硬件把感知设备的 BOM 压到 <span class="hl">¥200 以内</span>，创客社区自带传播与共创能力。「不自研硬件、专注算法与体验」的轻资产路径，过去从未如此可行。</p>
+      </div>
+    </div>
+
+    <div class="grid-3" style="margin-top:22px">
+      <div class="card reveal">
+        <div class="cn">TAM · 全球</div>
+        <h3 style="font-size:24px">≈ $50–90 亿 / 年</h3>
+        <p>全球正念与冥想市场（口径：App 订阅 + 线下课程 + 硬件设备）。</p>
+      </div>
+      <div class="card reveal">
+        <div class="cn">SAM · 可服务</div>
+        <h3 style="font-size:24px">≈ ¥10 亿 / 年</h3>
+        <p>中文圈冥想付费用户 + 全球创客 / 量化自我人群的硬件支出。</p>
+      </div>
+      <div class="card reveal">
+        <div class="cn">SOM · 首年可获取</div>
+        <h3 style="font-size:24px">≈ 0.1% → 2,000 台</h3>
+        <p>首年激活 2,000 台 / 售出套件 500 套。以社区渗透率倒推，不烧钱获客。</p>
+      </div>
+    </div>
+
+    <p class="note reveal" style="margin-top:18px">* 以上均为估算口径，用于对齐数量级而非承诺。发布前 2 周（Phase 0 退出标准之一）用最新行业报告校准一次。</p>
+  </div>
+</section>
+
+<!-- ============ 02 POSITIONING ============ -->
+<section class="sec" id="s2">
+  <div class="wrap">
+    <div class="sec-head reveal">
+      <span class="ghost">贰</span>
+      <div class="idx">02 · POSITIONING</div>
+      <h2>定位与品类</h2>
+      <p class="lede">我们开辟一个新品类，而不是挤进旧品类。品类名：冥想感知硬件（Meditation Sensing Hardware）——不是「智能头环」，也不是「冥想 App 的硬件版」。</p>
+    </div>
+
+    <div class="pos-box reveal">
+      <dl>
+        <dt>对于</dt><dd>想要坚持冥想、却始终得不到反馈的<b>练习者与创客</b>；</dd>
+        <dt>小观是</dt><dd>一款<b>开源冥想感知硬件</b>；</dd>
+        <dt>它</dt><dd>用麦克风与陀螺仪，把<b>呼吸频率和身体定力变成实时可见的数据</b>；</dd>
+        <dt>不同于</dt><dd>只会引导、无法验证练习质量的冥想 App，以及两千元起、封闭昂贵的 EEG 头环；</dd>
+        <dt>我们的产品</dt><dd>把感知算法完全开源，跑在 ¥200 的通用硬件上，<b>所有数据留在本地</b>。</dd>
+      </dl>
+    </div>
+
+    <div class="oneliner reveal">
+      <span class="lbl">对外一句话</span>
+      <span class="txt">「小观，把呼吸变成看得见的数据 —— 属于你自己的冥想进步记录。」</span>
+    </div>
+
+    <div class="nogos reveal">
+      <div><b>不做 · 医疗宣称</b>不提「治疗 / 治愈 / 医疗级」，定位练习伙伴而非测量仪器。</div>
+      <div><b>不做 · 订阅制</b>软件永远免费。反订阅疲劳本身即定位的一部分。</div>
+      <div><b>不做 · 自研硬件</b>Phase 3 之前不碰供应链，专注算法、固件与体验。</div>
+      <div><b>不做 · 付费投放</b>首期零付费广告。开源社区是唯一的获客发动机。</div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ 03 PERSONAS ============ -->
+<section class="sec" id="s3">
+  <div class="wrap">
+    <div class="sec-head reveal">
+      <span class="ghost">叁</span>
+      <div class="idx">03 · ICP &amp; PERSONAS</div>
+      <h2>目标人群</h2>
+      <p class="lede">三类核心用户，三个不同角色：初学者贡献规模，创客贡献种子与传播，老师贡献变现与背书。缺一不可，但节奏不同。</p>
+    </div>
+
+    <div class="grid-3">
+      <div class="persona reveal">
+        <span class="role">PRIMARY · 规模</span>
+        <h3>「卡住的初学者」</h3>
+        <p class="who">小满 · 28 岁 · 互联网从业者</p>
+        <ul>
+          <li>试过 3 个冥想 App，没有一个坚持超过两周</li>
+          <li>痛点：不知道自己「练得对不对」，缺乏进步感</li>
+          <li>对数据化反馈有好感（手环 / 打卡App 重度用户）</li>
+        </ul>
+        <div class="hook"><b>触达 × 钩子</b>小红书 / B 站；纯软件版零门槛体验 → 硬件升级路径</div>
+      </div>
+      <div class="persona reveal">
+        <span class="role">PRIMARY · 种子</span>
+        <h3>「量化禅修者」</h3>
+        <p class="who">老树 · 35 岁 · 硬件工程师 / 创客</p>
+        <ul>
+          <li>M5Stack 玩家，抽屉里至少三块 ESP32 开发板</li>
+          <li>想要可读、可改的算法，拒绝黑盒设备</li>
+          <li>既是首批用户，也是贡献者与传播节点</li>
+        </ul>
+        <div class="hook"><b>触达 × 钩子</b>GitHub / B站 / 创客社区；开源算法 + 三款硬件自由刷机</div>
+      </div>
+      <div class="persona reveal">
+        <span class="role">PRIMARY · 变现</span>
+        <h3>「冥想引导者」</h3>
+        <p class="who">陈老师 · 41 岁 · 禅修 / 瑜伽工作室主理人</p>
+        <ul>
+          <li>需要教学工具让学员「看见」自己的专注</li>
+          <li>预算敏感，但愿为差异化课程体验付费</li>
+          <li>自带学员网络，是最好的背书与分销渠道</li>
+        </ul>
+        <div class="hook"><b>触达 × 钩子</b>行业社群 / 线下 Pilot；团体看板 + 工作室版定制</div>
+      </div>
+    </div>
+
+    <div class="grid-2" style="margin-top:22px">
+      <div class="card reveal">
+        <div class="cn">SECONDARY · Phase 2 起</div>
+        <h3>海外量化自我 / Biohacker</h3>
+        <p>Reddit (r/meditation · r/Biohackers)、Show HN、Hackster.io。英文 README 就绪后开放。传播价值大于直接变现，反哺 GitHub Trending。</p>
+      </div>
+      <div class="card reveal">
+        <div class="cn">SECONDARY · Phase 3 后</div>
+        <h3>企业健康（EAP）</h3>
+        <p>企业冥想课程的教具采购。等工作室模式验证后再复制，首年只记录线索、不投入资源。</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ 04 DIFFERENTIATION ============ -->
+<section class="sec" id="s4">
+  <div class="wrap">
+    <div class="sec-head reveal">
+      <span class="ghost">肆</span>
+      <div class="idx">04 · WHY US</div>
+      <h2>差异化</h2>
+      <p class="lede">我们不和冥想 App 抢「引导」，不和 EEG 抢「专业测量」。我们占住中间没人做的位置：便宜、可见、开放的练习反馈。</p>
+    </div>
+
+    <div class="tbl-wrap reveal">
+      <table class="tbl">
+        <thead>
+          <tr>
+            <th style="width:22%">维度</th>
+            <th class="us" style="width:22%">小观</th>
+            <th>冥想 App<br><span style="opacity:.5">(Calm / Headspace / 潮汐)</span></th>
+            <th>EEG 头环<br><span style="opacity:.5">(Muse 等)</span></th>
+            <th>智能手环<br><span style="opacity:.5">(Apple Watch 等)</span></th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr><td>客观练习反馈</td><td class="us"><span class="tick">✓</span> 呼吸频率 + 定力评分实时可见</td><td><span class="cross">✗</span> 只引导，不验证</td><td><span class="tick">✓</span> 脑电，但不可读原始数据</td><td><span class="cross">✗</span> 呼吸提醒，非检测</td></tr>
+          <tr><td>入门成本</td><td class="us"><span class="tick">✓</span> ¥100–250（复用 M5Stack 现货）</td><td><span class="tick">✓</span> 免费下载，年订阅 ¥300+</td><td><span class="cross">✗</span> ¥1,500–2,500</td><td>随手机 / ¥1,000+</td></tr>
+          <tr><td>数据归属</td><td class="us"><span class="tick">✓</span> 全部本地，无云端无遥测</td><td>云端存储，随订阅条款</td><td>云端 + App 生态</td><td>厂商云</td></tr>
+          <tr><td>开源可改</td><td class="us"><span class="tick">✓</span> MIT 协议，算法透明</td><td><span class="cross">✗</span> 封闭</td><td><span class="cross">✗</span> 封闭</td><td><span class="cross">✗</span> 封闭</td></tr>
+          <tr><td>持续费用</td><td class="us"><span class="tick">✓</span> 无</td><td><span class="cross">✗</span> 订阅制</td><td><span class="cross">✗</span> 订阅制</td><td>部分订阅</td></tr>
+          <tr><td>可玩性</td><td class="us"><span class="tick">✓</span> 三款硬件 + 纯软件版，自由刷机改造</td><td>—</td><td>—</td><td>—</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="grid-2" style="margin-top:26px">
+      <div class="card reveal">
+        <div class="cn">护城河</div>
+        <h3>开源不是让出护城河，开源就是护城河</h3>
+        <p>代码可被复制，但四样东西抄不走：<span class="hl">社区与共创速度</span>（贡献者改进算法）、<span class="hl">品牌与东方美学</span>、<span class="hl">外壳与成品体验</span>（Phase 3）、以及<span class="hl">「数据属于你」的信任资产</span>。我们大方地被抄袭，因为抄袭者替我们教育了品类。</p>
+      </div>
+      <div class="card reveal">
+        <div class="cn">诚实边界</div>
+        <h3>明确说出我们不擅长什么</h3>
+        <p>感知精度不及医疗设备，也不追求达到；对嘈杂环境（电视 / 说话）的鲁棒性有限。在 FAQ 与文档中<span class="hl">主动公开算法边界</span>——诚实本身就是与「伪科学竞品」最大的差异。</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ 05 MESSAGING ============ -->
+<section class="sec" id="s5">
+  <div class="wrap">
+    <div class="sec-head reveal">
+      <span class="ghost">伍</span>
+      <div class="idx">05 · MESSAGING</div>
+      <h2>叙事与信息</h2>
+      <p class="lede">信息屋（Message House）：一个屋顶、三根支柱、一块地基。所有对外内容——README、小红书笔记、视频脚本——都必须能回溯到其中一根支柱。</p>
+    </div>
+
+    <div class="house reveal">
+      <div class="roof">
+        <span class="lbl">核心信息 · ROOF</span>
+        <div class="msg">冥想最难的是「看不见进步」。<br>小观把呼吸与定力变成数据，让每一次练习都被看见。</div>
+      </div>
+      <div class="pillars">
+        <div class="pillar">
+          <span class="pnum">支柱 ①</span>
+          <h4>看得见的进步</h4>
+          <p>实时呼吸曲线、0–100 定力评分、历史趋势。坚持不再靠意志力，靠反馈回路。</p>
+          <div class="proof">证据：WiFi 看板实拍 / 30 天趋势对比图</div>
+        </div>
+        <div class="pillar">
+          <span class="pnum">支柱 ②</span>
+          <h4>数据属于你</h4>
+          <p>无云端、无订阅、无遥测。设备自建热点，数据只存在你的局域网和 SD 卡里。</p>
+          <div class="proof">证据：架构文档 SoftAP 设计 · 隐私声明</div>
+        </div>
+        <div class="pillar">
+          <span class="pnum">支柱 ③</span>
+          <h4>开源、可玩、可信</h4>
+          <p>MIT 协议、算法透明、三款硬件 + 纯软件版。它不骗你，因为你可以读它的每一行代码。</p>
+          <div class="proof">证据：GitHub 仓库 · validate_breath.py 验证脚本</div>
+        </div>
+      </div>
+      <div class="foundation">
+        <span><b>地基</b>三款 M5Stack 硬件已适配</span>
+        <span>呼吸算法模拟验证 7/8 通过</span>
+        <span>4 级功耗管理 · 续航 13h+</span>
+        <span>MIT 开源协议</span>
+      </div>
+    </div>
+
+    <div class="aud-msg reveal">
+      <div class="tbl-wrap">
+        <table class="tbl">
+          <thead><tr><th style="width:26%">对谁说</th><th>说什么（一句话）</th><th style="width:30%">绝不说什么</th></tr></thead>
+          <tbody>
+            <tr><td>对初学者</td><td>「不是你不适合冥想，是你从没看见过自己的进步。」</td><td>不谈参数、协议、刷机</td></tr>
+            <tr><td>对创客</td><td>「一个跑在 M5Stack 上的开源感知算法，欢迎来改。」</td><td>不谈心灵成长、生活方式</td></tr>
+            <tr><td>对冥想老师</td><td>「让学员第一次亲眼看见专注长什么样。」</td><td>不替代老师，只做教具</td></tr>
+            <tr><td>对量化玩家</td><td>「你的呼吸 bpm 和定力分，第一次归你自己所有。」</td><td>不做医疗 / 健康声称</td></tr>
+          </tbody>
+        </table>
+      </div>
+      <p class="note" style="margin-top:14px">语言红线：不说「治疗/治愈/医疗级」；不贬低任何宗教修行传统；精度数值未经实测前绝不承诺。</p>
+    </div>
+  </div>
+</section>
+
+<!-- ============ 06 BUSINESS MODEL ============ -->
+<section class="sec" id="s6">
+  <div class="wrap">
+    <div class="sec-head reveal">
+      <span class="ghost">陆</span>
+      <div class="idx">06 · BUSINESS MODEL</div>
+      <h2>商业模式</h2>
+      <p class="lede">开源 + 硬件的双层结构：免费层做分发与信任，增值层（外壳、成品、B2B 服务）做收入。软件永远免费是铁律。</p>
+    </div>
+
+    <div class="grid-3" style="grid-template-columns:repeat(4,1fr)">
+      <div class="card tier reveal" style="grid-column:span 1">
+        <span class="p-role">TIER 0 · 获客入口</span>
+        <div class="price">Free</div>
+        <h3>纯软件版</h3>
+        <p>companion.py 桌面陪伴程序。电脑麦克风 + 摄像头即可体验核心算法，是漏斗的最顶端。</p>
+      </div>
+      <div class="card tier reveal">
+        <span class="p-role">TIER 1 · 社区主力</span>
+        <div class="price">BOM ≈ ¥100–250</div>
+        <h3>开源自装</h3>
+        <p>固件免费开源，用户自购 M5Stack 现货刷机。我们不赚硬件差价，赚的是社区。</p>
+      </div>
+      <div class="card tier reveal">
+        <span class="p-role">TIER 2 · Phase 3 · 规划</span>
+        <div class="price">¥399–599</div>
+        <h3>官方成品套件</h3>
+        <p>含冥想专用 3D 外壳、开箱即用固件、包装与说明册。毛利承担品牌与运营。</p>
+      </div>
+      <div class="card tier reveal">
+        <span class="p-role">TIER 3 · B2B · 高毛利</span>
+        <div class="price">定制报价</div>
+        <h3>工作室 / 团体版</h3>
+        <p>多设备 + 团体实时看板 + 课程素材包。以 Pilot 验证后定价，是收入的第二曲线。</p>
+      </div>
+    </div>
+
+    <div class="principles reveal">
+      <span><b>原则一</b> 硬件不亏钱卖，不做补贴换规模</span>
+      <span><b>原则二</b> 软件与固件永久免费、永久开源</span>
+      <span><b>原则三</b> 增值在外壳 / 服务 / 品牌，而非代码保密</span>
+      <span><b>原则四</b> B2B 在 C 端口碑成立之前不发力</span>
+    </div>
+  </div>
+</section>
+
+<!-- ============ 07 CHANNELS ============ -->
+<section class="sec" id="s7">
+  <div class="wrap">
+    <div class="sec-head reveal">
+      <span class="ghost">柒</span>
+      <div class="idx">07 · CHANNELS</div>
+      <h2>渠道与打法</h2>
+      <p class="lede">总打法：Community-Led Growth。开源社区是发动机，内容是放大器，B2B 是后手。选渠道的标准只有一个——目标人群已经聚集在那里。</p>
+    </div>
+
+    <div class="grid-3">
+      <div class="channel reveal">
+        <span class="c-role">发动机 · 技术信任</span>
+        <h4>GitHub</h4>
+        <p>仓库即落地页。README 当官网写：动图、三硬件对比表、Quick Start 压到 3 步。冲刺 GitHub Trending。</p>
+        <div class="kpi">衡量 <b>Stars / Forks / 贡献者数</b></div>
+      </div>
+      <div class="channel reveal">
+        <span class="c-role">放大器 · 中文主战场</span>
+        <h4>小红书 × B 站</h4>
+        <p>「数据即内容」：呼吸曲线截图天然适合传播。定力挑战、30 天记录、开箱刷机 Vlog 双圈层覆盖（冥想 + 创客）。</p>
+        <div class="kpi">衡量 <b>曝光 / 私域进群数</b></div>
+      </div>
+      <div class="channel reveal">
+        <span class="c-role">放大器 · 海外</span>
+        <h4>X · Reddit · Show HN</h4>
+        <p>英文 README 就绪后启动。Show HN 讲算法开源故事；r/meditation 讲反馈回路故事。北京时间晚间发布。</p>
+        <div class="kpi">衡量 <b>Referral 流量 / Star 增速</b></div>
+      </div>
+      <div class="channel reveal">
+        <span class="c-role">放大器 · 发布日</span>
+        <h4>Product Hunt × Hackster</h4>
+        <p>PH 用于海外发布日引爆（周二–周四）；Hackster.io / Hackaday 项目页长尾承接创客流量。</p>
+        <div class="kpi">衡量 <b>PH 当日排名 / 项目页流量</b></div>
+      </div>
+      <div class="channel reveal">
+        <span class="c-role">杠杆 · 生态合作</span>
+        <h4>M5Stack 生态</h4>
+        <p>小观是 M5Stack 的优质应用案例：争取官方转发、社区newsletter 推荐，远期谈官方商店上架。零成本高信任。</p>
+        <div class="kpi">衡量 <b>官方转发次数 / 联名内容</b></div>
+      </div>
+      <div class="channel reveal">
+        <span class="c-role">变现 · 后手</span>
+        <h4>工作室 Pilot</h4>
+        <p>免费借 5 家冥想 / 瑜伽工作室试用一个月，换案例与转介绍。Pilot 反哺产品（团体看板需求）。</p>
+        <div class="kpi">衡量 <b>Pilot NPS / 转化付费数</b></div>
+      </div>
+    </div>
+
+    <div class="grid-2" style="margin-top:26px">
+      <div class="card reveal">
+        <div class="cn">内容引擎</div>
+        <h3>每周固定节奏，而非灵感驱动</h3>
+        <p><span class="hl">周一</span>数据海报（社区成员投稿）· <span class="hl">周三</span>小红书笔记 ×2 · <span class="hl">周五</span>B 站视频或开发日志 · <span class="hl">周日</span>社区回复日（Issue / 群 / 评论区清零）。所有素材进公开 Media Kit，允许任何人二创。</p>
+      </div>
+      <div class="card reveal">
+        <div class="cn">冷启动三件事</div>
+        <h3>T-4 周必须就位</h3>
+        <p>① <span class="hl">20 人种子内测群</span>（创客 12 + 冥想练习者 8）　② <span class="hl">3 家工作室 Pilot</span> 签意向　③ <span class="hl">一支 60 秒 Demo 视频</span>（设备实拍 + WiFi 看板画面）。三件事齐了，发布才算准备好。</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ 08 LAUNCH PLAN ============ -->
+<section class="sec" id="s8">
+  <div class="wrap">
+    <div class="sec-head reveal">
+      <span class="ghost">捌</span>
+      <div class="idx">08 · LAUNCH PLAN</div>
+      <h2>发布计划</h2>
+      <p class="lede">T0 锚定 2026-10-10 世界精神卫生日。社交渠道先发造势，技术渠道周二跟进抢周榜——每个阶段都定义了退出标准，不达标不进入下一阶段。</p>
+    </div>
+
+    <ol class="timeline">
+      <li class="reveal">
+        <span class="tl-date">PHASE 0 · 2026-09-01 → 10-09</span>
+        <h3>预热与备战<small>PRE-LAUNCH</small></h3>
+        <p class="goal">目标：资产就位，种子用户蓄水。只做准备，不发声音。</p>
+        <div class="tl-cols">
+          <ul>
+            <li>README 重写为落地页标准（动图 / 对比表 / 3 步 Quick Start），英文版上线</li>
+            <li>60 秒 Demo 视频剪辑；9 宫格截图与 Media Kit 打包公开</li>
+            <li>招募 20 人种子内测群，跑通刷机流程并收集首批实拍数据</li>
+            <li>建立 Waitlist 表单 + 微信群沉淀私域</li>
+            <li>用最新行业报告校准 TAM/SAM/SOM 口径</li>
+          </ul>
+          <div class="exit"><b>退出标准 · EXIT</b><p>Demo 视频就绪；种子群 <em>≥ 20 人</em>；Waitlist <em>≥ 300</em>；3 家 Pilot 签意向；行业口径校准完成。</p></div>
+        </div>
+      </li>
+      <li class="reveal">
+        <span class="tl-date">PHASE 1 · 2026-10-10 → 10-24</span>
+        <h3>T0 发布<small>LAUNCH</small></h3>
+        <p class="goal">目标：一周内集中引爆，冲 GitHub Trending 与首批 100 台激活。</p>
+        <div class="tl-cols">
+          <ul>
+            <li><b>10-10（周六）</b>世界精神卫生日：小红书首发笔记 ×3、B 站 Demo 视频、朋友圈/社群同步</li>
+            <li><b>10-13（周二）</b>GitHub 公开推送 → 冲 Trending 周榜；同日 Show HN + Product Hunt</li>
+            <li>KOC（创客 / 冥想博主）同步转发，Media Kit 开放二创</li>
+            <li>48 小时内回复所有 Issue 与评论——发布期响应速度就是口碑</li>
+          </ul>
+          <div class="exit"><b>退出标准 · EXIT</b><p>GitHub <em>≥ 800 Stars</em>；首批激活 <em>≥ 100 台</em>；外部报道 / 转载 <em>≥ 3 篇</em>；Waitlist 转化率 <em>≥ 20%</em>。</p></div>
+        </div>
+      </li>
+      <li class="reveal">
+        <span class="tl-date">PHASE 2 · 2026-10-25 → 12-31</span>
+        <h3>放大与留存<small>GROW</small></h3>
+        <p class="goal">目标：把发布流量转化为留存与共创，验证周会话增长。</p>
+        <div class="tl-cols">
+          <ul>
+            <li>内容引擎全速运转（第七节节奏表），上线「30 天定力挑战」话题活动</li>
+            <li>发起开源改造挑战赛：最佳外壳 / 最佳玩法，奖品为首批成品套件</li>
+            <li>5 家工作室 Pilot 启动，收集团体看板需求，反哺 v1.1</li>
+            <li>v1.1 迭代：数据导出 CSV、英文 UI、多设备团体模式原型</li>
+          </ul>
+          <div class="exit"><b>退出标准 · EXIT</b><p>周完成会话 <em>≥ 500</em>；W4 留存 <em>≥ 30%</em>；Pilot NPS <em>≥ 40</em>；改造赛投稿 <em>≥ 15 件</em>。</p></div>
+        </div>
+      </li>
+      <li class="reveal">
+        <span class="tl-date">PHASE 3 · 2027 Q1</span>
+        <h3>变现验证<small>MONETIZE</small></h3>
+        <p class="goal">目标：证明这门生意成立——有人愿意为成品和外壳付钱。</p>
+        <div class="tl-cols">
+          <ul>
+            <li>官方成品套件众筹 / 预售（摩点 或 Crowd Supply 双线评估）</li>
+            <li>冥想专用 3D 外壳量产（手持 / 腿置 / 口罩夹三形态）</li>
+            <li>工作室版打包定价测试，签约 2 个付费 B2B 客户</li>
+            <li>企业 EAP 线索开始登记（只记录，不投入）</li>
+          </ul>
+          <div class="exit"><b>退出标准 · EXIT</b><p>套件预售 <em>≥ 500 套</em>；付费 B2B 客户 <em>≥ 2 家</em>；预售转化率数据支撑 Tier 2 定价决策。</p></div>
+        </div>
+      </li>
+    </ol>
+  </div>
+</section>
+
+<!-- ============ 09 METRICS ============ -->
+<section class="sec" id="s9">
+  <div class="wrap">
+    <div class="sec-head reveal">
+      <span class="ghost">玖</span>
+      <div class="idx">09 · METRICS</div>
+      <h2>北极星与指标</h2>
+      <p class="lede">衡量的是「价值交付」，不是「虚荣增长」。Star 数只是漏斗的中间层——真正的北极星只有一个。</p>
+    </div>
+
+    <div class="metrics-grid">
+      <div class="ns-card reveal">
+        <span class="lbl">NORTH STAR · 北极星指标</span>
+        <div class="big">每周完成的冥想会话数<br>（Weekly Meditated Sessions）</div>
+        <p>为什么是它：会话完成 = 产品真正交付了价值。Star 会停、曝光会衰减，只有「每周有人用它打坐」不可造假。所有 Phase 2/3 的决策以它为最终裁判。</p>
+      </div>
+      <div class="reveal">
+        <span class="kicker" style="display:block;margin-bottom:18px">首年漏斗模型（示意口径）</span>
+        <div class="funnel">
+          <div class="f-row"><span class="f-lbl">内容 / 仓库曝光</span><div class="f-bar" style="width:100%">30,000</div><span class="f-cv"></span></div>
+          <div class="f-row"><span class="f-lbl">GitHub Star</span><div class="f-bar" style="width:64%">2,000</div><span class="f-cv">→ 6.7%</span></div>
+          <div class="f-row"><span class="f-lbl">刷机激活</span><div class="f-bar" style="width:38%">400</div><span class="f-cv">→ 20%</span></div>
+          <div class="f-row"><span class="f-lbl">完成首次会话</span><div class="f-bar" style="width:28%">300</div><span class="f-cv">→ 75%</span></div>
+          <div class="f-row"><span class="f-lbl">W4 留存</span><div class="f-bar" style="width:18%">90</div><span class="f-cv">→ 30%</span></div>
+        </div>
+        <p class="note">* 示意模型：上线后以真实数据替换，并按月复盘假设偏差。</p>
+      </div>
+    </div>
+
+    <div class="tbl-wrap reveal" style="margin-top:30px">
+      <table class="tbl">
+        <thead>
+          <tr><th>指标</th><th>T0 收官（10-24）</th><th>T+3 月（1 月底）</th><th>T+6 月（4 月底）</th><th>度量方式</th></tr>
+        </thead>
+        <tbody>
+          <tr><td>GitHub Stars</td><td>800</td><td>2,500</td><td>5,000</td><td>仓库公开数据</td></tr>
+          <tr><td>激活设备（估算）</td><td>100</td><td>600</td><td>1,500</td><td>固件 Release 下载量 + 社区自报</td></tr>
+          <tr><td>周完成会话</td><td>200</td><td>800</td><td>2,000</td><td>看板历史截图征集 + 问卷</td></tr>
+          <tr><td>W4 留存</td><td>—</td><td>≥ 30%</td><td>≥ 35%</td><td>月度留存问卷（激励：优先购买套件）</td></tr>
+          <tr><td>工作室 Pilot</td><td>3（意向）</td><td>5</td><td>8</td><td>CRM 表格</td></tr>
+          <tr><td>套件预售</td><td>—</td><td>—</td><td>500</td><td>众筹 / 预售平台后台</td></tr>
+          <tr><td>月内容曝光</td><td>5 万</td><td>20 万</td><td>50 万</td><td>平台后台合计</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <p class="privacy-note reveal"><b>隐私的代价，我们接受：</b>产品承诺无遥测，意味着永远拿不到精确的使用数据，只能靠代理指标与社区自报。这是「数据属于你」定位的固有成本，不为了增长而破坏承诺——写进设计原则。</p>
+
+    <div class="principles reveal">
+      <span><b>周一</b> 30 分钟指标例会，对照假设找偏差</span>
+      <span><b>周三</b> 内容日，产出当周素材</span>
+      <span><b>周五</b> 社区回复日，Issue 与评论清零</span>
+      <span><b>月末</b> GTM 复盘，校准 TAM 假设与漏斗模型</span>
+    </div>
+  </div>
+</section>
+
+<!-- ============ 10 RISKS ============ -->
+<section class="sec" id="s10">
+  <div class="wrap">
+    <div class="sec-head reveal">
+      <span class="ghost">拾</span>
+      <div class="idx">10 · RISKS</div>
+      <h2>风险与对策</h2>
+      <p class="lede">把最大的风险写在最前面，并提前给出对策。风险不回避，对策要具体到动作。</p>
+    </div>
+
+    <div class="tbl-wrap reveal">
+      <table class="tbl">
+        <thead>
+          <tr><th style="width:26%">风险</th><th style="width:12%">概率 · 影响</th><th>对策</th></tr>
+        </thead>
+        <tbody>
+          <tr><td>呼吸检测精度被质疑，「数据不准」的口碑会杀死感知类产品</td><td><span class="risk-level risk-hi">高 · 高</span></td><td>发布 validate_breath.py 验证脚本与测试数据集；邀请 KOL 盲测并公开结果；文档明示算法边界（安静环境为前提）；把「诚实边界」做成品牌资产而非遮掩。</td></tr>
+          <tr><td>品类教育成本高：「冥想为什么要硬件？」</td><td><span class="risk-level risk-mid">中 · 高</span></td><td>定位为 App 的互补而非替代（「App 引导，小观验证」）；首发切创客圈层——他们不需要品类教育；用「看见进步」的对比内容做教育。</td></tr>
+          <tr><td>M5Stack 单一硬件依赖：供货波动或涨价</td><td><span class="risk-level risk-mid">中 · 中</span></td><td>与 M5Stack 建立官方合作锁定货源；算法层保持平台无关，随时可扩展到通用 ESP32 板卡——这正是开源架构的战略价值。</td></tr>
+          <tr><td>被抄袭 / 白嫖：代码被拿去做闭源商业产品</td><td><span class="risk-level risk-hi">高 · 中</span></td><td>接受并利用：开源即分发，抄袭者替我们教育品类；护城河放在品牌、外壳设计、迭代速度与社区；MIT 协议下大方授权，换取社区忠诚。</td></tr>
+          <tr><td>发布热度不可持续：Trending 一周后流量归零</td><td><span class="risk-level risk-hi">高 · 中</span></td><td>Phase 2 内容引擎 + 挑战赛接住流量；Waitlist 与微信群在 Phase 0/1 沉淀私域；把「发布」重新定义为「90 天节奏」而非「一天事件」。</td></tr>
+          <tr><td>增长压力与隐私承诺冲突（想加遥测 / 云账号）</td><td><span class="risk-level risk-lo">低 · 高</span></td><td>写入设计原则：无遥测不可妥协；用代理指标体系（Release 下载、自报、问卷）支撑决策；任何云功能必须本地优先、可选加入。</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</section>
+
+<!-- ============ CLOSING ============ -->
+<section class="closing">
+  <div class="wrap">
+    <div class="reveal">
+      <span class="kicker">一句话回顾</span>
+      <p class="final" style="margin-top:20px">
+        在「订阅疲劳 + 数据民主化 + 开源硬件成熟」的交汇点上，
+        小观以<em>「便宜、可见、开源」</em>开辟冥想感知硬件新品类：
+        用社区做发动机、用数据内容做放大器、用工作室 Pilot 做变现验证——
+        90 天内让 1,000 个人真正用小观完成冥想。
+      </p>
+    </div>
+
+    <div class="next-steps reveal">
+      <div><b>NEXT · 本周</b>确认各阶段 Owner 与周例会时间，建指标看板模板</div>
+      <div><b>NEXT · 本周</b>上线 Waitlist 表单，README 启动重写</div>
+      <div><b>NEXT · 两周内</b>种子群招募帖发出，约 3 家工作室 Pilot 意向</div>
+      <div><b>NEXT · 两周内</b>Demo 视频脚本定稿，进入拍摄</div>
+    </div>
+
+    <footer>
+      <span>PEACE LAB · 小观 XIAO GUAN · GTM STRATEGY V1.0 · 内部文档</span>
+      <span>
+        <a href="https://github.com/peace-lab-global/xiao-guan">github.com/peace-lab-global/xiao-guan</a>
+        &nbsp;·&nbsp; 2026-08-29
+      </span>
+    </footer>
+  </div>
+</section>
+
+</main>
+
+<script>
+const io = new IntersectionObserver((entries)=>{
+  entries.forEach(e=>{
+    if(e.isIntersecting){ e.target.classList.add('in'); io.unobserve(e.target); }
+  });
+},{threshold:.12,rootMargin:'0px 0px -40px 0px'});
+document.querySelectorAll('.reveal').forEach((el,i)=>{
+  el.style.transitionDelay = (i%4)*70 + 'ms';
+  io.observe(el);
+});
+</script>
+<!-- gtm-portal-backlink (managed by _scripts/sync-gtm.py) -->
+<a class="gtmp-back" href="/GTM/" aria-label="返回 GTM 门户">&#8617; GTM 门户</a>
+<style>
+.gtmp-back{position:fixed;right:1rem;bottom:1rem;z-index:2147483000;
+font:500 12px/1 ui-monospace,SFMono-Regular,Menlo,Consolas,monospace;
+letter-spacing:.05em;text-decoration:none;padding:.6rem .85rem;border-radius:999px;
+color:#14130f;background:rgba(251,250,247,.92);border:1px solid rgba(20,19,15,.16);
+box-shadow:0 2px 12px rgba(20,19,15,.14);backdrop-filter:blur(6px);
+transition:transform .15s ease,box-shadow .15s ease}
+.gtmp-back:hover{transform:translateY(-1px);box-shadow:0 4px 16px rgba(20,19,15,.22)}
+@media (prefers-color-scheme:dark){.gtmp-back{color:#f5f2ea;background:rgba(20,19,15,.88);
+border-color:rgba(245,242,234,.22)}}
+</style>
+</body>
+</html>

@@ -1,0 +1,198 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' https://cdn.jsdelivr.net; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src https://fonts.gstatic.com; img-src 'self' data:; connect-src 'self'">
+<title>GTM 增刊 GO-TO-MARKET — 点子内参 IDEA LEDGER</title>
+<link rel="icon" href="data:,">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Bodoni+Moda:ital,opsz,wght@0,6..96,400..900;1,6..96,400..900&family=Noto+Serif+SC:wght@600;900&family=Noto+Sans+SC:wght@400;500;700&family=Spline+Sans+Mono:wght@400;500&family=Long+Cang&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="./gtm.css?v=1">
+<script src="https://cdn.jsdelivr.net/npm/echarts@5.4.3/dist/echarts.min.js" integrity="sha384-BQKzmHvQLMCAnL3UtDBA1Al5tFjsCz1wrMlIUA1wkzo14DYkRWjywW+p9pCj0cwd" crossorigin="anonymous"></script>
+</head>
+<body>
+<!-- DIRECTION CONTRACT seed:gtm-comp-round-a
+THESIS: 1088 件档案的 GTM 能力以「增刊账目」出版：商业模式是六维第二短板，自报单位经济越健康，账面短板越刺眼。
+OWN-WORLD: 同内参世界（纸面/墨/朱印/发丝线），特刊头版叙事 + GTM 账本简表收尾。
+STORY: 读者先看见 6.22 与「会做产品，不会卖」，再看见纸面单位经济学与收费模式谱系，最后翻账本调阅单件 BIZ 档案。
+FIRST VIEWPORT: 刊头行 + 红规；左巨号 Bodoni 6.22，右标题「商业模式，六维第二短板」+ standfirst 真实数字；下接红规引语。
+FORM: comp-a 特刊头版·叙事先行（approved comp .impeccable/mocks/decision/gtm-comp-a-journal-ledger.png）。
+FINISH: unreviewed and undocumented is unfinished; this build ends with the finish review, the verdict, DESIGN.md, and every shipping raster carrying its provenance -->
+<div class="sheet">
+    <header class="masthead">
+        <a class="brand" href="../docs/ledger/index.html">
+            <b>点子内参</b>
+            <span class="folio">IDEA LEDGER</span>
+        </a>
+        <span class="folio">GTM 增刊 · GO-TO-MARKET SPECIAL ISSUE</span>
+        <div class="seal" aria-hidden="true"><span>点</span><span>子</span><span>内</span><span>参</span></div>
+    </header>
+    <hr class="rule-red">
+    <hr class="rule-ink" style="margin-top:3px;">
+
+    <section class="hero">
+        <div class="giant-num rv"><span id="h-biz">--</span><small>商业模式均分 · N=<span id="h-total">----</span></small></div>
+        <div>
+            <p class="kicker" style="margin-bottom:14px;">GTM 增刊 · 商业模式档案 · 数据源 AI+*/ 源文档</p>
+            <h1>商业模式，<br>六维第二短板</h1>
+            <p class="standfirst">对 <b id="s-total">----</b> 件档案的六维评分里，商业模式（BIZ）均分 <b class="bad" id="s-biz">-.--</b>，六维倒数第二，仅高于竞争格局的 <b id="s-compete">-.--</b>；<b id="s-weakest">---</b> 件档案（<b id="s-weakest-pct">--%</b>）的六维最弱处正是 BIZ。本增刊把「怎么收钱、怎么获客」从形容词变成账目：<b id="s-section">---</b> 份 BIZ 章节逐条解析，收费模式、自报 LTV/CAC、护城河全部上账。</p>
+        </div>
+    </section>
+
+    <div class="pull rv">「会做产品，不会卖。」</div>
+    <p class="marginalia rv" style="margin:-26px 0 10px;">先想清楚怎么收钱。</p>
+
+    <h2 class="section-h rv"><span class="sec-no">一</span>短板在账面</h2>
+    <p class="prose rv">六个维度里，solution <b id="t-solution">-.--</b> 与 pain <b id="t-pain">-.--</b> 说明这个语料会做产品；biz <b class="bad" id="t-biz">-.--</b> 与 compete <b id="t-compete">-.--</b> 说明它不会卖。最弱维度归属更直接：<b id="t-wbiz">---</b> 件档案的最低分落在 BIZ，占全库一半以上，仅次于竞争格局的 <b id="t-wcompete">---</b> 件。</p>
+    <div class="duo rv">
+        <div>
+            <div id="chart-dims" class="chart" role="img" aria-label="六维均分横向条形图，BIZ 为朱红色"></div>
+            <p class="folio chart-caption">图 1 · 六维均分（N=<span id="c1-n">----</span>）· BIZ 朱标</p>
+        </div>
+        <div>
+            <div class="statrow" style="margin-top:0;">
+                <div class="statbox"><h4>BIZ 为最弱维度</h4><div class="big" id="sb-wbiz">---</div><div class="sub">件档案 · 占 <span id="sb-wbiz-pct">--%</span></div></div>
+                <div class="statbox"><h4>COMPETE 为最弱</h4><div class="big" id="sb-wcompete">---</div><div class="sub">件档案 · 第一短板</div></div>
+                <div class="statbox"><h4>A 级 BIZ 均值</h4><div class="big" id="sb-abiz">-.--</div><div class="sub">B 级仅 <span id="sb-bbiz">-.--</span> · 分水岭</div></div>
+            </div>
+        </div>
+    </div>
+
+    <h2 class="section-h rv"><span class="sec-no">二</span>纸面单位经济学</h2>
+    <p class="prose rv"><b id="u-n">---</b> 份档案自报了 LTV/CAC 比值：中位数 <b id="u-median">--</b>，<b class="bad" id="u-ge3">--%</b> 高于 3 的健康线。纸面单位经济几乎全线「健康」，而 biz 均分只有 <b id="u-biz">-.--</b>——算式写得越漂亮，越说明缺的不是算术，是打法。</p>
+    <div class="rv">
+        <div id="chart-ratio" class="chart" style="height:320px;" role="img" aria-label="自报 LTV/CAC 比值分桶直方图，健康线以下朱标"></div>
+        <p class="folio chart-caption">图 2 · 自报 LTV/CAC 分桶（N=<span id="c2-n">---</span>）· 健康线 3 以下朱标</p>
+    </div>
+
+    <h2 class="section-h rv"><span class="sec-no">三</span>收费模式与获客词频</h2>
+    <p class="prose rv"><b id="p-n">---</b> 份收费模式档案里，<b id="p-sub">---</b> 份含订阅制（<b class="bad" id="p-sub-pct">--%</b>）——SaaS 订阅是这个语料的默认答案；项目制 <b id="p-proj">--</b>、交易抽成 <b id="p-take">--</b>、按量 <b id="p-usage">--</b>、免费增值 <b id="p-free">--</b>。获客侧 <b id="g-n">---</b> 份档案提到明确策略：内容/社区 <b id="g-content">---</b>、渠道/伙伴 <b id="g-channel">---</b>，而销售驱动 <b id="g-sales">--</b>、PLG <b id="g-plg">--</b>——写「做内容」的人远多于写「建销售」的人。</p>
+    <div class="duo rv">
+        <div>
+            <div id="chart-pricing" class="chart" style="height:240px;" role="img" aria-label="收费模式类别计数横向条形图"></div>
+            <p class="folio chart-caption">图 3 · 收费模式谱系（一件可多类）</p>
+        </div>
+        <div>
+            <div id="chart-strategy" class="chart" style="height:240px;" role="img" aria-label="获客策略词频横向条形图"></div>
+            <p class="folio chart-caption">图 4 · 获客策略词频（BIZ 章节提及）</p>
+        </div>
+    </div>
+
+    <h2 class="section-h rv"><span class="sec-no">四</span>赛道 GTM 档案</h2>
+    <p class="prose rv">按赛道看 BIZ 均分，B2B 语法的赛道卖得动：<b id="tr-top-name">--</b> <b class="bad" id="tr-top">-.--</b> 居首；C 端与情怀向赛道变现最难，<b id="tr-bot-name">--</b> 仅 <b class="bad" id="tr-bot">-.--</b>。同一把尺子下，「卖给谁」几乎决定了「卖不卖得动」。</p>
+    <table class="spec rv">
+        <thead><tr><th>赛道</th><th>档案数</th><th>BIZ 均分</th></tr></thead>
+        <tbody id="track-tbody"></tbody>
+    </table>
+    <p class="folio">表 1 · 赛道 BIZ 均分首末各三（n≥10）</p>
+
+    <h2 class="section-h rv"><span class="sec-no">五</span>GTM 账本</h2>
+    <p class="prose rv">以下账目来自 <b id="l-section">---</b> 份 BIZ 章节的逐条解析。默认仅列含收费模式或自报比值的档案；勾选后展开全库 <b id="l-all">----</b>。点击任意行调阅完整得分依据，自报 LTV/CAC 低于 3 者朱标。</p>
+
+    <div class="ledger-zone rv">
+        <div class="split">
+            <div>
+                <div class="tool-row">
+                    <input type="search" id="q" placeholder="检索标题 / 赛道…" aria-label="检索标题或赛道">
+                    <button class="grade-toggle" data-g="S" aria-pressed="false">S</button>
+                    <button class="grade-toggle" data-g="A" aria-pressed="false">A</button>
+                    <button class="grade-toggle" data-g="B" aria-pressed="false">B</button>
+                    <button class="grade-toggle" data-g="C" aria-pressed="false">C</button>
+                    <select id="f-pricing" aria-label="收费模式筛选">
+                        <option value="">全部收费模式</option>
+                        <option value="subscription">订阅制</option>
+                        <option value="usage">按量计费</option>
+                        <option value="take_rate">交易抽成</option>
+                        <option value="project">项目制 / 买断</option>
+                        <option value="freemium">免费增值</option>
+                        <option value="ads">广告</option>
+                    </select>
+                    <select id="f-sort" aria-label="排序">
+                        <option value="biz">按 BIZ 分</option>
+                        <option value="overall">按总分</option>
+                        <option value="ratio">按自报 LTV/CAC</option>
+                    </select>
+                    <label class="check-line"><input type="checkbox" id="f-all"> 含无 GTM 档案</label>
+                    <span class="folio count-line" id="count-line">-- 件档案</span>
+                </div>
+                <table class="ledger">
+                    <thead>
+                        <tr><th>评级</th><th>点子 / 收费方式</th><th class="trk">赛道</th><th style="text-align:right;">BIZ</th><th>自报 LTV/CAC</th><th class="pg">档案</th></tr>
+                    </thead>
+                    <tbody id="ledger-body"></tbody>
+                </table>
+                <div class="empty" id="empty" hidden>
+                    <p>没有符合条件的档案。</p>
+                    <button class="btn-red" id="clear-filters">清除筛选</button>
+                </div>
+                <div class="pager">
+                    <button id="pg-prev">← 上一页</button>
+                    <span class="folio" id="pg-info">-- / --</span>
+                    <button id="pg-next">下一页 →</button>
+                </div>
+            </div>
+            <aside class="sb">
+                <div class="statbox"><h4>含 BIZ 章节档案</h4><div class="big" id="sb-section">---</div><div class="sub">共 <span id="sb-files">----</span> 件 · 覆盖率 <span id="sb-cover">--%</span></div></div>
+                <div class="statbox"><h4>订阅制占比</h4><div class="big" id="sb-sub">--%</div><div class="sub">收费模式档案 <span id="sb-pricing-n">---</span> 份</div></div>
+                <div class="statbox"><h4>自报比值中位数</h4><div class="big" id="sb-median">--</div><div class="sub">健康线下仅 <span id="sb-low">-</span> 件</div></div>
+                <p class="marginalia">A 级 biz 均值 7.84，<br>B 级 5.88。</p>
+            </aside>
+        </div>
+    </div>
+
+    <div class="coverage">
+        <span class="folio">覆盖率 · BIZ 章节 <span id="cv-section">---</span>/<span id="cv-files">----</span></span>
+        <span class="folio">收费模式 <span id="cv-pricing">---</span></span>
+        <span class="folio">自报 LTV/CAC <span id="cv-ratio">---</span></span>
+        <span class="folio">护城河 <span id="cv-moat">---</span></span>
+        <span class="folio">自报数字为语料原文陈述，非本站核实</span>
+    </div>
+
+    <footer class="colophon">
+        <span class="folio">数据由 GTM/build.js 解析 AI+*/ 源文档生成</span>
+        <span class="folio"><a href="../docs/ledger/calibration.html">← 校准专刊</a> · <a href="../docs/ledger/archive.html">档案总目</a> · folio 04</span>
+    </footer>
+</div>
+
+<div class="scrim" id="scrim"></div>
+<aside class="drawer" id="drawer" role="dialog" aria-modal="true" aria-label="GTM 调阅卷">
+    <div class="top">
+        <div class="close-row">
+            <span class="folio" id="d-folio">NO.----</span>
+            <button class="folio" id="d-close" style="letter-spacing:0.14em; border-bottom:1.5px solid var(--red);">合卷 ✕</button>
+        </div>
+        <h3 id="d-title">--</h3>
+        <span class="folio" id="d-track">--</span>
+        <div class="scoreline">
+            <div class="cell biz"><div class="n" id="d-biz">-.-</div><div class="l">BIZ</div></div>
+            <div class="cell"><div class="n" id="d-market">-.-</div><div class="l">Market</div></div>
+            <div class="cell"><div class="n" id="d-overall">-.-</div><div class="l">总分</div></div>
+            <div class="cell"><div class="n" id="d-ratio">--</div><div class="l">LTV/CAC</div></div>
+        </div>
+        <div class="tags" id="d-tags"></div>
+        <div class="biz-dossier">
+            <h4>商业模式 · 得分依据</h4>
+            <dl id="d-dossier"></dl>
+        </div>
+        <p class="folio src-line"><a id="d-src" href="#" style="text-decoration:none; border-bottom:1.5px solid var(--red);">源文档 →</a></p>
+    </div>
+</aside>
+
+<script type="module" src="./gtm.js?v=1"></script>
+<!-- gtm-portal-backlink (managed by _scripts/sync-gtm.py) -->
+<a class="gtmp-back" href="/GTM/" aria-label="返回 GTM 门户">&#8617; GTM 门户</a>
+<style>
+.gtmp-back{position:fixed;right:1rem;bottom:1rem;z-index:2147483000;
+font:500 12px/1 ui-monospace,SFMono-Regular,Menlo,Consolas,monospace;
+letter-spacing:.05em;text-decoration:none;padding:.6rem .85rem;border-radius:999px;
+color:#14130f;background:rgba(251,250,247,.92);border:1px solid rgba(20,19,15,.16);
+box-shadow:0 2px 12px rgba(20,19,15,.14);backdrop-filter:blur(6px);
+transition:transform .15s ease,box-shadow .15s ease}
+.gtmp-back:hover{transform:translateY(-1px);box-shadow:0 4px 16px rgba(20,19,15,.22)}
+@media (prefers-color-scheme:dark){.gtmp-back{color:#f5f2ea;background:rgba(20,19,15,.88);
+border-color:rgba(245,242,234,.22)}}
+</style>
+</body>
+</html>

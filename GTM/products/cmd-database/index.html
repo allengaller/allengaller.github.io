@@ -1,0 +1,253 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>命令行语料数据库 — 让智能体读懂每一条命令</title>
+<meta name="description" content="100 个领域 · 1137 命令页 · 741 最佳实践页。YAML 单一数据源，Go CLI 检索校验，每条命令沉淀内涵外延、生产最佳实践与风险。">
+<link rel="stylesheet" href="style.css">
+<script>
+/* 字体在 load 后注入：离线环境不阻塞首屏，回退字族承载同一视觉世界 */
+window.addEventListener("load", function () {
+  var l = document.createElement("link");
+  l.rel = "stylesheet";
+  l.href = "https://fonts.googleapis.com/css2?family=Noto+Serif+SC:wght@500;600;700&family=Noto+Sans+SC:wght@400;500&family=Spectral:wght@500;600&family=JetBrains+Mono:wght@400;500&display=swap";
+  document.head.appendChild(l);
+});
+</script>
+</head>
+<body>
+<!--
+  DIRECTION CONTRACT — seed ad6c4c93 · 世界：语料星座图谱 · 构图三（图谱×语料卡双栏，approved comp-c）
+  THESIS: 页面本身就是语料库的活星图——左图谱证规模、右米纸卡证质量，拒绝品类默认的"深色 hero + 特性卡片"排布。
+  OWN-WORLD: 深墨蓝星野 #0a1424、琥珀金节点 #d09b43、发丝连线、米纸索引卡 #eddfc5、墨字 #071322、Noto Serif SC 展示字、JetBrains Mono 数据、1px 硬发丝线。
+  STORY: 访问者在星图上看到 100 领域的真实星座 → 读到 deepspeed 三件套（内涵外延/最佳实践/风险）的真实质量 → 走过 YAML→Markdown→CLI 机制带 → 克隆 / 检索 / 贡献。
+  FIRST VIEWPORT: 左 58% 全高星图（大模型训练聚焦簇展开 + 左上词标与搜索框 + 右下图例），右 42% 米纸三件套卡（00127 · deepspeed），下方全宽流水线带与统计/主动作条（100/1137/741 + 克隆语料库）。
+  FORM: 语料星座图谱（方向轮我的首选候选，经决策页用户锁定；构图轮第三构图为空间合同）。
+  FINISH: unreviewed and undocumented is unfinished; this build ends with the finish review, the verdict, DESIGN.md, and every shipping raster carrying its provenance.
+-->
+<header class="topbar">
+  <a class="wordmark" href="./index.html">
+    <svg class="mark" viewBox="0 0 24 24" aria-hidden="true"><circle cx="5" cy="17" r="2.2"/><circle cx="12" cy="6" r="2.6"/><circle cx="19" cy="14" r="2"/><path d="M6.6 15.4 10.6 8M13.9 7.2 17.6 12.8M7.2 17.2 16.9 14.4"/></svg>
+    命令行语料数据库
+  </a>
+  <nav class="topnav" aria-label="页面导航">
+    <a href="#domains">领域星图</a>
+    <a href="#cli">CLI 检索</a>
+    <a href="#source">数据源</a>
+    <a class="gh" href="https://github.com/standup-coder/cmd-database" target="_blank" rel="noopener">GitHub</a>
+  </nav>
+</header>
+
+<main>
+  <section class="hero" aria-label="语料库概览">
+    <div class="sky">
+      <svg id="constellation" viewBox="0 0 1000 880" role="img" aria-label="100 个领域的命令语料星座图，大模型训练领域正在聚焦展开"></svg>
+      <div class="sky-head">
+        <p class="sky-sub">100 个领域的命令行语料 · 喂给智能体与排障台</p>
+        <label class="sky-search">
+          <svg viewBox="0 0 20 20" aria-hidden="true"><circle cx="9" cy="9" r="5.5"/><path d="m13.2 13.2 3.8 3.8"/></svg>
+          <input id="q" type="search" placeholder="搜索命令：deepspeed…" autocomplete="off" spellcheck="false" aria-label="搜索命令或领域">
+        </label>
+        <p class="sky-hint" id="skyHint">双向链接 = 命令 ↔ 关联命令 · 命中即点亮</p>
+      </div>
+      <div class="sky-legend" aria-hidden="true">
+        <span class="dot d-domain"></span>领域簇
+        <span class="dot d-cmd"></span>命令
+        <span class="dot d-bp"></span>最佳实践
+      </div>
+    </div>
+
+    <aside class="folio" aria-label="真实命令卡示例">
+      <svg class="folio-clip" viewBox="0 0 24 40" aria-hidden="true"><path d="M15 8a3.5 3.5 0 0 0-7 0v19a5.5 5.5 0 0 0 11 0V12a7.5 7.5 0 0 0-15 0v15"/></svg>
+      <div class="folio-open">
+        <h2 class="folio-lede">什么是每条命令的三件套</h2>
+        <div class="folio-rule" aria-hidden="true">
+          <svg viewBox="0 0 10 10"><rect x="2" y="2" width="6" height="6" transform="rotate(45 5 5)"/></svg>
+        </div>
+      </div>
+      <div class="folio-head">
+        <span class="folio-no">00127</span>
+        <span class="folio-ring" aria-hidden="true"></span>
+        <h1 class="folio-title">deepspeed</h1>
+      </div>
+      <div class="folio-row">
+        <span class="stamp stamp-s1" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M4 5.5A2.5 2.5 0 0 1 6.5 3H18v18H6.5A2.5 2.5 0 0 1 4 18.5Z"/><path d="M8 7h6M8 11h8M8 15h5"/></svg></span>
+        <div>
+          <h2>内涵外延</h2>
+          <p>微软 DeepSpeed 大规模分布式训练框架，支持 ZeRO 优化、3D 并行、Offload。</p>
+        </div>
+      </div>
+      <div class="folio-row">
+        <span class="stamp stamp-s2" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M14.7 6.3a4 4 0 0 0-5.4 5.4L4 17v3h3l5.3-5.3a4 4 0 0 0 5.4-5.4L15 12l-3-3Z"/></svg></span>
+        <div>
+          <h2>生产最佳实践</h2>
+          <p>spot 实例配置 checkpoint 自动保存；NCCL 带宽 ≥ 25Gbps；DCGM 监控显存与 ECC。</p>
+        </div>
+      </div>
+      <div class="folio-row">
+        <span class="stamp stamp-s3" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M12 3 2.5 20h19Z"/><path d="M12 10v4M12 17.2v.3"/></svg></span>
+        <div>
+          <h2>风险提示</h2>
+          <p><b class="lvl lvl-mid">MEDIUM</b> 大规模分布式训练消耗大量 GPU 资源，需合理配置。</p>
+        </div>
+      </div>
+      <div class="folio-foot">
+        <span>所属领域 · 大模型训练</span>
+        <a href="../大模型训练/deepspeed.md">大模型训练/deepspeed.md</a>
+        <a href="../大模型训练/bp-deepspeed.md">bp-deepspeed.md</a>
+      </div>
+      <p class="folio-note">这是语料库 1137 页中的一页，内容摘自真实文件。</p>
+    </aside>
+  </section>
+
+  <section class="pipeline" aria-label="语料生成链路">
+    <div class="pipe-step">
+      <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M6 3h8l4 4v14H6Z"/><path d="M14 3v4h4"/><path d="M9 12h6M9 16h6"/></svg>
+      <b>YAML</b><span>单一数据源</span>
+    </div>
+    <svg class="pipe-arrow" viewBox="0 0 40 12" aria-hidden="true"><path d="M0 6h34m0 0-5-4m5 4-5 4"/></svg>
+    <div class="pipe-step">
+      <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M6 3h8l4 4v14H6Z"/><path d="M14 3v4h4"/><path d="m9 13 2.2 2.2L15.5 11"/></svg>
+      <b>Markdown</b><span>双向链接语料</span>
+    </div>
+    <svg class="pipe-arrow" viewBox="0 0 40 12" aria-hidden="true"><path d="M0 6h34m0 0-5-4m5 4-5 4"/></svg>
+    <div class="pipe-step">
+      <svg viewBox="0 0 24 24" aria-hidden="true"><rect x="3" y="4" width="18" height="16" rx="1.5"/><path d="m7 9 3 3-3 3M12.5 15H17"/></svg>
+      <b>CLI</b><span>检索与校验</span>
+    </div>
+    <p class="pipe-note">改一处 YAML，语料、检索与校验自动同步。</p>
+  </section>
+
+  <section class="footbar" aria-label="规模与入口">
+    <div class="stats">
+      <div class="stat"><b>100</b><span>领域</span></div>
+      <div class="stat"><b>1137</b><span>命令页</span></div>
+      <div class="stat"><b>741</b><span>最佳实践页</span></div>
+    </div>
+    <div class="actions">
+      <a class="btn btn-primary" href="https://github.com/standup-coder/cmd-database" target="_blank" rel="noopener">
+        <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3a9 9 0 0 0-2.85 17.54c.45.08.62-.2.62-.44v-1.7c-2.5.55-3.03-1.06-3.03-1.06-.41-1.04-1-1.32-1-1.32-.82-.56.06-.55.06-.55.9.06 1.38.93 1.38.93.8 1.38 2.11.98 2.63.75.08-.58.31-.98.57-1.2-2-.23-4.1-1-4.1-4.45 0-.98.35-1.79.93-2.42-.1-.23-.4-1.15.08-2.4 0 0 .76-.24 2.48.92a8.6 8.6 0 0 1 4.51 0c1.72-1.16 2.47-.92 2.47-.92.5 1.25.19 2.17.1 2.4.58.63.92 1.44.92 2.42 0 3.47-2.1 4.22-4.11 4.44.32.28.61.83.61 1.68v2.5c0 .24.16.53.62.44A9 9 0 0 0 12 3Z"/></svg>
+        克隆语料库
+      </a>
+      <a class="btn btn-ghost" href="#cli">命令搜索
+        <svg viewBox="0 0 20 20" aria-hidden="true"><circle cx="9" cy="9" r="5.5"/><path d="m13.2 13.2 3.8 3.8"/></svg>
+      </a>
+    </div>
+  </section>
+
+  <section class="domains" id="domains" aria-label="领域星图索引">
+    <div class="sec-head">
+      <h2>领域星图</h2>
+      <p>100 个领域按星座归组，点进任一领域即达它的 <code>-MOC.md</code> 速查入口。数字是真实页数。</p>
+    </div>
+    <div class="dom-grid" id="domGrid"></div>
+  </section>
+
+  <section class="cli" id="cli" aria-label="CLI 检索演示">
+    <div class="sec-head">
+      <h2>检索与校验，一条命令</h2>
+      <p>语料库自带 Go 编写的 <code>cmd4coder</code>：分类浏览、全文搜索、详情查看，另有 validator 校验 YAML 数据源。</p>
+    </div>
+    <div class="term" role="img" aria-label="cmd4coder 命令行演示">
+      <div class="term-bar"><span></span><span></span><span></span><b>cmd4coder</b></div>
+      <pre><code><span class="t-p">$</span> cmd4coder search "distributed training" <span class="t-c">-d ./data</span>
+<span class="t-h">  NAME         CATEGORY              DESCRIPTION                     RISK</span>
+  <a href="../大模型训练/deepspeed.md">deepspeed</a>    AI基础设施/大模型训练   微软DeepSpeed大规模分布式训练…   <span class="t-mid">medium</span>
+  <a href="../大模型训练/accelerate.md">accelerate</a>   AI基础设施/大模型训练   HuggingFace Accelerate 分布式…  <span class="t-low">low</span>
+  <span class="t-dim">… 共 27 条命中 · 大模型训练领域</span>
+
+<span class="t-p">$</span> cmd4coder show deepspeed <span class="t-c">-d ./data</span>
+  <span class="t-k">install</span>   pip install deepspeed
+  <span class="t-k">platform</span>  linux · darwin · windows
+  <span class="t-k">related</span>   accelerate ↤ torchrun
+  <span class="t-k">risk</span>      <span class="t-mid">MEDIUM</span> 大规模分布式训练消耗大量GPU资源，需合理配置
+
+<span class="t-p">$</span> go run ./cmd/validator <span class="t-c">-d ./data -v</span>
+  <span class="t-ok">✓ 129 yaml files · schema ok · links ok</span></code></pre>
+      <p class="term-note">演示输出依据真实 YAML 数据渲染，可在仓库内 <code>tools/cmd</code> 直接运行验证。</p>
+    </div>
+  </section>
+
+  <section class="source" id="source" aria-label="单一数据源与贡献方式">
+    <div class="sec-head">
+      <h2>单一数据源，三条命令入库</h2>
+      <p>每条命令在 <code>tools/cmd/data/*.yaml</code> 定义一次，Wiki、双向链接与 CLI 索引全部由此生成。</p>
+    </div>
+    <div class="src-grid">
+      <div class="yaml">
+        <div class="code-bar"><b>tools/cmd/data/ai/llm-training.yaml</b></div>
+        <pre><code><span class="y-k">category</span>: <span class="y-s">"AI基础设施/大模型训练"</span>
+<span class="y-k">commands</span>:
+- <span class="y-k">name</span>: <span class="y-s">deepspeed</span>
+  <span class="y-k">description</span>: <span class="y-s">"微软DeepSpeed大规模分布式训练框架…"</span>
+  <span class="y-k">usage</span>: [<span class="y-s">"deepspeed [OPTIONS] SCRIPT.py [ARGS...]"</span>]
+  <span class="y-k">options</span>:
+  - <span class="y-k">flag</span>: <span class="y-s">"--num_gpus"</span>
+    <span class="y-k">description</span>: <span class="y-s">"使用的GPU数量"</span>
+  <span class="y-k">examples</span>:
+  - <span class="y-k">command</span>: <span class="y-s">"deepspeed --num_gpus=4 train.py --deepspeed ds_config.json"</span>
+  <span class="y-k">related_commands</span>: [<span class="y-s">accelerate</span>, <span class="y-s">torchrun</span>]
+  <span class="y-k">risks</span>:
+  - <span class="y-k">level</span>: <span class="y-s">medium</span>
+    <span class="y-k">description</span>: <span class="y-s">"大规模分布式训练消耗大量GPU资源…"</span></code></pre>
+      </div>
+      <ol class="steps">
+        <li><b>编辑 YAML</b><span>在对应领域文件里新增或修改命令定义。</span><code>tools/cmd/data/&lt;领域&gt;/&lt;文件&gt;.yaml</code></li>
+        <li><b>校验</b><span>schema、链接与风险等级自动检查。</span><code>go run ./cmd/validator -d ./data -v</code></li>
+        <li><b>生成语料</b><span>重新生成带双向链接的 Markdown 页面。</span><code>python3 tools/cmd/scripts/wiki/convert_to_wiki.py</code></li>
+      </ol>
+    </div>
+  </section>
+
+  <section class="audiences" aria-label="四类读者的入口">
+    <div class="sec-head">
+      <h2>谁能用它做什么</h2>
+    </div>
+    <dl class="ledger">
+      <div class="ledger-row">
+        <dt>AI Agent 开发者</dt>
+        <dd>1878 页结构化语料直接进 RAG：Markdown + frontmatter 机器可读，风险等级可过滤。</dd>
+        <a href="../INDEX.md">浏览 INDEX.md</a>
+      </div>
+      <div class="ledger-row">
+        <dt>运维与平台工程师</dt>
+        <dd>每条命令配 <code>bp-*.md</code> 生产最佳实践与风险章，排障手册开箱即用。</dd>
+        <a href="../K8s监控日志/K8s监控日志-MOC.md">看 K8s 监控日志</a>
+      </div>
+      <div class="ledger-row">
+        <dt>开发者</dt>
+        <dd>查用法、示例与避坑；整个仓库可作为 Obsidian Vault 双向链接浏览。</dd>
+        <a href="../README.md">怎么用</a>
+      </div>
+      <div class="ledger-row">
+        <dt>数据合作方</dt>
+        <dd>YAML 单一数据源可审计、可再生成，MIT 许可，可集成进私有知识库。</dd>
+        <a href="https://github.com/standup-coder/cmd-database/issues" target="_blank" rel="noopener">发起合作</a>
+      </div>
+    </dl>
+  </section>
+</main>
+
+<footer class="foot">
+  <p>命令行语料数据库 · MIT License</p>
+  <p><a href="https://github.com/standup-coder/cmd-database" target="_blank" rel="noopener">GitHub</a> · <a href="../INDEX.md">INDEX.md</a> · <a href="../README.md">README</a></p>
+</footer>
+
+<script src="data.js"></script>
+<script src="gtm.js"></script>
+<!-- gtm-portal-backlink (managed by _scripts/sync-gtm.py) -->
+<a class="gtmp-back" href="/GTM/" aria-label="返回 GTM 门户">&#8617; GTM 门户</a>
+<style>
+.gtmp-back{position:fixed;right:1rem;bottom:1rem;z-index:2147483000;
+font:500 12px/1 ui-monospace,SFMono-Regular,Menlo,Consolas,monospace;
+letter-spacing:.05em;text-decoration:none;padding:.6rem .85rem;border-radius:999px;
+color:#14130f;background:rgba(251,250,247,.92);border:1px solid rgba(20,19,15,.16);
+box-shadow:0 2px 12px rgba(20,19,15,.14);backdrop-filter:blur(6px);
+transition:transform .15s ease,box-shadow .15s ease}
+.gtmp-back:hover{transform:translateY(-1px);box-shadow:0 4px 16px rgba(20,19,15,.22)}
+@media (prefers-color-scheme:dark){.gtmp-back{color:#f5f2ea;background:rgba(20,19,15,.88);
+border-color:rgba(245,242,234,.22)}}
+</style>
+</body>
+</html>

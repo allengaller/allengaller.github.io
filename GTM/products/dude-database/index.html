@@ -1,0 +1,1224 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>DUDE Database — Go-To-Market | 全球城市玩乐情报库</title>
+<meta name="description" content="DUDE Database：11 座全球城市 × 33 类玩法 × 900+ 篇真实场所指南，每篇标注可信等级与最后核实日期。免费、开源（MIT）、无需注册。">
+<meta property="og:title" content="DUDE Database — 你的城市玩乐情报库">
+<meta property="og:description" content="11 城 × 33 类 × 900+ 篇指南 · 可信分级 · 最后核实日期 · MIT 开源">
+<meta property="og:type" content="website">
+<link rel="icon" type="image/svg+xml" href="../favicon.svg">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=ZCOOL+QingKe+HuangYou&family=Anton&family=Noto+Serif+SC:wght@400;600;700;900&family=IBM+Plex+Mono:wght@400;500;700&display=swap" rel="stylesheet">
+<style>
+/* ============================================================
+   DUDE DATABASE — GTM PAGE
+   Direction: 夜行 editorial · acid lime × magenta on near-black
+   ============================================================ */
+:root {
+  --ink:      #0b0b10;
+  --ink-2:    #12121a;
+  --ink-3:    #1a1a24;
+  --paper:    #f2efe6;
+  --paper-2:  #e9e5d8;
+  --acid:     #d9f522;
+  --acid-dim: #b8d11c;
+  --magenta:  #ff3d7f;
+  --cyan:     #52e0ff;
+  --fg:       #f4f2ea;
+  --fg-dim:   rgba(244,242,234,.62);
+  --fg-faint: rgba(244,242,234,.34);
+  --ink-on-paper: #16150f;
+  --line:     rgba(244,242,234,.14);
+  --line-paper: rgba(22,21,15,.16);
+  --f-disp-cn: 'ZCOOL QingKe HuangYou', 'Noto Serif SC', sans-serif;
+  --f-disp-en: 'Anton', sans-serif;
+  --f-body:    'Noto Serif SC', serif;
+  --f-mono:    'IBM Plex Mono', monospace;
+  --gutter: clamp(20px, 5vw, 72px);
+}
+
+* { margin: 0; padding: 0; box-sizing: border-box; }
+html { scroll-behavior: smooth; }
+body {
+  font-family: var(--f-body);
+  background: var(--ink);
+  color: var(--fg);
+  overflow-x: hidden;
+  line-height: 1.7;
+}
+::selection { background: var(--acid); color: var(--ink); }
+img { max-width: 100%; display: block; }
+a { color: inherit; }
+
+/* grain overlay */
+body::after {
+  content: '';
+  position: fixed; inset: 0;
+  pointer-events: none;
+  z-index: 2000;
+  opacity: .5;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='140' height='140'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2'/%3E%3CfeColorMatrix values='0 0 0 0 1 0 0 0 0 1 0 0 0 0 1 0 0 0 0.05 0'/%3E%3C/filter%3E%3Crect width='140' height='140' filter='url(%23n)'/%3E%3C/svg%3E");
+}
+
+/* scroll progress */
+#progress {
+  position: fixed; top: 0; left: 0; height: 3px;
+  width: 0%;
+  background: var(--acid);
+  z-index: 1500;
+  transition: width .1s linear;
+}
+
+.mono { font-family: var(--f-mono); }
+
+/* ---------- kicker / labels ---------- */
+.kicker {
+  font-family: var(--f-mono);
+  font-size: 11px;
+  letter-spacing: .32em;
+  text-transform: uppercase;
+  color: var(--fg-dim);
+  display: inline-flex; align-items: center; gap: 12px;
+}
+.kicker::before {
+  content: '';
+  width: 34px; height: 1px;
+  background: var(--acid);
+}
+.kicker .dot { color: var(--acid); }
+
+/* ============================================================
+   NAV
+   ============================================================ */
+nav {
+  position: fixed; top: 0; left: 0; right: 0;
+  z-index: 1000;
+  display: flex; align-items: center; justify-content: space-between;
+  padding: 14px var(--gutter);
+  background: rgba(11,11,16,.82);
+  backdrop-filter: blur(14px);
+  -webkit-backdrop-filter: blur(14px);
+  border-bottom: 1px solid var(--line);
+}
+.logo {
+  font-family: var(--f-disp-en);
+  font-size: 18px;
+  letter-spacing: .06em;
+  text-decoration: none;
+  display: flex; align-items: center; gap: 10px;
+}
+.logo .mark {
+  width: 26px; height: 26px;
+  background: var(--acid);
+  color: var(--ink);
+  display: grid; place-items: center;
+  font-size: 13px;
+  transform: rotate(-6deg);
+}
+.logo em { font-style: normal; color: var(--acid); }
+.nav-links { display: flex; gap: 26px; }
+.nav-links a {
+  font-family: var(--f-mono);
+  font-size: 12px;
+  letter-spacing: .14em;
+  text-decoration: none;
+  color: var(--fg-dim);
+  transition: color .2s;
+}
+.nav-links a:hover { color: var(--acid); }
+.btn {
+  display: inline-flex; align-items: center; gap: 10px;
+  font-family: var(--f-mono);
+  font-size: 13px;
+  font-weight: 700;
+  letter-spacing: .1em;
+  text-decoration: none;
+  padding: 12px 22px;
+  border: 1px solid var(--acid);
+  color: var(--acid);
+  background: transparent;
+  transition: background .18s, color .18s, transform .18s;
+}
+.btn:hover { background: var(--acid); color: var(--ink); transform: translateY(-2px); }
+.btn.solid { background: var(--acid); color: var(--ink); }
+.btn.solid:hover { background: var(--fg); border-color: var(--fg); }
+.btn.big { font-size: 16px; padding: 18px 36px; }
+.btn .arr { transition: transform .18s; }
+.btn:hover .arr { transform: translateX(4px); }
+
+/* ============================================================
+   HERO
+   ============================================================ */
+.hero {
+  min-height: 100svh;
+  display: flex; flex-direction: column; justify-content: center;
+  position: relative;
+  padding: 140px var(--gutter) 60px;
+  overflow: hidden;
+}
+.hero-grid-bg {
+  position: absolute; inset: 0;
+  background-image:
+    linear-gradient(var(--line) 1px, transparent 1px),
+    linear-gradient(90deg, var(--line) 1px, transparent 1px);
+  background-size: 72px 72px;
+  mask-image: radial-gradient(ellipse 90% 70% at 50% 40%, black 30%, transparent 75%);
+  -webkit-mask-image: radial-gradient(ellipse 90% 70% at 50% 40%, black 30%, transparent 75%);
+}
+.hero-ghost {
+  position: absolute;
+  top: 4%; left: 50%;
+  transform: translateX(-50%);
+  font-family: var(--f-disp-en);
+  font-size: clamp(120px, 26vw, 380px);
+  line-height: 1;
+  color: transparent;
+  -webkit-text-stroke: 1px rgba(244,242,234,.09);
+  white-space: nowrap;
+  user-select: none;
+  pointer-events: none;
+}
+.hero-glow {
+  position: absolute;
+  width: 720px; height: 720px;
+  border-radius: 50%;
+  background: radial-gradient(circle, rgba(217,245,34,.13) 0%, transparent 60%);
+  top: -180px; right: -180px;
+  pointer-events: none;
+}
+.hero-inner { position: relative; max-width: 1280px; margin: 0 auto; }
+/* auto margin 在 flex 列容器里会把子项收缩为 fit-content，需显式撑满 */
+.hero-inner, .hero-stats { width: 100%; }
+.hero h1 {
+  font-family: var(--f-disp-cn);
+  font-weight: 400;
+  font-size: clamp(58px, 10.5vw, 156px);
+  line-height: 1.04;
+  letter-spacing: .01em;
+  margin: 26px 0 30px;
+}
+.hero h1 .stroke {
+  color: transparent;
+  -webkit-text-stroke: 2px var(--acid);
+}
+.hero h1 .mg { color: var(--magenta); }
+.hero-sub {
+  max-width: 620px;
+  font-size: clamp(16px, 1.6vw, 19px);
+  color: var(--fg-dim);
+  line-height: 1.9;
+}
+.hero-sub strong { color: var(--fg); font-weight: 700; }
+.hero-cta { display: flex; flex-wrap: wrap; gap: 16px; margin-top: 42px; }
+.hero-chips { display: flex; flex-wrap: wrap; gap: 10px; margin-top: 34px; }
+.chip {
+  font-family: var(--f-mono);
+  font-size: 11px;
+  letter-spacing: .12em;
+  padding: 7px 14px;
+  border: 1px solid var(--line);
+  color: var(--fg-dim);
+}
+.chip b { color: var(--acid); font-weight: 700; }
+.hero-stats {
+  position: relative;
+  max-width: 1280px; margin: 70px auto 0;
+  display: grid;
+  grid-template-columns: repeat(5, 1fr);
+  border-top: 1px solid var(--line);
+}
+.stat {
+  padding: 26px 18px 0 0;
+  border-right: 1px solid var(--line);
+}
+.stat:last-child { border-right: none; }
+.stat .num {
+  font-family: var(--f-disp-en);
+  font-size: clamp(34px, 4.6vw, 64px);
+  line-height: 1;
+  color: var(--acid);
+}
+.stat .num small { font-size: .5em; color: var(--magenta); }
+.stat .lab {
+  font-family: var(--f-mono);
+  font-size: 11px;
+  letter-spacing: .22em;
+  color: var(--fg-dim);
+  margin-top: 10px;
+  text-transform: uppercase;
+}
+
+/* ============================================================
+   MARQUEE
+   ============================================================ */
+.marquee {
+  background: var(--acid);
+  color: var(--ink);
+  overflow: hidden;
+  padding: 16px 0;
+  border-top: 1px solid var(--ink);
+  border-bottom: 1px solid var(--ink);
+  transform: rotate(-1.2deg) scale(1.02);
+  margin: 30px 0 10px;
+}
+.marquee-track {
+  display: flex;
+  width: max-content;
+  animation: scroll 38s linear infinite;
+}
+.marquee-track span {
+  font-family: var(--f-disp-en);
+  font-size: clamp(18px, 2.6vw, 30px);
+  letter-spacing: .05em;
+  white-space: nowrap;
+  padding: 0 22px;
+  display: flex; align-items: center; gap: 44px;
+}
+.marquee-track span::after { content: '✶'; font-size: .7em; }
+@keyframes scroll { to { transform: translateX(-50%); } }
+
+/* ============================================================
+   SECTION SCAFFOLD
+   ============================================================ */
+section { padding: clamp(90px, 11vw, 150px) var(--gutter); position: relative; }
+.wrap { max-width: 1280px; margin: 0 auto; }
+.sec-head { margin-bottom: clamp(46px, 6vw, 80px); }
+.sec-head h2 {
+  font-family: var(--f-disp-cn);
+  font-weight: 400;
+  font-size: clamp(40px, 6.4vw, 88px);
+  line-height: 1.1;
+  margin-top: 20px;
+}
+.sec-head p.lead {
+  max-width: 640px;
+  margin-top: 22px;
+  font-size: 17px;
+  color: var(--fg-dim);
+  line-height: 1.9;
+}
+.light { background: var(--paper); color: var(--ink-on-paper); }
+.light .kicker { color: rgba(22,21,15,.55); }
+.light .kicker::before { background: var(--magenta); }
+.light .sec-head p.lead { color: rgba(22,21,15,.66); }
+
+/* reveal */
+.reveal { opacity: 0; transform: translateY(36px); transition: opacity .8s cubic-bezier(.2,.7,.2,1), transform .8s cubic-bezier(.2,.7,.2,1); }
+.reveal.in { opacity: 1; transform: none; }
+.reveal.d1 { transition-delay: .1s; } .reveal.d2 { transition-delay: .2s; }
+.reveal.d3 { transition-delay: .3s; } .reveal.d4 { transition-delay: .4s; }
+
+/* ============================================================
+   PROBLEM — editorial numbered list on paper
+   ============================================================ */
+.pain-list { border-top: 2px solid var(--ink-on-paper); }
+.pain {
+  display: grid;
+  grid-template-columns: 120px 1fr 1.2fr;
+  gap: 30px;
+  padding: 34px 0;
+  border-bottom: 1px solid var(--line-paper);
+  align-items: baseline;
+}
+.pain .idx {
+  font-family: var(--f-disp-en);
+  font-size: 44px;
+  color: transparent;
+  -webkit-text-stroke: 1.5px var(--magenta);
+  line-height: 1;
+}
+.pain h3 {
+  font-family: var(--f-disp-cn);
+  font-weight: 400;
+  font-size: clamp(24px, 3vw, 36px);
+  line-height: 1.25;
+}
+.pain p { color: rgba(22,21,15,.62); font-size: 15.5px; }
+.pain p b { color: var(--ink-on-paper); }
+.pain:hover .idx { color: var(--magenta); -webkit-text-stroke: 0; transition: .25s; }
+
+/* ============================================================
+   PILLARS — 3 big cards on dark
+   ============================================================ */
+.pillars { display: grid; grid-template-columns: repeat(3, 1fr); gap: 22px; }
+.pillar {
+  border: 1px solid var(--line);
+  background: var(--ink-2);
+  padding: 40px 34px 44px;
+  position: relative;
+  overflow: hidden;
+  transition: transform .3s, border-color .3s;
+}
+.pillar:hover { transform: translateY(-6px); border-color: var(--acid); }
+.pillar::before {
+  content: attr(data-no);
+  position: absolute;
+  top: -18px; right: 8px;
+  font-family: var(--f-disp-en);
+  font-size: 130px;
+  color: transparent;
+  -webkit-text-stroke: 1px rgba(244,242,234,.1);
+  line-height: 1;
+}
+.badge-row { display: flex; gap: 10px; margin-bottom: 26px; }
+.pbadge {
+  font-family: var(--f-mono);
+  font-size: 12px;
+  font-weight: 700;
+  padding: 6px 12px;
+  letter-spacing: .08em;
+}
+.pbadge.l1 { background: var(--acid); color: var(--ink); }
+.pbadge.l2 { background: var(--cyan); color: var(--ink); }
+.pbadge.l3 { border: 1px solid var(--fg-faint); color: var(--fg-dim); }
+.pillar h3 {
+  font-family: var(--f-disp-cn);
+  font-weight: 400;
+  font-size: clamp(26px, 2.6vw, 34px);
+  margin-bottom: 16px;
+}
+.pillar p { color: var(--fg-dim); font-size: 15.5px; line-height: 1.9; }
+.pillar p b { color: var(--fg); }
+.pillar .foot {
+  margin-top: 26px;
+  font-family: var(--f-mono);
+  font-size: 11px;
+  letter-spacing: .18em;
+  color: var(--acid);
+  text-transform: uppercase;
+}
+
+/* ============================================================
+   CATEGORIES — tiles on paper
+   ============================================================ */
+.cat-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 14px; }
+.cat {
+  border: 1.5px solid var(--ink-on-paper);
+  padding: 26px 22px 22px;
+  background: var(--paper);
+  position: relative;
+  transition: background .22s, color .22s, transform .22s;
+  cursor: default;
+  display: flex; flex-direction: column; gap: 8px;
+  min-height: 190px;
+}
+.cat:hover { background: var(--ink-on-paper); color: var(--paper); transform: translate(-3px, -3px); box-shadow: 6px 6px 0 var(--magenta); }
+.cat .cn {
+  font-family: var(--f-disp-cn);
+  font-size: clamp(28px, 2.8vw, 40px);
+  line-height: 1.1;
+}
+.cat .en {
+  font-family: var(--f-mono);
+  font-size: 10px;
+  letter-spacing: .24em;
+  text-transform: uppercase;
+  opacity: .55;
+}
+.cat .tags { margin-top: auto; font-size: 12.5px; opacity: .68; line-height: 1.8; }
+.cat .cnt {
+  position: absolute; top: 14px; right: 16px;
+  font-family: var(--f-mono);
+  font-size: 12px;
+  font-weight: 700;
+}
+.cat.wide { grid-column: span 2; }
+.cat-note {
+  margin-top: 26px;
+  font-family: var(--f-mono);
+  font-size: 12px;
+  letter-spacing: .06em;
+  color: rgba(22,21,15,.5);
+}
+
+/* ============================================================
+   ICP — dark rows
+   ============================================================ */
+.icp-row {
+  display: grid;
+  grid-template-columns: 90px 300px 1fr;
+  gap: 26px;
+  padding: 30px 0;
+  border-bottom: 1px solid var(--line);
+  align-items: baseline;
+}
+.icp-row:first-of-type { border-top: 2px solid var(--acid); }
+.icp-row .no {
+  font-family: var(--f-mono);
+  font-size: 13px;
+  color: var(--acid);
+}
+.icp-row h3 {
+  font-family: var(--f-disp-cn);
+  font-weight: 400;
+  font-size: clamp(24px, 2.6vw, 32px);
+}
+.icp-row h3 small {
+  display: block;
+  font-family: var(--f-mono);
+  font-size: 10px;
+  letter-spacing: .26em;
+  color: var(--fg-faint);
+  margin-top: 6px;
+  text-transform: uppercase;
+}
+.icp-row p { color: var(--fg-dim); font-size: 15.5px; max-width: 560px; }
+.icp-row:hover .no { color: var(--magenta); }
+
+/* ============================================================
+   COMPARE — table on paper
+   ============================================================ */
+.compare-scroll { overflow-x: auto; border: 2px solid var(--ink-on-paper); }
+table.cmp {
+  width: 100%;
+  border-collapse: collapse;
+  min-width: 760px;
+  background: var(--paper);
+  font-size: 14.5px;
+}
+.cmp th, .cmp td {
+  padding: 16px 18px;
+  text-align: left;
+  border-bottom: 1px solid var(--line-paper);
+  vertical-align: top;
+}
+.cmp thead th {
+  font-family: var(--f-disp-cn);
+  font-weight: 400;
+  font-size: 19px;
+  border-bottom: 2px solid var(--ink-on-paper);
+  background: var(--paper-2);
+}
+.cmp thead th:first-child { font-family: var(--f-mono); font-size: 11px; letter-spacing: .2em; text-transform: uppercase; padding-top: 20px; }
+.cmp td:first-child { font-weight: 700; width: 24%; }
+.cmp tbody tr:last-child td { border-bottom: none; }
+.cmp .us { background: var(--acid); }
+.cmp thead .us { box-shadow: inset 0 -4px 0 var(--ink-on-paper); }
+.cmp .us .yes { font-weight: 900; }
+.yes { color: var(--ink-on-paper); font-weight: 700; }
+.no-ish { color: rgba(22,21,15,.4); }
+.meh { color: rgba(22,21,15,.66); }
+
+/* ============================================================
+   PRICING — free / open / contribute
+   ============================================================ */
+.price-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 22px; }
+.plan {
+  border: 1px solid var(--line);
+  background: var(--ink-2);
+  padding: 42px 34px;
+  display: flex; flex-direction: column;
+  position: relative;
+  transition: transform .3s, border-color .3s;
+}
+.plan:hover { transform: translateY(-6px); }
+.plan.hot { border: 2px solid var(--acid); }
+.plan .tag {
+  position: absolute; top: -13px; left: 30px;
+  background: var(--acid); color: var(--ink);
+  font-family: var(--f-mono); font-size: 11px; font-weight: 700;
+  letter-spacing: .14em; padding: 5px 12px;
+}
+.plan .who {
+  font-family: var(--f-mono);
+  font-size: 11px;
+  letter-spacing: .26em;
+  text-transform: uppercase;
+  color: var(--fg-dim);
+}
+.plan .amount {
+  font-family: var(--f-disp-en);
+  font-size: clamp(48px, 5vw, 72px);
+  line-height: 1;
+  margin: 18px 0 6px;
+}
+.plan .amount small { font-size: .34em; color: var(--acid); }
+.plan .desc { color: var(--fg-dim); font-size: 14.5px; margin-bottom: 26px; }
+.plan ul { list-style: none; margin-bottom: 34px; flex: 1; }
+.plan li {
+  padding: 10px 0;
+  border-bottom: 1px dashed var(--line);
+  font-size: 14.5px;
+  color: var(--fg-dim);
+  display: flex; gap: 10px;
+}
+.plan li::before { content: '→'; color: var(--acid); font-family: var(--f-mono); }
+.plan .btn { justify-content: center; }
+
+/* flywheel */
+.flywheel {
+  margin-top: 70px;
+  border: 1px solid var(--line);
+  padding: clamp(30px, 4vw, 54px);
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 26px;
+  background:
+    radial-gradient(circle at 100% 0%, rgba(255,61,127,.1) 0%, transparent 45%),
+    var(--ink-2);
+}
+.step .s-no {
+  font-family: var(--f-disp-en);
+  font-size: 40px;
+  color: transparent;
+  -webkit-text-stroke: 1.5px var(--acid);
+  line-height: 1;
+}
+.step h4 {
+  font-family: var(--f-disp-cn);
+  font-weight: 400;
+  font-size: 22px;
+  margin: 14px 0 8px;
+}
+.step p { font-size: 13.5px; color: var(--fg-dim); line-height: 1.8; }
+.step:nth-child(4) .s-no { -webkit-text-stroke-color: var(--magenta); }
+.fw-title {
+  grid-column: 1 / -1;
+  font-family: var(--f-mono);
+  font-size: 11px;
+  letter-spacing: .3em;
+  text-transform: uppercase;
+  color: var(--fg-dim);
+  margin-bottom: -6px;
+}
+
+/* ============================================================
+   FAQ — paper
+   ============================================================ */
+.faq-list { max-width: 880px; }
+details {
+  border-bottom: 1px solid var(--line-paper);
+  padding: 4px 0;
+}
+details:first-of-type { border-top: 2px solid var(--ink-on-paper); }
+summary {
+  cursor: pointer;
+  list-style: none;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 20px;
+  padding: 24px 4px;
+  font-family: var(--f-disp-cn);
+  font-size: clamp(19px, 2.2vw, 26px);
+}
+summary::-webkit-details-marker { display: none; }
+summary .plus {
+  font-family: var(--f-mono);
+  font-size: 26px;
+  color: var(--magenta);
+  transition: transform .25s;
+  flex-shrink: 0;
+  line-height: 1;
+}
+details[open] .plus { transform: rotate(45deg); }
+details .ans {
+  padding: 0 4px 28px;
+  max-width: 720px;
+  color: rgba(22,21,15,.68);
+  font-size: 15.5px;
+  line-height: 1.95;
+}
+details .ans b { color: var(--ink-on-paper); }
+details .ans code {
+  font-family: var(--f-mono);
+  font-size: .9em;
+  background: var(--paper-2);
+  padding: 2px 8px;
+}
+
+/* ============================================================
+   FINAL CTA — acid
+   ============================================================ */
+.final {
+  background: var(--acid);
+  color: var(--ink);
+  text-align: center;
+  padding: clamp(100px, 13vw, 180px) var(--gutter);
+  overflow: hidden;
+}
+.final h2 {
+  font-family: var(--f-disp-cn);
+  font-weight: 400;
+  font-size: clamp(46px, 8.5vw, 120px);
+  line-height: 1.06;
+}
+.final p.mono-note {
+  font-family: var(--f-mono);
+  font-size: 13px;
+  letter-spacing: .22em;
+  text-transform: uppercase;
+  margin: 26px 0 44px;
+  color: rgba(11,11,16,.72);
+}
+.final .btn { border-color: var(--ink); color: var(--ink); background: var(--ink); color: var(--acid); }
+.final .btn:hover { background: transparent; color: var(--ink); }
+.final .btn.ghost2 { background: transparent; color: var(--ink); }
+.final .btn.ghost2:hover { background: var(--ink); color: var(--acid); }
+.final-cta-row { display: flex; gap: 16px; justify-content: center; flex-wrap: wrap; }
+
+/* ============================================================
+   FOOTER
+   ============================================================ */
+footer {
+  padding: 70px var(--gutter) 40px;
+  border-top: 1px solid var(--line);
+}
+.foot-grid {
+  max-width: 1280px; margin: 0 auto;
+  display: grid;
+  grid-template-columns: 1.4fr 1fr 1fr 1fr;
+  gap: 40px;
+}
+.foot-grid .logo { font-size: 22px; }
+.foot-grid p { color: var(--fg-dim); font-size: 14px; margin-top: 18px; max-width: 300px; line-height: 1.9; }
+.fcol h5 {
+  font-family: var(--f-mono);
+  font-size: 11px;
+  letter-spacing: .26em;
+  text-transform: uppercase;
+  color: var(--fg-faint);
+  margin-bottom: 20px;
+}
+.fcol a {
+  display: block;
+  text-decoration: none;
+  color: var(--fg-dim);
+  font-size: 14.5px;
+  padding: 6px 0;
+  transition: color .2s;
+}
+.fcol a:hover { color: var(--acid); }
+.foot-bottom {
+  max-width: 1280px; margin: 60px auto 0;
+  padding-top: 24px;
+  border-top: 1px solid var(--line);
+  display: flex; justify-content: space-between; flex-wrap: wrap; gap: 12px;
+  font-family: var(--f-mono);
+  font-size: 11px;
+  letter-spacing: .1em;
+  color: var(--fg-faint);
+}
+
+/* ============================================================
+   RESPONSIVE
+   ============================================================ */
+@media (max-width: 1024px) {
+  .pillars, .price-grid { grid-template-columns: 1fr; }
+  .cat-grid { grid-template-columns: repeat(2, 1fr); }
+  .cat.wide { grid-column: span 2; }
+  .hero-stats { grid-template-columns: repeat(3, 1fr); gap: 0 20px; }
+  .stat:nth-child(3n) { border-right: none; }
+  .flywheel { grid-template-columns: repeat(2, 1fr); }
+  .foot-grid { grid-template-columns: 1fr 1fr; }
+  .icp-row { grid-template-columns: 60px 1fr; }
+  .icp-row p { grid-column: 2; }
+}
+@media (max-width: 680px) {
+  .nav-links { display: none; }
+  .pain { grid-template-columns: 1fr; gap: 10px; }
+  .pain .idx { font-size: 32px; }
+  .cat-grid { grid-template-columns: 1fr; }
+  .cat.wide { grid-column: span 1; }
+  .hero-stats { grid-template-columns: repeat(2, 1fr); }
+  .stat { border-right: none; }
+  .flywheel { grid-template-columns: 1fr; }
+  .foot-grid { grid-template-columns: 1fr; }
+  .marquee { transform: none; }
+  .hero { padding-top: 110px; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .marquee-track { animation: none; }
+  .reveal { opacity: 1; transform: none; transition: none; }
+  html { scroll-behavior: auto; }
+}
+</style>
+</head>
+<body>
+
+<div id="progress"></div>
+
+<!-- ================= NAV ================= -->
+<nav>
+  <a class="logo" href="../index.html"><span class="mark">D</span>DUDE<em>&nbsp;DB</em></a>
+  <div class="nav-links">
+    <a href="#problem">痛点</a>
+    <a href="#solution">方案</a>
+    <a href="#who">人群</a>
+    <a href="#compare">对比</a>
+    <a href="#pricing">定价</a>
+    <a href="#faq">FAQ</a>
+  </div>
+  <a class="btn" href="../index.html">立即探索 <span class="arr">→</span></a>
+</nav>
+
+<!-- ================= HERO ================= -->
+<header class="hero">
+  <div class="hero-grid-bg"></div>
+  <div class="hero-ghost">DUDE</div>
+  <div class="hero-glow"></div>
+  <div class="hero-inner">
+    <span class="kicker">GO-TO-MARKET <span class="dot">●</span> 2026 全球版 <span class="dot">●</span> V1.0 LAUNCH</span>
+    <h1 class="reveal in">把 <span class="stroke">11 座城市</span>的<br>玩乐情报<span class="mg">，</span>装进<br>一个数据库。</h1>
+    <p class="hero-sub reveal in d1">
+      DUDE Database 是面向城市探索者的<strong>真实场所数据库</strong>：
+      <strong>33 类玩法 × 900+ 篇指南</strong>，从 SPA 到密室，从牙医到养老院。
+      每一篇都标注<strong>可信等级</strong>与<strong>最后核实日期</strong>。
+    </p>
+    <div class="hero-cta reveal in d2">
+      <a class="btn solid big" href="../index.html">免费开始探索 <span class="arr">→</span></a>
+      <a class="btn big" href="https://github.com/allengaller/dude-database" target="_blank" rel="noopener">GitHub 加星 ☆</a>
+    </div>
+    <div class="hero-chips reveal in d3">
+      <span class="chip"><b>MIT</b> 完全开源</span>
+      <span class="chip"><b>¥0</b> 永久免费</span>
+      <span class="chip"><b>0</b> 注册门槛</span>
+      <span class="chip"><b>每周</b> 数据刷新</span>
+    </div>
+  </div>
+  <div class="hero-stats reveal in d3">
+    <div class="stat"><div class="num" data-count="11">0</div><div class="lab">全球城市</div></div>
+    <div class="stat"><div class="num" data-count="33">0</div><div class="lab">玩乐类别</div></div>
+    <div class="stat"><div class="num" data-count="900">0</div><div class="lab">指南文档 +</div></div>
+    <div class="stat"><div class="num" data-count="400">0</div><div class="lab">经典游戏 +</div></div>
+    <div class="stat"><div class="num">100<small>%</small></div><div class="lab">开源 MIT</div></div>
+  </div>
+</header>
+
+<!-- ================= CITY MARQUEE ================= -->
+<div class="marquee" aria-hidden="true">
+  <div class="marquee-track">
+    <span>上海 SHANGHAI</span><span>杭州 HANGZHOU</span><span>深圳 SHENZHEN</span><span>香港 HONG KONG</span><span>东京 TOKYO</span><span>首尔 SEOUL</span><span>新加坡 SINGAPORE</span><span>曼谷 BANGKOK</span><span>纽约 NEW YORK</span><span>莫斯科 MOSCOW</span><span>圣彼得堡 SAINT PETERSBURG</span>
+    <span>上海 SHANGHAI</span><span>杭州 HANGZHOU</span><span>深圳 SHENZHEN</span><span>香港 HONG KONG</span><span>东京 TOKYO</span><span>首尔 SEOUL</span><span>新加坡 SINGAPORE</span><span>曼谷 BANGKOK</span><span>纽约 NEW YORK</span><span>莫斯科 MOSCOW</span><span>圣彼得堡 SAINT PETERSBURG</span>
+  </div>
+</div>
+
+<!-- ================= PROBLEM ================= -->
+<section class="light" id="problem">
+  <div class="wrap">
+    <div class="sec-head">
+      <span class="kicker">01 · THE PROBLEM · 为什么需要它</span>
+      <h2>想玩得好，<br>却总在四五个 App 之间打转。</h2>
+      <p class="lead">现有的本地生活平台为「交易」而生，不为「探索」而生。越是垂直、越是小众的场景，信息越是稀碎、过时、不可信。</p>
+    </div>
+    <div class="pain-list">
+      <div class="pain reveal">
+        <div class="idx">01</div>
+        <h3>长尾场景没人管</h3>
+        <p>密室、剧本杀、KTV、二次元周边、心理咨询、殡葬服务……<b>大平台只覆盖「能抽佣」的品类</b>，长尾场景只能靠零散帖子碰运气。</p>
+      </div>
+      <div class="pain reveal">
+        <div class="idx">02</div>
+        <h3>信息过时无标注</h3>
+        <p>收藏的店去年就关门了，攻略里的价格停留在三年前。<b>没有任何平台告诉你「这条信息最后一次核实是什么时候」</b>。</p>
+      </div>
+      <div class="pain reveal">
+        <div class="idx">03</div>
+        <h3>排名被广告污染</h3>
+        <p>竞价排名、探店软文、刷量点评——<b>你看到的顺序，是商家付钱的顺序</b>，不是真实口碑的顺序。</p>
+      </div>
+      <div class="pain reveal">
+        <div class="idx">04</div>
+        <h3>跨城体验完全割裂</h3>
+        <p>在上海用 A，去东京换 B，到纽约再装 C。<b>11 座城市的信息结构互不相通</b>，每次搬家、旅行都要从零开始。</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ================= SOLUTION / PILLARS ================= -->
+<section id="solution">
+  <div class="wrap">
+    <div class="sec-head">
+      <span class="kicker">02 · THE SOLUTION · 我们的答案</span>
+      <h2>一个把<span style="color:var(--acid)">可信度</span>写在<br>每一篇标题旁边的数据库。</h2>
+    </div>
+    <div class="pillars">
+      <article class="pillar reveal" data-no="01">
+        <div class="badge-row"><span class="pbadge l1">L1 真实场所</span><span class="pbadge l2">L2 知名品牌</span><span class="pbadge l3">L3 通用介绍</span></div>
+        <h3>可信分级体系</h3>
+        <p>每篇指南自带徽章：<b>L1</b> 是核实过地址与营业信息真实场所，<b>L2</b> 是连锁知名品牌，<b>L3</b> 是通用性介绍。<b>可信度不再靠猜。</b></p>
+        <div class="foot">TRUST BY DEFAULT</div>
+      </article>
+      <article class="pillar reveal d1" data-no="02">
+        <div class="badge-row"><span class="pbadge l1">最后核实 2026-07</span></div>
+        <h3>持续核实机制</h3>
+        <p>每条内容标注<b>「最后核实」日期</b>；中国城市数据由 <b>Amap 数据管道每周自动刷新</b>，国际城市由社区人工维护，过期内容降级重审。</p>
+        <div class="foot">ALWAYS FRESH</div>
+      </article>
+      <article class="pillar reveal d2" data-no="03">
+        <div class="badge-row"><span class="pbadge l1">MIT LICENSE</span><span class="pbadge l3">纯 MARKDOWN</span></div>
+        <h3>完全开放的数据</h3>
+        <p>全部内容是<b>纯 Markdown 文件</b>，MIT 许可。没有 App 锁定、没有登录墙、没有 API 付费——<b>fork 整个仓库，数据就是你的。</b></p>
+        <div class="foot">YOURS TO KEEP</div>
+      </article>
+    </div>
+  </div>
+</section>
+
+<!-- ================= CATEGORIES ================= -->
+<section class="light" id="categories">
+  <div class="wrap">
+    <div class="sec-head">
+      <span class="kicker">03 · THE PRODUCT · 内容矩阵</span>
+      <h2>七大主题，33 类玩法，<br>从周五晚到人生终点。</h2>
+    </div>
+    <div class="cat-grid">
+      <a class="cat reveal" href="../index.html" style="text-decoration:none">
+        <span class="cnt">35 篇</span>
+        <div class="cn">游戏</div><div class="en">Gaming</div>
+        <div class="tags">桌游 · 密室 · 剧本杀 · 游乐场</div>
+      </a>
+      <a class="cat wide reveal d1" href="../index.html" style="text-decoration:none">
+        <span class="cnt">52 篇</span>
+        <div class="cn">娱乐</div><div class="en">Nightlife &amp; Leisure</div>
+        <div class="tags">KTV · 夜店 · 酒吧 · 咖啡 · 网吧</div>
+      </a>
+      <a class="cat reveal" href="../index.html" style="text-decoration:none">
+        <span class="cnt">33 篇</span>
+        <div class="cn">景点</div><div class="en">Sightseeing</div>
+        <div class="tags">观光 · 公园 · 徒步路线</div>
+      </a>
+      <a class="cat reveal" href="../index.html" style="text-decoration:none">
+        <span class="cnt">30 篇</span>
+        <div class="cn">购物</div><div class="en">Shopping</div>
+        <div class="tags">二次元周边 · 艺术 · 医美</div>
+      </a>
+      <a class="cat wide reveal d1" href="../index.html" style="text-decoration:none">
+        <span class="cnt">77 篇</span>
+        <div class="cn">健康</div><div class="en">Health</div>
+        <div class="tags">医院 · 牙医 · 健身 · SPA · 心理 · 跑步 · 骑行</div>
+      </a>
+      <a class="cat reveal" href="../index.html" style="text-decoration:none">
+        <span class="cnt">55 篇</span>
+        <div class="cn">生活</div><div class="en">Daily Life</div>
+        <div class="tags">约会 · 共享办公 · 图书馆</div>
+      </a>
+      <a class="cat reveal d2" href="../index.html" style="text-decoration:none">
+        <span class="cnt">33 篇</span>
+        <div class="cn">身后</div><div class="en">End-of-Life</div>
+        <div class="tags">殡葬 · 墓地 · 养老院</div>
+      </a>
+      <div class="cat reveal d3" style="background:var(--ink-on-paper);color:var(--paper)">
+        <div class="cn">+ 400 款</div><div class="en">Games Archive</div>
+        <div class="tags" style="opacity:.8">1980s–2020s 经典单机游戏档案</div>
+      </div>
+    </div>
+    <p class="cat-note">// 文件命名 {城市}-{主题}.md · 例：健康/上海-医院.md · 每个主题目录按城市展开</p>
+  </div>
+</section>
+
+<!-- ================= ICP ================= -->
+<section id="who">
+  <div class="wrap">
+    <div class="sec-head">
+      <span class="kicker">04 · WHO IT'S FOR · 为谁而做</span>
+      <h2>五类人，<br>打开它的五种理由。</h2>
+    </div>
+    <div class="icp-row reveal">
+      <div class="no">/01</div>
+      <h3>48 小时旅行者<small>THE WEEKEND TRAVELER</small></h3>
+      <p>落地即玩，照着走。一个页面读完一座城的核心玩法，不用再交叉比对五篇攻略。</p>
+    </div>
+    <div class="icp-row reveal">
+      <div class="no">/02</div>
+      <h3>留学生与侨居者<small>EXPATS &amp; STUDENTS</small></h3>
+      <p>落地第一周的生活底座：哪家医院能沟通、哪个牙医靠谱、共享办公在哪——冷启动直接跳过。</p>
+    </div>
+    <div class="icp-row reveal">
+      <div class="no">/03</div>
+      <h3>数字游民<small>DIGITAL NOMADS</small></h3>
+      <p>边工作边换城市。11 城同一套信息结构，换城市 = 换一个文件夹，学习成本为零。</p>
+    </div>
+    <div class="icp-row reveal">
+      <div class="no">/04</div>
+      <h3>本地周末玩家<small>THE LOCAL EXPLORER</small></h3>
+      <p>「这周末去哪」的答案库。密室、KTV、新开的展览和步道，按目录翻，不被算法投喂。</p>
+    </div>
+    <div class="icp-row reveal">
+      <div class="no">/05</div>
+      <h3>内容创作者与开发者<small>CREATORS &amp; BUILDERS</small></h3>
+      <p>可引用、可 fork 的开放数据源。写攻略、做产品、搭机器人——MIT 许可，注明出处即可。</p>
+    </div>
+  </div>
+</section>
+
+<!-- ================= COMPARE ================= -->
+<section class="light" id="compare">
+  <div class="wrap">
+    <div class="sec-head">
+      <span class="kicker">05 · WHY US · 横向对比</span>
+      <h2>不是替代它们，<br>是补上它们都不做的那块。</h2>
+    </div>
+    <div class="compare-scroll reveal">
+      <table class="cmp">
+        <thead>
+          <tr>
+            <th>维度</th>
+            <th class="us">DUDE Database</th>
+            <th>点评类 App</th>
+            <th>地图 App</th>
+            <th>种草社区</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>长尾场景覆盖</td>
+            <td class="us"><span class="yes">✓ 33 类全目录</span></td>
+            <td class="meh">偏餐饮交易</td>
+            <td class="meh">偏导航检索</td>
+            <td class="no-ish">✗ 碎片笔记</td>
+          </tr>
+          <tr>
+            <td>可信度标注</td>
+            <td class="us"><span class="yes">✓ L1/L2/L3 分级</span></td>
+            <td class="no-ish">✗ 不可分辨</td>
+            <td class="no-ish">✗</td>
+            <td class="no-ish">✗ 软文难辨</td>
+          </tr>
+          <tr>
+            <td>最后核实日期</td>
+            <td class="us"><span class="yes">✓ 每篇必标</span></td>
+            <td class="no-ish">✗</td>
+            <td class="meh">部分营业时间</td>
+            <td class="no-ish">✗</td>
+          </tr>
+          <tr>
+            <td>广告与竞价排名</td>
+            <td class="us"><span class="yes">✓ 零广告</span></td>
+            <td class="no-ish">竞价排序</td>
+            <td class="no-ish">推广插位</td>
+            <td class="no-ish">商单软文</td>
+          </tr>
+          <tr>
+            <td>数据开放性</td>
+            <td class="us"><span class="yes">✓ MIT · 纯 Markdown</span></td>
+            <td class="no-ish">封闭</td>
+            <td class="meh">API 付费</td>
+            <td class="no-ish">封闭</td>
+          </tr>
+          <tr>
+            <td>跨城结构一致性</td>
+            <td class="us"><span class="yes">✓ 11 城同构</span></td>
+            <td class="meh">各地深浅不一</td>
+            <td class="yes">✓</td>
+            <td class="no-ish">✗</td>
+          </tr>
+          <tr>
+            <td>使用门槛</td>
+            <td class="us"><span class="yes">✓ 免登录 · 纯静态秒开</span></td>
+            <td class="no-ish">强制登录</td>
+            <td class="yes">✓</td>
+            <td class="no-ish">强制登录</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</section>
+
+<!-- ================= PRICING + FLYWHEEL ================= -->
+<section id="pricing">
+  <div class="wrap">
+    <div class="sec-head">
+      <span class="kicker">06 · PRICING · 定价策略</span>
+      <h2>价格只有一个数字：<span style="color:var(--acid)">0</span>。<br>增长引擎就是开源本身。</h2>
+      <p class="lead">我们不做订阅、不卖广告、不做竞价排名。数据库的价值随贡献者数量指数增长——把门槛降到零，是唯一正确的 GTM 策略。</p>
+    </div>
+    <div class="price-grid">
+      <article class="plan reveal">
+        <div class="who">探索者 · EXPLORE</div>
+        <div class="amount">¥0</div>
+        <div class="desc">永久免费，无需注册</div>
+        <ul>
+          <li>全部 900+ 篇指南</li>
+          <li>11 城 × 33 类完整目录</li>
+          <li>可信徽章 + 核实日期</li>
+          <li>收藏与搜索功能</li>
+        </ul>
+        <a class="btn" href="../index.html">开始浏览 <span class="arr">→</span></a>
+      </article>
+      <article class="plan hot reveal d1">
+        <div class="tag">最流行的用法</div>
+        <div class="who">开发者 · BUILD</div>
+        <div class="amount">MIT</div>
+        <div class="desc">整个仓库，fork 走就是你的</div>
+        <ul>
+          <li>纯 Markdown 数据，无锁定</li>
+          <li>可商用，注明出处即可</li>
+          <li>Node.js 数据管道随附</li>
+          <li>Jest 测试套件守质量</li>
+        </ul>
+        <a class="btn solid" href="https://github.com/allengaller/dude-database/fork" target="_blank" rel="noopener">Fork 仓库 ⑂</a>
+      </article>
+      <article class="plan reveal d2">
+        <div class="who">共建者 · CONTRIBUTE</div>
+        <div class="amount">PR</div>
+        <div class="desc">你的城市，写进数据库</div>
+        <ul>
+          <li>模板齐全：真实场所 / 数据源</li>
+          <li>核验清单保证质量</li>
+          <li>CI 自动检查结构</li>
+          <li>拒绝爬虫抓取点评数据</li>
+        </ul>
+        <a class="btn" href="https://github.com/allengaller/dude-database/blob/main/CONTRIBUTING.md" target="_blank" rel="noopener">读贡献指南 <span class="arr">→</span></a>
+      </article>
+    </div>
+
+    <div class="flywheel reveal">
+      <div class="fw-title">// GROWTH FLYWHEEL · 社区驱动的增长飞轮</div>
+      <div class="step">
+        <div class="s-no">01</div>
+        <h4>免费用</h4>
+        <p>零门槛浏览全部内容，体验即获客。</p>
+      </div>
+      <div class="step">
+        <div class="s-no">02</div>
+        <h4>顺手传</h4>
+        <p>指南按城市即读即转，天然适合口碑传播。</p>
+      </div>
+      <div class="step">
+        <div class="s-no">03</div>
+        <h4>提 PR 补</h4>
+        <p>发现过期或缺失？模板 + 核验清单，15 分钟补一篇。</p>
+      </div>
+      <div class="step">
+        <div class="s-no">04</div>
+        <h4>更全 → 更多人用</h4>
+        <p>内容越全，搜索与口碑带来新用户，飞轮转起来。</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ================= FAQ ================= -->
+<section class="light" id="faq">
+  <div class="wrap">
+    <div class="sec-head">
+      <span class="kicker">07 · FAQ · 你可能想问</span>
+      <h2>先把疑虑，<br>一条条摆平。</h2>
+    </div>
+    <div class="faq-list">
+      <details class="reveal" open>
+        <summary>数据从哪里来，靠谱吗？<span class="plus">+</span></summary>
+        <div class="ans">中国城市（上海 / 杭州 / 深圳 / 香港）的数据来自 <b>Amap 数据管道，每周自动刷新</b>；国际城市（东京 / 纽约 / 莫斯科等）由社区人工整理维护。所有内容经过 <b>L1/L2/L3 三级可信分级</b>，且每篇标注来源与最后核实日期。我们不接受爬虫抓取点评平台数据。</div>
+      </details>
+      <details class="reveal">
+        <summary>信息会不会很快过时？<span class="plus">+</span></summary>
+        <div class="ans">会过时的信息，我们让它<b>自己暴露过时</b>：每篇指南带「最后核实」日期，读者一眼可见新旧；管道定期重刷中国城市，社区定期巡检国际城市，过期内容降级重审，而不是假装它永远新鲜。</div>
+      </details>
+      <details class="reveal">
+        <summary>和大众点评 / Google Maps / 小红书有什么区别？<span class="plus">+</span></summary>
+        <div class="ans">定位不同：它们是<b>交易平台和流量入口</b>，为「成交」优化；DUDE Database 是<b>开放数据库</b>，为「探索与决策」优化——覆盖点评类不做的长尾品类（密室、心理咨询、殡葬）、标注可信等级、零广告零竞价排名、数据整体开源可 fork。</div>
+      </details>
+      <details class="reveal">
+        <summary>可以商用吗？<span class="plus">+</span></summary>
+        <div class="ans">可以。<b>MIT 许可</b>意味着你可以自由复制、修改、商用、再分发，只需在分发时保留版权与许可声明。给产品接数据、做city-walk手册、训练机器人，都欢迎。</div>
+      </details>
+      <details class="reveal">
+        <summary>我想补充自己的城市 / 常去的店，怎么参与？<span class="plus">+</span></summary>
+        <div class="ans">三步：Fork 仓库 → 按 <code>真实场所模板.md</code> 写一篇（附核实信息与日期）→ 提 PR。CI 会自动检查文件结构，<code>CONTRIBUTING.md</code> 里有完整指引。核验清单确保每一篇都达到 L1 标准。</div>
+      </details>
+      <details class="reveal">
+        <summary>为什么完全免费？你们靠什么持续？<span class="plus">+</span></summary>
+        <div class="ans">因为<b>开源本身就是我们的增长策略</b>：数据库是典型的社区共建产品，内容越多越有用，越有用越多人贡献。纯静态架构意味着接近零的托管成本，社区贡献即是内容的持续供给。</div>
+      </details>
+    </div>
+  </div>
+</section>
+
+<!-- ================= FINAL CTA ================= -->
+<section class="final">
+  <div class="wrap">
+    <h2 class="reveal">今晚就去哪？<br>现在就查。</h2>
+    <p class="mono-note reveal d1">NO SIGN-UP · NO ADS · NO EXCUSES</p>
+    <div class="final-cta-row reveal d2">
+      <a class="btn big" href="../index.html">打开数据库 <span class="arr">→</span></a>
+      <a class="btn big ghost2" href="https://github.com/allengaller/dude-database" target="_blank" rel="noopener">GitHub ☆ Star</a>
+    </div>
+  </div>
+</section>
+
+<!-- ================= FOOTER ================= -->
+<footer>
+  <div class="foot-grid">
+    <div>
+      <a class="logo" href="../index.html"><span class="mark">D</span>DUDE<em>&nbsp;DB</em></a>
+      <p>全球生活方式数据库。真实场所指南 × 经典游戏档案，MIT 开源，社区共建。</p>
+    </div>
+    <div class="fcol">
+      <h5>产品</h5>
+      <a href="../index.html">数据库主页</a>
+      <a href="../index.html">11 城指南</a>
+      <a href="../gaming/">游戏档案</a>
+      <a href="#categories">主题目录</a>
+    </div>
+    <div class="fcol">
+      <h5>参与</h5>
+      <a href="https://github.com/allengaller/dude-database/fork" target="_blank" rel="noopener">Fork 仓库</a>
+      <a href="https://github.com/allengaller/dude-database/blob/main/CONTRIBUTING.md" target="_blank" rel="noopener">贡献指南</a>
+      <a href="../核验清单.md">核验清单</a>
+      <a href="https://github.com/allengaller/dude-database/issues" target="_blank" rel="noopener">反馈问题</a>
+    </div>
+    <div class="fcol">
+      <h5>项目</h5>
+      <a href="../README.md">README</a>
+      <a href="../项目评估.md">项目评估</a>
+      <a href="../数据管道说明.md">数据管道</a>
+      <a href="../LICENSE">MIT License</a>
+    </div>
+  </div>
+  <div class="foot-bottom">
+    <span>© 2026 DUDE DATABASE · MIT LICENSED</span>
+    <span>BUILT WITH MARKDOWN + VANILLA JS · ZERO BUILD STEP</span>
+  </div>
+</footer>
+
+<script>
+// scroll progress
+const bar = document.getElementById('progress');
+addEventListener('scroll', () => {
+  const h = document.documentElement;
+  bar.style.width = (h.scrollTop / (h.scrollHeight - h.clientHeight) * 100) + '%';
+}, { passive: true });
+
+// reveal on scroll
+const io = new IntersectionObserver(entries => {
+  entries.forEach(e => { if (e.isIntersecting) { e.target.classList.add('in'); io.unobserve(e.target); } });
+}, { threshold: 0.12 });
+document.querySelectorAll('.reveal:not(.in)').forEach(el => io.observe(el));
+
+// count-up stats
+const cio = new IntersectionObserver(entries => {
+  entries.forEach(e => {
+    if (!e.isIntersecting) return;
+    cio.unobserve(e.target);
+    const target = +e.target.dataset.count, dur = 1100, t0 = performance.now();
+    const tick = now => {
+      const p = Math.min((now - t0) / dur, 1);
+      e.target.textContent = Math.round(target * (1 - Math.pow(1 - p, 3)));
+      if (p < 1) requestAnimationFrame(tick);
+    };
+    requestAnimationFrame(tick);
+  });
+}, { threshold: 0.5 });
+document.querySelectorAll('[data-count]').forEach(el => cio.observe(el));
+</script>
+<!-- gtm-portal-backlink (managed by _scripts/sync-gtm.py) -->
+<a class="gtmp-back" href="/GTM/" aria-label="返回 GTM 门户">&#8617; GTM 门户</a>
+<style>
+.gtmp-back{position:fixed;right:1rem;bottom:1rem;z-index:2147483000;
+font:500 12px/1 ui-monospace,SFMono-Regular,Menlo,Consolas,monospace;
+letter-spacing:.05em;text-decoration:none;padding:.6rem .85rem;border-radius:999px;
+color:#14130f;background:rgba(251,250,247,.92);border:1px solid rgba(20,19,15,.16);
+box-shadow:0 2px 12px rgba(20,19,15,.14);backdrop-filter:blur(6px);
+transition:transform .15s ease,box-shadow .15s ease}
+.gtmp-back:hover{transform:translateY(-1px);box-shadow:0 4px 16px rgba(20,19,15,.22)}
+@media (prefers-color-scheme:dark){.gtmp-back{color:#f5f2ea;background:rgba(20,19,15,.88);
+border-color:rgba(245,242,234,.22)}}
+</style>
+</body>
+</html>

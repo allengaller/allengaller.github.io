@@ -1,0 +1,682 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>agent-up · Agent 持续改进平台 — 模型是引擎，改进是生产力</title>
+<meta name="description" content="agent-up 把企业 Agent 的持续改进工程化：反馈 → AI 归因 → 改配置 → 审批发布 → 效果报告 → 一键回滚。公共云与专有云双形态，模型可换、闭环不变。" />
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,500;0,9..144,650;1,9..144,500&family=IBM+Plex+Mono:wght@400;500&family=Noto+Sans+SC:wght@400;500;700&family=Noto+Serif+SC:wght@700;900&display=swap" rel="stylesheet" />
+<style>
+  :root{
+    --paper:#FBF8F2;
+    --ink:#181310;
+    --ink-2:#6B6156;
+    --hairline:#E8E0D2;
+    --orange:#FF6A00;          /* 图形/强调色（非文本） */
+    --orange-text:#C24E00;     /* 文本橙：纸底 ≥4.5:1 */
+    --orange-btn:#C24E00;      /* 交互面橙：白字 ≥4.5:1 */
+    --orange-btn-h:#A63F00;
+    --orange-t:#FFF1E6;
+    --card:#FFFFFF;
+    --amber:#9A5B08;  --amber-bg:#FDF3DC;  --amber-line:#EAD3A0;
+    --green:#0B7A55;  --green-bg:#EAF8F1;  --green-line:#BFE5D4;
+    --serif:"Noto Serif SC",serif;
+    --sans:"Noto Sans SC",-apple-system,sans-serif;
+    --disp:"Fraunces",Georgia,serif;
+    --mono:"IBM Plex Mono",monospace;
+  }
+  *{margin:0;padding:0;box-sizing:border-box}
+  html{scroll-behavior:smooth;caret-color:var(--orange-text)}
+  body{background:var(--paper);color:var(--ink);font-family:var(--sans);font-size:16px;line-height:1.75;
+    -webkit-font-smoothing:antialiased}
+  ::selection{background:var(--orange);color:#fff}
+  ::-webkit-scrollbar{width:10px}
+  ::-webkit-scrollbar-track{background:var(--paper)}
+  ::-webkit-scrollbar-thumb{background:#D8CDBC;border-radius:5px}
+  ::-webkit-scrollbar-thumb:hover{background:var(--orange-text)}
+  a{color:inherit;text-decoration:none}
+  a:focus-visible,button:focus-visible{outline:2px solid var(--orange-text);outline-offset:3px;border-radius:2px}
+  .wrap{max-width:1200px;margin:0 auto;padding:0 32px}
+
+  /* ---------- 微观细节 ---------- */
+  .meta{display:flex;align-items:center;gap:14px;margin-top:14px}
+  .meta .no{font-family:var(--disp);font-style:italic;font-size:15px;color:var(--orange-text)}
+  .meta .lb{font-size:12px;letter-spacing:.14em;color:var(--ink-2)}
+  .meta .rule{flex:1;height:1px;background:var(--hairline)}
+  h2{font-family:var(--serif);font-weight:900;font-size:clamp(28px,3.6vw,44px);line-height:1.25;letter-spacing:.01em}
+  h2 .em{color:var(--orange-text)}
+  .sec-head{max-width:760px}
+  .sec-head p.lead{margin-top:16px;color:var(--ink-2);font-size:17px}
+  section{padding:96px 0;border-top:1px solid var(--hairline)}
+
+  /* ---------- 导航 ---------- */
+  nav{position:sticky;top:0;z-index:50;background:color-mix(in srgb,var(--paper) 88%,transparent);
+    backdrop-filter:blur(12px);border-bottom:1px solid var(--hairline)}
+  nav .bar{display:flex;align-items:center;gap:28px;min-height:64px}
+  .wordmark{font-family:var(--disp);font-weight:650;font-size:22px;letter-spacing:-.01em}
+  .wordmark em{font-style:italic;color:var(--orange-text)}
+  .nav-links{display:flex;gap:22px;margin-left:auto}
+  .nav-links a{font-size:13.5px;color:var(--ink-2);transition:color .2s}
+  .nav-links a:hover{color:var(--orange-text)}
+  .btn{display:inline-flex;align-items:center;gap:8px;font-weight:700;font-size:15px;
+    padding:13px 26px;border-radius:2px;transition:transform .15s,box-shadow .15s,background .2s}
+  .btn:active{transform:translateY(1px)}
+  .btn-primary{background:var(--orange-btn);color:#fff;box-shadow:0 8px 20px -10px rgba(194,78,0,.55)}
+  .btn-primary:hover{background:var(--orange-btn-h)}
+  .btn-ghost{border:1px solid var(--ink);color:var(--ink)}
+  .btn-ghost:hover{background:var(--ink);color:var(--paper)}
+  nav .btn{padding:9px 18px;font-size:13.5px}
+
+  /* ---------- HERO ---------- */
+  .hero{padding:88px 0 72px}
+  .hero-grid{display:grid;grid-template-columns:1.15fr .85fr;gap:64px;align-items:center}
+  .hero h1{font-family:var(--serif);font-weight:900;font-size:clamp(38px,4.6vw,60px);line-height:1.22;letter-spacing:.01em}
+  .hero h1 .hl{display:block}
+  .hero h1 .en{font-family:var(--disp);font-weight:650;font-style:italic;color:var(--orange-text);white-space:nowrap}
+  .hero-meta{margin-top:16px;font-size:12px;letter-spacing:.16em;color:var(--ink-2)}
+  .hero .sub{margin-top:18px;font-size:17.5px;color:var(--ink-2);max-width:34em}
+  .hero .sub b{color:var(--ink)}
+  .hero-cta{display:flex;gap:14px;margin-top:34px;flex-wrap:wrap}
+  .facts{display:flex;gap:0;margin-top:52px;border-top:1px solid var(--hairline);border-bottom:1px solid var(--hairline)}
+  .facts div{flex:1;padding:16px 20px 14px;border-left:1px solid var(--hairline)}
+  .facts div:first-child{border-left:0;padding-left:0}
+  .facts .n{font-family:var(--disp);font-weight:650;font-size:30px;line-height:1.1;color:var(--ink);font-variant-numeric:tabular-nums}
+  .facts .n i{font-style:italic;color:var(--orange-text)}
+  .facts .t{font-size:12px;color:var(--ink-2);margin-top:2px;letter-spacing:.04em}
+
+  /* 环形闭环图（桌面） */
+  .loop{position:relative;width:460px;height:460px;margin:0 auto}
+  .loop svg.ring{position:absolute;inset:0;animation:spin 46s linear infinite}
+  .loop svg.ring circle{fill:none;stroke:var(--orange);stroke-width:1.6;stroke-dasharray:5 9;opacity:.85}
+  @keyframes spin{to{transform:rotate(360deg)}}
+  .loop .core{position:absolute;left:50%;top:50%;transform:translate(-50%,-50%);text-align:center}
+  .loop .core .zh{font-family:var(--serif);font-weight:900;font-size:30px;line-height:1.3}
+  .loop .core .tag{display:inline-block;margin-top:10px;font-family:var(--mono);font-size:11px;letter-spacing:.18em;
+    color:var(--green);background:var(--green-bg);border:1px solid var(--green-line);padding:3px 10px;border-radius:2px}
+  .node{position:absolute;transform:translate(-50%,-50%);background:var(--card);border:1px solid var(--hairline);
+    border-radius:3px;padding:9px 14px;box-shadow:0 8px 18px -12px rgba(24,19,16,.3);white-space:nowrap;
+    transition:transform .25s,border-color .25s}
+  .node:hover{transform:translate(-50%,-50%) scale(1.06);border-color:var(--orange-text)}
+  .node .step{font-family:var(--mono);font-size:11px;letter-spacing:.16em;color:var(--orange-text)}
+  .node .name{font-weight:700;font-size:14.5px;line-height:1.4}
+  .node .by{display:block;font-weight:400;font-size:11.5px;color:var(--ink-2)}
+
+  /* 紧凑 SVG 环（移动端） */
+  .loop-mini{display:none;width:min(320px,86vw);margin:0 auto}
+  .loop-mini .c1{font-family:var(--serif);font-weight:900;font-size:24px;fill:var(--ink);text-anchor:middle}
+  .loop-mini .lb{font-size:12.5px;font-weight:700;fill:var(--ink);text-anchor:middle;font-family:var(--sans)}
+  .loop-mini .sb{font-size:10.5px;fill:var(--ink-2);text-anchor:middle;font-family:var(--mono)}
+
+  /* ---------- 跑马灯 ---------- */
+  .marquee{background:var(--orange-btn);color:#fff;overflow:hidden;padding:11px 0;border-block:1px solid var(--orange-btn-h)}
+  .mq-track{display:flex;gap:0;width:max-content;animation:mq 26s linear infinite}
+  .mq-track span{font-family:var(--mono);font-size:13px;letter-spacing:.22em;padding:0 18px;white-space:nowrap;opacity:.95}
+  @keyframes mq{to{transform:translateX(-50%)}}
+
+  /* ---------- 痛点 ---------- */
+  .pain-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:22px;margin-top:48px}
+  .pain{background:var(--card);border:1px solid var(--hairline);border-radius:4px;padding:30px 28px 26px;
+    position:relative;transition:transform .25s,box-shadow .25s}
+  .pain:hover{transform:translateY(-5px);box-shadow:0 18px 34px -22px rgba(24,19,16,.32)}
+  .pain .idx{font-family:var(--disp);font-style:italic;font-size:44px;color:var(--orange-t);
+    -webkit-text-stroke:1.2px var(--orange-text);line-height:1;position:absolute;top:22px;right:24px}
+  .pain h3{font-family:var(--serif);font-weight:900;font-size:23px;margin-bottom:12px}
+  .pain .now{font-size:14px;color:var(--ink-2);border-top:1px dashed var(--hairline);padding-top:12px}
+  .pain .now b{display:block;font-size:11.5px;font-weight:700;letter-spacing:.16em;
+    color:var(--amber);margin-bottom:4px}
+
+  /* ---------- 方案（闭环四行） ---------- */
+  .flow-list{margin-top:52px;border-top:1px solid var(--hairline)}
+  .flow-row{display:grid;grid-template-columns:90px 210px 1fr;gap:28px;padding:26px 0;border-bottom:1px solid var(--hairline);
+    align-items:baseline;transition:background .2s}
+  .flow-row:hover{background:var(--orange-t)}
+  .flow-row .fn{font-family:var(--disp);font-style:italic;font-size:17px;color:var(--orange-text)}
+  .flow-row .fname{font-family:var(--serif);font-weight:900;font-size:21px}
+  .flow-row .fdesc{color:var(--ink-2);font-size:15px;max-width:62ch}
+  .flow-row .fdesc b{color:var(--ink)}
+  .flow-row .anchor{display:block;margin-top:10px;font-family:var(--mono);font-size:11px;letter-spacing:.1em;color:var(--orange-btn-h)}
+
+  /* ---------- 能力 bento ---------- */
+  .bento{display:grid;grid-template-columns:repeat(6,1fr);gap:18px;margin-top:48px}
+  .cell{background:var(--card);border:1px solid var(--hairline);border-radius:4px;padding:26px 24px 22px;
+    display:flex;flex-direction:column;gap:8px;transition:border-color .25s,transform .25s}
+  .cell:hover{border-color:var(--orange-text);transform:translateY(-3px)}
+  .cell .tag{font-family:var(--mono);font-size:11.5px;letter-spacing:.16em;color:var(--orange-text)}
+  .cell h3{font-family:var(--serif);font-weight:900;font-size:19px}
+  .cell p{font-size:13.5px;color:var(--ink-2);line-height:1.7}
+  .cell.w3{grid-column:span 3}.cell.w2{grid-column:span 2}.cell.w4{grid-column:span 4}
+  .cell.live .tag{color:var(--green)}
+
+  /* ---------- 双形态 ---------- */
+  .duo{display:grid;grid-template-columns:1fr 1fr;gap:22px;margin-top:48px}
+  .duo-card{border:1px solid var(--hairline);border-radius:4px;overflow:hidden;background:var(--card)}
+  .duo-card header{padding:18px 26px;display:flex;justify-content:space-between;align-items:center;background:var(--ink);color:var(--paper)}
+  .duo-card.cloud header{background:var(--orange-btn);color:#fff}
+  .duo-card header .t{font-family:var(--serif);font-weight:900;font-size:19px}
+  .duo-card header .m{font-family:var(--mono);font-size:11.5px;letter-spacing:.18em;opacity:.85}
+  .duo-card ul{list-style:none;padding:20px 26px 24px}
+  .duo-card li{padding:9px 0 9px 22px;border-bottom:1px dashed var(--hairline);font-size:14.5px;position:relative}
+  .duo-card li:last-child{border-bottom:0}
+  .duo-card li::before{content:"";position:absolute;left:2px;top:17px;width:9px;height:9px;
+    background:var(--orange);clip-path:polygon(0 0,100% 50%,0 100%)}
+  .duo-card li b{font-weight:700}
+  .duo-note{margin-top:26px;display:flex;gap:14px;align-items:baseline;background:var(--orange-t);
+    border:1px solid var(--amber-line);padding:16px 22px;font-size:14.5px}
+  .duo-note span{max-width:60ch}
+  .duo-note b{font-family:var(--mono);font-weight:500;font-size:11.5px;letter-spacing:.16em;color:var(--orange-text);white-space:nowrap}
+
+  /* ---------- 对比表 ---------- */
+  .cmp{width:100%;border-collapse:collapse;margin-top:48px;background:var(--card);
+    border:1px solid var(--hairline);font-size:14px}
+  .cmp th,.cmp td{padding:15px 18px;border-bottom:1px solid var(--hairline);text-align:left;vertical-align:top}
+  .cmp thead th{font-family:var(--mono);font-weight:500;font-size:11.5px;letter-spacing:.16em;color:var(--ink-2);background:var(--paper)}
+  .cmp thead th.us{color:#fff;background:var(--orange-btn)}
+  .cmp td:first-child{font-weight:700;width:130px}
+  .cmp .dim{color:var(--ink-2)}
+  .cmp td.us{background:var(--orange-t);font-weight:500}
+  .cmp tr:last-child td{border-bottom:0}
+  .cmp .no{color:#B3400F}.cmp .yes{color:var(--green);font-weight:700}
+
+  /* ---------- 演示动线 ---------- */
+  .demo-steps{margin-top:52px;position:relative;padding-left:34px}
+  .demo-steps::before{content:"";position:absolute;left:9px;top:8px;bottom:8px;width:1.5px;
+    background:repeating-linear-gradient(var(--orange) 0 6px,transparent 6px 12px)}
+  .dstep{position:relative;padding:0 0 34px}
+  .dstep:last-child{padding-bottom:0}
+  .dstep::before{content:"";position:absolute;left:-31px;top:9px;width:13px;height:13px;border-radius:50%;
+    background:var(--orange);box-shadow:0 0 0 4px var(--paper),0 0 0 5.5px var(--hairline)}
+  .dstep .min{font-family:var(--mono);font-size:11.5px;letter-spacing:.16em;color:var(--orange-text)}
+  .dstep h3{font-family:var(--serif);font-weight:900;font-size:20px;margin:4px 0 6px}
+  .dstep p{color:var(--ink-2);font-size:14.5px;max-width:46em}
+  .dstep code{font-family:var(--mono);font-size:12.5px;background:var(--paper);border:1px solid var(--hairline);
+    padding:1px 7px;border-radius:2px;color:var(--orange-text)}
+  .dstep .exp{display:block;margin-top:8px;font-family:var(--mono);font-size:11.5px;letter-spacing:.05em;color:#0B6B4A}
+
+  /* ---------- 诚实边界 ---------- */
+  .honesty{display:grid;grid-template-columns:1fr 1fr;gap:22px;margin-top:48px}
+  .hz{border-radius:4px;padding:28px 26px;border:1px solid}
+  .hz .badge{display:inline-block;font-family:var(--mono);font-size:11.5px;font-weight:500;letter-spacing:.2em;
+    padding:4px 12px;border-radius:2px;margin-bottom:14px}
+  .hz.mock{background:var(--amber-bg);border-color:var(--amber-line)}
+  .hz.mock .badge{color:var(--amber);border:1px solid var(--amber-line);background:#fff}
+  .hz.live{background:var(--green-bg);border-color:var(--green-line)}
+  .hz.live .badge{color:var(--green);border:1px solid var(--green-line);background:#fff}
+  .hz h3{font-family:var(--serif);font-weight:900;font-size:20px;margin-bottom:8px}
+  .hz p{font-size:14px;color:var(--ink-2)}
+  .honesty-note{margin-top:24px;font-size:14.5px;color:var(--ink-2);max-width:62em}
+  .honesty-note b{color:var(--ink)}
+  .provenance{margin-top:14px;font-family:var(--mono);font-size:11.5px;letter-spacing:.04em;color:var(--ink-2);max-width:70em}
+
+  /* ---------- 实测证据 ---------- */
+  .ev-grid{display:grid;grid-template-columns:1fr 1fr;gap:18px;margin-top:48px}
+  .ev{background:var(--card);border:1px solid var(--hairline);border-radius:4px;overflow:hidden;display:flex;flex-direction:column}
+  .ev.wide{grid-column:1/-1}
+  .ev-head{display:flex;align-items:center;gap:10px;padding:12px 18px;border-bottom:1px solid var(--hairline);background:var(--paper)}
+  .ev-head .t{font-family:var(--serif);font-weight:900;font-size:15.5px}
+  .ev-head .src{margin-left:auto;font-family:var(--mono);font-size:10.5px;letter-spacing:.06em;color:var(--ink-2);white-space:nowrap}
+  .ev-badge{font-family:var(--mono);font-size:10.5px;font-weight:500;letter-spacing:.16em;padding:2px 8px;border-radius:2px;background:#fff;white-space:nowrap}
+  .ev-badge.live{color:var(--green);border:1px solid var(--green-line)}
+  .ev-badge.mock{color:var(--amber);border:1px solid var(--amber-line)}
+  .ev-body{padding:18px 20px;font-size:13.5px;color:var(--ink-2);line-height:1.7;flex:1}
+  .ev-body b{color:var(--ink)}
+  .ev-metrics{display:flex;border:1px solid var(--hairline);border-radius:3px;margin:12px 0;font-variant-numeric:tabular-nums}
+  .ev-metrics div{flex:1;padding:10px 14px;border-left:1px solid var(--hairline)}
+  .ev-metrics div:first-child{border-left:0;padding-left:0}
+  .ev-metrics b{display:block;font-family:var(--disp);font-weight:650;font-size:17px;color:var(--ink);white-space:nowrap}
+  .ev-metrics span{font-size:11px;letter-spacing:.06em}
+  .ev-q{border-left:1px solid var(--hairline);padding:2px 0 2px 14px;margin:12px 0;color:var(--ink);font-size:14px}
+  .ev-chip{display:inline-block;font-family:var(--mono);font-size:10.5px;letter-spacing:.14em;padding:2px 9px;border-radius:2px;background:#fff;border:1px solid var(--hairline);color:var(--orange-text);white-space:nowrap}
+  .ev-chat{margin:12px 0;border:1px solid var(--hairline);border-radius:3px;padding:12px 14px;display:flex;flex-direction:column;gap:10px;font-size:13px}
+  .ev-chat:first-child{margin-top:0}
+  .ev-chat .who{display:block;font-family:var(--mono);font-size:10px;letter-spacing:.16em;color:var(--ink-2);margin-bottom:2px}
+  .ev-chat .say{color:var(--ink)}
+
+  /* ---------- CTA ---------- */
+  .cta{background:var(--ink);color:var(--paper);border-top:0}
+  .cta .grid{display:grid;grid-template-columns:1.1fr .9fr;gap:64px;align-items:center}
+  .cta h2{color:var(--paper)}
+  .cta h2 .em{color:var(--orange)}
+  .cta .lead{margin-top:16px;color:#B7AC9E;font-size:16.5px}
+  .cta-micro{margin-top:14px;font-size:12.5px;color:#B7AC9E;letter-spacing:.04em}
+  .poc{border:1px solid #352C26;border-radius:4px;overflow:hidden;margin-top:8px}
+  .poc .row{display:flex;gap:18px;padding:18px 24px;border-bottom:1px solid #352C26;align-items:baseline}
+  .poc .row:last-child{border-bottom:0}
+  .poc .n{font-family:var(--disp);font-style:italic;color:var(--orange);font-size:19px}
+  .poc .t b{display:block;font-size:15px}
+  .poc .t span{font-size:13px;color:#B7AC9E}
+  .cta .btn-primary{margin-top:30px}
+
+  /* ---------- footer ---------- */
+  footer{background:var(--ink);color:#8A7F71;border-top:1px solid #352C26;padding:26px 0}
+  footer .bar{display:flex;flex-wrap:wrap;gap:14px 28px;align-items:baseline;font-size:12.5px}
+  footer .wordmark{color:var(--paper);font-size:17px}
+  footer .wordmark em{color:var(--orange)}
+  footer .right{margin-left:auto}
+
+  /* ---------- 动效 ---------- */
+  .rise{opacity:0;transform:translateY(26px);transition:opacity .75s cubic-bezier(.2,.7,.2,1),transform .75s cubic-bezier(.2,.7,.2,1)}
+  .rise.in{opacity:1;transform:none}
+  @keyframes heroIn{from{opacity:0;transform:translateY(30px)}to{opacity:1;transform:none}}
+  .hero .a1,.hero .a2,.hero .a3,.hero .a4{animation:heroIn .8s cubic-bezier(.2,.7,.2,1) both}
+  .hero .a2{animation-delay:.12s}.hero .a3{animation-delay:.24s}.hero .a4{animation-delay:.36s}
+  @media (prefers-reduced-motion:reduce){
+    *,*::before,*::after{animation-duration:.01ms!important;animation-iteration-count:1!important;transition-duration:.01ms!important}
+    .rise{opacity:1;transform:none}
+  }
+
+  /* ---------- 响应式 ---------- */
+  @media (max-width:1020px){
+    .hero-grid{grid-template-columns:1fr;gap:48px}
+    .loop{transform:scale(.86);margin:-20px auto}
+    nav .bar{flex-wrap:wrap;padding:10px 0;gap:16px}
+    .nav-links{margin:2px 0 0;width:100%;overflow-x:auto;gap:18px;padding-bottom:4px;scrollbar-width:none}
+    .nav-links::-webkit-scrollbar{display:none}
+    .nav-links a{white-space:nowrap}
+    .bento{grid-template-columns:repeat(2,1fr)}
+    .cell.w3,.cell.w2,.cell.w4{grid-column:span 1}
+    .cmp{font-size:13px}.cmp th,.cmp td{padding:12px 12px}
+  }
+  @media (max-width:720px){
+    section{padding:64px 0}
+    .pain-grid,.duo,.honesty{grid-template-columns:1fr}
+    .facts{flex-wrap:wrap}
+    .facts div{flex:1 1 40%;border-left:0;border-top:1px solid var(--hairline)}
+    .facts div:nth-child(-n+2){border-top:0}
+    .flow-row{grid-template-columns:1fr;gap:6px;padding:20px 0}
+    .ev-grid{grid-template-columns:1fr}
+    .ev-metrics{flex-wrap:wrap}
+    .ev-metrics div{flex:1 1 40%;border-left:0;border-top:1px solid var(--hairline)}
+    .ev-metrics div:nth-child(-n+2){border-top:0;padding-left:0}
+    .ev-head .src{display:none}
+    .loop{display:none}
+    .loop-mini{display:block}
+    .cta .grid{grid-template-columns:1fr;gap:40px}
+  }
+</style>
+</head>
+<body>
+
+<!-- ============ NAV ============ -->
+<nav>
+  <div class="wrap bar">
+    <a class="wordmark" href="#top">agent<em>—</em>up</a>
+    <div class="nav-links">
+      <a href="#pain">痛点</a><a href="#solution">方案</a><a href="#evidence">实测</a><a href="#capability">能力</a>
+      <a href="#deploy">双形态</a><a href="#compare">对比</a><a href="#demo">演示动线</a><a href="#honesty">边界</a>
+    </div>
+    <a class="btn btn-primary" href="#cta">预约演示</a>
+  </div>
+</nav>
+
+<!-- ============ HERO ============ -->
+<header class="hero" id="top">
+  <div class="wrap hero-grid">
+    <div>
+      <h1 class="a1"><span class="hl">模型是引擎，</span><span class="hl"><span class="en">agent-up</span> 把它变成</span><span class="hl">持续改进的生产系统。</span></h1>
+      <p class="hero-meta a2">AGENT IMPROVEMENT PLATFORM · GTM · 2026</p>
+      <p class="sub a3">企业把 Agent 上线只是开始。agent-up 管住之后的一切：<b>配置 · 评估 · 发布 · 回滚</b>——
+        反馈进来自动归因，改配置走审批快照，上线七天出效果报告，改坏了分区级一键回滚。</p>
+      <div class="hero-cta a4">
+        <a class="btn btn-primary" href="#cta">预约 30 分钟深度演示</a>
+        <a class="btn btn-ghost" href="#demo">先看 8 分钟演示动线</a>
+      </div>
+      <div class="facts a4">
+        <div><div class="n">232</div><div class="t">自动化测试</div></div>
+        <div><div class="n">30</div><div class="t">API 端点</div></div>
+        <div><div class="n">4<i>×LIVE</i></div><div class="t">真实 LLM 集成点</div></div>
+        <div><div class="n">2</div><div class="t">部署形态（公共云/专有云）</div></div>
+      </div>
+    </div>
+    <div class="a3">
+      <div class="loop" aria-hidden="true">
+        <svg class="ring" viewBox="0 0 460 460"><circle cx="230" cy="230" r="176"/></svg>
+        <div class="core">
+          <div class="zh">改进<br>闭环</div>
+          <span class="tag">LIVE · REAL LLM</span>
+        </div>
+        <div class="node" style="left:230px;top:54px"><span class="step">STEP 1</span><div class="name">反馈收集<span class="by">工单/评价自动流入</span></div></div>
+        <div class="node" style="left:385px;top:142px"><span class="step">STEP 2</span><div class="name">AI 归因<span class="by">定位到四个分区之一</span></div></div>
+        <div class="node" style="left:385px;top:318px"><span class="step">STEP 3</span><div class="name">改配置<span class="by">页面编辑 · 分钟级</span></div></div>
+        <div class="node" style="left:230px;top:406px"><span class="step">STEP 4</span><div class="name">审批发布<span class="by">diff 摘要 · 不可变快照</span></div></div>
+        <div class="node" style="left:76px;top:318px"><span class="step">STEP 5</span><div class="name">效果报告<span class="by">上线 7 天自动聚合</span></div></div>
+        <div class="node" style="left:76px;top:142px"><span class="step">STEP 6</span><div class="name">一键回滚<span class="by">分区级 / 整版本</span></div></div>
+      </div>
+      <svg class="loop-mini" viewBox="0 0 320 320" aria-hidden="true">
+        <circle cx="160" cy="160" r="120" fill="none" stroke="#FF6A00" stroke-width="1.4" stroke-dasharray="4 8" opacity=".85"/>
+        <text x="160" y="152" class="c1">改进</text><text x="160" y="180" class="c1">闭环</text>
+        <circle cx="160" cy="40" r="4" fill="#FF6A00"/><text x="160" y="76" class="lb">反馈收集</text><text x="160" y="92" class="sb">01</text>
+        <circle cx="264" cy="100" r="4" fill="#FF6A00"/><text x="238" y="124" class="lb">AI 归因</text><text x="238" y="140" class="sb">02</text>
+        <circle cx="264" cy="220" r="4" fill="#FF6A00"/><text x="238" y="204" class="lb">改配置</text><text x="238" y="188" class="sb">03</text>
+        <circle cx="160" cy="280" r="4" fill="#FF6A00"/><text x="160" y="252" class="lb">审批发布</text><text x="160" y="236" class="sb">04</text>
+        <circle cx="56" cy="220" r="4" fill="#FF6A00"/><text x="82" y="204" class="lb">效果报告</text><text x="82" y="188" class="sb">05</text>
+        <circle cx="56" cy="100" r="4" fill="#FF6A00"/><text x="82" y="124" class="lb">一键回滚</text><text x="82" y="140" class="sb">06</text>
+      </svg>
+    </div>
+  </div>
+</header>
+
+<!-- ============ MARQUEE ============ -->
+<div class="marquee" aria-hidden="true">
+  <div class="mq-track">
+    <span>反馈</span><span>→</span><span>AI 归因</span><span>→</span><span>改配置</span><span>→</span><span>审批发布</span><span>→</span><span>效果报告</span><span>→</span><span>一键回滚</span><span>→</span><span>模型可换 · 闭环不变</span><span>→</span>
+    <span>反馈</span><span>→</span><span>AI 归因</span><span>→</span><span>改配置</span><span>→</span><span>审批发布</span><span>→</span><span>效果报告</span><span>→</span><span>一键回滚</span><span>→</span><span>模型可换 · 闭环不变</span><span>→</span>
+  </div>
+</div>
+
+<!-- ============ 01 痛点 ============ -->
+<section id="pain">
+  <div class="wrap">
+    <div class="sec-head rise">
+      <h2>Agent 上线之后，<span class="em">改进</span>为什么这么难？</h2>
+      <div class="meta"><span class="no">01</span><span class="lb">痛点 · PAIN</span><span class="rule"></span></div>
+      <p class="lead">这是我们在客户现场反复看到的三件事——它们决定了 Agent 是「越用越好」还是「上线即巅峰」。</p>
+    </div>
+    <div class="pain-grid">
+      <div class="pain rise"><span class="idx">1</span>
+        <h3>改不动</h3>
+        <p style="color:var(--ink-2);font-size:14.5px">Prompt 写在代码仓库里，改一句话要排期发版；业务同学提的改进意见，永远排不进迭代。</p>
+        <div class="now"><b>现状的典型样子</b>改进建议躺在 IM 里，落地靠下次大版本</div>
+      </div>
+      <div class="pain rise"><span class="idx">2</span>
+        <h3>不敢改</h3>
+        <p style="color:var(--ink-2);font-size:14.5px">改完不知道会不会更差：没有审批、没有版本快照，出了问题只能靠 git 记忆和人的经验回滚。</p>
+        <div class="now"><b>现状的典型样子</b>「上次那句是谁改的来着？」</div>
+      </div>
+      <div class="pain rise"><span class="idx">3</span>
+        <h3>说不清</h3>
+        <p style="color:var(--ink-2);font-size:14.5px">上线后效果靠感觉。「这次改进值不值」拿不出数据，模型预算与选型都对不齐。</p>
+        <div class="now"><b>现状的典型样子</b>汇报时只有截图，没有负向率变化</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ 02 方案 ============ -->
+<section id="solution">
+  <div class="wrap">
+    <div class="sec-head rise">
+      <h2>一条<span class="em">看得见、管得住、算得清、退得出</span>的改进闭环</h2>
+      <div class="meta"><span class="no">02</span><span class="lb">方案 · THE LOOP</span><span class="rule"></span></div>
+      <p class="lead">不是又一个 prompt 编辑器。是从「用户反馈」到「效果验证」的完整工程链路——每一步都有系统兜底。</p>
+    </div>
+    <div class="flow-list">
+      <div class="flow-row rise"><span class="fn">01</span><span class="fname">看得见</span>
+        <p class="fdesc">每条负向反馈进来，<b>真实大模型调用</b>自动归因：问题出在 Prompt / Knowledge / Tools / Routing 哪个分区，为什么，怎么改——直接给出可执行建议。<span class="anchor">实测锚点 · fb-001 → 归因 KNOWLEDGE 分区</span></p></div>
+      <div class="flow-row rise"><span class="fn">02</span><span class="fname">管得住</span>
+        <p class="fdesc">配置变更提交 <b>Release 审批</b>：自动 diff 上一版本，AI 生成变更摘要与风险提示；通过即产生不可变版本快照，谁改的、改了什么，审计日志一条不少。<span class="anchor">实测锚点 · 0.2.0 · pm-chen 提交 → admin-zhao 审批通过</span></p></div>
+      <div class="flow-row rise"><span class="fn">03</span><span class="fname">算得清</span>
+        <p class="fdesc">版本上线满 7 天<b>自动聚合效果报告</b>：反馈量、负向比、严重度分布；改完配置还能在试聊 Playground 用当前配置立即验证——不等上线再赌。<span class="anchor">实测锚点 · 报表样式见「实测实录」</span></p></div>
+      <div class="flow-row rise"><span class="fn">04</span><span class="fname">退得出</span>
+        <p class="fdesc"><b>分区级或整版本一键回滚</b>：改坏知识库不用动提示词，回滚本身写审计。回退从「事故预案」变成「日常动作」。</p></div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ 03 实测 ============ -->
+<section id="evidence">
+  <div class="wrap">
+    <div class="sec-head rise">
+      <h2>口说无凭，<span class="em">实测为证</span></h2>
+      <div class="meta"><span class="no">03</span><span class="lb">实测 · EVIDENCE</span><span class="rule"></span></div>
+      <p class="lead">2026-08-25 演示环境的真实调用记录：输入来自演示种子（MOCK 徽标），模型输出为实时返回（LIVE 徽标）。每一条都可在演示现场复现——不是文案。</p>
+    </div>
+    <div class="ev-grid">
+
+      <div class="ev rise">
+        <div class="ev-head"><span class="ev-badge live">LIVE</span><span class="t">连通性探针</span><span class="src">POST /api/maas/probe</span></div>
+        <div class="ev-body">
+          点击「发起真实调用」，LLM 网关直连推理服务，返回模型身份、时延与 tokens：
+          <div class="ev-metrics">
+            <div><b>mimo-v2.5-pro</b><span>模型</span></div>
+            <div><b>2,557ms</b><span>端到端时延</span></div>
+            <div><b>45 / 73</b><span>tokens 入 / 出</span></div>
+          </div>
+          <div class="ev-q">「连接状态正常！我是 MiMo，由小米公司大模型 Core 团队开发的智能助手。」</div>
+          <b>连接的不是截图，是正在运行的推理服务。</b>
+        </div>
+      </div>
+
+      <div class="ev rise">
+        <div class="ev-head"><span class="ev-badge mock">MOCK 输入</span><span class="ev-badge live">LIVE 输出</span><span class="t">反馈 AI 归因</span><span class="src">fb-001</span></div>
+        <div class="ev-body">
+          <div class="ev-chat">
+            <div><span class="who">负向反馈 · CRE 提交</span><div class="say">安全组规则说明不够清晰——操作步骤正确，但对入方向 / 出方向的解释不清，用户反复确认。</div></div>
+          </div>
+          <span class="ev-chip">归因 → KNOWLEDGE 分区</span>
+          <div class="ev-q">安全组「入 / 出方向」概念解释缺失；建议在知识库补充方向性说明与常见端口放通示例。</div>
+          归因到分区、给出理由与可执行改法——CRE 不用自己读配置猜。
+        </div>
+      </div>
+
+      <div class="ev rise">
+        <div class="ev-head"><span class="ev-badge mock">MOCK 输入</span><span class="ev-badge live">LIVE 输出</span><span class="t">发布 AI 摘要</span><span class="src">rel-001</span></div>
+        <div class="ev-body">
+          变更说明写着<b>「根据反馈优化安全组相关知识」</b>，四分区 diff 提交审批。AI 变更摘要的判定：
+          <div class="ev-q">变更内容与说明不符——配置快照未见实际改动，可能为空操作，建议退回或补充变更。</div>
+          审批人 30 秒内看到风险——<b>AI 不是复述 diff，是替审批人把关。</b>
+        </div>
+      </div>
+
+      <div class="ev rise">
+        <div class="ev-head"><span class="ev-badge mock">MOCK 配置</span><span class="ev-badge live">LIVE 输出</span><span class="t">试聊 Playground</span><span class="src">ecs-assistant</span></div>
+        <div class="ev-body">
+          <div class="ev-chat">
+            <div><span class="who">问 · 演示者</span><div class="say">SSH 连不上 ECS 实例，怎么排查？</div></div>
+            <div><span class="who">答 · 当前配置实跑</span><div class="say">第一步先检查安全组规则是否放通 22 端口（附控制台操作路径）……</div></div>
+          </div>
+          试聊加载的是<b>当前四分区配置</b>——改完 Prompt 立即验证，不等上线。
+        </div>
+      </div>
+
+      <div class="ev wide rise">
+        <div class="ev-head"><span class="ev-badge mock">MOCK · 示例数值</span><span class="t">7 天效果报告（报表样式）</span><span class="src">ver-002 · 0.2.0</span></div>
+        <div class="ev-body">
+          版本上线满 7 天自动聚合：懒计算、幂等写回、零运维。以下字段与聚合口径与系统一致，<b>数值为演示种子示例，非实测</b>：
+          <div class="ev-metrics">
+            <div><b>28</b><span>窗口内反馈</span></div>
+            <div><b>6 · 21%</b><span>负向反馈及占比</span></div>
+            <div><b>2</b><span>MAJOR（CRITICAL 0）</span></div>
+            <div><b>3</b><span>归因 KNOWLEDGE</span></div>
+          </div>
+          <p style="font-family:var(--mono);font-size:11px;letter-spacing:.06em;color:var(--ink-2)">byRating POSITIVE 19 · NEGATIVE 6 · NEUTRAL 3 ｜ byPartition PROMPT 2 · KNOWLEDGE 3 · TOOLS 1 · ROUTING 0</p>
+          「这次改进值不值」，第一次有了一张能对着念的表。
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- ============ 04 能力 ============ -->
+<section id="capability">
+  <div class="wrap">
+    <div class="sec-head rise">
+      <h2>六项核心能力，<span class="em">全部可演示</span></h2>
+      <div class="meta"><span class="no">04</span><span class="lb">能力 · CAPABILITY</span><span class="rule"></span></div>
+      <p class="lead">下面每一项都对应一个真实页面与真实 API——演示现场逐个点开，不接受 PPT。</p>
+    </div>
+    <div class="bento">
+      <div class="cell w3 rise"><span class="tag">FOUR PARTITIONS</span><h3>四分区配置</h3>
+        <p>Prompt / Knowledge / Tools / Routing 独立编辑、独立回滚。改知识库不动提示词，改动影响面天然隔离。</p></div>
+      <div class="cell w3 rise"><span class="tag">RELEASE PIPELINE</span><h3>发布流水线</h3>
+        <p>自动 diff + 真语义化版本号（按变更范围计算 patch/minor），通过审批生成不可变快照，历史永远可追溯。</p></div>
+      <div class="cell w2 rise"><span class="tag">REPORT</span><h3>7 天效果报告</h3>
+        <p>上线满窗口自动聚合反馈，懒计算不占运行时。</p></div>
+      <div class="cell w2 live rise"><span class="tag">LIVE · REAL LLM</span><h3>AI 归因</h3>
+        <p>负向反馈自动定位分区并给出改法，实时调用大模型。</p></div>
+      <div class="cell w2 live rise"><span class="tag">LIVE · REAL LLM</span><h3>AI 摘要 + 试聊</h3>
+        <p>审批前 AI 概括影响面与风险；改完 Prompt 立即试聊验证。</p></div>
+      <div class="cell w4 rise"><span class="tag">AUDIT · RBAC</span><h3>全量审计与角色协同</h3>
+        <p>所有写操作 append-only 审计日志；产品组、CRE、工单团队三种角色围绕同一份配置协作——谁在何时改了什么，一目了然。</p></div>
+      <div class="cell w2 rise"><span class="tag">ENGINEERING</span><h3>工程纪律</h3>
+        <p>232 测试 / 23 Zod Schema 全量校验 / 结构化错误体系，不是 demo 品质。</p></div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ 05 双形态 ============ -->
+<section id="deploy">
+  <div class="wrap">
+    <div class="sec-head rise">
+      <h2>公共云与专有云：<span class="em">模型可换，闭环不变</span></h2>
+      <div class="meta"><span class="no">05</span><span class="lb">部署 · DEPLOYMENT</span><span class="rule"></span></div>
+      <p class="lead">模型中立是设计出来的，不是承诺出来的——LLM 网关把 Provider 抽象成一层配置。</p>
+    </div>
+    <div class="duo">
+      <div class="duo-card cloud rise">
+        <header><span class="t">公共云</span><span class="m">PUBLIC CLOUD</span></header>
+        <ul>
+          <li><b>百炼 Model Studio</b> — 模型服务 + 知识库 RAG + 应用编排入口</li>
+          <li><b>DashScope API</b> — 统一推理 API（Qwen 系列 / embedding）</li>
+          <li><b>Qwen-Max / Plus / Turbo</b> — 主模型、成本降级与意图分类分流</li>
+          <li><b>text-embedding-v3 + 百炼 RAG</b> — 向量化与知识库检索</li>
+        </ul>
+      </div>
+      <div class="duo-card rise">
+        <header><span class="t">专有云</span><span class="m">DEDICATED / APSARA</span></header>
+        <ul>
+          <li><b>Apsara Stack 模型服务</b> — 集群内私有化推理，同口径 Qwen 系列</li>
+          <li><b>PAI-EAS</b> — 模型部署与弹性扩缩</li>
+          <li><b>私有向量检索</b> — 集群内 embedding，数据不出域</li>
+          <li><b>同一套审批 / 快照 / 回滚</b> — 私有化环境改进治理不打折</li>
+        </ul>
+      </div>
+    </div>
+    <div class="duo-note rise">
+      <b>已验证的可插拔</b>
+      <span>当前演示环境已真实接入小米 MiMo（mimo-v2.5-pro）跑通全部 LIVE 功能——换模型只换网关配置，不换代码。您的百炼 / 专有云接入，就是下一份配置。</span>
+    </div>
+  </div>
+</section>
+
+<!-- ============ 06 对比 ============ -->
+<section id="compare">
+  <div class="wrap">
+    <div class="sec-head rise">
+      <h2>先定义 baseline，<span class="em">再谈改进</span></h2>
+      <div class="meta"><span class="no">06</span><span class="lb">对比 · WHY US</span><span class="rule"></span></div>
+    </div>
+    <table class="cmp rise">
+      <thead><tr><th>维度</th><th>个人做法（Prompt 存代码）</th><th>纯模型平台（只管调用）</th><th class="us">agent-up</th></tr></thead>
+      <tbody>
+        <tr><td>改配置</td><td class="dim">发代码版本</td><td class="dim">不支持</td><td class="us">页面编辑，分钟级</td></tr>
+        <tr><td>审批</td><td class="dim no">✕ 无</td><td class="dim no">✕ 无</td><td class="us">✓ Release 审批 + AI 风险提示</td></tr>
+        <tr><td>回滚</td><td class="dim">靠 git 记忆</td><td class="dim no">✕ 无</td><td class="us">✓ 分区级 / 整版本一键</td></tr>
+        <tr><td>效果度量</td><td class="dim no">✕ 无</td><td class="dim">仅用量账单</td><td class="us">✓ 反馈驱动 7 天效果报告</td></tr>
+        <tr><td>参与角色</td><td class="dim">只有开发</td><td class="dim">只有开发</td><td class="us">✓ 产品组 + CRE + 工单团队</td></tr>
+        <tr><td>私有化</td><td class="dim">—</td><td class="dim">按平台而定</td><td class="us">✓ 专有云同闭环</td></tr>
+      </tbody>
+    </table>
+  </div>
+</section>
+
+<!-- ============ 07 演示动线 ============ -->
+<section id="demo">
+  <div class="wrap">
+    <div class="sec-head rise">
+      <h2>8 分钟，把闭环<span class="em">走一遍</span></h2>
+      <div class="meta"><span class="no">07</span><span class="lb">演示 · LIVE DEMO</span><span class="rule"></span></div>
+      <p class="lead">以下每一步都是真实系统操作（非录屏）：MOCK 数据有徽标，真实模型调用有 LIVE 徽标。</p>
+    </div>
+    <div class="demo-steps">
+      <div class="dstep rise"><span class="min">STEP 1 · 约 1 分钟</span>
+        <h3>证明「模型是活的」</h3>
+        <p>打开 <code>/maas</code> 点「发起真实调用」——实时返回模型身份、时延与 tokens。平台连接的不是截图，是正在运行的推理服务。<span class="exp">LIVE 实测 · mimo-v2.5-pro · 2,557ms · 45 入 / 73 出 tokens（2026-08-25）</span></p></div>
+      <div class="dstep rise"><span class="min">STEP 2 · 约 1.5 分钟</span>
+        <h3>反馈进来，AI 归因</h3>
+        <p>在 <code>/feedback</code> 挑一条 NEGATIVE 反馈点「AI 归因」——LLM 指出问题在哪个分区、理由、怎么改。<span class="exp">LIVE 实测 · fb-001 → 归因 KNOWLEDGE 分区，附改进建议</span></p></div>
+      <div class="dstep rise"><span class="min">STEP 3 · 约 2 分钟</span>
+        <h3>改配置，立即验证</h3>
+        <p>按归因建议在 <code>/agents/ecs-assistant</code> 修改 Prompt 分区，保存后在「试聊 Playground」用当前配置当场试聊——改完即验，不赌上线。<span class="exp">LIVE 实测 · 以当前配置当场应答 SSH 排查，第一步指向安全组规则</span></p></div>
+      <div class="dstep rise"><span class="min">STEP 4 · 约 2 分钟</span>
+        <h3>审批发布，AI 把关</h3>
+        <p><code>/releases</code> 提交发布 → 查看自动 diff + 「AI 变更摘要」（影响面与风险）→ 审批通过，生成不可变版本快照。<span class="exp">LIVE 实测 · AI 识破「说明与变更不符」，提示疑似空操作</span></p></div>
+      <div class="dstep rise"><span class="min">STEP 5 · 约 1.5 分钟</span>
+        <h3>效果报告与回滚底气</h3>
+        <p>版本历史里看 7 天效果报告徽标；顺手演示「回滚此分区」——改坏了，一步退回去，回滚本身有审计。<span class="exp">MOCK 演示 · 报表样式与聚合口径见「实测实录」</span></p></div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ 08 诚实边界 ============ -->
+<section id="honesty">
+  <div class="wrap">
+    <div class="sec-head rise">
+      <h2>我们把<span class="em">真与假的边界</span>印在界面上</h2>
+      <div class="meta"><span class="no">08</span><span class="lb">边界 · HONESTY</span><span class="rule"></span></div>
+      <p class="lead">企业软件最贵的成本是「信错」。所以每个页面都自带徽标——这是我们与 PPT 产品的区别。</p>
+    </div>
+    <div class="honesty">
+      <div class="hz mock rise">
+        <span class="badge">MOCK</span>
+        <h3>业务数据 = 演示种子</h3>
+        <p>Agent / 反馈 / 发布记录来自本地种子数据（未接真实数据库），琥珀色徽标逐页标注。生产化路线明确：Prisma 持久化 → 真实认证 → CI。</p>
+      </div>
+      <div class="hz live rise">
+        <span class="badge">LIVE</span>
+        <h3>AI 能力 = 真实调用</h3>
+        <p>连通性探针、反馈归因、变更摘要、试聊 Playground 四处均为实时大模型调用，绿色 LIVE 徽标标注，并展示时延与 tokens 用量。</p>
+      </div>
+    </div>
+    <p class="honesty-note rise"><b>为什么主动说这个？</b>因为在客户现场，「哪里是真的、哪里是演示」必须 10 秒内说清楚。
+      我们把边界做成了 UI 的一部分——这本身也是产品方法论：<b>改进的前提，是对现状诚实。</b></p>
+    <p class="provenance rise">本页数字口径 · 232 测试 / 30 路由 / 4×LIVE 为项目实测统计；2,557ms 与 tokens 为 2026-08-25 MiMo 实测；反馈、发布与报表数值为演示种子（MOCK）。</p>
+  </div>
+</section>
+
+<!-- ============ CTA ============ -->
+<section class="cta" id="cta">
+  <div class="wrap grid">
+    <div class="rise">
+      <h2>下一步：<span class="em">4 周，跑通一个真实改进闭环</span></h2>
+      <p class="lead">不做大而全的实施。从一个产品组、一个 Agent 开始，让闭环先转起来。</p>
+      <!-- TODO(GTM): 预约通道——将下方 href 替换为 Calendly / 企微二维码链接 -->
+      <a class="btn btn-primary" href="#cta" data-booking="pending">预约 30 分钟深度演示</a>
+      <p class="cta-micro">30 分钟 · 无需 prep · 可随时取消</p>
+      <!-- 有意保留：本地演示工具，不公开部署；如需公网发布请移除账号行 -->
+      <p class="cta-micro">演示环境即刻可开 · allengaller / 123</p>
+    </div>
+    <div class="poc rise">
+      <div class="row"><span class="n">1</span><span class="t"><b>第 1 周 · 接入</b><span>选定 1 个产品组 + 1 个值班 Agent，四分区配置迁入</span></span></div>
+      <div class="row"><span class="n">2</span><span class="t"><b>第 2–3 周 · 闭环</b><span>真实反馈进入归因 → 改配置 → 审批发布，跑完两轮改进</span></span></div>
+      <div class="row"><span class="n">3</span><span class="t"><b>第 4 周 · 度量</b><span>首份效果报告产出，与业务对齐「改进值不值」的口径</span></span></div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ FOOTER ============ -->
+<footer>
+  <div class="wrap bar">
+    <span class="wordmark">agent<em>—</em>up</span>
+    <span>better agent, better life</span>
+    <span>页面数据与项目实测同步 · 更新 2026-08-31</span>
+    <span class="right">公共云 · 专有云 | 模型可换 · 闭环不变</span>
+  </div>
+</footer>
+
+<script>
+  const io = new IntersectionObserver((es) => {
+    es.forEach((e) => { if (e.isIntersecting) { e.target.classList.add("in"); io.unobserve(e.target); } });
+  }, { threshold: 0.12 });
+  document.querySelectorAll(".rise").forEach((el, i) => {
+    el.style.transitionDelay = `${(i % 4) * 70}ms`;
+    io.observe(el);
+  });
+</script>
+<!-- gtm-portal-backlink (managed by _scripts/sync-gtm.py) -->
+<a class="gtmp-back" href="/GTM/" aria-label="返回 GTM 门户">&#8617; GTM 门户</a>
+<style>
+.gtmp-back{position:fixed;right:1rem;bottom:1rem;z-index:2147483000;
+font:500 12px/1 ui-monospace,SFMono-Regular,Menlo,Consolas,monospace;
+letter-spacing:.05em;text-decoration:none;padding:.6rem .85rem;border-radius:999px;
+color:#14130f;background:rgba(251,250,247,.92);border:1px solid rgba(20,19,15,.16);
+box-shadow:0 2px 12px rgba(20,19,15,.14);backdrop-filter:blur(6px);
+transition:transform .15s ease,box-shadow .15s ease}
+.gtmp-back:hover{transform:translateY(-1px);box-shadow:0 4px 16px rgba(20,19,15,.22)}
+@media (prefers-color-scheme:dark){.gtmp-back{color:#f5f2ea;background:rgba(20,19,15,.88);
+border-color:rgba(245,242,234,.22)}}
+</style>
+</body>
+</html>

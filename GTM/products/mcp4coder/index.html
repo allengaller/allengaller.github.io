@@ -1,0 +1,793 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>mcp4coder — 37 个 MCP Server，一套框架统管</title>
+<meta name="description" content="别再逐个拼装 MCP Server。mcp4coder 把开发工具链、云平台、文档、搜索、协作、监控、支付统一进一个自托管框架：Web 管理界面、可视化工作流设计器、企业级安全。MIT 开源。">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Archivo:wdth,wght@62..125,400..900&family=JetBrains+Mono:ital,wght@0,400;0,500;0,700;1,400&family=Noto+Sans+SC:wght@400;500;700;900&display=swap" rel="stylesheet">
+<style>
+/* ============================================================
+   MCP-4CODER · MISSION CONTROL
+   磷光终端 × 工业仪表盘 aesthetic
+   ============================================================ */
+:root {
+  --bg:        #070a08;
+  --bg-2:      #0a0f0c;
+  --panel:     #0d1410;
+  --panel-2:   #101a14;
+  --line:      rgba(115, 245, 154, .13);
+  --line-hi:   rgba(115, 245, 154, .35);
+  --ink:       #e9f6ee;
+  --ink-dim:   #93b3a0;
+  --ink-faint: #5d7a68;
+  --green:     #6bff9e;
+  --green-dk:  #29d16d;
+  --amber:     #ffc46b;
+  --red:       #ff7070;
+  --mono: "JetBrains Mono", "Noto Sans SC", ui-monospace, monospace;
+  --disp: "Archivo", "Noto Sans SC", sans-serif;
+  --body: "Noto Sans SC", "Archivo", sans-serif;
+  --maxw: 1200px;
+}
+* { margin: 0; padding: 0; box-sizing: border-box; }
+html { scroll-behavior: smooth; }
+::selection { background: var(--green); color: #05130a; }
+
+body {
+  background: var(--bg);
+  color: var(--ink);
+  font-family: var(--body);
+  font-size: 16px;
+  line-height: 1.75;
+  overflow-x: hidden;
+  /* 深层网格 + 噪点氛围 */
+  background-image:
+    radial-gradient(ellipse 80% 50% at 50% -10%, rgba(107,255,158,.07), transparent 60%),
+    linear-gradient(var(--line) 1px, transparent 1px),
+    linear-gradient(90deg, var(--line) 1px, transparent 1px);
+  background-size: 100% 100%, 72px 72px, 72px 72px;
+}
+body::after { /* 噪点颗粒覆盖层 */
+  content: ""; position: fixed; inset: 0; pointer-events: none; z-index: 999;
+  opacity: .05; mix-blend-mode: overlay;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2'/%3E%3C/filter%3E%3Crect width='160' height='160' filter='url(%23n)'/%3E%3C/svg%3E");
+}
+
+.wrap { max-width: var(--maxw); margin: 0 auto; padding: 0 28px; }
+.mono { font-family: var(--mono); }
+
+/* ---------- 顶部公告条 ---------- */
+.announce {
+  background: var(--green); color: #05130a;
+  font-family: var(--mono); font-size: 12px; font-weight: 500;
+  text-align: center; padding: 8px 16px; letter-spacing: .06em;
+}
+.announce b { font-weight: 700; }
+
+/* ---------- 导航 ---------- */
+nav {
+  position: sticky; top: 0; z-index: 100;
+  background: rgba(7,10,8,.82); backdrop-filter: blur(14px);
+  border-bottom: 1px solid var(--line);
+  transition: background .3s;
+}
+.nav-in {
+  max-width: var(--maxw); margin: 0 auto; padding: 0 28px;
+  display: flex; align-items: center; justify-content: space-between; height: 64px;
+}
+.logo { display: flex; align-items: center; gap: 12px; text-decoration: none; }
+.logo-mark {
+  width: 30px; height: 30px; border: 1px solid var(--green);
+  display: grid; place-items: center;
+  font-family: var(--mono); font-size: 11px; font-weight: 700; color: var(--green);
+  box-shadow: 0 0 14px rgba(107,255,158,.25), inset 0 0 8px rgba(107,255,158,.12);
+}
+.logo-word { font-family: var(--mono); font-weight: 700; font-size: 14px; letter-spacing: .04em; color: var(--ink); }
+.logo-word em { color: var(--green); font-style: normal; }
+.nav-links { display: flex; align-items: center; gap: 30px; }
+.nav-links a {
+  color: var(--ink-dim); text-decoration: none; font-size: 13.5px;
+  font-family: var(--mono); transition: color .2s;
+}
+.nav-links a:hover { color: var(--green); }
+.btn {
+  display: inline-flex; align-items: center; gap: 9px;
+  font-family: var(--mono); font-weight: 700; font-size: 13.5px;
+  text-decoration: none; padding: 11px 22px;
+  border: 1px solid var(--green); color: var(--green);
+  transition: all .22s; position: relative; white-space: nowrap;
+}
+.btn:hover { background: rgba(107,255,158,.1); box-shadow: 0 0 22px rgba(107,255,158,.22); transform: translateY(-1px); }
+.btn.solid { background: var(--green); color: #05130a; }
+.btn.solid:hover { box-shadow: 0 0 34px rgba(107,255,158,.45); background: #8dffb6; }
+.btn.ghost { border-color: var(--line-hi); color: var(--ink-dim); }
+.btn.ghost:hover { color: var(--ink); border-color: var(--green); }
+.btn.big { padding: 16px 30px; font-size: 15px; }
+@media (max-width: 900px) { .nav-links a { display: none; } }
+
+/* ---------- Hero ---------- */
+.hero { position: relative; padding: 96px 0 0; }
+.hero-grid { display: grid; grid-template-columns: 1.15fr .85fr; gap: 56px; align-items: center; }
+.eyebrow {
+  display: inline-flex; align-items: center; gap: 10px;
+  font-family: var(--mono); font-size: 12px; letter-spacing: .18em;
+  color: var(--green); border: 1px solid var(--line-hi); padding: 7px 14px;
+  margin-bottom: 30px; background: rgba(107,255,158,.05);
+}
+.dot { width: 7px; height: 7px; border-radius: 50%; background: var(--green); animation: pulse 2s infinite; }
+@keyframes pulse {
+  0%,100% { box-shadow: 0 0 0 0 rgba(107,255,158,.5); }
+  50% { box-shadow: 0 0 0 7px rgba(107,255,158,0); }
+}
+h1 {
+  font-family: var(--disp); font-weight: 900;
+  font-size: clamp(46px, 6.4vw, 88px);
+  line-height: .98; letter-spacing: -.025em; text-transform: uppercase;
+}
+h1 .zh {
+  display: block; font-size: .52em; font-weight: 900; letter-spacing: .01em;
+  color: var(--ink); margin-top: 18px; text-transform: none;
+}
+h1 .g { color: var(--green); text-shadow: 0 0 34px rgba(107,255,158,.35); }
+.hero-sub {
+  margin-top: 30px; font-size: 17px; color: var(--ink-dim); max-width: 560px;
+}
+.hero-sub b { color: var(--ink); font-weight: 700; }
+.hero-ctas { display: flex; gap: 16px; margin-top: 38px; flex-wrap: wrap; }
+.clone-hint {
+  margin-top: 22px; font-family: var(--mono); font-size: 12.5px; color: var(--ink-faint);
+}
+.clone-hint code { color: var(--green-dk); }
+.clone-hint .cur { display: inline-block; width: 8px; height: 15px; background: var(--green); vertical-align: -2px; animation: blink 1.1s steps(1) infinite; }
+@keyframes blink { 50% { opacity: 0; } }
+
+/* 指标条 */
+.metrics {
+  margin-top: 72px; border-top: 1px solid var(--line); border-bottom: 1px solid var(--line);
+  display: grid; grid-template-columns: repeat(4, 1fr);
+}
+.metric { padding: 26px 8px 26px 26px; border-left: 1px solid var(--line); }
+.metric:first-child { border-left: none; padding-left: 0; }
+.metric .num {
+  font-family: var(--disp); font-weight: 900; font-size: clamp(34px, 4vw, 54px);
+  color: var(--green); line-height: 1; letter-spacing: -.02em;
+  text-shadow: 0 0 26px rgba(107,255,158,.3);
+}
+.metric .num sup { font-size: .45em; color: var(--ink-dim); text-shadow: none; }
+.metric .lab { font-family: var(--mono); font-size: 11.5px; color: var(--ink-faint); letter-spacing: .14em; margin-top: 10px; }
+
+/* ---------- 终端窗口 ---------- */
+.term {
+  border: 1px solid var(--line-hi); background: #060907;
+  box-shadow: 0 30px 80px rgba(0,0,0,.6), 0 0 60px rgba(107,255,158,.07);
+  font-family: var(--mono); font-size: 12.8px; line-height: 1.9;
+}
+.term-bar {
+  display: flex; align-items: center; gap: 8px;
+  padding: 11px 16px; border-bottom: 1px solid var(--line); background: var(--panel);
+}
+.term-bar i { width: 10px; height: 10px; border-radius: 50%; display: block; }
+.term-bar i:nth-child(1){ background:#ff5f57; } .term-bar i:nth-child(2){ background:#febc2e; } .term-bar i:nth-child(3){ background:#28c840; }
+.term-bar span { margin-left: auto; font-size: 11px; color: var(--ink-faint); letter-spacing: .1em; }
+.term-body { padding: 22px 22px 26px; min-height: 320px; white-space: pre-wrap; word-break: break-all; }
+.term-body .c-dim { color: var(--ink-faint); }
+.term-body .c-g { color: var(--green); }
+.term-body .c-a { color: var(--amber); }
+.term-body .c-w { color: var(--ink); }
+.tcur { display: inline-block; width: 8px; height: 14px; background: var(--green); vertical-align: -2px; animation: blink 1s steps(1) infinite; }
+
+/* ---------- 通用 Section ---------- */
+section { position: relative; }
+.sec { padding: 110px 0; }
+.sec-head { margin-bottom: 64px; }
+.sec-tag {
+  font-family: var(--mono); font-size: 12px; letter-spacing: .22em;
+  color: var(--green); margin-bottom: 18px; display: flex; align-items: center; gap: 14px;
+}
+.sec-tag::after { content: ""; height: 1px; width: 72px; background: var(--line-hi); }
+h2 {
+  font-family: var(--disp); font-weight: 900;
+  font-size: clamp(30px, 4.2vw, 52px); line-height: 1.12; letter-spacing: -.02em;
+}
+h2 .g { color: var(--green); }
+.sec-desc { margin-top: 20px; color: var(--ink-dim); max-width: 640px; font-size: 16.5px; }
+
+/* 滚动 reveal */
+.reveal { opacity: 0; transform: translateY(26px); transition: opacity .7s ease, transform .7s ease; }
+.reveal.in { opacity: 1; transform: none; }
+.reveal.d1 { transition-delay: .08s; } .reveal.d2 { transition-delay: .16s; } .reveal.d3 { transition-delay: .24s; }
+@media (prefers-reduced-motion: reduce) {
+  .reveal { opacity: 1; transform: none; transition: none; }
+  .dot, .cur, .tcur { animation: none; }
+}
+
+/* ---------- 痛点区 ---------- */
+.pains { display: grid; grid-template-columns: repeat(4, 1fr); gap: 1px; background: var(--line); border: 1px solid var(--line); }
+.pain { background: var(--panel); padding: 34px 28px 38px; transition: background .25s; }
+.pain:hover { background: var(--panel-2); }
+.pain .no {
+  font-family: var(--mono); font-size: 12px; color: var(--red);
+  letter-spacing: .18em; margin-bottom: 22px;
+}
+.pain .no::before { content: "▲ "; }
+.pain h3 { font-size: 18.5px; font-weight: 900; margin-bottom: 12px; letter-spacing: .01em; }
+.pain p { font-size: 14px; color: var(--ink-dim); line-height: 1.8; }
+
+/* ---------- 能力 Bento ---------- */
+.bento { display: grid; grid-template-columns: repeat(6, 1fr); gap: 18px; }
+.cell {
+  border: 1px solid var(--line); background: var(--panel);
+  padding: 30px; position: relative; overflow: hidden;
+  transition: border-color .25s, box-shadow .25s, transform .25s;
+}
+.cell:hover { border-color: var(--green); box-shadow: 0 0 34px rgba(107,255,158,.1); transform: translateY(-3px); }
+.cell::before { /* 角标刻度 */
+  content: ""; position: absolute; top: 0; right: 0; width: 14px; height: 14px;
+  border-top: 1px solid var(--line-hi); border-right: 1px solid var(--line-hi);
+  transition: width .25s, height .25s;
+}
+.cell:hover::before { width: 26px; height: 26px; border-color: var(--green); }
+.cell .cell-tag { font-family: var(--mono); font-size: 11px; color: var(--green); letter-spacing: .18em; margin-bottom: 16px; }
+.cell h3 { font-size: 19px; font-weight: 900; margin-bottom: 10px; }
+.cell p { font-size: 14px; color: var(--ink-dim); }
+.cell.w3 { grid-column: span 3; } .cell.w2 { grid-column: span 2; } .cell.w4 { grid-column: span 4; }
+.cell .code {
+  margin-top: 18px; font-family: var(--mono); font-size: 12.5px; line-height: 1.8;
+  background: #060907; border: 1px solid var(--line); padding: 14px 16px; color: var(--ink-dim);
+  overflow-x: auto; white-space: pre;
+}
+.cell .code b { color: var(--green); font-weight: 500; }
+.cell .code i { color: var(--amber); font-style: normal; }
+@media (max-width: 860px) { .bento { grid-template-columns: 1fr 1fr; } .cell.w3,.cell.w2,.cell.w4 { grid-column: span 2; } }
+@media (max-width: 560px) { .bento { grid-template-columns: 1fr; } .cell.w3,.cell.w2,.cell.w4 { grid-column: span 1; } }
+
+/* ---------- ICP 分层 ---------- */
+.icp { display: grid; grid-template-columns: repeat(3, 1fr); gap: 18px; }
+.icp-card {
+  border: 1px solid var(--line); background: var(--panel); padding: 36px 30px;
+  display: flex; flex-direction: column; transition: border-color .25s, transform .25s, box-shadow .25s;
+}
+.icp-card:hover { border-color: var(--green); transform: translateY(-4px); box-shadow: 0 18px 50px rgba(0,0,0,.5), 0 0 30px rgba(107,255,158,.08); }
+.icp-card .who { font-family: var(--mono); font-size: 12px; letter-spacing: .2em; color: var(--green); margin-bottom: 20px; }
+.icp-card h3 { font-size: 21px; font-weight: 900; margin-bottom: 6px; }
+.icp-card .fit { font-family: var(--mono); font-size: 12px; color: var(--ink-faint); margin-bottom: 20px; }
+.icp-card ul { list-style: none; margin: 0 0 26px; flex: 1; }
+.icp-card li { font-size: 14px; color: var(--ink-dim); padding: 9px 0 9px 22px; border-top: 1px dashed var(--line); position: relative; }
+.icp-card li::before { content: "▸"; position: absolute; left: 2px; color: var(--green); font-family: var(--mono); }
+.icp-card .btn { align-self: flex-start; }
+@media (max-width: 860px) { .icp { grid-template-columns: 1fr; } }
+
+/* ---------- Server 目录 ---------- */
+.catalog { border: 1px solid var(--line); background: var(--panel); }
+.cat-row { display: grid; grid-template-columns: 220px 1fr; border-bottom: 1px solid var(--line); }
+.cat-row:last-child { border-bottom: none; }
+.cat-name {
+  padding: 20px 24px; font-family: var(--mono); font-size: 12px; letter-spacing: .12em;
+  color: var(--green); border-right: 1px solid var(--line); display: flex; align-items: center; gap: 10px;
+}
+.cat-name .cnt { margin-left: auto; color: var(--ink-faint); }
+.cat-chips { padding: 14px 18px; display: flex; flex-wrap: wrap; gap: 8px; align-items: center; }
+.chip {
+  font-family: var(--mono); font-size: 12.5px; padding: 6px 12px;
+  border: 1px solid var(--line-hi); color: var(--ink-dim);
+  transition: all .18s; cursor: default;
+}
+.chip:hover { color: #05130a; background: var(--green); border-color: var(--green); box-shadow: 0 0 16px rgba(107,255,158,.35); }
+@media (max-width: 760px) { .cat-row { grid-template-columns: 1fr; } .cat-name { border-right: none; border-bottom: 1px dashed var(--line); } }
+
+/* ---------- 对比表 ---------- */
+.compare { border: 1px solid var(--line); overflow-x: auto; }
+.compare table { width: 100%; border-collapse: collapse; min-width: 680px; }
+.compare th, .compare td { padding: 18px 22px; text-align: left; border-bottom: 1px solid var(--line); font-size: 14px; }
+.compare tr:last-child td { border-bottom: none; }
+.compare th {
+  font-family: var(--mono); font-size: 12px; letter-spacing: .12em; color: var(--ink-faint); font-weight: 500;
+  background: var(--panel);
+}
+.compare th.us { color: var(--green); }
+.compare td:first-child { color: var(--ink); font-weight: 700; width: 22%; }
+.compare td { color: var(--ink-dim); }
+.compare .col-us { background: rgba(107,255,158,.055); border-left: 1px solid var(--line-hi); border-right: 1px solid var(--line-hi); color: var(--ink); }
+.compare .col-us b { color: var(--green); font-family: var(--mono); }
+.compare .no-b { color: var(--red); font-family: var(--mono); }
+
+/* ---------- Quickstart ---------- */
+.steps { display: grid; grid-template-columns: repeat(3, 1fr); gap: 18px; counter-reset: step; }
+.step { border: 1px solid var(--line); background: var(--panel); padding: 30px; position: relative; }
+.step .sn {
+  font-family: var(--disp); font-weight: 900; font-size: 44px; color: transparent;
+  -webkit-text-stroke: 1px var(--green); line-height: 1; margin-bottom: 18px; display: block;
+}
+.step h3 { font-size: 17px; font-weight: 900; margin-bottom: 8px; }
+.step p { font-size: 13.5px; color: var(--ink-dim); margin-bottom: 18px; }
+.step .code {
+  font-family: var(--mono); font-size: 12.5px; line-height: 1.9; background: #060907;
+  border: 1px solid var(--line); padding: 16px; color: var(--ink-dim); overflow-x: auto; white-space: pre;
+}
+.step .code b { color: var(--green); font-weight: 500; }
+.step .code i { color: var(--amber); font-style: normal; }
+@media (max-width: 860px) { .steps { grid-template-columns: 1fr; } }
+
+/* ---------- FAQ ---------- */
+.faq { max-width: 820px; }
+.faq details { border-bottom: 1px solid var(--line); }
+.faq details:first-child { border-top: 1px solid var(--line); }
+.faq summary {
+  list-style: none; cursor: pointer; padding: 26px 40px 26px 0;
+  font-size: 17px; font-weight: 700; position: relative; transition: color .2s;
+}
+.faq summary::-webkit-details-marker { display: none; }
+.faq summary::after {
+  content: "+"; position: absolute; right: 4px; top: 50%; transform: translateY(-50%);
+  font-family: var(--mono); font-size: 22px; color: var(--green); transition: transform .25s;
+}
+.faq details[open] summary::after { transform: translateY(-50%) rotate(45deg); }
+.faq summary:hover { color: var(--green); }
+.faq .a { padding: 0 60px 28px 0; color: var(--ink-dim); font-size: 15px; }
+.faq .a code { font-family: var(--mono); font-size: 13px; color: var(--green-dk); background: rgba(107,255,158,.07); padding: 2px 7px; border: 1px solid var(--line); }
+
+/* ---------- Final CTA ---------- */
+.final {
+  border-top: 1px solid var(--line);
+  background:
+    radial-gradient(ellipse 60% 80% at 50% 110%, rgba(107,255,158,.12), transparent 65%),
+    var(--bg-2);
+  text-align: center; padding: 130px 0 140px;
+}
+.final h2 { font-size: clamp(36px, 5.6vw, 72px); }
+.final .sub { color: var(--ink-dim); margin: 26px auto 44px; max-width: 520px; }
+.final .clone {
+  display: inline-block; font-family: var(--mono); font-size: 14px;
+  border: 1px dashed var(--line-hi); color: var(--green-dk);
+  padding: 14px 26px; margin-bottom: 30px; background: #060907;
+}
+.final .clone:hover { border-color: var(--green); color: var(--green); }
+.final .mini-links { display: flex; gap: 26px; justify-content: center; margin-top: 8px; }
+.final .mini-links a { color: var(--ink-faint); font-family: var(--mono); font-size: 12.5px; text-decoration: none; }
+.final .mini-links a:hover { color: var(--green); }
+
+/* ---------- Footer ---------- */
+footer { border-top: 1px solid var(--line); padding: 34px 0; }
+.foot-in { display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 14px; }
+footer .mono { font-size: 12px; color: var(--ink-faint); letter-spacing: .08em; }
+footer .mono b { color: var(--green-dk); }
+
+/* ---------- 响应式 ---------- */
+@media (max-width: 980px) {
+  .hero-grid { grid-template-columns: 1fr; }
+  .metrics { grid-template-columns: repeat(2, 1fr); }
+  .metric { padding-left: 0; border-left: none; border-top: 1px solid var(--line); }
+  .metric:nth-child(-n+2) { border-top: none; }
+  .pains { grid-template-columns: 1fr 1fr; }
+}
+@media (max-width: 620px) {
+  .pains { grid-template-columns: 1fr; }
+  .sec { padding: 80px 0; }
+}
+</style>
+</head>
+<body>
+
+<!-- 公告条 -->
+<div class="announce">100% 开源 · MIT LICENSE · SELF-HOSTED · <b>37 SERVERS / 200+ TOOLS</b> · 一个 CLONE 全部带走</div>
+
+<!-- 导航 -->
+<nav>
+  <div class="nav-in">
+    <a class="logo" href="#top">
+      <span class="logo-mark">M4</span>
+      <span class="logo-word">mcp<em>4</em>coder<span style="color:var(--ink-faint);font-weight:400">/mission-control</span></span>
+    </a>
+    <div class="nav-links">
+      <a href="#pain">为什么</a>
+      <a href="#cap">框架能力</a>
+      <a href="#icp">适用团队</a>
+      <a href="#catalog">37 Server 目录</a>
+      <a href="#compare">对比</a>
+      <a href="#quickstart">快速开始</a>
+      <a href="#faq">FAQ</a>
+      <a class="btn" href="https://github.com/standup-coder/mcp4coder" target="_blank" rel="noopener">★ GITHUB</a>
+    </div>
+  </div>
+</nav>
+
+<!-- ============ HERO ============ -->
+<header class="hero" id="top">
+  <div class="wrap">
+    <div class="hero-grid">
+      <div>
+        <div class="eyebrow"><span class="dot"></span>MCP-4CODER · SELF-HOSTED MISSION CONTROL · V2026.8</div>
+        <h1>
+          <span><span class="g">37</span> Servers.</span>
+          <span>One Framework.</span>
+          <span class="zh">一套框架，统管全部 MCP Server。</span>
+        </h1>
+        <p class="hero-sub">
+          别再逐个拼装 MCP Server 了。mcp4coder 把<b>开发工具链、云平台、文档、搜索、协作、监控、支付</b>
+          统一进一个自托管框架 —— 内置 Web 管理界面、可视化工作流设计器与企业级安全，
+          <b>零胶水代码</b>，一个 <span class="mono" style="color:var(--green-dk)">git clone</span> 全部带走。
+        </p>
+        <div class="hero-ctas">
+          <a class="btn solid big" href="#quickstart">▶ 五分钟快速开始</a>
+          <a class="btn big" href="https://github.com/standup-coder/mcp4coder" target="_blank" rel="noopener">★ 在 GitHub 上查看</a>
+        </div>
+        <div class="clone-hint mono">$ git clone https://github.com/standup-coder/mcp4coder.git <span class="cur"></span></div>
+      </div>
+      <div class="term reveal in" aria-hidden="true">
+        <div class="term-bar"><i></i><i></i><i></i><span>mcp4coder — zsh</span></div>
+        <div class="term-body" id="termBody"></div>
+      </div>
+    </div>
+
+    <div class="metrics reveal">
+      <div class="metric"><div class="num" data-count="37">0</div><div class="lab">MCP SERVERS</div></div>
+      <div class="metric"><div class="num" data-count="200">0<sup>+</sup></div><div class="lab">TOOLS 即插即用</div></div>
+      <div class="metric"><div class="num" data-count="13">0</div><div class="lab">场景类目覆盖</div></div>
+      <div class="metric"><div class="num" data-count="100">0<sup>%</sup></div><div class="lab">MIT 开源 · 自托管</div></div>
+    </div>
+  </div>
+</header>
+
+<!-- ============ 痛点 ============ -->
+<section class="sec" id="pain">
+  <div class="wrap">
+    <div class="sec-head reveal">
+      <div class="sec-tag">SEC.01 // PROBLEM</div>
+      <h2>你的 Agent 不缺工具，<br>缺的是<span class="g">一套管理系统</span>。</h2>
+      <p class="sec-desc">MCP 生态爆发之后，团队普遍卡在同一个地方：Server 越装越多，运维越来越乱。接 37 个工具的真实成本不在调用，在拼装。</p>
+    </div>
+    <div class="pains reveal d1">
+      <div class="pain">
+        <div class="no">PAIN-01</div>
+        <h3>碎片化拼装</h3>
+        <p>37 个工具散落在 37 个仓库、37 套依赖和配置里。每个都要单独克隆、安装、排错，版本互不兼容。</p>
+      </div>
+      <div class="pain">
+        <div class="no">PAIN-02</div>
+        <h3>认证密钥失控</h3>
+        <p>GitHub、Slack、AWS、Stripe…… API Key 分散在各处明文配置里，没有统一入口，更没有统一审计边界。</p>
+      </div>
+      <div class="pain">
+        <div class="no">PAIN-03</div>
+        <h3>黑盒运行</h3>
+        <p>Server 挂了没人知道。没有健康检查、没有进程监控、没有可视化管理界面，出了问题只能翻日志。</p>
+      </div>
+      <div class="pain">
+        <div class="no">PAIN-04</div>
+        <h3>编排靠手写</h3>
+        <p>想让 Agent 把「查数据库 → 写 Notion → 推钉钉」串成一条链？只能为每条业务流手写一遍胶水代码。</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ 解法 / 能力 ============ -->
+<section class="sec" id="cap" style="background:var(--bg-2);border-top:1px solid var(--line);border-bottom:1px solid var(--line)">
+  <div class="wrap">
+    <div class="sec-head reveal">
+      <div class="sec-tag">SEC.02 // SOLUTION</div>
+      <h2>一个框架，<span class="g">四个维度</span>的答案。</h2>
+      <p class="sec-desc">mcp4coder 用统一抽象接管了 Server 的全生命周期：注册、执行、监控、编排、安全、部署 —— 全部内建。</p>
+    </div>
+    <div class="bento reveal d1">
+      <div class="cell w3">
+        <div class="cell-tag">CORE / 统一抽象</div>
+        <h3>BaseMCPServer 统一模式</h3>
+        <p>所有 37 个 Server 继承同一基类，实现 <span class="mono">register_tools → execute_tool</span> 统一接口。写一个新 Server = 实现两个方法，成本从「周」降到「小时」。</p>
+        <div class="code"><b>class</b> MyServer(BaseMCPServer):
+    <b>def</b> <i>register_tools</i>(self) -> dict: ...
+    <b>def</b> <i>execute_tool</i>(self, name, args) -> Any: ...</div>
+      </div>
+      <div class="cell w3">
+        <div class="cell-tag">OPS / 可视化运维</div>
+        <h3>Web 管理界面 + 健康检查</h3>
+        <p>内置 <span class="mono">/ui</span> 管理界面实时查看 Server 状态，<span class="mono">MCPServerManager</span> 负责进程监控与健康检查，<span class="mono">/docs</span> 自动生成交互式 Swagger 文档。</p>
+        <div class="code">http://localhost:8000/ui    <i>← 可视化管理</i>
+http://localhost:8000/docs  <i>← Swagger API</i>
+http://localhost:8000/health <i>← 健康检查</i></div>
+      </div>
+      <div class="cell w2">
+        <div class="cell-tag">FLOW / 编排</div>
+        <h3>可视化工作流设计器</h3>
+        <p>把多 Server 调用拖拽成流程，配 Celery + Redis 异步执行。业务编排不再手写胶水代码。</p>
+      </div>
+      <div class="cell w2">
+        <div class="cell-tag">SEC / 安全边界</div>
+        <h3>JWT + API Key 双认证</h3>
+        <p>所有端点统一鉴权（JWT / <span class="mono">X-API-Key</span>），生产环境强制 <span class="mono">JWT_SECRET_KEY</span>，未设置拒绝启动。危险代码执行走 E2B 云端沙箱隔离。</p>
+      </div>
+      <div class="cell w2">
+        <div class="cell-tag">DEPLOY / 交付</div>
+        <h3>Docker 一键自托管</h3>
+        <p>Docker Compose 起 Redis + 应用，数据不出你的机房。按需安装 extras（browser / database / all），不必全量拉依赖。</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ ICP 分层 ============ -->
+<section class="sec" id="icp">
+  <div class="wrap">
+    <div class="sec-head reveal">
+      <div class="sec-tag">SEC.03 // WHO IT'S FOR</div>
+      <h2>为三种团队而生。</h2>
+      <p class="sec-desc">同一套框架，在不同团队手里是不同的杠杆。对号入座，各取所需。</p>
+    </div>
+    <div class="icp reveal d1">
+      <div class="icp-card">
+        <div class="who">ICP-A // AI 应用工程师</div>
+        <h3>给 Agent 一次接入全套工具链</h3>
+        <div class="fit">你是写 Agent / Copilot 的人</div>
+        <ul>
+          <li>一个 REST 端点调 200+ Tools，不用逐个接 MCP</li>
+          <li>Context7 / DeepWiki 文档注入、E2B 沙箱执行开箱即用</li>
+          <li>Swagger + API Key，任何语言客户端 10 分钟接入</li>
+        </ul>
+        <a class="btn" href="#quickstart">接入工具链 →</a>
+      </div>
+      <div class="icp-card">
+        <div class="who">ICP-B // 平台 / 基础设施团队</div>
+        <h3>自托管、可审计的 AI 工具中台</h3>
+        <div class="fit">你对安全边界和数据主权负责</div>
+        <ul>
+          <li>全部组件跑在自己机房，数据不出域</li>
+          <li>统一认证 + 健康检查 + 进程监控，运维有抓手</li>
+          <li>统一基类约束扩展，新 Server 上线有规范</li>
+        </ul>
+        <a class="btn" href="#cap">看架构设计 →</a>
+      </div>
+      <div class="icp-card">
+        <div class="who">ICP-C // 独立开发者 & 创业者</div>
+        <h3>拿来即用的产品底座</h3>
+        <div class="fit">你要的是交付速度</div>
+        <ul>
+          <li>MIT 协议，直接商用，零授权成本</li>
+          <li>Stripe 支付、Twilio 通信、Supabase 存储全都有</li>
+          <li>省下 N 周胶水代码，把时间还给产品</li>
+        </ul>
+        <a class="btn" href="#quickstart">Clone 起步 →</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ Server 目录 ============ -->
+<section class="sec" id="catalog" style="background:var(--bg-2);border-top:1px solid var(--line);border-bottom:1px solid var(--line)">
+  <div class="wrap">
+    <div class="sec-head reveal">
+      <div class="sec-tag">SEC.04 // THE ARSENAL</div>
+      <h2><span class="g">37 个 Server</span>，全在弹药库里。</h2>
+      <p class="sec-desc">不是宣传口径，是可以逐个点开验收的完整目录。鼠标悬停感受一下发射准备状态。</p>
+    </div>
+    <div class="catalog reveal d1">
+      <div class="cat-row"><div class="cat-name">开发工具链<span class="cnt">×6</span></div><div class="cat-chips"><span class="chip">Filesystem</span><span class="chip">Git</span><span class="chip">Database</span><span class="chip">HTTP Client</span><span class="chip">GitHub</span><span class="chip">Desktop Commander</span></div></div>
+      <div class="cat-row"><div class="cat-name">文档与知识<span class="cnt">×4</span></div><div class="cat-chips"><span class="chip">Context7</span><span class="chip">Docfork</span><span class="chip">DeepWiki</span><span class="chip">Memory</span></div></div>
+      <div class="cat-row"><div class="cat-name">搜索与浏览器<span class="cnt">×2</span></div><div class="cat-chips"><span class="chip">Brave Search</span><span class="chip">Browser · Playwright</span></div></div>
+      <div class="cat-row"><div class="cat-name">团队协作与项目<span class="cnt">×5</span></div><div class="cat-chips"><span class="chip">Slack</span><span class="chip">Notion</span><span class="chip">Google Sheets</span><span class="chip">Linear</span><span class="chip">Composio</span></div></div>
+      <div class="cat-row"><div class="cat-name">设计与前端<span class="cnt">×2</span></div><div class="cat-chips"><span class="chip">Figma</span><span class="chip">ReactBits</span></div></div>
+      <div class="cat-row"><div class="cat-name">代码执行与监控<span class="cnt">×2</span></div><div class="cat-chips"><span class="chip">E2B 沙箱</span><span class="chip">Sentry</span></div></div>
+      <div class="cat-row"><div class="cat-name">AI 推理<span class="cnt">×1</span></div><div class="cat-chips"><span class="chip">Sequential Thinking</span></div></div>
+      <div class="cat-row"><div class="cat-name">云平台与基础设施<span class="cnt">×4</span></div><div class="cat-chips"><span class="chip">Cloudflare</span><span class="chip">Vercel</span><span class="chip">Supabase</span><span class="chip">AWS</span></div></div>
+      <div class="cat-row"><div class="cat-name">企业协作<span class="cnt">×2</span></div><div class="cat-chips"><span class="chip">Jira</span><span class="chip">Confluence</span></div></div>
+      <div class="cat-row"><div class="cat-name">支付与通信<span class="cnt">×2</span></div><div class="cat-chips"><span class="chip">Stripe</span><span class="chip">Twilio</span></div></div>
+      <div class="cat-row"><div class="cat-name">地图与可观测性<span class="cnt">×2</span></div><div class="cat-chips"><span class="chip">Google Maps</span><span class="chip">Datadog</span></div></div>
+      <div class="cat-row"><div class="cat-name">生活与效率<span class="cnt">×4</span></div><div class="cat-chips"><span class="chip">高德地图</span><span class="chip">钉钉</span><span class="chip">天气</span><span class="chip">日历</span></div></div>
+      <div class="cat-row"><div class="cat-name">API 与规范<span class="cnt">×1</span></div><div class="cat-chips"><span class="chip">OpenAPI</span></div></div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ 对比 ============ -->
+<section class="sec" id="compare">
+  <div class="wrap">
+    <div class="sec-head reveal">
+      <div class="sec-tag">SEC.05 // DIFFERENTIATION</div>
+      <h2>自己拼装 vs <span class="g">mcp4coder</span>。</h2>
+      <p class="sec-desc">结论先行：当工具数量超过 5 个，统一框架的总成本就开始断崖式低于逐个拼装。</p>
+    </div>
+    <div class="compare reveal d1">
+      <table>
+        <thead><tr><th>决策维度</th><th>自己逐个拼装</th><th class="us">MCP4CODER</th></tr></thead>
+        <tbody>
+          <tr><td>接入 37 个工具</td><td>37 次克隆 / 安装 / 配置，按周计</td><td class="col-us"><b>1 次 clone</b>，按小时计</td></tr>
+          <tr><td>配置与密钥</td><td>分散在 N 份配置文件</td><td class="col-us">统一 <b>.env</b> 分组管理</td></tr>
+          <tr><td>认证与安全</td><td>各自为政，无统一边界</td><td class="col-us"><b>JWT + API Key</b> 统一鉴权</td></tr>
+          <tr><td>运行监控</td><td><span class="no-b">✗ 无</span>，出事翻日志</td><td class="col-us"><b>健康检查</b> + Web 管理界面</td></tr>
+          <tr><td>流程编排</td><td>每条业务流手写胶水代码</td><td class="col-us"><b>可视化设计器</b> + Celery 异步</td></tr>
+          <tr><td>新增一个 Server</td><td>从零搭工程脚手架</td><td class="col-us">继承基类，<b>实现 2 个方法</b></td></tr>
+          <tr><td>升级维护</td><td>逐仓库跟进上游变更</td><td class="col-us"><b>一处升级</b>，全量跟进</td></tr>
+          <tr><td>商用授权</td><td>逐个核对 License</td><td class="col-us"><b>MIT</b>，放心商用</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</section>
+
+<!-- ============ 快速开始 ============ -->
+<section class="sec" id="quickstart" style="background:var(--bg-2);border-top:1px solid var(--line);border-bottom:1px solid var(--line)">
+  <div class="wrap">
+    <div class="sec-head reveal">
+      <div class="sec-tag">SEC.06 // ACTIVATION</div>
+      <h2>三条命令，<span class="g">开始发射</span>。</h2>
+      <p class="sec-desc">从 clone 到 37 个 Server 在线，一个下午绰绰有余。生产环境请务必设置 <span class="mono">JWT_SECRET_KEY</span>。</p>
+    </div>
+    <div class="steps reveal d1">
+      <div class="step">
+        <span class="sn">01</span>
+        <h3>克隆并安装</h3>
+        <p>Python 3.11+。按需选装 extras，或一步到位。</p>
+        <div class="code"><b>git clone</b> https://github.com/standup-coder/mcp4coder.git
+<b>cd</b> mcp4coder
+<b>pip install</b> -e ".[all]"</div>
+      </div>
+      <div class="step">
+        <span class="sn">02</span>
+        <h3>配置环境变量</h3>
+        <p>统一模板，按功能分组填 Key，只配你要用的。</p>
+        <div class="code"><b>cp</b> config/.env.example .env
+<i># 编辑 .env，填入所需 API Key</i>
+<i># 生产必设 JWT_SECRET_KEY</i></div>
+      </div>
+      <div class="step">
+        <span class="sn">03</span>
+        <h3>启动并验收</h3>
+        <p>Redis 用 Compose 起，应用 + Celery Worker 各一终端。</p>
+        <div class="code"><b>docker compose</b> -f deployment/docker-compose.yml up -d redis
+<b>python</b> -m app.main
+<b>celery</b> -A app.workers.celery_app worker</div>
+      </div>
+    </div>
+    <div class="reveal d2" style="margin-top:26px;display:flex;gap:16px;flex-wrap:wrap">
+      <a class="btn solid" href="http://localhost:8000/ui" onclick="return false" title="启动后访问">启动后打开 /ui 管理界面</a>
+      <a class="btn ghost" href="https://github.com/standup-coder/mcp4coder#readme" target="_blank" rel="noopener">查看完整文档 →</a>
+    </div>
+  </div>
+</section>
+
+<!-- ============ FAQ ============ -->
+<section class="sec" id="faq">
+  <div class="wrap">
+    <div class="sec-head reveal">
+      <div class="sec-tag">SEC.07 // OBJECTIONS</div>
+      <h2>决策前，<span class="g">把问题问完</span>。</h2>
+    </div>
+    <div class="faq reveal d1">
+      <details open>
+        <summary>和直接用官方/社区的单个 MCP Server 有什么区别？</summary>
+        <div class="a">单个 Server 解决「一个工具的接入」，mcp4coder 解决「几十个工具的管理」。当你只用 1–2 个工具时，直接用官方 Server 更轻；一旦超过 5 个，统一框架在配置、认证、监控、升级上的优势会持续放大。两者不冲突 —— 本项目的统一基类也让你能把自研 Server 规范地纳入同一管理体系。</div>
+      </details>
+      <details>
+        <summary>安全吗？密钥和代码执行怎么处理？</summary>
+        <div class="a">所有 API 端点支持 JWT 或 <code>X-API-Key</code> 双认证；生产环境强制设置 <code>JWT_SECRET_KEY</code>，未设置将拒绝启动。不可信代码执行通过 E2B 云端沙箱隔离，不落你的宿主机。部署形态是完全自托管，数据与密钥不出你的基础设施。</div>
+      </details>
+      <details>
+        <summary>部署门槛高吗？需要哪些依赖？</summary>
+        <div class="a">核心依赖只有 Python 3.11+ 和 Redis（用于 Celery 异步队列与健康状态），提供 Docker Compose 一键编排。依赖是分组的：只装 <code>[database]</code>、<code>[browser]</code> 等所需 extras，或 <code>[all]</code> 一次到位，不必为 37 个 Server 全量拉包。</div>
+      </details>
+      <details>
+        <summary>可以商用吗？License 是什么？</summary>
+        <div class="a">MIT License，可自由商用、修改、二次分发，无需授权或付费。各上游服务的使用请遵循其自身服务条款（如 Stripe、AWS 等）。</div>
+      </details>
+      <details>
+        <summary>我只想要其中几个 Server，可以吗？</summary>
+        <div class="a">可以。每个 Server 通过 <code>ServerFactory</code> 独立配置和启停，环境变量按功能分组 —— 不配置某个服务的 Key，对应 Server 不启用即可，框架按需加载，不影响其余部分。</div>
+      </details>
+      <details>
+        <summary>我的 Agent / 客户端怎么接入？</summary>
+        <div class="a">暴露标准 REST API + OpenAPI（Swagger）文档，支持任何能发 HTTP 请求的 MCP 客户端、Agent 框架或脚本语言。认证拿 Token 或带 <code>X-API-Key</code> 头即可调用全部 200+ Tools。</div>
+      </details>
+    </div>
+  </div>
+</section>
+
+<!-- ============ FINAL CTA ============ -->
+<section class="final">
+  <div class="wrap reveal">
+    <h2>把胶水代码的时间，<br><span class="g">还给产品。</span></h2>
+    <p class="sub">37 个 MCP Server、200+ Tools、一个统一框架。Clone 下来，今天就上线第一套 Agent 工具链。</p>
+    <div class="clone">$ git clone https://github.com/standup-coder/mcp4coder.git</div>
+    <div style="display:flex;gap:16px;justify-content:center;flex-wrap:wrap">
+      <a class="btn solid big" href="https://github.com/standup-coder/mcp4coder" target="_blank" rel="noopener">★ GitHub 仓库</a>
+      <a class="btn big" href="#quickstart">▶ 重看快速开始</a>
+    </div>
+    <div class="mini-links">
+      <a href="#catalog">SERVER 目录</a>
+      <a href="#compare">对比决策</a>
+      <a href="#faq">FAQ</a>
+      <a href="https://github.com/standup-coder/mcp4coder/blob/main/LICENSE" target="_blank" rel="noopener">MIT LICENSE</a>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <div class="wrap foot-in">
+    <span class="mono"><b>MCP-4CODER</b> // MISSION CONTROL · SELF-HOSTED MCP FRAMEWORK</span>
+    <span class="mono">37 SERVERS · 200+ TOOLS · MIT LICENSE · BUILT WITH FASTAPI + CELERY + REDIS</span>
+  </div>
+</footer>
+
+<script>
+/* ---- 终端打字动画 ---- */
+(function () {
+  const el = document.getElementById("termBody");
+  if (!el || window.matchMedia("(prefers-reduced-motion: reduce)").matches) {
+    if (el) el.textContent = "$ mcp4coder online — 37 servers [HEALTHY]";
+    return;
+  }
+  const lines = [
+    { t: "$ git clone mcp4coder.git", c: "c-w" },
+    { t: "→ Cloning into 'mcp4coder'... done.", c: "c-dim" },
+    { t: "$ pip install -e \".[all]\"", c: "c-w" },
+    { t: "→ 37 servers · 200+ tools registered.", c: "c-dim" },
+    { t: "$ python -m app.main", c: "c-w" },
+    { t: "✓ FastAPI   →  :8000        [RUNNING]", c: "c-g" },
+    { t: "✓ Web UI    →  :8000/ui     [RUNNING]", c: "c-g" },
+    { t: "✓ Swagger   →  :8000/docs   [RUNNING]", c: "c-g" },
+    { t: "✓ HEALTH CHECK →  37/37 servers [HEALTHY]", c: "c-a" },
+    { t: "▍awaiting your first agent…", c: "c-dim" },
+  ];
+  let li = 0, ci = 0;
+  const spans = [];
+  function tick() {
+    if (li >= lines.length) return;
+    const line = lines[li];
+    if (ci === 0) {
+      spans[li] = document.createElement("div");
+      spans[li].className = line.c;
+      el.appendChild(spans[li]);
+    }
+    spans[li].textContent = line.t.slice(0, ++ci);
+    if (ci >= line.t.length) { li++; ci = 0; setTimeout(tick, line.t.startsWith("$") ? 420 : 130); }
+    else setTimeout(tick, line.t.startsWith("$") ? 46 : 16);
+  }
+  setTimeout(tick, 700);
+})();
+
+/* ---- 数字 count-up ---- */
+(function () {
+  const nums = document.querySelectorAll("[data-count]");
+  const io = new IntersectionObserver((es) => {
+    es.forEach((e) => {
+      if (!e.isIntersecting) return;
+      io.unobserve(e.target);
+      const target = +e.target.dataset.count;
+      const sup = e.target.querySelector("sup");
+      const t0 = performance.now(), dur = 1400;
+      (function step(t) {
+        const p = Math.min((t - t0) / dur, 1);
+        const eased = 1 - Math.pow(1 - p, 3);
+        e.target.childNodes[0].nodeValue = Math.round(target * eased);
+        if (p < 1) requestAnimationFrame(step);
+      })(t0);
+    });
+  }, { threshold: .5 });
+  nums.forEach((n) => io.observe(n));
+})();
+
+/* ---- 滚动 reveal ---- */
+(function () {
+  const els = document.querySelectorAll(".reveal");
+  const io = new IntersectionObserver((es) => {
+    es.forEach((e) => { if (e.isIntersecting) { e.target.classList.add("in"); io.unobserve(e.target); } });
+  }, { threshold: .12 });
+  els.forEach((el) => io.observe(el));
+})();
+</script>
+<!-- gtm-portal-backlink (managed by _scripts/sync-gtm.py) -->
+<a class="gtmp-back" href="/GTM/" aria-label="返回 GTM 门户">&#8617; GTM 门户</a>
+<style>
+.gtmp-back{position:fixed;right:1rem;bottom:1rem;z-index:2147483000;
+font:500 12px/1 ui-monospace,SFMono-Regular,Menlo,Consolas,monospace;
+letter-spacing:.05em;text-decoration:none;padding:.6rem .85rem;border-radius:999px;
+color:#14130f;background:rgba(251,250,247,.92);border:1px solid rgba(20,19,15,.16);
+box-shadow:0 2px 12px rgba(20,19,15,.14);backdrop-filter:blur(6px);
+transition:transform .15s ease,box-shadow .15s ease}
+.gtmp-back:hover{transform:translateY(-1px);box-shadow:0 4px 16px rgba(20,19,15,.22)}
+@media (prefers-color-scheme:dark){.gtmp-back{color:#f5f2ea;background:rgba(20,19,15,.88);
+border-color:rgba(245,242,234,.22)}}
+</style>
+</body>
+</html>

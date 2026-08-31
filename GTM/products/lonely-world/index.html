@@ -1,0 +1,874 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>孤独世界 lonely-world — 没有既定剧情的中文 AI 文字冒险游戏</title>
+<meta name="description" content="孤独世界是一款开源的中文 AI 文字冒险游戏：没有既定剧情，世界由你共创，角色长期记忆，存档完全保存在本地。支持 OpenAI / Claude / Ollama，pip 一行命令开始你的故事。">
+<meta property="og:title" content="孤独世界 lonely-world — 没有既定剧情的中文 AI 文字冒险游戏">
+<meta property="og:description" content="输入你的动作，世界即时回应。角色、恩怨与世界观永久保存在你自己的电脑里。每一次开局，都是一个只属于你的故事。">
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://github.com/panna-arts/lonely-world">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Serif+SC:wght@400;600;700;900&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "SoftwareApplication",
+  "name": "孤独世界 lonely-world",
+  "applicationCategory": "GameApplication",
+  "operatingSystem": "Cross-platform",
+  "description": "没有既定剧情的中文 AI 文字冒险游戏，角色与世界观长期记忆，本地存档，支持 OpenAI / Claude / Ollama。",
+  "offers": { "@type": "Offer", "price": "0", "priceCurrency": "USD" },
+  "license": "https://opensource.org/licenses/MIT",
+  "url": "https://github.com/panna-arts/lonely-world",
+  "softwareVersion": "0.2.0"
+}
+</script>
+<style>
+  :root{
+    --bg:        #0d0a07;
+    --bg-2:      #14100a;
+    --card:      #17120b;
+    --card-hi:   #1d160d;
+    --paper:     #efe5d0;
+    --muted:     #a4937a;
+    --faint:     #6e6150;
+    --line:      rgba(239,229,208,.10);
+    --line-soft: rgba(239,229,208,.06);
+    --amber:     #e8a34c;
+    --amber-hi:  #ffc272;
+    --ember:     #c2503a;
+    --jade:      #93b08c;
+    --serif: "Noto Serif SC","Songti SC","STSong",serif;
+    --mono: "JetBrains Mono","SF Mono",ui-monospace,Menlo,monospace;
+    --maxw: 1140px;
+  }
+  *{margin:0;padding:0;box-sizing:border-box}
+  html{scroll-behavior:smooth;overflow-x:hidden}
+  body{
+    background:var(--bg);
+    color:var(--paper);
+    font-family:var(--serif);
+    font-size:16px;
+    line-height:1.8;
+    overflow-x:hidden;
+    -webkit-font-smoothing:antialiased;
+  }
+  /* 纸纹噪点 */
+  body::after{
+    content:"";position:fixed;inset:0;z-index:2000;pointer-events:none;opacity:.045;
+    background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+  }
+  ::selection{background:rgba(232,163,76,.35);color:#fff8ec}
+  a{color:inherit;text-decoration:none}
+  .wrap{max-width:var(--maxw);margin:0 auto;padding:0 28px}
+  section{padding:110px 0;position:relative;scroll-margin-top:76px}
+
+  /* ============ 导航 ============ */
+  nav{
+    position:fixed;top:0;left:0;right:0;z-index:1000;
+    backdrop-filter:blur(14px);-webkit-backdrop-filter:blur(14px);
+    background:rgba(13,10,7,.78);border-bottom:1px solid var(--line-soft);
+  }
+  .nav-inner{max-width:var(--maxw);margin:0 auto;padding:0 28px;height:64px;display:flex;align-items:center;gap:28px}
+  .brand{display:flex;align-items:center;gap:12px;font-weight:700;font-size:17px;letter-spacing:.06em}
+  .seal{
+    width:34px;height:34px;flex:none;display:grid;place-items:center;
+    background:var(--ember);color:#fff4e4;font-weight:900;font-size:19px;
+    border-radius:5px;transform:rotate(-4deg);
+    box-shadow:0 2px 14px rgba(194,80,58,.4);
+  }
+  .brand small{font-family:var(--mono);font-weight:400;font-size:11px;color:var(--faint);letter-spacing:.02em;display:block;line-height:1.2}
+  .nav-links{display:flex;gap:26px;margin-left:auto}
+  .nav-links a{font-size:13.5px;color:var(--muted);letter-spacing:.08em;transition:color .2s}
+  .nav-links a:hover{color:var(--amber-hi)}
+  .nav-gh{
+    display:flex;align-items:center;gap:8px;font-family:var(--mono);font-size:12.5px;
+    border:1px solid var(--line);border-radius:99px;padding:7px 16px;color:var(--paper);
+    transition:border-color .2s,color .2s,box-shadow .2s;
+  }
+  .nav-gh:hover{border-color:var(--amber);color:var(--amber-hi);box-shadow:0 0 20px rgba(232,163,76,.15)}
+  @media(max-width:900px){.nav-links{display:none}}
+
+  /* ============ Hero ============ */
+  .hero{position:relative;min-height:100vh;display:flex;flex-direction:column;justify-content:center;padding:150px 0 90px;overflow:hidden}
+  .hero::before{ /* 灯笼光晕 */
+    content:"";position:absolute;top:-12%;right:-6%;width:62vw;height:62vw;max-width:880px;max-height:880px;
+    background:radial-gradient(circle,rgba(232,163,76,.13) 0%,rgba(232,163,76,.05) 38%,transparent 66%);
+    animation:lamp 9s ease-in-out infinite alternate;pointer-events:none;
+  }
+  @keyframes lamp{from{transform:translate(0,0) scale(1)}to{transform:translate(-3%,4%) scale(1.07)}}
+  .hero-grid{display:grid;grid-template-columns:1.04fr .96fr;gap:56px;align-items:center;position:relative;z-index:2}
+  .eyebrow{
+    font-family:var(--mono);font-size:12px;letter-spacing:.22em;color:var(--amber);
+    display:inline-flex;align-items:center;gap:10px;margin-bottom:26px;
+  }
+  .eyebrow::before{content:"";width:26px;height:1px;background:var(--amber)}
+  h1{
+    font-size:clamp(2.5rem,5.6vw,4.35rem);font-weight:900;line-height:1.28;letter-spacing:.02em;
+    margin-bottom:26px;
+  }
+  h1 em{font-style:normal;color:var(--amber-hi);position:relative;white-space:nowrap}
+  h1 em::after{
+    content:"";position:absolute;left:0;right:0;bottom:.08em;height:.42em;z-index:-1;
+    background:linear-gradient(90deg,rgba(232,163,76,.22),rgba(194,80,58,.16));
+    transform:skewX(-8deg);
+  }
+  .hero-sub{color:var(--muted);font-size:17px;max-width:34em;margin-bottom:38px}
+  .hero-sub strong{color:var(--paper);font-weight:600}
+  .cta-row{display:flex;gap:16px;flex-wrap:wrap;align-items:center;margin-bottom:34px}
+  .btn{
+    display:inline-flex;align-items:center;gap:10px;border-radius:8px;cursor:pointer;
+    font-family:var(--serif);font-size:15.5px;font-weight:700;letter-spacing:.06em;
+    padding:14px 28px;transition:transform .2s,box-shadow .25s,border-color .2s,background .2s;
+  }
+  .btn-pri{
+    background:linear-gradient(135deg,var(--amber) 0%,#d8853a 100%);color:#241505;
+    box-shadow:0 4px 24px rgba(232,163,76,.28);
+  }
+  .btn-pri:hover{transform:translateY(-2px);box-shadow:0 8px 34px rgba(232,163,76,.42)}
+  .btn-gho{border:1px solid var(--line);color:var(--paper)}
+  .btn-gho:hover{border-color:var(--amber);color:var(--amber-hi)}
+  .install-pill{
+    display:inline-flex;align-items:center;gap:14px;max-width:100%;
+    font-family:var(--mono);font-size:13.5px;color:var(--paper);
+    background:var(--bg-2);border:1px solid var(--line);border-radius:10px;padding:11px 8px 11px 18px;
+  }
+  .install-pill .dollar{color:var(--amber)}
+  .copy-btn{
+    font-family:var(--mono);font-size:11.5px;color:var(--muted);background:transparent;
+    border:1px solid var(--line);border-radius:6px;padding:5px 12px;cursor:pointer;letter-spacing:.06em;
+    transition:all .2s;flex:none;
+  }
+  .copy-btn:hover{color:var(--amber-hi);border-color:var(--amber)}
+  .copy-btn.done{color:var(--jade);border-color:var(--jade)}
+  .hero-meta{
+    display:flex;flex-wrap:wrap;gap:8px 0;font-family:var(--mono);font-size:11.5px;
+    color:var(--faint);letter-spacing:.1em;
+  }
+  .hero-meta span{display:flex;align-items:center}
+  .hero-meta span:not(:last-child)::after{content:"·";margin:0 14px;color:rgba(232,163,76,.45)}
+
+  /* 竖排装饰文字 */
+  .vtext{
+    position:absolute;writing-mode:vertical-rl;letter-spacing:.5em;
+    font-size:13px;color:rgba(164,147,122,.42);user-select:none;pointer-events:none;z-index:1;
+  }
+  .vtext b{color:rgba(232,163,76,.55);font-weight:400}
+  .vt-1{right:36px;top:150px}
+  .vt-2{right:76px;top:150px;opacity:.55}
+
+  /* 终端窗口 */
+  .term{
+    background:#0a0805;border:1px solid rgba(232,163,76,.16);border-radius:14px;
+    box-shadow:0 30px 80px rgba(0,0,0,.6),0 0 60px rgba(232,163,76,.06),inset 0 1px 0 rgba(255,255,255,.04);
+    overflow:hidden;font-family:var(--mono);font-size:13px;line-height:1.9;position:relative;z-index:2;
+  }
+  .term-bar{
+    display:flex;align-items:center;gap:8px;padding:12px 16px;
+    background:rgba(232,163,76,.05);border-bottom:1px solid var(--line-soft);
+  }
+  .term-bar i{width:11px;height:11px;border-radius:50%;background:#3a3227}
+  .term-bar i:first-child{background:var(--ember)}
+  .term-bar i:nth-child(2){background:var(--amber)}
+  .term-bar i:nth-child(3){background:var(--jade)}
+  .term-bar span{margin-left:auto;font-size:11px;color:var(--faint);letter-spacing:.12em}
+  .term-body{padding:20px 22px 26px;min-height:400px;color:#cfc2a8;white-space:pre-wrap;word-break:break-all}
+  .term-body .t-cmd{color:var(--paper)}
+  .term-body .t-cmd::before{content:"$ ";color:var(--amber)}
+  .term-body .t-sys{color:#8a7c64}
+  .term-body .t-you{color:#e8d9b8}
+  .term-body .t-you::before{content:"你：";color:var(--amber-hi);font-weight:700}
+  .term-body .t-npc{color:#b7a789}
+  .term-body .t-npc::before{content:"李逍遥：";color:var(--jade);font-weight:700}
+  .term-body .t-new{display:block;margin-top:1em}
+  .caret{display:inline-block;width:8px;height:1.15em;background:var(--amber);vertical-align:text-bottom;animation:blink 1s steps(1) infinite;margin-left:2px}
+  @keyframes blink{50%{opacity:0}}
+  .term-fade{animation:tfade .5s ease both}
+  @keyframes tfade{from{opacity:0;transform:translateY(5px)}to{opacity:1;transform:none}}
+
+  /* 远山 */
+  .mountains{position:absolute;bottom:-2px;left:0;right:0;z-index:0;pointer-events:none;opacity:.75}
+
+  /* ============ 通用 section 头 ============ */
+  .sec-head{max-width:640px;margin-bottom:64px}
+  .sec-head.center{margin-left:auto;margin-right:auto;text-align:center}
+  .sec-head.center .eyebrow{justify-content:center}
+  .sec-head.center .eyebrow::before{display:none}
+  h2{font-size:clamp(1.7rem,3.4vw,2.5rem);font-weight:900;line-height:1.4;letter-spacing:.02em;margin-bottom:16px}
+  h2 em{font-style:normal;color:var(--amber-hi)}
+  .lead{color:var(--muted);font-size:16.5px}
+
+  /* 入场动画 */
+  .reveal{opacity:0;transform:translateY(26px);transition:opacity .8s ease,transform .8s cubic-bezier(.2,.7,.3,1);transition-delay:var(--d,0s)}
+  .reveal.in{opacity:1;transform:none}
+  @media(prefers-reduced-motion:reduce){
+    .reveal{opacity:1;transform:none;transition:none}
+    .hero::before{animation:none}
+    html{scroll-behavior:auto}
+  }
+
+  /* ============ 痛点 ============ */
+  .pains{display:grid;grid-template-columns:repeat(3,1fr);gap:20px;margin-bottom:20px}
+  .pain{
+    background:linear-gradient(180deg,var(--card) 0%,var(--bg-2) 100%);
+    border:1px solid var(--line-soft);border-radius:14px;padding:34px 30px;position:relative;overflow:hidden;
+    transition:transform .3s,border-color .3s;
+  }
+  .pain:hover{transform:translateY(-4px);border-color:var(--line)}
+  .pain .no{font-family:var(--mono);font-size:12px;color:var(--faint);letter-spacing:.2em;display:block;margin-bottom:20px}
+  .pain h3{font-size:19px;font-weight:700;margin-bottom:12px;color:#ded1b6}
+  .pain p{font-size:14.5px;color:var(--muted)}
+  .pain p b{color:var(--ember);font-weight:600}
+  .answer{
+    margin-top:44px;text-align:center;padding:38px 30px;position:relative;
+    border-top:1px solid var(--line);border-bottom:1px solid var(--line);
+  }
+  .answer::before,.answer::after{
+    content:"";position:absolute;top:-4px;width:7px;height:7px;border-radius:50%;background:var(--amber);
+  }
+  .answer::before{left:0}.answer::after{right:0}
+  .answer p{font-size:clamp(1.05rem,2vw,1.35rem);font-weight:600;line-height:2}
+  .answer p em{font-style:normal;color:var(--amber-hi)}
+
+  /* ============ 人群 ============ */
+  .audiences{display:grid;grid-template-columns:repeat(4,1fr);gap:20px}
+  .aud{
+    border:1px solid var(--line-soft);border-radius:14px;padding:32px 26px;background:var(--bg-2);
+    display:flex;flex-direction:column;gap:16px;transition:transform .3s,border-color .3s,background .3s;position:relative;overflow:hidden;
+  }
+  .aud::before{content:"";position:absolute;top:0;left:0;right:0;height:2px;background:linear-gradient(90deg,var(--amber),transparent);opacity:0;transition:opacity .3s}
+  .aud:hover{transform:translateY(-5px);border-color:rgba(232,163,76,.35);background:var(--card-hi)}
+  .aud:hover::before{opacity:1}
+  .aud .icon{font-size:26px;line-height:1}
+  .aud h3{font-size:17.5px;font-weight:700}
+  .aud blockquote{font-size:14px;color:var(--muted);line-height:1.9;flex:1}
+  .aud blockquote em{font-style:normal;color:var(--amber-hi)}
+  .aud .tag{font-family:var(--mono);font-size:10.5px;color:var(--faint);letter-spacing:.18em}
+
+  /* ============ 特性 ============ */
+  .features{display:grid;grid-template-columns:repeat(3,1fr);gap:20px}
+  .feat{
+    background:linear-gradient(180deg,var(--card) 0%,var(--bg-2) 100%);
+    border:1px solid var(--line-soft);border-radius:14px;padding:34px 30px;
+    transition:transform .3s,border-color .3s,box-shadow .3s;
+  }
+  .feat:hover{transform:translateY(-4px);border-color:rgba(232,163,76,.3);box-shadow:0 16px 44px rgba(0,0,0,.4)}
+  .feat .glyph{
+    font-family:var(--mono);font-size:12px;color:var(--amber);letter-spacing:.15em;
+    border:1px solid rgba(232,163,76,.3);border-radius:6px;display:inline-block;padding:4px 10px;margin-bottom:22px;
+  }
+  .feat h3{font-size:19px;font-weight:700;margin-bottom:10px}
+  .feat p{font-size:14.5px;color:var(--muted)}
+
+  /* ============ 对比 ============ */
+  .tbl-scroll{overflow-x:auto;border:1px solid var(--line-soft);border-radius:16px;background:var(--bg-2)}
+  table{width:100%;border-collapse:collapse;min-width:760px}
+  th,td{padding:20px 24px;text-align:left;font-size:14.5px;vertical-align:top;border-bottom:1px solid var(--line-soft)}
+  tr:last-child td{border-bottom:none}
+  thead th{font-size:13px;letter-spacing:.08em;color:var(--muted);font-weight:600;background:rgba(239,229,208,.02)}
+  td.dim{color:var(--faint);font-weight:600;white-space:nowrap;font-size:13.5px}
+  .col-us{background:rgba(232,163,76,.06);border-left:1px solid rgba(232,163,76,.22);border-right:1px solid rgba(232,163,76,.22)}
+  thead th.col-us{color:var(--amber-hi);position:relative}
+  thead th.col-us::after{content:"";position:absolute;top:-1px;left:0;right:0;height:2px;background:var(--amber)}
+  td.col-us{color:#ead9ba;font-weight:600}
+  td .ok{color:var(--jade);margin-right:8px;font-family:var(--mono)}
+  td .no{color:#7a6a55;margin-right:8px;font-family:var(--mono)}
+
+  /* ============ 上手 ============ */
+  .steps{display:grid;grid-template-columns:repeat(3,1fr);gap:20px;counter-reset:step}
+  .step{
+    background:var(--bg-2);border:1px solid var(--line-soft);border-radius:14px;padding:34px 30px;position:relative;
+    transition:transform .3s,border-color .3s;
+  }
+  .step:hover{transform:translateY(-4px);border-color:rgba(232,163,76,.3)}
+  .step .num{
+    font-family:var(--mono);font-size:44px;font-weight:700;color:transparent;
+    -webkit-text-stroke:1px rgba(232,163,76,.5);line-height:1;display:block;margin-bottom:22px;
+  }
+  .step h3{font-size:18px;font-weight:700;margin-bottom:8px}
+  .step p{font-size:14px;color:var(--muted);margin-bottom:20px}
+  .cmd{
+    display:flex;align-items:center;gap:12px;font-family:var(--mono);font-size:12.5px;
+    background:#0a0805;border:1px solid var(--line);border-radius:8px;padding:10px 8px 10px 14px;color:#d8caab;
+  }
+  .cmd .dollar{color:var(--amber);flex:none}
+  .cmd code{flex:1;overflow-x:auto;white-space:nowrap;scrollbar-width:none}
+  .cmd code::-webkit-scrollbar{display:none}
+  .web-note{
+    margin-top:26px;display:flex;gap:18px;align-items:flex-start;flex-wrap:wrap;
+    border:1px dashed rgba(232,163,76,.3);border-radius:14px;padding:24px 28px;
+    background:rgba(232,163,76,.04);
+  }
+  .web-note .lbl{
+    font-family:var(--mono);font-size:11px;letter-spacing:.2em;color:var(--amber);flex:none;
+    border:1px solid rgba(232,163,76,.35);border-radius:99px;padding:5px 14px;margin-top:3px;
+  }
+  .web-note p{font-size:14.5px;color:var(--muted);flex:1;min-width:260px}
+  .web-note code{font-family:var(--mono);font-size:13px;color:var(--amber-hi)}
+  .web-note a{border-bottom:1px dashed var(--amber);color:var(--paper)}
+  .web-note a:hover{color:var(--amber-hi)}
+
+  /* ============ 信任 ============ */
+  .trust{display:grid;grid-template-columns:repeat(4,1fr);gap:20px}
+  .tcard{border:1px solid var(--line-soft);border-radius:14px;padding:30px 26px;background:var(--bg-2);transition:border-color .3s,transform .3s}
+  .tcard:hover{border-color:rgba(147,176,140,.4);transform:translateY(-3px)}
+  .tcard .icon{font-size:22px;margin-bottom:16px;display:block}
+  .tcard h3{font-size:16.5px;font-weight:700;margin-bottom:8px;color:#ded1b6}
+  .tcard p{font-size:13.5px;color:var(--muted)}
+  .tcard code{font-family:var(--mono);font-size:12px;color:var(--amber-hi)}
+
+  /* ============ FAQ ============ */
+  .faq{max-width:760px;margin:0 auto}
+  details{border-bottom:1px solid var(--line-soft)}
+  details:first-child{border-top:1px solid var(--line-soft)}
+  summary{
+    list-style:none;cursor:pointer;padding:26px 8px;display:flex;align-items:center;gap:18px;
+    font-size:17px;font-weight:600;transition:color .2s;
+  }
+  summary::-webkit-details-marker{display:none}
+  summary:hover{color:var(--amber-hi)}
+  summary .q{font-family:var(--mono);color:var(--amber);font-size:13px;flex:none}
+  summary .arr{margin-left:auto;font-family:var(--mono);color:var(--faint);transition:transform .3s;flex:none}
+  details[open] .arr{transform:rotate(45deg);color:var(--amber)}
+  details .a{padding:0 8px 28px 43px;color:var(--muted);font-size:15px;max-width:60em}
+  details .a code{font-family:var(--mono);font-size:13px;color:var(--amber-hi);background:rgba(232,163,76,.08);padding:2px 7px;border-radius:5px}
+
+  /* ============ 尾部 CTA ============ */
+  .final{text-align:center;padding:160px 0 150px;overflow:hidden}
+  .final .giant{
+    position:absolute;left:50%;top:50%;transform:translate(-50%,-52%);z-index:0;pointer-events:none;
+    font-size:clamp(300px,42vw,560px);font-weight:900;line-height:1;
+    color:transparent;-webkit-text-stroke:1px rgba(232,163,76,.14);user-select:none;
+  }
+  .final h2{font-size:clamp(2rem,4.6vw,3.3rem);position:relative;z-index:1}
+  .final h2 em{font-style:normal;color:var(--amber-hi)}
+  .final .lead{position:relative;z-index:1;margin-bottom:44px}
+  .final .cta-row{justify-content:center;position:relative;z-index:1;margin-bottom:30px}
+  .final .install-pill{position:relative;z-index:1}
+  .final .whisper{
+    position:relative;z-index:1;margin-top:56px;font-size:13.5px;color:var(--faint);letter-spacing:.3em;
+  }
+
+  footer{border-top:1px solid var(--line-soft);padding:44px 0 54px;position:relative;z-index:1}
+  .foot-grid{display:flex;flex-wrap:wrap;gap:28px;align-items:flex-start;justify-content:space-between}
+  .foot-brand{display:flex;align-items:center;gap:12px;font-weight:700}
+  .foot-links{display:flex;flex-wrap:wrap;gap:10px 26px;font-family:var(--mono);font-size:12px;letter-spacing:.06em}
+  .foot-links a{color:var(--muted);transition:color .2s}
+  .foot-links a:hover{color:var(--amber-hi)}
+  .foot-fine{margin-top:26px;font-family:var(--mono);font-size:11px;color:var(--faint);letter-spacing:.12em;line-height:2.2}
+
+  /* ============ 响应式 ============ */
+  @media(max-width:1020px){
+    .audiences{grid-template-columns:repeat(2,1fr)}
+    .trust{grid-template-columns:repeat(2,1fr)}
+  }
+  @media(max-width:880px){
+    .hero-grid{grid-template-columns:1fr;gap:44px}
+    .hero{padding-top:130px}
+    .vtext{display:none}
+    .pains,.features,.steps{grid-template-columns:1fr}
+    section{padding:84px 0}
+  }
+  @media(max-width:560px){
+    .audiences,.trust{grid-template-columns:1fr}
+    .wrap{padding:0 20px}
+    .nav-inner{padding:0 20px}
+    h1 em{white-space:normal}
+  }
+</style>
+</head>
+<body>
+
+<!-- ================= 导航 ================= -->
+<nav>
+  <div class="nav-inner">
+    <a class="brand" href="#top">
+      <span class="seal">孤</span>
+      <span>孤独世界<small>lonely-world</small></span>
+    </a>
+    <div class="nav-links">
+      <a href="#why">为什么</a>
+      <a href="#who">为谁而做</a>
+      <a href="#features">特性</a>
+      <a href="#compare">对比</a>
+      <a href="#start">快速上手</a>
+      <a href="#faq">FAQ</a>
+    </div>
+    <a class="nav-gh" href="https://github.com/panna-arts/lonely-world" target="_blank" rel="noopener">
+      <svg width="15" height="15" viewBox="0 0 16 16" fill="currentColor" aria-hidden="true"><path d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27s1.36.09 2 .27c1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.01 8.01 0 0 0 16 8c0-4.42-3.58-8-8-8Z"/></svg>
+      GitHub
+    </a>
+  </div>
+</nav>
+
+<!-- ================= HERO ================= -->
+<header class="hero" id="top">
+  <span class="vtext vt-1">万 卷 山 河 · 尽 在 你 笔</span>
+  <span class="vtext vt-2">推 门 · 世 界 才 开 始</span>
+  <div class="wrap hero-grid">
+    <div>
+      <span class="eyebrow">V0.2.0 · MIT 开源 · 中文原生</span>
+      <h1>没有既定剧情的<br><em>中文 AI 文字冒险</em></h1>
+      <p class="hero-sub">
+        你输入动作，世界即时回应。角色的<strong>物品、技能、性格与恩怨</strong>会永久记在你的电脑里——
+        三个月后回来，江湖还记得你。每一次开局，都是<strong>只属于你的故事</strong>。
+      </p>
+      <div class="cta-row">
+        <a class="btn btn-pri" href="#start">三分钟开始你的故事</a>
+        <a class="btn btn-gho" href="https://github.com/panna-arts/lonely-world" target="_blank" rel="noopener">
+          <svg width="15" height="15" viewBox="0 0 16 16" fill="currentColor" aria-hidden="true"><path d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27s1.36.09 2 .27c1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.01 8.01 0 0 0 16 8c0-4.42-3.58-8-8-8Z"/></svg>
+          查看源码
+        </a>
+      </div>
+      <div class="install-pill">
+        <span><span class="dollar">$</span> pip install lonely-world</span>
+        <button class="copy-btn" data-copy="pip install lonely-world">复制</button>
+      </div>
+      <div class="hero-meta" style="margin-top:30px">
+        <span>MIT LICENSE</span>
+        <span>PYTHON 3.10+</span>
+        <span>CLI + WEB</span>
+        <span>OPENAI / CLAUDE / OLLAMA</span>
+        <span>本地存档</span>
+      </div>
+    </div>
+    <div class="term" aria-hidden="true">
+      <div class="term-bar"><i></i><i></i><i></i><span>lonely-world — zsh</span></div>
+      <div class="term-body" id="termBody"></div>
+    </div>
+  </div>
+  <svg class="mountains" viewBox="0 0 1440 180" preserveAspectRatio="none" height="180" width="100%">
+    <path d="M0 180 L0 120 Q 120 70 240 105 Q 330 128 430 92 Q 560 48 700 96 Q 800 128 900 100 Q 1030 64 1160 104 Q 1290 142 1440 96 L1440 180 Z" fill="#120e09"/>
+    <path d="M0 180 L0 148 Q 160 112 320 138 Q 480 162 640 132 Q 820 100 1000 140 Q 1200 178 1440 128 L1440 180 Z" fill="#171209"/>
+  </svg>
+</header>
+
+<main>
+<!-- ================= 痛点 / 为什么 ================= -->
+<section id="why">
+  <div class="wrap">
+    <div class="sec-head reveal">
+      <span class="eyebrow">01 · 为什么是孤独世界</span>
+      <h2>你读过一百个结局，<br>还没读过<em>只属于你</em>的那一个</h2>
+      <p class="lead">在 AI 之前，我们只能在别人写好的故事里打卡。现在，故事终于可以由你执笔——但大多数 AI 玩法，都弄丢了三样东西。</p>
+    </div>
+    <div class="pains">
+      <div class="pain reveal" style="--d:.05s">
+        <span class="no">PAIN — 01</span>
+        <h3>传统文字冒险：剧本是写死的</h3>
+        <p>再厚的分支树也是有限的。二周目开始，你看到的不是故事，是<b>攻略</b>。通关即弃，没有第二次新鲜感。</p>
+      </div>
+      <div class="pain reveal" style="--d:.15s">
+        <span class="no">PAIN — 02</span>
+        <h3>直接和聊天 AI 扮演：转身就忘</h3>
+        <p>有求必应，但关掉窗口什么都不剩：<b>没有存档、没有世界、没有积累</b>。上次的恩怨，这次它一无所知。</p>
+      </div>
+      <div class="pain reveal" style="--d:.25s">
+        <span class="no">PAIN — 03</span>
+        <h3>云端 AI 游戏：故事不在你手里</h3>
+        <p>你的角色和剧情存在别人的服务器上，<b>随订阅涨价、随关服归零</b>；中文语境隔一层机翻，代入感先天不足。</p>
+      </div>
+    </div>
+    <div class="answer reveal">
+      <p>孤独世界把「无限剧情的 AI」装进「<em>会记事的本地引擎</em>」——<br>世界由你共创，记忆归你保管，故事永远在你自己的硬盘里。</p>
+    </div>
+  </div>
+</section>
+
+<!-- ================= 人群 ICP ================= -->
+<section id="who" style="background:var(--bg-2);border-top:1px solid var(--line-soft);border-bottom:1px solid var(--line-soft)">
+  <div class="wrap">
+    <div class="sec-head reveal">
+      <span class="eyebrow">02 · 为谁而做</span>
+      <h2>四种人，会在这里<em>留下来</em></h2>
+    </div>
+    <div class="audiences">
+      <div class="aud reveal" style="--d:.05s">
+        <span class="icon">🗡️</span>
+        <span class="tag">玩家 / PLAYERS</span>
+        <h3>互动小说爱好者</h3>
+        <blockquote>「我想玩一个<em>没有攻略、剧透不了</em>的游戏。」——每次开局世界都不同，你的选择真正改变因果。</blockquote>
+      </div>
+      <div class="aud reveal" style="--d:.15s">
+        <span class="icon">🎲</span>
+        <span class="tag">跑团 / TTRPG</span>
+        <h3>Solo 跑团 & GM</h3>
+        <blockquote>一个<em>不累、不穿帮、记得住伏笔</em>的 GM，随时在线。一个人，也能跑完整场江湖。</blockquote>
+      </div>
+      <div class="aud reveal" style="--d:.25s">
+        <span class="icon">⚙️</span>
+        <span class="tag">极客 / GEEKS</span>
+        <h3>AI 与开源爱好者</h3>
+        <blockquote>provider 抽象干净，<em>接上自己的模型</em>就能玩；MIT 协议，源码就是最好的说明书，随便改造。</blockquote>
+      </div>
+      <div class="aud reveal" style="--d:.35s">
+        <span class="icon">✒️</span>
+        <span class="tag">创作者 / WRITERS</span>
+        <h3>写作者 & 故事人</h3>
+        <blockquote>5 轮问答搭好世界观，每一轮对话都是灵感素材；<em>导出 story.md，合上屏幕就是一部小说</em>。</blockquote>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ================= 特性 ================= -->
+<section id="features">
+  <div class="wrap">
+    <div class="sec-head reveal">
+      <span class="eyebrow">03 · 核心价值</span>
+      <h2>会记事的引擎，<em>才配得上</em>无限剧情</h2>
+      <p class="lead">每一项特性都在回答同一个问题：如何让一段由 AI 生成的故事，值得你投入三个月。</p>
+    </div>
+    <div class="features">
+      <div class="feat reveal" style="--d:.05s">
+        <span class="glyph">NO-SCRIPT</span>
+        <h3>无预设剧情</h3>
+        <p>没有主线任务清单，没有既定故事线。你推开门，故事才发生——智能体即时即兴，回应你的一切胡来。</p>
+      </div>
+      <div class="feat reveal" style="--d:.12s">
+        <span class="glyph">CO-CREATE</span>
+        <h3>世界观共创</h3>
+        <p>开局 5 轮问答：时代、地点、人物、社会风貌。世界不是随机生成的背景板，是按你的想象搭起来的舞台。</p>
+      </div>
+      <div class="feat reveal" style="--d:.19s">
+        <span class="glyph">MEMORY</span>
+        <h3>角色长期记忆</h3>
+        <p>物品、技能、性格与恩怨全部持久化存档。Token-aware 动态上下文 + 自动记忆压缩，长剧情也绝不「失忆」。</p>
+      </div>
+      <div class="feat reveal" style="--d:.26s">
+        <span class="glyph">STORY.MD</span>
+        <h3>文学续写（可选）</h3>
+        <p>开启后，每轮互动自动生成文学化续写并写入 story.md。你在玩游戏，也在合著一部小说。</p>
+      </div>
+      <div class="feat reveal" style="--d:.33s">
+        <span class="glyph">BYO-MODEL</span>
+        <h3>多模型自由接入</h3>
+        <p>OpenAI、Anthropic Claude、Ollama / vLLM 等任何 OpenAI 兼容接口。一个参数切换，永远不会被某家模型锁定。</p>
+      </div>
+      <div class="feat reveal" style="--d:.40s">
+        <span class="glyph">CLI + WEB</span>
+        <h3>终端与浏览器双形态</h3>
+        <p>CLI 有终端的仪式感；Web UI 支持多用户独立存档、流式对话、Markdown 渲染。同一套存档体系，两种玩法。</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ================= 对比 ================= -->
+<section id="compare" style="background:var(--bg-2);border-top:1px solid var(--line-soft);border-bottom:1px solid var(--line-soft)">
+  <div class="wrap">
+    <div class="sec-head center reveal">
+      <span class="eyebrow">04 · 差异化</span>
+      <h2>同样是「故事」，<em>差别在归谁管</em></h2>
+    </div>
+    <div class="tbl-scroll reveal">
+      <table>
+        <thead>
+          <tr>
+            <th style="width:16%">维度</th>
+            <th class="col-us">孤独世界</th>
+            <th>传统文字冒险游戏</th>
+            <th>通用 AI 聊天扮演</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td class="dim">剧情走向</td>
+            <td class="col-us"><span class="ok">✓</span>每次开局独一无二</td>
+            <td><span class="no">✕</span>分支树写死，二周目即剧透</td>
+            <td><span class="no">✕</span>有回应，无规则，易出戏</td>
+          </tr>
+          <tr>
+            <td class="dim">长期记忆</td>
+            <td class="col-us"><span class="ok">✓</span>角色状态永久存档</td>
+            <td><span class="no">✕</span>仅进度存档，无角色沉淀</td>
+            <td><span class="no">✕</span>关掉窗口即遗忘</td>
+          </tr>
+          <tr>
+            <td class="dim">世界观</td>
+            <td class="col-us"><span class="ok">✓</span>5 轮问答按你想象共创</td>
+            <td><span class="no">✕</span>官方预设，不可更改</td>
+            <td><span class="no">✕</span>需自己写长篇提示词</td>
+          </tr>
+          <tr>
+            <td class="dim">中文体验</td>
+            <td class="col-us"><span class="ok">✓</span>为中文母语原生设计</td>
+            <td><span class="no">△</span>多为翻译作品，语境隔层</td>
+            <td><span class="no">△</span>机翻味重，江湖味寡淡</td>
+          </tr>
+          <tr>
+            <td class="dim">数据归属</td>
+            <td class="col-us"><span class="ok">✓</span>全部本地，随时导出</td>
+            <td><span class="no">△</span>本地或云，随厂商而定</td>
+            <td><span class="no">✕</span>存在服务方服务器</td>
+          </tr>
+          <tr>
+            <td class="dim">模型自由</td>
+            <td class="col-us"><span class="ok">✓</span>OpenAI / Claude / Ollama 随换</td>
+            <td><span class="no">✕</span>绑定自家引擎</td>
+            <td><span class="no">✕</span>绑定自家模型</td>
+          </tr>
+          <tr>
+            <td class="dim">成本</td>
+            <td class="col-us"><span class="ok">✓</span>开源免费，模型费用自控</td>
+            <td><span class="no">△</span>买断制或内购</td>
+            <td><span class="no">△</span>订阅制</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</section>
+
+<!-- ================= 快速上手 ================= -->
+<section id="start">
+  <div class="wrap">
+    <div class="sec-head reveal">
+      <span class="eyebrow">05 · 快速上手</span>
+      <h2>从安装到推门，<em>不到三分钟</em></h2>
+      <p class="lead">时间花在故事上，而不是配置上——这是我们对「上手体验」的唯一标准。</p>
+    </div>
+    <div class="steps">
+      <div class="step reveal" style="--d:.05s">
+        <span class="num">01</span>
+        <h3>安装</h3>
+        <p>一行命令，来自 PyPI。无需克隆仓库、无需编译。</p>
+        <div class="cmd">
+          <span class="dollar">$</span>
+          <code>pip install lonely-world</code>
+          <button class="copy-btn" data-copy="pip install lonely-world">复制</button>
+        </div>
+      </div>
+      <div class="step reveal" style="--d:.15s">
+        <span class="num">02</span>
+        <h3>配置模型</h3>
+        <p>首次启动有引导：填入 API Key、Base URL 与模型名。Key 自动存入系统钥匙串，明文落盘只是兜底。</p>
+        <div class="cmd">
+          <span class="dollar">$</span>
+          <code>lonely-world</code>
+          <button class="copy-btn" data-copy="lonely-world">复制</button>
+        </div>
+      </div>
+      <div class="step reveal" style="--d:.25s">
+        <span class="num">03</span>
+        <h3>共创世界，开始故事</h3>
+        <p>5 轮问答搭好你的世界，然后输入第一个动作。输入 <b style="color:var(--amber-hi)">help</b> 查看命令，<b style="color:var(--amber-hi)">undo</b> 撤回任何不满意的一笔。</p>
+        <div class="cmd">
+          <span class="dollar">$</span>
+          <code>你：推门走进客栈。</code>
+          <button class="copy-btn" data-copy="推门走进客栈。">复制</button>
+        </div>
+      </div>
+    </div>
+    <div class="web-note reveal">
+      <span class="lbl">偏好图形界面？</span>
+      <p>安装 Web 版后运行 <code>lonely-world-web</code>，浏览器打开 <a href="http://localhost:7860">localhost:7860</a> 即可游玩——支持多用户同时在线，每个人的存档互相独立。<code>pip install "lonely-world[web]"</code></p>
+    </div>
+  </div>
+</section>
+
+<!-- ================= 信任 ================= -->
+<section id="trust" style="padding-top:0">
+  <div class="wrap">
+    <div class="sec-head reveal">
+      <span class="eyebrow">06 · 信任与安全</span>
+      <h2>你的故事，<em>只属于你</em></h2>
+    </div>
+    <div class="trust">
+      <div class="tcard reveal" style="--d:.05s">
+        <span class="icon">📜</span>
+        <h3>MIT 开源</h3>
+        <p>代码全部公开、可审计、可修改。商业模式不靠锁定你，靠做得足够好。</p>
+      </div>
+      <div class="tcard reveal" style="--d:.15s">
+        <span class="icon">🗄️</span>
+        <h3>存档 100% 本地</h3>
+        <p>角色与故事存于 <code>local/</code> 目录，不上传任何服务器。删掉文件夹，才是真正的「删档」。</p>
+      </div>
+      <div class="tcard reveal" style="--d:.25s">
+        <span class="icon">🔐</span>
+        <h3>密钥进钥匙串</h3>
+        <p>API Key 优先存入系统密钥环（Keychain / Credential Manager），配置文件明文只是兜底方案。</p>
+      </div>
+      <div class="tcard reveal" style="--d:.35s">
+        <span class="icon">📦</span>
+        <h3>随时带走的资产</h3>
+        <p>一键导出 story.md 与角色汇总。你的三个多月的江湖，是 Markdown 和 JSON，不是平台里的数据库行。</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ================= FAQ ================= -->
+<section id="faq" style="background:var(--bg-2);border-top:1px solid var(--line-soft)">
+  <div class="wrap">
+    <div class="sec-head center reveal">
+      <span class="eyebrow">07 · 常见疑问</span>
+      <h2>在你按下回车之前</h2>
+    </div>
+    <div class="faq reveal">
+      <details open>
+        <summary><span class="q">Q1</span>游戏本身收费吗？我需要花多少钱？<span class="arr">＋</span></summary>
+        <div class="a">项目 MIT 协议开源，永久免费。你只需为自己使用的模型 API 付费（通常一次游玩几美分）；接入 Ollama / vLLM 本地模型则完全零成本。</div>
+      </details>
+      <details>
+        <summary><span class="q">Q2</span>我不会命令行，能玩吗？<span class="arr">＋</span></summary>
+        <div class="a">可以。安装 Web 版（<code>pip install "lonely-world[web]"</code>）后运行 <code>lonely-world-web</code>，浏览器打开 <code>localhost:7860</code>，点选或创建角色即可开始，全程图形界面。</div>
+      </details>
+      <details>
+        <summary><span class="q">Q3</span>支持哪些模型？一定要用 OpenAI 吗？<span class="arr">＋</span></summary>
+        <div class="a">不需要。任何 OpenAI 兼容接口都可以：OpenAI、Anthropic Claude、以及 Ollama / vLLM 跑的本地模型。用 <code>--provider</code> 参数或环境变量切换，随时换模型不换存档。</div>
+      </details>
+      <details>
+        <summary><span class="q">Q4</span>我的存档和数据安全吗？<span class="arr">＋</span></summary>
+        <div class="a">所有数据保存在你电脑的 <code>local/</code> 目录，不经过任何第三方服务器（仅与你配置的模型 API 通信）。API Key 优先存入系统密钥环；故事可随时导出为 Markdown，完全可携带。</div>
+      </details>
+      <details>
+        <summary><span class="q">Q5</span>玩久了 AI 会「失忆」吗？<span class="arr">＋</span></summary>
+        <div class="a">这正是孤独世界的核心工程：Token-aware 动态上下文截断 + 自动记忆压缩归档。长剧情下关键设定与人物恩怨会被归档保留，而不是被直接截断丢弃。</div>
+      </details>
+      <details>
+        <summary><span class="q">Q6</span>AI 写出了我不想要的走向，怎么办？<span class="arr">＋</span></summary>
+        <div class="a">输入 <code>undo</code>（或「撤回」）即可撤销上一轮输入并恢复到之前的状态，世界会当作什么都没发生过。你的故事，你有最终剪辑权。</div>
+      </details>
+    </div>
+  </div>
+</section>
+
+<!-- ================= 尾部 CTA ================= -->
+<section class="final" id="final">
+  <span class="giant">孤</span>
+  <div class="wrap">
+    <h2 class="reveal">客栈的灯已经点上了，<br><em>只差你推门。</em></h2>
+    <p class="lead reveal" style="margin-bottom:44px">孤独世界从不孤独——因为整个世界，都在等着回应你。</p>
+    <div class="cta-row reveal">
+      <a class="btn btn-pri" href="#start">开始你的故事</a>
+      <a class="btn btn-gho" href="https://github.com/panna-arts/lonely-world" target="_blank" rel="noopener">GitHub 加个 Star ⭐</a>
+    </div>
+    <div class="install-pill reveal">
+      <span><span class="dollar">$</span> pip install lonely-world</span>
+      <button class="copy-btn" data-copy="pip install lonely-world">复制</button>
+    </div>
+    <p class="whisper">万 卷 山 河 · 尽 在 你 笔</p>
+  </div>
+</section>
+</main>
+
+<!-- ================= 页脚 ================= -->
+<footer>
+  <div class="wrap">
+    <div class="foot-grid">
+      <div class="foot-brand">
+        <span class="seal">孤</span>
+        <span>孤独世界<small style="display:block;font-family:var(--mono);font-weight:400;font-size:10.5px;color:var(--faint)">lonely-world v0.2.0</small></span>
+      </div>
+      <div class="foot-links">
+        <a href="https://github.com/panna-arts/lonely-world" target="_blank" rel="noopener">GITHUB</a>
+        <a href="https://pypi.org/project/lonely-world/" target="_blank" rel="noopener">PYPI</a>
+        <a href="https://github.com/panna-arts/lonely-world/blob/main/CHANGELOG.md" target="_blank" rel="noopener">CHANGELOG</a>
+        <a href="https://github.com/panna-arts/lonely-world/blob/main/CONTRIBUTING.md" target="_blank" rel="noopener">CONTRIBUTING</a>
+        <a href="https://github.com/panna-arts/lonely-world/issues" target="_blank" rel="noopener">ISSUES</a>
+      </div>
+    </div>
+    <p class="foot-fine">MIT LICENSE · MADE WITH 烛火 &amp; LLM · 故事永远保存在你自己的电脑里</p>
+  </div>
+</footer>
+
+<script>
+  /* ---------- 滚动入场 ---------- */
+  const io = new IntersectionObserver((entries)=>{
+    entries.forEach(e=>{ if(e.isIntersecting){ e.target.classList.add('in'); io.unobserve(e.target);} });
+  },{threshold:.12});
+  document.querySelectorAll('.reveal').forEach(el=>io.observe(el));
+
+  /* ---------- 复制命令 ---------- */
+  document.querySelectorAll('.copy-btn').forEach(btn=>{
+    btn.addEventListener('click', async ()=>{
+      const text = btn.dataset.copy || '';
+      try{ await navigator.clipboard.writeText(text); }
+      catch(_){
+        const ta=document.createElement('textarea');ta.value=text;document.body.appendChild(ta);
+        ta.select();document.execCommand('copy');ta.remove();
+      }
+      const old=btn.textContent; btn.textContent='已复制 ✓'; btn.classList.add('done');
+      setTimeout(()=>{btn.textContent=old;btn.classList.remove('done');},1600);
+    });
+  });
+
+  /* ---------- 终端打字动画 ---------- */
+  (function(){
+    const body=document.getElementById('termBody');
+    if(!body) return;
+    const reduce=window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    const script=[
+      {t:'cmd', s:'lonely-world'},
+      {t:'sys', s:'已存在角色：', n:1},
+      {t:'sys', s:'  1. 李逍遥'},
+      {t:'sys', s:'  2. 林月如'},
+      {t:'sys', s:'  0. 创建新角色'},
+      {t:'sys', s:'请选择角色编号：1'},
+      {t:'sys', s:'已载入角色：李逍遥', n:1},
+      {t:'sys', s:'—— 上次对话回顾 ——', n:1},
+      {t:'you', s:'推门走进客栈。', n:1},
+      {t:'npc', s:'客栈里灯火昏黄，几个江湖客正在低声交谈……', n:1},
+      {t:'sys', s:'进入游戏。输入 help 查看命令，quit 保存退出。', n:1},
+      {t:'you', s:'把长剑放在桌上，向小二要一壶热酒。', n:1},
+      {t:'npc', s:'小二眯眼一笑：「客官面生得很，是头回来洛阳吧？」', n:1},
+      {t:'you', s:'', n:1, caret:true}
+    ];
+    if(reduce){
+      script.forEach(l=>{
+        const d=document.createElement('span');
+        d.className='t-'+l.t+(l.n?' t-new':'');
+        d.textContent=l.s; body.appendChild(d);
+        if(l.caret){const c=document.createElement('span');c.className='caret';body.appendChild(c);}
+      });
+      return;
+    }
+    const sleep=ms=>new Promise(r=>setTimeout(r,ms));
+    let first=true;
+    async function play(){
+      while(true){
+        body.innerHTML='';
+        for(const l of script){
+          const d=document.createElement('span');
+          d.className='t-'+l.t+(l.n?' t-new':'');
+          if(!first) d.classList.add('term-fade');
+          body.appendChild(d);
+          if(l.caret){
+            const c=document.createElement('span');c.className='caret';body.appendChild(c);
+            await sleep(2600); continue;
+          }
+          if(l.t==='you'){
+            for(const ch of l.s){ d.textContent+=ch; await sleep(55+Math.random()*70); }
+            await sleep(500);
+          }else{
+            d.textContent=l.s;
+            await sleep(l.t==='cmd'?650:420);
+          }
+        }
+        first=false;
+        await sleep(6000);
+      }
+    }
+    play();
+  })();
+</script>
+<!-- gtm-portal-backlink (managed by _scripts/sync-gtm.py) -->
+<a class="gtmp-back" href="/GTM/" aria-label="返回 GTM 门户">&#8617; GTM 门户</a>
+<style>
+.gtmp-back{position:fixed;right:1rem;bottom:1rem;z-index:2147483000;
+font:500 12px/1 ui-monospace,SFMono-Regular,Menlo,Consolas,monospace;
+letter-spacing:.05em;text-decoration:none;padding:.6rem .85rem;border-radius:999px;
+color:#14130f;background:rgba(251,250,247,.92);border:1px solid rgba(20,19,15,.16);
+box-shadow:0 2px 12px rgba(20,19,15,.14);backdrop-filter:blur(6px);
+transition:transform .15s ease,box-shadow .15s ease}
+.gtmp-back:hover{transform:translateY(-1px);box-shadow:0 4px 16px rgba(20,19,15,.22)}
+@media (prefers-color-scheme:dark){.gtmp-back{color:#f5f2ea;background:rgba(20,19,15,.88);
+border-color:rgba(245,242,234,.22)}}
+</style>
+</body>
+</html>

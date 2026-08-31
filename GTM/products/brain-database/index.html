@@ -1,0 +1,903 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>FightBrain · GTM 策略 v1.0</title>
+<meta name="description" content="FightBrain Go-to-Market 策略：市场分析、ICP、定位、竞品、定价、渠道、发布计划、增长指标与风险。" />
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300..900;1,9..144,300..900&family=IBM+Plex+Mono:wght@400;500;600&family=Noto+Serif+SC:wght@600;700;900&family=Noto+Sans+SC:wght@400;500;700&display=swap" rel="stylesheet" />
+<style>
+:root{
+  --ink:#06080f;
+  --bg:#070a12;
+  --panel:rgba(255,255,255,.032);
+  --panel-2:rgba(255,255,255,.016);
+  --line:rgba(151,163,255,.11);
+  --line-soft:rgba(151,163,255,.07);
+  --txt:#e8ebf7;
+  --muted:#9299b8;
+  --faint:#5d6480;
+  --indigo:#6366f1;
+  --violet:#a78bfa;
+  --mint:#34d399;
+  --amber:#f5b04c;
+  --rose:#fb7185;
+  --grad:linear-gradient(96deg,#6366f1,#a78bfa);
+  --serif:"Fraunces","Noto Serif SC","Songti SC",serif;
+  --sans:"Noto Sans SC",-apple-system,BlinkMacSystemFont,"PingFang SC","Hiragino Sans GB","Microsoft YaHei",sans-serif;
+  --mono:"IBM Plex Mono","SFMono-Regular",Menlo,monospace;
+}
+*{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth}
+body{
+  background:var(--bg);color:var(--txt);font-family:var(--sans);
+  font-size:16px;line-height:1.75;-webkit-font-smoothing:antialiased;
+  text-rendering:optimizeLegibility;overflow-x:hidden;
+}
+::selection{background:rgba(99,102,241,.45);color:#fff}
+a{color:inherit}
+
+/* ---------- atmosphere ---------- */
+.atmo{position:fixed;inset:0;pointer-events:none;z-index:0}
+.atmo .mesh{position:absolute;border-radius:50%;filter:blur(110px);opacity:.5}
+.mesh.a{width:56vw;height:56vw;top:-22vw;right:-16vw;background:radial-gradient(circle,rgba(99,102,241,.34),transparent 65%)}
+.mesh.b{width:44vw;height:44vw;top:52vh;left:-18vw;background:radial-gradient(circle,rgba(167,139,250,.16),transparent 65%)}
+.mesh.c{width:38vw;height:38vw;bottom:-14vw;right:6vw;background:radial-gradient(circle,rgba(245,176,76,.07),transparent 65%)}
+.grain{position:fixed;inset:0;z-index:1;pointer-events:none;opacity:.05;mix-blend-mode:overlay;
+  background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2'/%3E%3C/filter%3E%3Crect width='160' height='160' filter='url(%23n)' opacity='0.7'/%3E%3C/svg%3E")}
+
+/* ---------- sidebar toc ---------- */
+.toc{position:fixed;top:0;left:0;bottom:0;width:232px;z-index:20;padding:44px 0 32px 34px;
+  display:flex;flex-direction:column;gap:2px;border-right:1px solid var(--line-soft);
+  background:linear-gradient(180deg,rgba(7,10,18,.86),rgba(7,10,18,.55));backdrop-filter:blur(10px)}
+.toc .brand{display:flex;align-items:center;gap:10px;margin-bottom:26px}
+.toc .brand .orb{width:26px;height:26px;border-radius:50%;background:var(--grad);position:relative;flex:none;
+  box-shadow:0 0 18px rgba(124,120,246,.55)}
+.toc .brand .orb::before,.toc .brand .orb::after{content:"";position:absolute;width:5px;height:5px;border-radius:50%;
+  background:#fff;opacity:.9}
+.toc .brand .orb::before{top:4px;left:5px}.toc .brand .orb::after{bottom:4px;right:5px}
+.toc .brand b{font-family:var(--mono);font-size:11px;letter-spacing:.22em;color:var(--txt)}
+.toc .brand span{display:block;font-family:var(--mono);font-size:9px;letter-spacing:.18em;color:var(--faint)}
+.toc nav{display:flex;flex-direction:column;gap:1px;flex:1;overflow-y:auto;scrollbar-width:none}
+.toc nav::-webkit-scrollbar{display:none}
+.toc nav a{display:flex;align-items:center;gap:10px;padding:7px 12px 7px 0;font-size:12.5px;color:var(--muted);
+  text-decoration:none;border-radius:8px;transition:color .25s;letter-spacing:.02em}
+.toc nav a .n{font-family:var(--mono);font-size:9.5px;color:var(--faint);width:20px;flex:none;transition:color .25s}
+.toc nav a .tick{width:14px;height:1px;background:var(--faint);opacity:.4;flex:none;transition:all .3s}
+.toc nav a:hover{color:var(--txt)}
+.toc nav a.on{color:var(--txt)}
+.toc nav a.on .n{color:var(--violet)}
+.toc nav a.on .tick{background:var(--grad);opacity:1;width:22px;box-shadow:0 0 8px rgba(139,124,246,.8)}
+.toc .meta{font-family:var(--mono);font-size:9px;letter-spacing:.16em;color:var(--faint);line-height:2}
+
+/* ---------- layout ---------- */
+main{position:relative;z-index:2;margin-left:232px;max-width:1120px;padding:0 56px 0 64px}
+section{padding:92px 0 30px;border-top:1px solid var(--line-soft)}
+section:first-of-type{border-top:none}
+.kicker{display:flex;align-items:center;gap:14px;margin-bottom:22px}
+.kicker .no{font-family:var(--mono);font-size:11px;letter-spacing:.28em;color:var(--violet)}
+.kicker .ln{height:1px;width:46px;background:linear-gradient(90deg,var(--violet),transparent)}
+.kicker .lab{font-family:var(--mono);font-size:10.5px;letter-spacing:.3em;color:var(--faint);text-transform:uppercase}
+h2{font-family:var(--serif);font-weight:700;font-size:clamp(27px,3.4vw,40px);line-height:1.28;letter-spacing:.01em;margin-bottom:16px}
+h2 em{font-style:normal;background:var(--grad);-webkit-background-clip:text;background-clip:text;color:transparent}
+.lede{color:var(--muted);max-width:720px;font-size:15.5px;margin-bottom:40px}
+.lede b,.card b,.p-body b{color:var(--txt);font-weight:600}
+.note{font-family:var(--mono);font-size:10px;color:var(--faint);letter-spacing:.08em}
+
+/* ---------- reveal ---------- */
+.reveal{opacity:0;transform:translateY(26px);transition:opacity .8s cubic-bezier(.22,.8,.3,1),transform .8s cubic-bezier(.22,.8,.3,1)}
+.reveal.in{opacity:1;transform:none}
+.d1{transition-delay:.08s}.d2{transition-delay:.16s}.d3{transition-delay:.24s}.d4{transition-delay:.32s}.d5{transition-delay:.4s}
+
+/* ---------- hero ---------- */
+.hero{position:relative;padding:118px 0 64px;border-top:none}
+.hero .grid-bg{position:absolute;inset:-118px 0 0;background-image:radial-gradient(rgba(148,163,255,.07) 1px,transparent 1px);
+  background-size:30px 30px;mask-image:radial-gradient(ellipse 75% 70% at 42% 30%,#000 30%,transparent 75%);pointer-events:none}
+.synapse{position:absolute;top:-40px;right:-70px;width:520px;max-width:44vw;opacity:.85;pointer-events:none}
+.synapse line{stroke:rgba(167,139,250,.32);stroke-width:1}
+.synapse .flow{stroke:url(#flowGrad);stroke-width:1.4;stroke-dasharray:6 190;animation:dash 7s linear infinite}
+.synapse .flow.f2{animation-delay:-2.4s}.synapse .flow.f3{animation-delay:-4.8s}
+.synapse circle{fill:#c4b5fd}
+.synapse circle.hub{fill:url(#nodeGrad)}
+@keyframes dash{to{stroke-dashoffset:-196}}
+.badge{display:inline-flex;align-items:center;gap:10px;font-family:var(--mono);font-size:10.5px;letter-spacing:.26em;
+  color:var(--violet);border:1px solid rgba(167,139,250,.3);border-radius:100px;padding:8px 18px;
+  background:rgba(99,102,241,.08);animation:rise .9s .05s cubic-bezier(.22,.8,.3,1) both}
+.badge i{width:6px;height:6px;border-radius:50%;background:var(--mint);box-shadow:0 0 10px var(--mint);animation:blink 2.4s infinite}
+@keyframes blink{50%{opacity:.35}}
+h1{font-family:var(--serif);font-weight:900;font-size:clamp(40px,5.6vw,76px);line-height:1.16;letter-spacing:.005em;
+  margin:30px 0 8px;max-width:820px;animation:rise .9s .16s cubic-bezier(.22,.8,.3,1) both}
+h1 .grad{background:var(--grad);-webkit-background-clip:text;background-clip:text;color:transparent}
+h1 .thin{font-weight:300;font-style:italic;font-family:"Fraunces",serif}
+.hero .sub{color:var(--muted);font-size:17px;max-width:640px;margin:18px 0 0;animation:rise .9s .28s cubic-bezier(.22,.8,.3,1) both}
+.hero .sub b{color:var(--txt)}
+@keyframes rise{from{opacity:0;transform:translateY(30px)}to{opacity:1;transform:none}}
+
+.stat-strip{display:flex;flex-wrap:wrap;gap:0;margin-top:52px;border:1px solid var(--line);border-radius:18px;
+  overflow:hidden;background:var(--panel-2);animation:rise .9s .4s cubic-bezier(.22,.8,.3,1) both}
+.stat{flex:1 1 150px;padding:22px 26px;border-right:1px solid var(--line-soft);min-width:130px}
+.stat:last-child{border-right:none}
+.stat .v{font-family:var(--serif);font-weight:600;font-size:34px;line-height:1.1;
+  background:var(--grad);-webkit-background-clip:text;background-clip:text;color:transparent}
+.stat .k{font-family:var(--mono);font-size:9.5px;letter-spacing:.2em;color:var(--faint);margin-top:8px;text-transform:uppercase}
+
+.tldr{margin-top:26px;border:1px solid rgba(167,139,250,.24);border-radius:18px;padding:30px 34px;
+  background:linear-gradient(135deg,rgba(99,102,241,.12),rgba(167,139,250,.05) 55%,rgba(52,211,153,.05));
+  position:relative;animation:rise .9s .5s cubic-bezier(.22,.8,.3,1) both}
+.tldr .tag{position:absolute;top:-11px;left:30px;font-family:var(--mono);font-size:9.5px;letter-spacing:.26em;
+  background:#0b0e1a;border:1px solid rgba(167,139,250,.35);color:var(--violet);padding:4px 12px;border-radius:100px}
+.tldr p{font-size:17px;line-height:1.85;max-width:840px}
+.tldr p b{color:#fff}
+.chips{display:flex;flex-wrap:wrap;gap:10px;margin-top:20px}
+.chip{font-family:var(--mono);font-size:10.5px;letter-spacing:.06em;color:var(--muted);
+  border:1px solid var(--line);border-radius:100px;padding:6px 14px;background:rgba(6,8,15,.5)}
+.chip b{color:var(--txt);font-weight:500}
+.chip.c1 b{color:#a5b4fc}.chip.c2 b{color:var(--mint)}.chip.c3 b{color:var(--amber)}
+
+/* ---------- generic card ---------- */
+.grid{display:grid;gap:16px}
+.g2{grid-template-columns:repeat(2,1fr)}.g3{grid-template-columns:repeat(3,1fr)}.g4{grid-template-columns:repeat(4,1fr)}
+.card{border:1px solid var(--line);border-radius:16px;background:linear-gradient(180deg,var(--panel),var(--panel-2));
+  padding:26px 26px 24px;transition:transform .35s cubic-bezier(.22,.8,.3,1),border-color .35s,box-shadow .35s;position:relative;overflow:hidden}
+.card:hover{transform:translateY(-3px);border-color:rgba(167,139,250,.4);box-shadow:0 18px 44px -18px rgba(80,70,220,.35)}
+.card .ico{font-size:22px;margin-bottom:14px;display:block}
+.card h3{font-size:16.5px;font-weight:700;margin-bottom:10px;letter-spacing:.01em}
+.card h3 .en{display:block;font-family:var(--mono);font-weight:400;font-size:9.5px;letter-spacing:.22em;color:var(--faint);margin-top:5px;text-transform:uppercase}
+.card p{font-size:13.8px;color:var(--muted);line-height:1.8}
+.card .foot{margin-top:16px;font-family:var(--mono);font-size:10px;letter-spacing:.1em;color:var(--violet)}
+
+/* ---------- category statement ---------- */
+.cat{display:grid;grid-template-columns:1.05fr .95fr;gap:16px;align-items:stretch}
+.cat .big{border:1px solid var(--line);border-radius:18px;padding:38px 40px;display:flex;flex-direction:column;justify-content:center;
+  background:linear-gradient(160deg,rgba(99,102,241,.13),rgba(7,10,18,.2) 60%)}
+.cat .big .lab{font-family:var(--mono);font-size:10px;letter-spacing:.3em;color:var(--violet);margin-bottom:18px}
+.cat .big .formula{font-family:var(--serif);font-size:clamp(22px,2.6vw,32px);font-weight:700;line-height:1.5}
+.cat .big .formula .x{color:var(--violet);font-family:"Fraunces",serif;font-style:italic;font-weight:300;padding:0 6px}
+.cat .big .formula .m{color:var(--mint)}
+.cat .big p{margin-top:18px;color:var(--muted);font-size:14px}
+
+/* ---------- TAM bars ---------- */
+.tam{display:flex;flex-direction:column;gap:14px;margin-top:8px}
+.bar-row{display:grid;grid-template-columns:88px 1fr 210px;gap:18px;align-items:center}
+.bar-row .t{font-family:var(--mono);font-size:12px;color:var(--violet);letter-spacing:.1em}
+.bar-track{height:12px;border-radius:100px;background:rgba(255,255,255,.045);overflow:hidden;position:relative}
+.bar-fill{height:100%;border-radius:100px;background:var(--grad);width:0;transition:width 1.4s cubic-bezier(.22,.8,.3,1);
+  box-shadow:0 0 14px rgba(124,120,246,.5)}
+.bar-row:nth-child(2) .bar-fill{background:linear-gradient(90deg,#4f46e5,#818cf8)}
+.bar-row:nth-child(3) .bar-fill{background:linear-gradient(90deg,#0ea5e9,#34d399)}
+.bar-row .d{font-size:12.5px;color:var(--muted)}
+.bar-row .d b{color:var(--txt);font-family:var(--serif);font-size:15px}
+
+/* ---------- persona ---------- */
+.persona{border:1px solid var(--line);border-radius:18px;overflow:hidden;background:var(--panel-2);display:flex;flex-direction:column;
+  transition:transform .35s cubic-bezier(.22,.8,.3,1),border-color .35s}
+.persona:hover{transform:translateY(-3px);border-color:rgba(167,139,250,.4)}
+.persona .head{padding:24px 26px 18px;border-bottom:1px solid var(--line-soft);position:relative}
+.persona .head .avatar{width:46px;height:46px;border-radius:14px;display:flex;align-items:center;justify-content:center;
+  font-size:23px;background:rgba(99,102,241,.16);border:1px solid rgba(167,139,250,.28);margin-bottom:14px}
+.persona .head h3{font-size:17px;font-weight:700}
+.persona .head .role{font-family:var(--mono);font-size:10px;letter-spacing:.14em;color:var(--violet);margin-top:6px}
+.persona .head .pri{position:absolute;top:20px;right:20px;font-family:var(--mono);font-size:8.5px;letter-spacing:.2em;
+  padding:4px 10px;border-radius:100px;border:1px solid rgba(52,211,153,.4);color:var(--mint)}
+.persona .head .pri.s{border-color:rgba(245,176,76,.4);color:var(--amber)}
+.persona dl{padding:18px 26px 22px;display:flex;flex-direction:column;gap:12px;flex:1}
+.persona dt{font-family:var(--mono);font-size:9px;letter-spacing:.22em;color:var(--faint);margin-bottom:4px;text-transform:uppercase}
+.persona dd{font-size:13px;color:var(--muted);line-height:1.75}
+.persona dd b{color:var(--txt);font-weight:600}
+
+/* ---------- positioning statement ---------- */
+.pos{border:1px solid var(--line);border-radius:20px;padding:44px 48px;position:relative;
+  background:linear-gradient(150deg,rgba(99,102,241,.1),rgba(7,10,18,.25) 65%)}
+.pos .q{position:absolute;top:-22px;left:36px;font-family:"Fraunces",serif;font-size:88px;color:rgba(167,139,250,.35);line-height:1}
+.pos p{font-family:var(--serif);font-size:clamp(18px,2vw,23px);font-weight:600;line-height:1.95}
+.pos p mark{background:none;color:var(--violet)}
+.pos p mark.mint{color:var(--mint)}
+.pos p mark.amber{color:var(--amber)}
+.pos .src{margin-top:20px;font-family:var(--mono);font-size:10px;letter-spacing:.16em;color:var(--faint)}
+.pillars{margin-top:16px}
+.pillar{display:grid;grid-template-columns:150px 1fr;gap:26px;padding:24px 8px;border-top:1px solid var(--line-soft);align-items:baseline}
+.pillar:first-child{border-top:none}
+.pillar .t{font-family:var(--serif);font-weight:700;font-size:19px}
+.pillar .t span{display:block;font-family:var(--mono);font-weight:400;font-size:9px;letter-spacing:.24em;color:var(--violet);margin-top:6px}
+.pillar p{color:var(--muted);font-size:14px}
+.pillar p b{color:var(--txt)}
+
+/* ---------- table ---------- */
+.tbl-wrap{border:1px solid var(--line);border-radius:16px;overflow:auto;background:var(--panel-2)}
+table{width:100%;border-collapse:collapse;min-width:860px}
+th{font-family:var(--mono);font-size:9.5px;letter-spacing:.18em;color:var(--faint);text-transform:uppercase;
+  text-align:left;padding:16px 18px;border-bottom:1px solid var(--line);white-space:nowrap;background:rgba(255,255,255,.02)}
+td{padding:15px 18px;border-bottom:1px solid var(--line-soft);font-size:13.5px;color:var(--muted);vertical-align:top}
+tr:last-child td{border-bottom:none}
+tbody tr{transition:background .25s}
+tbody tr:hover{background:rgba(99,102,241,.05)}
+td.rowhead{color:var(--txt);font-weight:600;white-space:nowrap}
+td .cell-b{font-family:var(--mono);font-size:9px;letter-spacing:.1em;padding:3px 9px;border-radius:100px;display:inline-block;white-space:nowrap}
+.b-full{background:rgba(52,211,153,.14);color:var(--mint);border:1px solid rgba(52,211,153,.3)}
+.b-half{background:rgba(245,176,76,.12);color:var(--amber);border:1px solid rgba(245,176,76,.3)}
+.b-none{background:rgba(251,113,133,.1);color:var(--rose);border:1px solid rgba(251,113,133,.28)}
+.b-txt{background:rgba(148,163,255,.1);color:#a5b4fc;border:1px solid rgba(148,163,255,.25)}
+col.us{background:rgba(99,102,241,.08)}
+th.us{color:var(--violet)}
+
+/* ---------- pricing ---------- */
+.plans{display:grid;grid-template-columns:repeat(3,1fr);gap:18px;align-items:stretch}
+.plan{border:1px solid var(--line);border-radius:20px;padding:30px 30px 26px;background:var(--panel-2);
+  display:flex;flex-direction:column;transition:transform .35s cubic-bezier(.22,.8,.3,1),border-color .35s}
+.plan:hover{transform:translateY(-4px)}
+.plan.hot{border:1px solid transparent;
+  background:linear-gradient(rgba(10,13,26,.96),rgba(10,13,26,.96)) padding-box,
+  linear-gradient(140deg,#6366f1,#a78bfa 55%,#34d399) border-box;
+  box-shadow:0 26px 60px -24px rgba(99,102,241,.5);position:relative}
+.plan .flag{position:absolute;top:-12px;left:50%;transform:translateX(-50%);font-family:var(--mono);font-size:9px;
+  letter-spacing:.24em;background:var(--grad);color:#fff;padding:5px 16px;border-radius:100px;white-space:nowrap}
+.plan .nm{font-family:var(--mono);font-size:10.5px;letter-spacing:.26em;color:var(--violet)}
+.plan .pr{margin:14px 0 4px;display:flex;align-items:baseline;gap:8px}
+.plan .pr .num{font-family:var(--serif);font-weight:600;font-size:44px;line-height:1}
+.plan .pr .unit{color:var(--faint);font-size:12.5px}
+.plan .desc{color:var(--muted);font-size:13px;margin-bottom:18px}
+.plan ul{list-style:none;display:flex;flex-direction:column;gap:10px;flex:1;margin-bottom:22px}
+.plan li{font-size:13px;color:var(--muted);padding-left:22px;position:relative;line-height:1.6}
+.plan li::before{content:"";position:absolute;left:0;top:9px;width:11px;height:5px;border-left:1.5px solid var(--mint);
+  border-bottom:1.5px solid var(--mint);transform:rotate(-45deg)}
+.plan li.dim{color:var(--faint)}
+.plan li.dim::before{border-color:var(--faint)}
+.pack-note{margin-top:18px;display:grid;grid-template-columns:repeat(3,1fr);gap:16px}
+.pack-note .pn{border-left:2px solid var(--violet);padding:4px 0 4px 18px;font-size:13px;color:var(--muted)}
+.pack-note .pn b{display:block;color:var(--txt);margin-bottom:4px;font-size:13.5px}
+
+/* ---------- channels ---------- */
+.loop{display:flex;align-items:stretch;gap:0;flex-wrap:wrap;border:1px solid var(--line);border-radius:18px;
+  overflow:hidden;background:var(--panel-2);margin-bottom:34px}
+.loop .step{flex:1 1 160px;min-width:150px;padding:22px 22px 20px;border-right:1px dashed var(--line);position:relative}
+.loop .step:last-child{border-right:none}
+.loop .step .i{font-family:var(--mono);font-size:9px;letter-spacing:.24em;color:var(--mint);margin-bottom:10px}
+.loop .step h4{font-size:14.5px;font-weight:700;margin-bottom:6px}
+.loop .step p{font-size:12px;color:var(--muted);line-height:1.7}
+.loop .step::after{content:"→";position:absolute;right:-9px;top:50%;transform:translateY(-50%);z-index:2;
+  color:var(--violet);font-size:15px;background:var(--bg);width:18px;text-align:center}
+.loop .step:last-child::after{display:none}
+
+/* ---------- timeline ---------- */
+.timeline{position:relative;padding-left:34px}
+.timeline::before{content:"";position:absolute;left:9px;top:8px;bottom:8px;width:1px;
+  background:linear-gradient(180deg,var(--indigo),var(--violet),var(--mint))}
+.phase{position:relative;padding:0 0 38px}
+.phase:last-child{padding-bottom:0}
+.phase::before{content:"";position:absolute;left:-31px;top:7px;width:13px;height:13px;border-radius:50%;
+  background:var(--bg);border:2px solid var(--violet);box-shadow:0 0 12px rgba(167,139,250,.6)}
+.phase.g::before{border-color:var(--mint);box-shadow:0 0 12px rgba(52,211,153,.5)}
+.phase .head{display:flex;align-items:baseline;gap:16px;flex-wrap:wrap;margin-bottom:10px}
+.phase .head h3{font-family:var(--serif);font-size:21px;font-weight:700}
+.phase .wk{font-family:var(--mono);font-size:10px;letter-spacing:.18em;color:var(--bg);background:var(--grad);
+  padding:4px 12px;border-radius:100px}
+.phase.g .wk{background:linear-gradient(90deg,#0ea5e9,#34d399)}
+.phase .head .goal{font-family:var(--mono);font-size:10.5px;letter-spacing:.1em;color:var(--amber)}
+.phase p{color:var(--muted);font-size:14px;max-width:760px;margin-bottom:12px}
+.phase .acts{display:flex;flex-wrap:wrap;gap:8px;margin-bottom:12px}
+.phase .acts span{font-size:12px;color:var(--muted);border:1px solid var(--line);border-radius:8px;padding:5px 12px;background:rgba(255,255,255,.02)}
+.phase .exit{font-size:12.5px;color:var(--mint);font-family:var(--mono);letter-spacing:.04em}
+.phase .exit b{color:var(--faint);letter-spacing:.2em;font-size:9.5px;margin-right:10px}
+
+/* ---------- funnel / kpi ---------- */
+.ns{border:1px solid rgba(52,211,153,.3);border-radius:18px;padding:30px 34px;margin-bottom:30px;
+  background:linear-gradient(140deg,rgba(52,211,153,.09),rgba(7,10,18,.2) 60%);display:grid;grid-template-columns:auto 1fr;gap:28px;align-items:center}
+.ns .v{font-family:var(--serif);font-weight:700;font-size:clamp(24px,2.8vw,34px);line-height:1.35}
+.ns .v em{font-style:normal;color:var(--mint)}
+.ns .lab{font-family:var(--mono);font-size:9.5px;letter-spacing:.26em;color:var(--mint);margin-bottom:8px}
+.ns p{color:var(--muted);font-size:13.5px}
+.funnel{display:flex;flex-direction:column;gap:10px;margin:6px 0 34px}
+.f-row{display:grid;grid-template-columns:210px 1fr 240px;gap:18px;align-items:center}
+.f-row .t{font-size:13px;color:var(--txt);font-weight:600}
+.f-row .t span{display:block;font-family:var(--mono);font-weight:400;font-size:9px;letter-spacing:.2em;color:var(--faint);margin-top:3px}
+.f-bar{position:relative}
+.f-track{height:26px;border-radius:8px;background:rgba(255,255,255,.035);overflow:hidden}
+.f-fill{height:100%;border-radius:8px;display:flex;align-items:center;width:0;transition:width 1.3s cubic-bezier(.22,.8,.3,1);
+  justify-content:flex-end;padding-right:12px;font-family:var(--mono);font-size:10.5px;color:#fff;white-space:nowrap;
+  background:linear-gradient(90deg,rgba(99,102,241,.9),rgba(167,139,250,.9))}
+.f-out{position:absolute;top:50%;transform:translateY(-50%);font-family:var(--mono);font-size:10.5px;
+  color:var(--txt);white-space:nowrap;padding:3px 10px;border-radius:100px;border:1px solid var(--line);background:rgba(10,13,26,.85)}
+.f-row:nth-child(2) .f-fill{background:linear-gradient(90deg,rgba(79,70,229,.85),rgba(129,140,248,.85))}
+.f-row:nth-child(3) .f-fill{background:linear-gradient(90deg,rgba(14,165,233,.85),rgba(56,189,248,.85))}
+.f-row:nth-child(4) .f-fill{background:linear-gradient(90deg,rgba(16,185,129,.85),rgba(52,211,153,.9))}
+.f-row:nth-child(5) .f-fill{background:linear-gradient(90deg,rgba(245,158,11,.85),rgba(245,176,76,.9))}
+.f-row .m{font-family:var(--mono);font-size:11px;color:var(--muted);letter-spacing:.04em}
+.f-row .m b{color:var(--txt)}
+
+/* ---------- risk ---------- */
+.risk{border:1px solid var(--line);border-radius:16px;padding:24px 26px;background:var(--panel-2);position:relative;
+  transition:transform .35s cubic-bezier(.22,.8,.3,1),border-color .35s}
+.risk:hover{transform:translateY(-3px);border-color:rgba(251,113,133,.4)}
+.risk .tags{display:flex;gap:8px;margin-bottom:14px}
+.risk .lv{font-family:var(--mono);font-size:8.5px;letter-spacing:.16em;padding:4px 10px;border-radius:100px}
+.lv.hi{background:rgba(251,113,133,.12);color:var(--rose);border:1px solid rgba(251,113,133,.32)}
+.lv.mid{background:rgba(245,176,76,.12);color:var(--amber);border:1px solid rgba(245,176,76,.32)}
+.lv.low{background:rgba(52,211,153,.12);color:var(--mint);border:1px solid rgba(52,211,153,.32)}
+.risk h3{font-size:15.5px;font-weight:700;margin-bottom:8px}
+.risk p{font-size:13px;color:var(--muted);line-height:1.75}
+.risk p b{color:var(--mint);font-weight:600}
+
+/* ---------- checklist ---------- */
+.checks{display:grid;grid-template-columns:repeat(2,1fr);gap:0 40px;counter-reset:ck}
+.check{display:flex;gap:16px;padding:18px 4px;border-bottom:1px solid var(--line-soft);align-items:flex-start;counter-increment:ck}
+.check::before{content:counter(ck,decimal-leading-zero);font-family:var(--mono);font-size:10px;color:var(--violet);
+  padding-top:5px;flex:none;width:24px}
+.check .bx{width:19px;height:19px;border:1.5px solid rgba(167,139,250,.5);border-radius:6px;flex:none;margin-top:4px;transition:all .25s}
+.check:hover .bx{background:rgba(99,102,241,.2);box-shadow:0 0 10px rgba(124,120,246,.4)}
+.check div h4{font-size:14px;font-weight:600;margin-bottom:3px}
+.check div p{font-size:12.5px;color:var(--muted)}
+
+/* ---------- footer ---------- */
+footer{border-top:1px solid var(--line-soft);margin-top:80px;padding:40px 0 56px;position:relative;z-index:2}
+.assume{border:1px dashed rgba(151,163,255,.25);border-radius:14px;padding:22px 26px;margin-bottom:26px;background:rgba(245,176,76,.03)}
+.assume b{font-family:var(--mono);font-size:9.5px;letter-spacing:.24em;color:var(--amber);display:block;margin-bottom:10px}
+.assume p{font-size:12.5px;color:var(--muted);line-height:1.8}
+.foot-row{display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:16px}
+.foot-row .l{font-family:var(--mono);font-size:10px;letter-spacing:.2em;color:var(--faint);line-height:2}
+.foot-row .l b{color:var(--violet)}
+
+/* ---------- responsive ---------- */
+@media(max-width:1240px){.toc{display:none}main{margin-left:auto;margin:auto;padding:0 28px}}
+@media(max-width:960px){
+  .g3,.g4,.plans,.pack-note,.checks{grid-template-columns:1fr 1fr}
+  .cat{grid-template-columns:1fr}
+  .bar-row{grid-template-columns:60px 1fr;grid-template-rows:auto auto}
+  .bar-row .d{grid-column:2}
+  .f-row{grid-template-columns:150px 1fr}
+  .f-row .m{grid-column:2}
+  .ns{grid-template-columns:1fr}
+  .synapse{display:none}
+}
+@media(max-width:620px){
+  .g2,.g3,.g4,.plans,.pack-note,.checks{grid-template-columns:1fr}
+  main{padding:0 18px}
+  .pos{padding:32px 24px}
+  .pillar{grid-template-columns:1fr;gap:8px}
+  .stat{padding:16px 18px}
+}
+</style>
+</head>
+<body>
+
+<div class="atmo" aria-hidden="true">
+  <div class="mesh a"></div><div class="mesh b"></div><div class="mesh c"></div>
+</div>
+<div class="grain" aria-hidden="true"></div>
+
+<!-- ======= SIDEBAR TOC ======= -->
+<aside class="toc">
+  <div class="brand">
+    <div class="orb"></div>
+    <div><b>FIGHTBRAIN</b><span>GTM STRATEGY</span></div>
+  </div>
+  <nav id="tocNav">
+    <a href="#s01"><span class="n">01</span><span class="tick"></span>产品快照与品类</a>
+    <a href="#s02"><span class="n">02</span><span class="tick"></span>市场分析与时机</a>
+    <a href="#s03"><span class="n">03</span><span class="tick"></span>目标客户 ICP</a>
+    <a href="#s04"><span class="n">04</span><span class="tick"></span>定位与信息</a>
+    <a href="#s05"><span class="n">05</span><span class="tick"></span>竞争格局与护城河</a>
+    <a href="#s06"><span class="n">06</span><span class="tick"></span>定价与打包</a>
+    <a href="#s07"><span class="n">07</span><span class="tick"></span>渠道与分发</a>
+    <a href="#s08"><span class="n">08</span><span class="tick"></span>发布计划</a>
+    <a href="#s09"><span class="n">09</span><span class="tick"></span>增长指标</a>
+    <a href="#s10"><span class="n">10</span><span class="tick"></span>风险与应对</a>
+    <a href="#s11"><span class="n">11</span><span class="tick"></span>30 天行动清单</a>
+  </nav>
+  <div class="meta">V1.0 · 2026-08<br>OWNER: GTM WORKING GROUP<br>REVIEW: MONTHLY</div>
+</aside>
+
+<main>
+
+<!-- ======= HERO ======= -->
+<header class="hero">
+  <div class="grid-bg" aria-hidden="true"></div>
+  <svg class="synapse" viewBox="0 0 520 420" aria-hidden="true">
+    <defs>
+      <linearGradient id="flowGrad" x1="0" y1="0" x2="1" y2="1">
+        <stop offset="0%" stop-color="#6366f1"/><stop offset="100%" stop-color="#a78bfa"/>
+      </linearGradient>
+      <radialGradient id="nodeGrad"><stop offset="0%" stop-color="#a78bfa"/><stop offset="100%" stop-color="#6366f1"/></radialGradient>
+    </defs>
+    <line x1="150" y1="90" x2="300" y2="60"/><line x1="150" y1="90" x2="90" y2="210"/>
+    <line x1="300" y1="60" x2="430" y2="130"/><line x1="300" y1="60" x2="300" y2="200"/>
+    <line x1="90" y1="210" x2="300" y2="200"/><line x1="90" y1="210" x2="180" y2="330"/>
+    <line x1="300" y1="200" x2="430" y2="130"/><line x1="300" y1="200" x2="420" y2="300"/>
+    <line x1="300" y1="200" x2="180" y2="330"/><line x1="420" y1="300" x2="180" y2="330"/>
+    <line x1="430" y1="130" x2="470" y2="40"/><line x1="300" y1="60" x2="470" y2="40"/>
+    <line x1="90" y1="210" x2="40" y2="320"/><line x1="180" y1="330" x2="40" y2="320"/>
+    <line class="flow" x1="150" y1="90" x2="300" y2="200"/>
+    <line class="flow f2" x1="300" y1="200" x2="420" y2="300"/>
+    <line class="flow f3" x1="90" y1="210" x2="180" y2="330"/>
+    <circle cx="470" cy="40" r="5"/><circle cx="40" cy="320" r="5"/>
+    <circle cx="150" cy="90" r="8"/><circle cx="300" cy="60" r="7"/><circle cx="430" cy="130" r="6"/>
+    <circle cx="90" cy="210" r="7"/><circle cx="420" cy="300" r="6"/><circle cx="180" cy="330" r="7"/>
+    <circle class="hub" cx="300" cy="200" r="13"/>
+  </svg>
+
+  <span class="badge"><i></i>GO-TO-MARKET STRATEGY · V1.0 · 2026.08</span>
+  <h1>把<span class="grad">循证脑科学</span>，<br>卖进每个职场人的工位。<span class="thin">_</span></h1>
+  <p class="sub">FightBrain 的市场进入策略：以<b>开源 PLG</b> 为引擎、<b>循证内容</b>为护城河，
+  90 天内建立「<b>最靠谱的 AI 脑科学工作台</b>」品类心智。</p>
+
+  <div class="stat-strip">
+    <div class="stat"><div class="v" data-count="72">0</div><div class="k">循证知识卡片</div></div>
+    <div class="stat"><div class="v" data-count="11">0</div><div class="k">脑科学领域</div></div>
+    <div class="stat"><div class="v" data-count="6">0</div><div class="k">结构化学习路径</div></div>
+    <div class="stat"><div class="v" data-count="4">0</div><div class="k">平台模式</div></div>
+    <div class="stat"><div class="v">MIT</div><div class="k">开源协议</div></div>
+  </div>
+
+  <div class="tldr">
+    <span class="tag">TL;DR · 北极星策略</span>
+    <p>AI 脑图工具遍地都是，但<b>没有一个是"可信"的</b>——生成内容无出处、知识无结构、隐私无保障。
+    FightBrain 用 72 张带学术引用的双语卡片 + AI 导图引擎 + 本地优先架构，占位一个新品类：
+    <b>循证脑科学工作台（Evidence-Based Brain Workspace）</b>。先赢中文职场知识工作者，再用内容飞轮与开源社区滚向全球。</p>
+    <div class="chips">
+      <span class="chip c1"><b>切入点</b> 中文职场知识工作者（25–40 岁）</span>
+      <span class="chip c2"><b>增长引擎</b> 开源 PLG × 内容 SEO × 社区</span>
+      <span class="chip c3"><b>护城河</b> 循证语料飞轮 + 品类命名权</span>
+    </div>
+  </div>
+</header>
+
+<!-- ======= 01 PRODUCT & CATEGORY ======= -->
+<section id="s01">
+  <div class="kicker reveal"><span class="no">01</span><span class="ln"></span><span class="lab">Product & Category</span></div>
+  <h2 class="reveal">卖的不是脑图工具，<br>是一个<em>新品类</em>。</h2>
+  <p class="lede reveal">GTM 第一步是定义品类：用户拿我们和谁比较，决定了定价权和信息传递效率。我们主动选择比较对象——不进"AI 脑图"红海，自立"循证脑科学工作台"。</p>
+
+  <div class="cat reveal d1">
+    <div class="big">
+      <div class="lab">CATEGORY EQUATION</div>
+      <div class="formula">循证内容语料 <span class="x">×</span> AI 思维引擎 <span class="x">×</span> 本地优先隐私<br>= <span class="m">循证脑科学工作台</span></div>
+      <p>XMind 们有工具没内容，得到/Brilliant 有内容没工具，AI 生成工具有速度没可信度。三者交集处是空的——这就是我们的货架。</p>
+    </div>
+    <div class="grid g2" style="gap:14px">
+      <div class="card"><span class="ico">🧠</span><h3>脑科学百科<span class="en">BrainPedia</span></h3><p>72 张卡片、11 个领域，每张带中英学术引用，从神经递质到 HPA 轴。</p></div>
+      <div class="card"><span class="ico">🗺️</span><h3>AI 思维导图<span class="en">MindMap</span></h3><p>Expand / Refine / Reorganize 等 8 种 AI 动作，构建在结构化语料之上而非空壳生成。</p></div>
+      <div class="card"><span class="ico">⏱️</span><h3>专注训练<span class="en">Focus</span></h3><p>基于超日节律的番茄钟 + 专注度自评，把"知道"变成"做到"。</p></div>
+      <div class="card"><span class="ico">🧪</span><h3>脑力测评<span class="en">Assessment</span></h3><p>工作记忆 / 注意力 / 决策倾向自测，给出个性化学习路径入口。</p></div>
+    </div>
+  </div>
+</section>
+
+<!-- ======= 02 MARKET ======= -->
+<section id="s02">
+  <div class="kicker reveal"><span class="no">02</span><span class="ln"></span><span class="lab">Market & Timing</span></div>
+  <h2 class="reveal">市场够大、增速够快、<br>而<em>此刻</em>正好空着。</h2>
+  <p class="lede reveal">规模数字是方向感而非承诺——关键在于三条趋势的交汇点，让"为什么是现在"有了硬答案。</p>
+
+  <div class="grid g3 reveal d1" style="margin-bottom:34px">
+    <div class="card">
+      <span class="ico">📡</span><h3>趋势一 · 科普破圈<span class="en">Neuro goes mainstream</span></h3>
+      <p>Huberman 式神经科学内容把"脑科学"变成通勤陪伴；中文小红书/播客的脑科学话题播放量指数级增长。需求已被教育，供给缺可信工具。</p>
+      <div class="foot">需求侧已就绪</div>
+    </div>
+    <div class="card">
+      <span class="ico">🤖</span><h3>趋势二 · AI 导师平价化<span class="en">Tutor intelligence for $0</span></h3>
+      <p>LLM 让"一对一个性化辅导"的边际成本趋近于零。个性化学习从奢侈品变成默认能力——但生成内容的可信度成为新瓶颈，正是我们的切口。</p>
+      <div class="foot">供给侧范式转移</div>
+    </div>
+    <div class="card">
+      <span class="ico">🏢</span><h3>趋势三 · 企业买"认知效能"<span class="en">Cognitive performance budget</span></h3>
+      <p>员工体验与效能预算从体检、健身房扩展到认知健康：专注力、压力管理、睡眠。为 HR/OD 提供循证工具，是客单价十倍于 C 端的后手棋。</p>
+      <div class="foot">变现侧升级空间</div>
+    </div>
+  </div>
+
+  <h3 style="font-family:var(--serif);font-size:19px;margin-bottom:18px" class="reveal">市场规模阶梯 <span class="note">— 假设估算，随数据校准</span></h3>
+  <div class="tam reveal d1">
+    <div class="bar-row">
+      <span class="t">TAM</span>
+      <div class="bar-track"><div class="bar-fill" data-w="100%"></div></div>
+      <span class="d"><b>≈ $50B+</b> · 全球自我提升 + 生产力软件年度支出</span>
+    </div>
+    <div class="bar-row">
+      <span class="t">SAM</span>
+      <div class="bar-track"><div class="bar-fill" data-w="34%"></div></div>
+      <span class="d"><b>≈ $2–4B</b> · 中英双语 AI 知识工具 / 科学学习平台可服务市场</span>
+    </div>
+    <div class="bar-row">
+      <span class="t">SOM</span>
+      <div class="bar-track"><div class="bar-fill" data-w="7%"></div></div>
+      <span class="d"><b>≈ ¥1.5–5M ARR</b> · 首个 12–18 个月，5k–15k 付费用户（假设）</span>
+    </div>
+  </div>
+</section>
+
+<!-- ======= 03 ICP ======= -->
+<section id="s03">
+  <div class="kicker reveal"><span class="no">03</span><span class="ln"></span><span class="lab">Ideal Customer Profile</span></div>
+  <h2 class="reveal">先服务好一种人：<br>被信息<em>过载</em>的知识工作者。</h2>
+  <p class="lede reveal">ICP 定义：25–40 岁、一线城市、信息密集型职业（产品/研发/金融/咨询/市场）；自我提升年支出 ≥ ¥1000；已为 2 个以上效率工具付费；对"科学依据"敏感且愿意验证。以下三个 persona 覆盖 80% 的早期预算。</p>
+
+  <div class="grid g3 reveal d1">
+    <div class="persona">
+      <div class="head">
+        <div class="avatar">👩‍💻</div>
+        <span class="pri">PRIMARY</span>
+        <h3>林晓 · 过载的知识工作者</h3>
+        <div class="role">29 · 大厂产品经理 · 一线</div>
+      </div>
+      <dl>
+        <div><dt>痛点</dt><dd>收藏 500 篇没读；注意力碎片化到无法深工；<b>学了就忘</b>，复盘全靠硬撑。</dd></div>
+        <div><dt>触发场景</dt><dd>季度复盘写不出沉淀 / 准备重要汇报需要框架 / 年初立 flag 系统学习。</dd></div>
+        <div><dt>触达渠道</dt><dd>小红书 · 即刻 · 少数派 · 播客通勤时段</dd></div>
+        <div><dt>付费信号</dt><dd>已订阅 Notion + XMind，为工具付 <b>¥20–40/月</b> 无痛。</dd></div>
+      </dl>
+    </div>
+    <div class="persona">
+      <div class="head">
+        <div class="avatar">🧑‍🎓</div>
+        <span class="pri s">SECONDARY</span>
+        <h3>陈铭 · 终身学习精进者</h3>
+        <div class="role">24 · 研究生 / 备考党</div>
+      </div>
+      <dl>
+        <div><dt>痛点</dt><dd>背了就忘的效率焦虑；文献读不完；被"伪科学记忆法"反复收割。</dd></div>
+        <div><dt>触发场景</dt><dd>考前冲刺搭建知识树 / 文献综述梳理 / 想验证某记忆法是否真有依据。</dd></div>
+        <div><dt>触达渠道</dt><dd>B站 · 知乎 · 小红书学习博主</dd></div>
+        <div><dt>付费信号</dt><dd>价格敏感，学生价 <b>¥10–15/月</b> 是转化线；量大、传播强。</dd></div>
+      </dl>
+    </div>
+    <div class="persona">
+      <div class="head">
+        <div class="avatar">🧑‍💼</div>
+        <span class="pri s">SECONDARY · B端</span>
+        <h3>Kevin · 团队效能负责人</h3>
+        <div class="role">35 · HR/OD · 互联网与成长期公司</div>
+      </div>
+      <dl>
+        <div><dt>痛点</dt><dd>内训内容陈旧缺依据；需要"能说服刺头员工的科学材料"；健康福利预算花不出新意。</dd></div>
+        <div><dt>触发场景</dt><dd>新人培训营 / 管理层工作坊 / 员工健康月策划。</dd></div>
+        <div><dt>触达渠道</dt><dd>36kr · HR 社群 · 行业会展 · 同行转介绍</dd></div>
+        <div><dt>付费信号</dt><dd>团队采购 <b>¥1–3 万/年</b>，决策周期 1–2 月，需发票与案例。</dd></div>
+      </dl>
+    </div>
+  </div>
+</section>
+
+<!-- ======= 04 POSITIONING ======= -->
+<section id="s04">
+  <div class="kicker reveal"><span class="no">04</span><span class="ln"></span><span class="lab">Positioning & Messaging</span></div>
+  <h2 class="reveal">定位声明：<br>一句话让比较对象<em>失效</em>。</h2>
+  <p class="lede reveal">按 April Dunford 五要素框架撰写：先锁定竞争替代品，再提炼独特属性，最终把价值翻译成目标市场的语言。</p>
+
+  <div class="pos reveal d1">
+    <span class="q">"</span>
+    <p>对于<mark class="amber">被信息过载与效率焦虑困扰的职场学习者</mark>，当你在
+    <mark>XMind、Notion AI、得到与 Huberman 播客</mark>之间摇摆时——
+    FightBrain 是唯一的<mark class="mint">循证脑科学工作台</mark>：
+    72 张带学术引用的双语知识卡片 × 建立在语料之上的 AI 思维引擎 × 本地优先隐私架构。
+    它不给你更多笔记，它给你的大脑一份<mark class="mint">可验证的操作手册</mark>——
+    <mark>学得进、记得住、用得上</mark>。</p>
+    <div class="src">FRAMEWORK: APRIL DUNFORD · OBVIOUSLY AWESOME — 竞争替代 / 独特属性 / 价值 / 目标市场 / 品类</div>
+  </div>
+
+  <div class="pillars reveal d2" style="margin-top:34px">
+    <div class="pillar">
+      <div class="t">循证，不玄学<span>PRINCIPLE 01 · EVIDENCE FIRST</span></div>
+      <p>每张卡片标注学术出处与研究局限，产品里甚至内置<b>「神经神话破除」卡片</b>主动证伪流行谣言。可信度不是营销话术，是产品结构。</p>
+    </div>
+    <div class="pillar">
+      <div class="t">有底蕴的 AI<span>PRINCIPLE 02 · CORPUS-NATIVE AI</span></div>
+      <p>AI 动作（解读 / 实践 / 出题）建立在结构化语料上，输出可溯源。与"空壳生成"工具形成代差——<b>速度是别人的，可信是我们的</b>。</p>
+    </div>
+    <div class="pillar">
+      <div class="t">隐私默认安全<span>PRINCIPLE 03 · LOCAL FIRST</span></div>
+      <p>MIT 开源、API Key 只存浏览器 localStorage、支持 Ollama 全本地推理。<b>你的思维数据不该是别人的训练集</b>——这是对 AI 时代的态度，也是转化率的杠杆。</p>
+    </div>
+  </div>
+
+  <div class="grid g3 reveal d3" style="margin-top:34px">
+    <div class="card"><h3>对用户 30 秒<span class="en">Elevator · User</span></h3><p>"你收藏的知识永远不会再读。FightBrain 把脑科学做成一张能和你对话的导图：每个结论有论文背书，每个建议可以直接用在工作里。"</p></div>
+    <div class="card"><h3>对开发者<span class="en">Elevator · Developer</span></h3><p>"MIT 开源、BYOK、Ollama 本地推理、数据不出浏览器。Star 它，是因为它值得被 fork，而不是因为它求你用。"</p></div>
+    <div class="card"><h3>对企业<span class="en">Elevator · Enterprise</span></h3><p>"给团队一场有循证依据的认知效能工作坊：压力、专注、决策，全部可溯源。HR 终于可以科学地做员工健康月。"</p></div>
+  </div>
+</section>
+
+<!-- ======= 05 COMPETITION ======= -->
+<section id="s05">
+  <div class="kicker reveal"><span class="no">05</span><span class="ln"></span><span class="lab">Competition & Moat</span></div>
+  <h2 class="reveal">每一列对手都很强，<br>但<em>整行</em>只有我们全绿。</h2>
+  <p class="lede reveal">竞争策略不是逐点追平，而是让比较维度本身向我们有利的坐标轴倾斜：从"功能多不多"转向"内容可不可信"。</p>
+
+  <div class="tbl-wrap reveal d1">
+    <table>
+      <thead><tr>
+        <th style="width:190px">能力维度</th><th class="us">FightBrain</th><th>XMind + AI</th><th>ChatMind / Boardmix</th><th>Heptabase</th><th>Notion AI</th><th>Brilliant</th>
+      </tr></thead>
+      <tbody>
+        <tr><td class="rowhead">AI 导图扩展</td><td><span class="cell-b b-full">● 语料增强</span></td><td><span class="cell-b b-half">◐ 通用</span></td><td><span class="cell-b b-full">● 通用</span></td><td><span class="cell-b b-none">○ 弱</span></td><td><span class="cell-b b-half">◐ 文本</span></td><td><span class="cell-b b-none">○ 无</span></td></tr>
+        <tr><td class="rowhead">结构化知识语料</td><td><span class="cell-b b-full">● 72 卡 / 11 域</span></td><td><span class="cell-b b-none">○</span></td><td><span class="cell-b b-none">○</span></td><td><span class="cell-b b-half">◐ 模板</span></td><td><span class="cell-b b-half">◐ 模板</span></td><td><span class="cell-b b-full">● 交互动课</span></td></tr>
+        <tr><td class="rowhead">学术引用可溯源</td><td><span class="cell-b b-full">● 全量双语</span></td><td><span class="cell-b b-none">○</span></td><td><span class="cell-b b-none">○</span></td><td><span class="cell-b b-none">○</span></td><td><span class="cell-b b-none">○</span></td><td><span class="cell-b b-half">◐ 课程内</span></td></tr>
+        <tr><td class="rowhead">目标化学习路径</td><td><span class="cell-b b-full">● 6 条</span></td><td><span class="cell-b b-none">○</span></td><td><span class="cell-b b-none">○</span></td><td><span class="cell-b b-none">○</span></td><td><span class="cell-b b-none">○</span></td><td><span class="cell-b b-full">●</span></td></tr>
+        <tr><td class="rowhead">本地优先 / 隐私</td><td><span class="cell-b b-full">● BYOK+Ollama</span></td><td><span class="cell-b b-half">◐ 桌面端</span></td><td><span class="cell-b b-none">○ 云端</span></td><td><span class="cell-b b-half">◐ 本地文件</span></td><td><span class="cell-b b-none">○ 云端</span></td><td><span class="cell-b b-none">○ 云端</span></td></tr>
+        <tr><td class="rowhead">开源 / 可自托管</td><td><span class="cell-b b-full">● MIT</span></td><td><span class="cell-b b-none">○</span></td><td><span class="cell-b b-none">○</span></td><td><span class="cell-b b-none">○</span></td><td><span class="cell-b b-none">○</span></td><td><span class="cell-b b-none">○</span></td></tr>
+        <tr><td class="rowhead">专注训练 + 测评</td><td><span class="cell-b b-full">● 内置</span></td><td><span class="cell-b b-none">○</span></td><td><span class="cell-b b-none">○</span></td><td><span class="cell-b b-none">○</span></td><td><span class="cell-b b-none">○</span></td><td><span class="cell-b b-half">◐ 测验</span></td></tr>
+        <tr><td class="rowhead">起步价</td><td><span class="cell-b b-txt">¥0 开源</span></td><td><span class="cell-b b-txt">≈¥38/月</span></td><td><span class="cell-b b-txt">≈¥25/月</span></td><td><span class="cell-b b-txt">≈$12/月</span></td><td><span class="cell-b b-txt">$10/席/月</span></td><td><span class="cell-b b-txt">≈$25/月</span></td></tr>
+      </tbody>
+    </table>
+  </div>
+  <p class="note reveal d2" style="margin-top:12px">* 竞品定价为 2026-08 公开页面估算，发布前需复核；评分维度定义见 GTM/README.md。</p>
+
+  <div class="grid g3" style="margin-top:30px">
+    <div class="card reveal d1"><span class="ico">🧬</span><h3>护城河一 · 语料飞轮<span class="en">Content Flywheel</span></h3><p>卡片生产 pipeline（文献 → 结构化卡 → 社区共创审核）一旦转起来，每一张新卡都在加深"循证"的信任资产。生成式对手可以抄界面，抄不走引用规范与审核社区。</p></div>
+    <div class="card reveal d2"><span class="ico">🏷️</span><h3>护城河二 · 品类命名权<span class="en">Category Naming</span></h3><p>"循证脑科学工作台"这个词由我们先喊、先定义、先被搜索。品类命名者在用户心智中自动获得"原创"溢价——跟进者只能被表述为"类 FightBrain"。</p></div>
+    <div class="card reveal d3"><span class="ico">🛡️</span><h3>护城河三 · 开源信任<span class="en">Open-source Trust</span></h3><p>MIT 协议把"隐私承诺"变成可审计的事实。开发者社区既是分发渠道，也是防御纵深：巨头做封闭 SaaS 时，开源恰好站在他们的商业模式阴影里。</p></div>
+  </div>
+</section>
+
+<!-- ======= 06 PRICING ======= -->
+<section id="s06">
+  <div class="kicker reveal"><span class="no">06</span><span class="ln"></span><span class="lab">Pricing & Packaging</span></div>
+  <h2 class="reveal">免费层给信任，<br>付费层卖<em>省事与协同</em>。</h2>
+  <p class="lede reveal">定价原则：内容资产永远免费（它是获客与信任的根），付费点在"免配置的托管模型"与"团队协同"上，绝不在"阉割核心功能"上。</p>
+
+  <div class="plans reveal d1">
+    <div class="plan">
+      <div class="nm">FREE · 社区版</div>
+      <div class="pr"><span class="num">¥0</span><span class="unit">/ 永久</span></div>
+      <div class="desc">完整的信任起点——不是试用。</div>
+      <ul>
+        <li>全部 72 张卡片 + 4 大模式</li>
+        <li>BYOK 接入任意 OpenAI 兼容端点</li>
+        <li>Ollama 全本地推理（免 Key）</li>
+        <li>导出 PNG / SVG / Markdown</li>
+        <li>开源自托管</li>
+      </ul>
+    </div>
+    <div class="plan hot">
+      <span class="flag">RECOMMENDED · 主力变现</span>
+      <div class="nm">PRO · 专业版</div>
+      <div class="pr"><span class="num">¥25</span><span class="unit">/ 月 · 年付 ¥199</span></div>
+      <div class="desc">为"不想折腾"的职场人省掉全部配置成本。</div>
+      <ul>
+        <li>内置托管模型，零配置开箱即用</li>
+        <li>无限 AI 动作（Expand / Apply / Quiz…）</li>
+        <li>跨设备云同步 + 历史版本</li>
+        <li>进阶脑力测评报告</li>
+        <li>新卡片与学习路径抢先体验</li>
+      </ul>
+    </div>
+    <div class="plan">
+      <div class="nm">TEAM · 团队版</div>
+      <div class="pr"><span class="num">¥49</span><span class="unit">/ 席 / 月 · 5 席起</span></div>
+      <div class="desc">把个人效能升级为组织能力。</div>
+      <ul>
+        <li>团队知识空间 + 共享模板库</li>
+        <li>学习路径指派与进度看板</li>
+        <li>认知效能工作坊材料包</li>
+        <li>管理后台 · 用量统计</li>
+        <li>发票 / SSO（Roadmap）</li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="pack-note reveal d2">
+    <div class="pn"><b>为什么免费层不阉割？</b>内容语料是获客飞轮的燃料，任何墙都会杀死口碑。免费层越完整，Pro 的"省事"理由越体面。</div>
+    <div class="pn"><b>为什么 Pro 锚定 ¥25？</b>正好等于用户已为 XMind/Notion 支付的心理价位带——替换而非新增预算，转化摩擦最小。</div>
+    <div class="pn"><b>为什么先 C 后 B？</b>C 端验证激活与留存后，再用案例与工作坊材料包打 B 端，客单价 ×10 且 CAC 更低。</div>
+  </div>
+</section>
+
+<!-- ======= 07 CHANNELS ======= -->
+<section id="s07">
+  <div class="kicker reveal"><span class="no">07</span><span class="ln"></span><span class="lab">Channels & Distribution</span></div>
+  <h2 class="reveal">增长引擎：<br>一条会自己转的<em>内容飞轮</em>。</h2>
+  <p class="lede reveal">PLG 产品的渠道策略核心是设计回路而非堆动作。下面的循环每转一圈，获客成本就摊薄一分。</p>
+
+  <div class="loop reveal d1">
+    <div class="step"><div class="i">LOOP 01</div><h4>循证卡片</h4><p>72 张卡片本身就是 SEO 资产：「如何科学提升专注力」每篇都是搜索入口。</p></div>
+    <div class="step"><div class="i">LOOP 02</div><h4>AI 生成职场导图</h4><p>用户把卡片变成自己的复盘 / 方案 / 学习树，价值瞬间具象。</p></div>
+    <div class="step"><div class="i">LOOP 03</div><h4>导出与分享</h4><p>导图自带品牌水印与链接，分享到社交即广告；模板可回流社区。</p></div>
+    <div class="step"><div class="i">LOOP 04</div><h4>新访客进百科</h4><p>观众落地在免费百科，零门槛体验"循证"差异点。</p></div>
+    <div class="step"><div class="i">LOOP 05</div><h4>UGC 模板沉淀</h4><p>优质用户模板进画廊，成为下一批用户的起点——飞轮闭合。</p></div>
+  </div>
+
+  <div class="tbl-wrap reveal d2">
+    <table>
+      <thead><tr><th style="width:170px">渠道</th><th style="width:150px">角色</th><th>首个 90 天关键动作</th><th style="width:190px">北极星贡献</th></tr></thead>
+      <tbody>
+        <tr><td class="rowhead">GitHub 开源</td><td><span class="cell-b b-full">信任引擎</span></td><td>README / Roadmap / issue 礼仪打磨；好的 first-issue 标签；冲 1k stars</td><td>获客 + 转化信任背书</td></tr>
+        <tr><td class="rowhead">内容 SEO / 公众号</td><td><span class="cell-b b-full">获客主渠</span></td><td>每周 2 篇，把卡片改写为「如何科学 X」长文，覆盖专注/记忆/压力关键词</td><td>新用户占比最大来源</td></tr>
+        <tr><td class="rowhead">小红书</td><td><span class="cell-b b-half">需求教育</span></td><td>每周 3–5 条图卡：脑科学冷知识 + 导图实拍，主攻林晓 persona</td><td>获客 + 品类认知</td></tr>
+        <tr><td class="rowhead">即刻 / V2EX / 少数派</td><td><span class="cell-b b-half">冷启动</span></td><td>Beta 邀请帖 + 发布长文，效率工具圈精准首批 500 用户</td><td>激活与首批反馈</td></tr>
+        <tr><td class="rowhead">Product Hunt + X</td><td><span class="cell-b b-half">海外试水</span></td><td>英文 Launch Kit：30 秒 GIF + one-liner；收集英文市场信号</td><td>海外需求验证</td></tr>
+        <tr><td class="rowhead">KOL 联创</td><td><span class="cell-b b-txt">放大器</span></td><td>邀请 10 位脑科学/效率博主联名共创「学习路径」专属卡</td><td>获客峰值脉冲</td></tr>
+        <tr><td class="rowhead">企业内训 POC</td><td><span class="cell-b b-txt">变现在后</span></td><td>Phase 3 启动，3 家灯塔客户免费工作坊换案例与转介绍</td><td>Team 版收入</td></tr>
+      </tbody>
+    </table>
+  </div>
+</section>
+
+<!-- ======= 08 LAUNCH ======= -->
+<section id="s08">
+  <div class="kicker reveal"><span class="no">08</span><span class="ln"></span><span class="lab">Launch Plan</span></div>
+  <h2 class="reveal">90 天，四个阶段，<br>每阶段都有<em>退出门槛</em>。</h2>
+  <p class="lede reveal">没有退出门槛的阶段计划只是愿望清单。未达门槛则延长当前阶段、复盘归因，绝不带病进入下一阶段。</p>
+
+  <div class="timeline reveal d1">
+    <div class="phase">
+      <div class="head"><span class="wk">PHASE 0 · W1–2</span><h3>预热与地基</h3><span class="goal">GOAL: 万事俱备，只欠发布</span></div>
+      <p>把"可被传播的资产"全部备齐，埋点先行——没有数据就没有后续一切判断。</p>
+      <div class="acts"><span>定位资产：Landing Page + 品牌一句话</span><span>埋点与漏斗看板上线</span><span>50 人种子用户群</span><span>内容排期 8 周</span><span>Launch Kit 初稿</span></div>
+      <div class="exit"><b>EXIT</b>埋点全通 · 50 人 waitlist · Landing 转化率基线建立</div>
+    </div>
+    <div class="phase">
+      <div class="head"><span class="wk">PHASE 1 · W3–6</span><h3>私测打磨</h3><span class="goal">GOAL: 把产品用进真实工作流</span></div>
+      <p>邀请制 200 人，盯"激活链路"而非功能数量：从打开到生成第一张职场导图必须顺滑。</p>
+      <div class="acts"><span>200 内测名额分层发放</span><span>周迭代节奏</span><span>产出 10 篇内容</span><span>NPS 调研</span></div>
+      <div class="exit"><b>EXIT</b>激活率 ≥40% · NPS ≥40 · 3 个可公开的用户故事</div>
+    </div>
+    <div class="phase">
+      <div class="head"><span class="wk">PHASE 2 · W7–10</span><h3>公测发布</h3><span class="goal">GOAL: 品类宣言日</span></div>
+      <p>集中引爆：中文圈（少数派 / V2EX / 小红书矩阵）与海外（Product Hunt）同周发布，所有内容都指向同一个新品类名词。</p>
+      <div class="acts"><span>GitHub 全力推广冲 1k stars</span><span>Product Hunt Launch</span><span>小红书 / 少数派矩阵发布</span><span>PR 稿：品类定义文</span><span>KOL 联名上线</span></div>
+      <div class="exit"><b>EXIT</b>注册 5k · GitHub 1k stars · 激活率 ≥45% 保持</div>
+    </div>
+    <div class="phase g">
+      <div class="head"><span class="wk">PHASE 3 · W11–13+</span><h3>增长与变现</h3><span class="goal">GOAL: 飞轮自转，营收开闸</span></div>
+      <p>验证留存后启动 Pro 灰度收费与 UGC 模板画廊；企业内训 POC 并行开跑。</p>
+      <div class="acts"><span>模板画廊 UGC 机制</span><span>Pro 收费灰度 10% → 100%</span><span>推荐 / 邀请机制</span><span>3 家企业 POC</span></div>
+      <div class="exit"><b>EXIT</b>D7 ≥25% · 首批付费转化 · 分享率 ≥8%</div>
+    </div>
+  </div>
+</section>
+
+<!-- ======= 09 METRICS ======= -->
+<section id="s09">
+  <div class="kicker reveal"><span class="no">09</span><span class="ln"></span><span class="lab">Growth Metrics</span></div>
+  <h2 class="reveal">北极星只有一个：<br><em>周学习会话数</em>。</h2>
+  <p class="lede reveal">指标体系服从一个原则：虚荣指标（下载、注册）只用于汇报，决策一律看行为深度指标。</p>
+
+  <div class="ns reveal d1">
+    <div>
+      <div class="lab">NORTH STAR METRIC</div>
+      <div class="v">周学习会话数<br><em>Weekly Learning Sessions</em></div>
+    </div>
+    <p>一个用户一周内完成 ≥1 次「百科学习或 AI 导图会话」记为 1 次学习会话。它同时反映获客质量、激活深度与留存意愿——是产品价值被真实消费的唯一代理变量。目标：发布 90 天后 <b style="color:var(--mint)">1,200 / 周</b>。</p>
+  </div>
+
+  <h3 style="font-family:var(--serif);font-size:19px;margin-bottom:18px" class="reveal">AARRR 漏斗 · 90 天目标</h3>
+  <div class="funnel reveal d1">
+    <div class="f-row"><div class="t">获客 Acquisition<span>AWARENESS</span></div><div class="f-track"><div class="f-fill" data-w="100%">50,000 UV</div></div><div class="m">内容 + 开源 + 社交矩阵 · <b>UV→注册 10%</b></div></div>
+    <div class="f-row"><div class="t">激活 Activation<span>FIRST VALUE &lt; 5 MIN</span></div><div class="f-track"><div class="f-fill" data-w="46%">5,000 注册 → 2,250 激活</div></div><div class="m">激活定义：完成「卡片 → AI 导图」首链路 · <b>≥45%</b></div></div>
+    <div class="f-row"><div class="t">留存 Retention<span>HABIT</span></div><div class="f-track"><div class="f-fill" data-w="25%">D7 ≥ 25%</div></div><div class="m">D30 ≥ 12% · 周学习会话 <b>1,200</b></div></div>
+    <div class="f-row"><div class="t">收入 Revenue<span>PRO GREY RELEASE</span></div><div class="f-bar"><div class="f-track"><div class="f-fill" data-w="9%"></div></div><span class="f-out" style="left:calc(9% + 12px)">付费 2–4%</span></div><div class="m">首月收入 <b>¥10–20k</b> · 替换型定价锚 ¥25</div></div>
+    <div class="f-row"><div class="t">推荐 Referral<span>SHARE LOOP</span></div><div class="f-bar"><div class="f-track"><div class="f-fill" data-w="15%"></div></div><span class="f-out" style="left:calc(15% + 12px)">分享率 ≥8% · K≈0.15</span></div><div class="m">导出带水印链接 · 模板回流</div></div>
+  </div>
+
+  <div class="grid g4 reveal d2">
+    <div class="card"><div class="foot" style="margin:0 0 10px">GUARDRAIL 01</div><h3>激活时长</h3><p>首链路 P50 &lt; 5 分钟。每加一个功能都要回答：它让这一条变长还是变短？</p></div>
+    <div class="card"><div class="foot" style="margin:0 0 10px">GUARDRAIL 02</div><h3>AI 成本 / 会话</h3><p>托管模型单会话成本 ≤ ¥0.4。超线则推 BYOK / 本地引导，而非涨价。</p></div>
+    <div class="card"><div class="foot" style="margin:0 0 10px">GUARDRAIL 03</div><h3>内容引用合规率</h3><p>卡片引用可溯源率 100%。任何一条存疑引用下架优先于发布。</p></div>
+    <div class="card"><div class="foot" style="margin:0 0 10px">GUARDRAIL 04</div><h3>自然流量占比</h3><p>≥60%。付费投流只做实验，不做依赖——PLG 产品的命脉是 CAC 趋近于 0。</p></div>
+  </div>
+</section>
+
+<!-- ======= 10 RISKS ======= -->
+<section id="s10">
+  <div class="kicker reveal"><span class="no">10</span><span class="ln"></span><span class="lab">Risks & Mitigation</span></div>
+  <h2 class="reveal">六个风险，<br>每个都先想好<em>退路</em>。</h2>
+  <p class="lede reveal">风险按「发生概率 × 影响」标注。原则：高影响风险必须有产品结构级的应对，而不是话术级的安抚。</p>
+
+  <div class="grid g2 reveal d1">
+    <div class="risk">
+      <div class="tags"><span class="lv hi">概率 高</span><span class="lv hi">影响 高</span></div>
+      <h3>巨头 / 成熟工具跟进"AI + 内容"</h3>
+      <p><b>应对：</b>不拼生成拼语料与可信度——引用规范与审核社区是慢功夫；开源卡位封闭 SaaS 的阴影区；抢先完成品类命名并持续占领搜索。</p>
+    </div>
+    <div class="risk">
+      <div class="tags"><span class="lv mid">概率 中</span><span class="lv hi">影响 高</span></div>
+      <h3>"伪科学"公信力质疑</h3>
+      <p><b>应对：</b>引用规范与"研究局限"标注公开可查；神经神话破除卡片作为公信力资产前置展示；邀请 2–3 位神经科学背景顾问审校并在页面署名。</p>
+    </div>
+    <div class="risk">
+      <div class="tags"><span class="lv mid">概率 中</span><span class="lv mid">影响 中</span></div>
+      <h3>托管模型 API 成本失控</h3>
+      <p><b>应对：</b>BYOK 为默认架构；托管模型限流 + 结果缓存；设置成本护栏（≤¥0.4/会话）自动告警；Ollama 引导承接重度用户。</p>
+    </div>
+    <div class="risk">
+      <div class="tags"><span class="lv hi">概率 高</span><span class="lv mid">影响 中</span></div>
+      <h3>中文市场个人付费意愿偏低</h3>
+      <p><b>应对：</b>免费层即完整内容资产建立信任；付费锚定"省事 + 协同"而非功能；学生价 ¥10–15 覆盖价格敏感段；美元定价的海外市场并行验证。</p>
+    </div>
+    <div class="risk">
+      <div class="tags"><span class="lv low">概率 低</span><span class="lv hi">影响 高</span></div>
+      <h3>医疗边界与合规（病理内容误读）</h3>
+      <p><b>应对：</b>产品定位严格限定"科普与效率"；ADHD/AD/PTSD 卡片明确标注"教育锚点，非诊断工具"；全站医学免责声明；测评不做疾病化表述。</p>
+    </div>
+    <div class="risk">
+      <div class="tags"><span class="lv mid">概率 中</span><span class="lv mid">影响 中</span></div>
+      <h3>内容更新不可持续（72 卡被耗尽）</h3>
+      <p><b>应对：</b>语料即产品——建设「文献 → 卡片」生产 pipeline；卡片周更节奏写入发布仪式；社区共创审核激励（署名 + Pro 时长）。</p>
+    </div>
+  </div>
+</section>
+
+<!-- ======= 11 CHECKLIST ======= -->
+<section id="s11">
+  <div class="kicker reveal"><span class="no">11</span><span class="ln"></span><span class="lab">Next 30 Days</span></div>
+  <h2 class="reveal">别让策略停在页面里：<br>未来 <em>30 天</em>就做这十件事。</h2>
+  <p class="lede reveal">按依赖顺序排列，每周复盘一次勾选进度。owner 见例会纪要。</p>
+
+  <div class="checks reveal d1">
+    <div class="check"><span class="bx"></span><div><h4>定稿定位声明与品类命名</h4><p>第 04 节文案进 Landing Page，全渠道统一话术</p></div></div>
+    <div class="check"><span class="bx"></span><div><h4>上线埋点与漏斗看板</h4><p>注册 → 激活 → 会话三步必须可观测</p></div></div>
+    <div class="check"><span class="bx"></span><div><h4>Landing Page 上线 + waitlist</h4><p>转化率基线，A/B 一版 hero 文案</p></div></div>
+    <div class="check"><span class="bx"></span><div><h4>建 50 人种子用户群</h4><p>即刻 / 少数派 / 朋友圈定向邀请，明确私测规则</p></div></div>
+    <div class="check"><span class="bx"></span><div><h4>激活链路优化到 P50 &lt; 5 分钟</h4><p>打开 → 选卡 → 生成首图全流程走查</p></div></div>
+    <div class="check"><span class="bx"></span><div><h4>发布前 8 篇内容产出</h4><p>从高频卡片改写，覆盖 4 个核心搜索词</p></div></div>
+    <div class="check"><span class="bx"></span><div><h4>GitHub README / Roadmap 打磨</h4><p>加 GTM one-liner、截图 GIF、good first issue</p></div></div>
+    <div class="check"><span class="bx"></span><div><h4>Launch Kit 初稿</h4><p>Product Hunt 文案 + 30 秒 GIF + 媒体清单 30 家</p></div></div>
+    <div class="check"><span class="bx"></span><div><h4>锁定 10 位 KOL 联创候选</h4><p>脑科学 + 效率两个圈子各 5 位，发出共创邀约</p></div></div>
+    <div class="check"><span class="bx"></span><div><h4>定价灰度方案评审</h4><p>Pro ¥25 计费链路与 10% 灰度开关的技术评审</p></div></div>
+  </div>
+</section>
+
+<footer>
+  <div class="assume">
+    <b>ASSUMPTIONS & DISCLAIMER</b>
+    <p>本页所有市场规模、竞品定价、转化率与收入数字均为方向性假设，标注出处缺失，用于对齐策略方向而非财务承诺；
+    正式对外引用前需以真实数据与尽调校准。竞品信息基于 2026-08 公开页面，可能已过期。本策略不构成医疗建议，
+    FightBrain 产品定位为科普与效率工具，不做任何诊断或治疗建议。</p>
+  </div>
+  <div class="foot-row">
+    <div class="l"><b>FIGHTBRAIN</b> · GO-TO-MARKET STRATEGY V1.0<br>循证脑科学工作台 · Evidence-Based Brain Workspace</div>
+    <div class="l">REVIEW CADENCE: MONTHLY · NEXT: 2026-09<br>文件位置: GTM/index.html</div>
+  </div>
+</footer>
+
+</main>
+
+<script>
+// scroll reveal
+const io=new IntersectionObserver(es=>es.forEach(e=>{
+  if(e.isIntersecting){e.target.classList.add('in');io.unobserve(e.target)}
+}),{threshold:.12,rootMargin:'0px 0px -6% 0px'});
+document.querySelectorAll('.reveal').forEach(el=>io.observe(el));
+
+// bar / funnel fill on view
+const fio=new IntersectionObserver(es=>es.forEach(e=>{
+  if(e.isIntersecting){e.target.style.width=e.target.dataset.w;fio.unobserve(e.target)}
+}),{threshold:.4});
+document.querySelectorAll('[data-w]').forEach(el=>fio.observe(el));
+
+// count-up
+const cio=new IntersectionObserver(es=>es.forEach(e=>{
+  if(!e.isIntersecting)return;cio.unobserve(e.target);
+  const el=e.target,end=+el.dataset.count,t0=performance.now(),dur=1200;
+  (function tick(t){const p=Math.min((t-t0)/dur,1),v=Math.round(end*(1-Math.pow(1-p,3)));
+    el.textContent=v;if(p<1)requestAnimationFrame(tick)})(t0);
+}),{threshold:.6});
+document.querySelectorAll('[data-count]').forEach(el=>cio.observe(el));
+
+// scrollspy
+const links=[...document.querySelectorAll('#tocNav a')];
+const secs=links.map(a=>document.querySelector(a.getAttribute('href')));
+const sio=new IntersectionObserver(es=>{
+  es.forEach(e=>{if(e.isIntersecting){
+    links.forEach(l=>l.classList.remove('on'));
+    const i=secs.indexOf(e.target);if(i>-1)links[i].classList.add('on');
+  }})
+},{rootMargin:'-25% 0px -65% 0px'});
+secs.forEach(s=>s&&sio.observe(s));
+</script>
+<!-- gtm-portal-backlink (managed by _scripts/sync-gtm.py) -->
+<a class="gtmp-back" href="/GTM/" aria-label="返回 GTM 门户">&#8617; GTM 门户</a>
+<style>
+.gtmp-back{position:fixed;right:1rem;bottom:1rem;z-index:2147483000;
+font:500 12px/1 ui-monospace,SFMono-Regular,Menlo,Consolas,monospace;
+letter-spacing:.05em;text-decoration:none;padding:.6rem .85rem;border-radius:999px;
+color:#14130f;background:rgba(251,250,247,.92);border:1px solid rgba(20,19,15,.16);
+box-shadow:0 2px 12px rgba(20,19,15,.14);backdrop-filter:blur(6px);
+transition:transform .15s ease,box-shadow .15s ease}
+.gtmp-back:hover{transform:translateY(-1px);box-shadow:0 4px 16px rgba(20,19,15,.22)}
+@media (prefers-color-scheme:dark){.gtmp-back{color:#f5f2ea;background:rgba(20,19,15,.88);
+border-color:rgba(245,242,234,.22)}}
+</style>
+</body>
+</html>

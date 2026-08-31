@@ -1,0 +1,979 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>knowledge-graph-basement — Your notes already are a graph</title>
+<meta name="description" content="Point it at any folder of Markdown — Obsidian vault, LLM wiki, digital garden — and get sixteen living views of what you know. One command, zero config, nothing leaves your machine.">
+<meta property="og:title" content="knowledge-graph-basement — see what you actually know">
+<meta property="og:description" content="Any folder of Markdown → sixteen living views of your knowledge. One command, zero config, your data stays yours.">
+<meta property="og:type" content="website">
+<link rel="icon" href='data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32"><rect width="32" height="32" rx="7" fill="%230C0F13"/><line x1="9" y1="10" x2="22" y2="15" stroke="%23F0A32E" stroke-width="1.6"/><line x1="22" y1="15" x2="12" y2="24" stroke="%23F0A32E" stroke-width="1.6"/><circle cx="9" cy="10" r="3" fill="%23E9E4D6"/><circle cx="22" cy="15" r="3.6" fill="%23F0A32E"/><circle cx="12" cy="24" r="3" fill="%23E9E4D6"/></svg>'>
+<!-- webfonts load async via JS after window load (see script below): never block render or
+     script execution; unreachable CDN silently degrades to the system font stack -->
+<noscript><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300..700;1,9..144,300..700&family=Spline+Sans:wght@400;500;600&family=Spline+Sans+Mono:wght@400;500&display=swap"></noscript>
+<script>
+addEventListener('load', () => {
+  const l = document.createElement('link');
+  l.rel = 'stylesheet';
+  l.href = 'https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300..700;1,9..144,300..700&family=Spline+Sans:wght@400;500;600&family=Spline+Sans+Mono:wght@400;500&display=swap';
+  document.head.appendChild(l);
+});
+</script>
+<style>
+/* ============ tokens ============ */
+:root{
+  --ink-950:#0C0F13;
+  --ink-900:#11151B;
+  --ink-850:#141A21;
+  --ink-800:#1A2028;
+  --line:rgba(233,228,214,.09);
+  --line-strong:rgba(233,228,214,.16);
+  --text:#E9E4D6;
+  --dim:#9C978A;
+  --faint:#6E6A5F;
+  --amber:#F0A32E;
+  --amber-bright:#FFBE4D;
+  --amber-soft:rgba(240,163,46,.13);
+  --mint:#7EDAB5;
+  --serif:"Fraunces","Baskerville","Palatino","Iowan Old Style",Georgia,serif;
+  --sans:"Spline Sans","Avenir Next","Avenir","Segoe UI","Helvetica Neue",sans-serif;
+  --mono:"Spline Sans Mono","SF Mono",Menlo,Consolas,"Cascadia Code",monospace;
+  --radius:14px;
+}
+*{margin:0;padding:0;box-sizing:border-box}
+html{scroll-behavior:smooth;scroll-padding-top:92px;overflow-x:clip}
+body{
+  background:var(--ink-950);
+  color:var(--text);
+  font-family:var(--sans);
+  font-size:16.5px;
+  line-height:1.7;
+  -webkit-font-smoothing:antialiased;
+  overflow-x:hidden;
+}
+::selection{background:var(--amber);color:var(--ink-950)}
+a{color:inherit}
+img,svg{display:block}
+.container{max-width:1160px;margin:0 auto;padding:0 clamp(20px,4vw,40px)}
+/* flex hero would otherwise shrink-wrap the container; pin it to the grid */
+.hero .container{width:100%}
+/* grid blowout guard: content (e.g. wide terminal lines) must not widen tracks */
+.grid-3>*,.how-grid>*,.viz-grid>*,.use-grid>*,.price-grid>*,.stats-grid>*{min-width:0}
+section{padding:clamp(76px,9vw,128px) 0;position:relative}
+
+/* faint background grid, atlas feel */
+body::before{
+  content:"";position:fixed;inset:0;z-index:-2;
+  background-image:
+    linear-gradient(var(--line) 1px,transparent 1px),
+    linear-gradient(90deg,var(--line) 1px,transparent 1px);
+  background-size:72px 72px;
+  opacity:.28;
+  mask-image:radial-gradient(ellipse 90% 70% at 50% 0%,#000 20%,transparent 75%);
+  -webkit-mask-image:radial-gradient(ellipse 90% 70% at 50% 0%,#000 20%,transparent 75%);
+}
+/* grain */
+.grain{
+  position:fixed;inset:-50%;z-index:60;pointer-events:none;opacity:.05;
+  background-image:url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" width="240" height="240"><filter id="n"><feTurbulence type="fractalNoise" baseFrequency=".85" numOctaves="2"/></filter><rect width="240" height="240" filter="url(%23n)" opacity="1"/></svg>');
+  animation:grain 9s steps(6) infinite;
+}
+@keyframes grain{
+  0%,100%{transform:translate(0,0)}20%{transform:translate(-2%,1%)}
+  40%{transform:translate(1%,-2%)}60%{transform:translate(-1%,2%)}80%{transform:translate(2%,-1%)}
+}
+
+/* ============ type helpers ============ */
+.kicker{
+  font-family:var(--mono);font-size:12px;font-weight:500;
+  letter-spacing:.22em;text-transform:uppercase;color:var(--amber);
+  display:flex;align-items:center;gap:14px;margin-bottom:22px;
+}
+.kicker::before{content:"";width:34px;height:1px;background:var(--amber);flex:none}
+h2{
+  font-family:var(--serif);font-weight:400;
+  font-size:clamp(30px,4.4vw,52px);
+  line-height:1.12;letter-spacing:-.01em;max-width:22ch;
+}
+h2 em{font-style:italic;color:var(--amber-bright);font-weight:340}
+.lede{color:var(--dim);font-size:clamp(16px,1.5vw,18.5px);max-width:62ch;margin-top:18px}
+.lede strong{color:var(--text);font-weight:500}
+
+/* ============ nav ============ */
+nav{
+  position:fixed;top:0;left:0;right:0;z-index:50;
+  border-bottom:1px solid transparent;transition:.35s;
+}
+nav.scrolled{background:rgba(12,15,19,.78);backdrop-filter:blur(14px);-webkit-backdrop-filter:blur(14px);border-bottom-color:var(--line)}
+.nav-inner{display:flex;align-items:center;justify-content:space-between;height:66px}
+.wordmark{display:flex;align-items:center;gap:10px;text-decoration:none;font-family:var(--serif);font-size:19px;font-weight:500;letter-spacing:.01em}
+.wordmark b{font-weight:340;font-style:italic;color:var(--amber)}
+.nav-links{display:flex;gap:30px;list-style:none}
+.nav-links a{font-family:var(--mono);font-size:12.5px;letter-spacing:.08em;text-transform:uppercase;color:var(--dim);text-decoration:none;transition:.2s}
+.nav-links a:hover{color:var(--text)}
+.btn{
+  display:inline-flex;align-items:center;gap:9px;
+  font-family:var(--mono);font-size:13px;font-weight:500;letter-spacing:.05em;
+  padding:12px 22px;border-radius:9px;text-decoration:none;cursor:pointer;
+  border:1px solid transparent;transition:.22s;white-space:nowrap;
+}
+.btn-primary{background:var(--amber);color:#171208;box-shadow:0 0 0 0 rgba(240,163,46,.35)}
+.btn-primary:hover{background:var(--amber-bright);transform:translateY(-1px);box-shadow:0 6px 26px -6px rgba(240,163,46,.45)}
+.btn-ghost{border-color:var(--line-strong);color:var(--text)}
+.btn-ghost:hover{border-color:var(--amber);color:var(--amber-bright)}
+.btn-nav{padding:9px 17px;font-size:12px}
+.arrow{transition:transform .22s}
+.btn:hover .arrow{transform:translateX(3px)}
+
+/* ============ hero ============ */
+.hero{min-height:100svh;display:flex;align-items:center;padding:150px 0 90px;overflow:hidden}
+#gcanvas{position:absolute;inset:0;width:100%;height:100%;
+  mask-image:linear-gradient(105deg,transparent 38%,#000 62%);
+  -webkit-mask-image:linear-gradient(105deg,transparent 38%,#000 62%);
+}
+.hero-inner{position:relative;z-index:2;max-width:640px}
+.hero h1{
+  font-family:var(--serif);font-weight:340;
+  font-size:clamp(42px,6.2vw,76px);
+  line-height:1.04;letter-spacing:-.015em;
+  margin:26px 0 28px;
+}
+.hero h1 .l2{display:block;font-style:italic;color:var(--amber-bright);font-weight:380}
+.hero .sub{color:var(--dim);font-size:clamp(16.5px,1.6vw,19px);max-width:54ch}
+.hero .sub strong{color:var(--text);font-weight:500}
+.hero-cta{display:flex;gap:14px;margin-top:38px;flex-wrap:wrap}
+.proof{
+  margin-top:34px;display:inline-flex;align-items:center;gap:10px;
+  font-family:var(--mono);font-size:12px;letter-spacing:.06em;color:var(--faint);
+  border:1px solid var(--line);border-radius:99px;padding:8px 16px;background:rgba(17,21,27,.6);
+}
+.proof .dot{width:7px;height:7px;border-radius:50%;background:var(--mint);box-shadow:0 0 10px var(--mint);animation:pulse 2.4s infinite}
+@keyframes pulse{0%,100%{opacity:1}50%{opacity:.35}}
+.scroll-hint{
+  position:absolute;bottom:34px;left:50%;transform:translateX(-50%);z-index:2;
+  font-family:var(--mono);font-size:10.5px;letter-spacing:.28em;color:var(--faint);text-transform:uppercase;
+  display:flex;flex-direction:column;align-items:center;gap:10px;
+}
+.scroll-hint::after{content:"";width:1px;height:44px;background:linear-gradient(var(--faint),transparent);animation:drip 2.2s infinite}
+@keyframes drip{0%{transform:scaleY(0);transform-origin:top}45%{transform:scaleY(1);transform-origin:top}55%{transform:scaleY(1);transform-origin:bottom}100%{transform:scaleY(0);transform-origin:bottom}}
+
+/* ============ stats band ============ */
+.stats{border-top:1px solid var(--line);border-bottom:1px solid var(--line);padding:0;background:rgba(17,21,27,.45)}
+.stats-grid{display:grid;grid-template-columns:repeat(4,1fr)}
+.stat{padding:44px 30px;border-left:1px solid var(--line)}
+.stat:first-child{border-left:none}
+.stat .num{font-family:var(--serif);font-size:clamp(38px,4vw,58px);font-weight:340;line-height:1;color:var(--amber-bright);font-variant-numeric:tabular-nums}
+.stat .lbl{font-family:var(--mono);font-size:12px;letter-spacing:.1em;text-transform:uppercase;color:var(--dim);margin-top:12px}
+
+/* ============ generic cards ============ */
+.grid-3{display:grid;grid-template-columns:repeat(3,1fr);gap:18px;margin-top:56px}
+.card{
+  background:var(--ink-900);border:1px solid var(--line);border-radius:var(--radius);
+  padding:30px 28px;transition:.25s;position:relative;
+}
+.card:hover{transform:translateY(-4px);border-color:rgba(240,163,46,.4);background:var(--ink-850)}
+.card .idx{font-family:var(--mono);font-size:11px;color:var(--amber);letter-spacing:.15em}
+.card h3{font-family:var(--serif);font-weight:450;font-size:21.5px;margin:14px 0 10px;letter-spacing:.005em}
+.card p{color:var(--dim);font-size:15.5px;line-height:1.65}
+.punch{
+  margin-top:52px;font-family:var(--serif);font-size:clamp(21px,2.4vw,28px);
+  font-weight:380;font-style:italic;color:var(--text);max-width:38ch;line-height:1.45;
+}
+.punch b{color:var(--amber-bright);font-weight:500}
+
+/* ============ terminal / how ============ */
+.how-grid{display:grid;grid-template-columns:1fr 1.05fr;gap:clamp(30px,5vw,72px);align-items:center;margin-top:20px}
+.steps{display:flex;flex-direction:column;gap:34px;counter-reset:step}
+.step{display:flex;gap:22px}
+.step .n{
+  font-family:var(--serif);font-style:italic;font-size:30px;color:var(--amber);font-weight:340;
+  border:1px solid var(--line-strong);border-radius:11px;width:58px;height:58px;flex:none;
+  display:flex;align-items:center;justify-content:center;background:var(--ink-900);
+}
+.step h3{font-family:var(--serif);font-weight:480;font-size:20px;margin-bottom:6px}
+.step p{color:var(--dim);font-size:15.5px;max-width:44ch}
+.terminal{
+  background:#0A0D11;border:1px solid var(--line-strong);border-radius:var(--radius);
+  font-family:var(--mono);font-size:13.5px;line-height:2;overflow-x:auto;
+  box-shadow:0 30px 80px -30px rgba(0,0,0,.7);
+}
+.terminal .bar{display:flex;gap:7px;padding:13px 16px;border-bottom:1px solid var(--line);align-items:center}
+.terminal .bar i{width:11px;height:11px;border-radius:50%;background:var(--ink-800)}
+.terminal .bar i:first-child{background:#3A3F47}
+.terminal .bar span{margin-left:8px;font-size:11px;color:var(--faint);letter-spacing:.08em}
+.terminal .body{padding:22px 24px}
+.terminal .p{color:var(--amber)}
+.terminal .c{color:var(--faint)}
+.terminal .ok{color:var(--mint)}
+.terminal .u{color:var(--text)}
+
+/* ============ 16 views ============ */
+.viz-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:16px;margin-top:56px}
+.viz-card{
+  background:var(--ink-900);border:1px solid var(--line);border-radius:var(--radius);
+  padding:20px;transition:.25s;position:relative;overflow:hidden;
+}
+.viz-card:hover{transform:translateY(-4px);border-color:rgba(240,163,46,.45);background:var(--ink-850)}
+.viz-card .thumb{height:76px;margin-bottom:16px;border-radius:8px;background:
+  radial-gradient(ellipse 80% 90% at 50% 110%,rgba(240,163,46,.06),transparent)}
+.viz-card h3{font-family:var(--mono);font-size:13px;font-weight:500;letter-spacing:.03em;display:flex;align-items:center;gap:8px}
+.viz-card p{color:var(--faint);font-size:13px;line-height:1.55;margin-top:7px}
+.badge{
+  font-family:var(--mono);font-size:9.5px;letter-spacing:.14em;padding:3px 8px;border-radius:99px;font-weight:500;
+}
+.badge.live{background:rgba(126,218,181,.14);color:var(--mint);border:1px solid rgba(126,218,181,.35)}
+.badge.next{background:rgba(233,228,214,.06);color:var(--faint);border:1px solid var(--line)}
+.viz-note{margin-top:34px;font-family:var(--mono);font-size:12.5px;color:var(--faint);display:flex;gap:22px;flex-wrap:wrap}
+
+/* ============ use cases ============ */
+.use-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:18px;margin-top:56px}
+.use{border:1px solid var(--line);border-radius:var(--radius);padding:30px;background:
+  linear-gradient(160deg,var(--ink-900),var(--ink-950) 70%);transition:.25s}
+.use:hover{border-color:rgba(240,163,46,.4);transform:translateY(-3px)}
+.use .who{font-family:var(--mono);font-size:11.5px;letter-spacing:.16em;text-transform:uppercase;color:var(--amber)}
+.use h3{font-family:var(--serif);font-weight:460;font-size:22px;margin:12px 0 8px}
+.use p{color:var(--dim);font-size:15.5px}
+
+/* ============ vs table ============ */
+.vs-wrap{margin-top:56px;overflow-x:auto;border:1px solid var(--line);border-radius:var(--radius);background:var(--ink-900)}
+table{width:100%;border-collapse:collapse;min-width:760px}
+th,td{padding:17px 22px;text-align:left;border-bottom:1px solid var(--line);font-size:14.5px}
+thead th{
+  font-family:var(--mono);font-size:11.5px;letter-spacing:.1em;text-transform:uppercase;font-weight:500;
+  color:var(--dim);background:var(--ink-850);
+}
+thead th.us{color:var(--amber-bright)}
+td.us{color:var(--text);background:rgba(240,163,46,.05);font-weight:500}
+tbody tr:last-child td{border-bottom:none}
+.yes{color:var(--mint);font-weight:600}
+.no{color:var(--faint)}
+tbody th{font-weight:500;color:var(--text);font-size:14.5px}
+
+/* ============ pricing ============ */
+.price-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:18px;margin-top:56px;align-items:stretch}
+.plan{
+  border:1px solid var(--line);border-radius:var(--radius);padding:34px 30px;background:var(--ink-900);
+  display:flex;flex-direction:column;position:relative;transition:.25s;
+}
+.plan:hover{transform:translateY(-4px)}
+.plan.hot{border-color:rgba(240,163,46,.55);background:linear-gradient(170deg,rgba(240,163,46,.07),var(--ink-900) 45%)}
+.plan .flag{
+  position:absolute;top:-13px;left:30px;font-family:var(--mono);font-size:10px;letter-spacing:.16em;
+  text-transform:uppercase;background:var(--amber);color:#171208;padding:5px 12px;border-radius:99px;font-weight:500;
+}
+.plan .name{font-family:var(--mono);font-size:12px;letter-spacing:.18em;text-transform:uppercase;color:var(--dim)}
+.plan .price{font-family:var(--serif);font-size:46px;font-weight:340;margin:16px 0 4px}
+.plan .price small{font-family:var(--mono);font-size:12.5px;color:var(--faint);letter-spacing:.04em}
+.plan ul{list-style:none;margin:24px 0 30px;flex:1}
+.plan li{padding:7px 0 7px 26px;position:relative;color:var(--dim);font-size:14.5px}
+.plan li::before{content:"→";position:absolute;left:0;color:var(--amber);font-family:var(--mono)}
+.plan .btn{justify-content:center}
+.price-note{margin-top:26px;font-family:var(--mono);font-size:12.5px;color:var(--faint);text-align:center}
+
+/* ============ faq ============ */
+.faq-list{max-width:780px;margin-top:50px}
+details{border-bottom:1px solid var(--line)}
+details:first-of-type{border-top:1px solid var(--line)}
+summary{
+  cursor:pointer;list-style:none;display:flex;justify-content:space-between;align-items:center;gap:20px;
+  padding:24px 4px;font-family:var(--serif);font-size:20px;font-weight:450;transition:.2s;
+}
+summary::-webkit-details-marker{display:none}
+summary:hover{color:var(--amber-bright)}
+summary .pm{font-family:var(--mono);color:var(--amber);font-size:18px;flex:none;transition:.3s}
+details[open] .pm{transform:rotate(45deg)}
+details .a{padding:0 4px 26px;color:var(--dim);font-size:15.5px;max-width:64ch}
+details .a b{color:var(--text);font-weight:500}
+
+/* ============ final cta ============ */
+.final{
+  text-align:center;border-top:1px solid var(--line);
+  background:radial-gradient(ellipse 60% 80% at 50% 100%,rgba(240,163,46,.09),transparent 70%);
+}
+.final h2{margin:0 auto;max-width:16ch}
+.wl-form{display:flex;gap:12px;justify-content:center;margin-top:44px;flex-wrap:wrap}
+.wl-form input{
+  font-family:var(--mono);font-size:14px;color:var(--text);
+  background:var(--ink-900);border:1px solid var(--line-strong);border-radius:9px;
+  padding:13px 18px;width:min(340px,80vw);outline:none;transition:.2s;
+}
+.wl-form input:focus{border-color:var(--amber);box-shadow:0 0 0 3px var(--amber-soft)}
+.wl-form input::placeholder{color:var(--faint)}
+.wl-done{
+  display:none;margin-top:44px;font-family:var(--mono);font-size:14px;color:var(--mint);
+  border:1px solid rgba(126,218,181,.35);border-radius:9px;padding:15px 26px;
+  background:rgba(126,218,181,.07);
+}
+.wl-note{margin-top:22px;font-family:var(--mono);font-size:11.5px;letter-spacing:.1em;color:var(--faint)}
+
+/* ============ footer ============ */
+footer{border-top:1px solid var(--line);padding:44px 0;background:var(--ink-950)}
+.foot{display:flex;justify-content:space-between;align-items:center;gap:24px;flex-wrap:wrap}
+.foot .meta{font-family:var(--mono);font-size:12px;color:var(--faint);letter-spacing:.04em;display:flex;gap:18px;flex-wrap:wrap}
+.foot a{color:var(--dim);text-decoration:none}
+.foot a:hover{color:var(--amber-bright)}
+
+/* ============ reveal (JS adds .js to <html>; no-JS keeps all visible) ============ */
+.js .reveal{opacity:0;transform:translateY(20px);transition:opacity .7s cubic-bezier(.2,.6,.2,1),transform .7s cubic-bezier(.2,.6,.2,1)}
+.js .reveal.in{opacity:1;transform:none}
+.js .hero .reveal{transition-duration:.85s}
+.js .reveal-l{opacity:0}
+
+/* ============ responsive ============ */
+@media (max-width:1020px){
+  .viz-grid{grid-template-columns:repeat(2,1fr)}
+  .stats-grid{grid-template-columns:repeat(2,1fr)}
+  .stat:nth-child(3){border-left:none}
+  .stat{border-top:1px solid var(--line)}
+  .stat:nth-child(-n+2){border-top:none}
+  .how-grid{grid-template-columns:1fr}
+}
+@media (max-width:860px){
+  .nav-links{display:none}
+  .grid-3{grid-template-columns:1fr}
+  .price-grid{grid-template-columns:1fr}
+  .use-grid{grid-template-columns:1fr}
+  #gcanvas{mask-image:linear-gradient(180deg,transparent 30%,rgba(0,0,0,.5) 60%,#000 90%);
+    -webkit-mask-image:linear-gradient(180deg,transparent 30%,rgba(0,0,0,.5) 60%,#000 90%);opacity:.55}
+  .hero{padding-top:130px}
+}
+@media (max-width:560px){
+  .viz-grid{grid-template-columns:1fr}
+  .stats-grid{grid-template-columns:1fr 1fr}
+}
+@media (prefers-reduced-motion:reduce){
+  *,*::before,*::after{animation:none!important;transition:none!important}
+  html{scroll-behavior:auto}
+  .js .reveal{opacity:1;transform:none}
+}
+</style>
+</head>
+<body>
+<div class="grain" aria-hidden="true"></div>
+
+<!-- GTM practice: persistent nav + one repeated conversion goal (waitlist) -->
+<nav id="nav">
+  <div class="container nav-inner">
+    <a class="wordmark" href="#top" aria-label="graph basement home">
+      <svg width="22" height="22" viewBox="0 0 32 32" aria-hidden="true"><line x1="9" y1="10" x2="22" y2="15" stroke="#F0A32E" stroke-width="1.6"/><line x1="22" y1="15" x2="12" y2="24" stroke="#F0A32E" stroke-width="1.6"/><circle cx="9" cy="10" r="3" fill="#E9E4D6"/><circle cx="22" cy="15" r="3.6" fill="#F0A32E"/><circle cx="12" cy="24" r="3" fill="#E9E4D6"/></svg>
+      graph<b>basement</b>
+    </a>
+    <ul class="nav-links">
+      <li><a href="#how">How it works</a></li>
+      <li><a href="#views">16 views</a></li>
+      <li><a href="#who">Who it's for</a></li>
+      <li><a href="#pricing">Pricing</a></li>
+      <li><a href="#faq">FAQ</a></li>
+    </ul>
+    <a class="btn btn-primary btn-nav" href="#waitlist">Early access</a>
+  </div>
+</nav>
+
+<!-- GTM practice: above-the-fold clarity — who it's for, what it does, primary CTA, live proof -->
+<header class="hero" id="top">
+  <canvas id="gcanvas" aria-hidden="true"></canvas>
+  <div class="container">
+    <div class="hero-inner">
+      <div class="kicker reveal-l">For people who think in Markdown</div>
+      <h1>
+        <span class="reveal-l">Your notes already</span>
+        <span class="reveal-l">are a graph.</span>
+        <span class="l2 reveal-l">Start seeing it.</span>
+      </h1>
+      <p class="sub reveal-l">
+        Point <strong>knowledge-graph-basement</strong> at any folder of Markdown — an Obsidian
+        vault, an LLM wiki, a digital garden — and get <strong>sixteen living views</strong> of what
+        you know. One command, zero config, nothing leaves your machine.
+      </p>
+      <div class="hero-cta reveal-l">
+        <a class="btn btn-primary" href="#waitlist">Join the waitlist <span class="arrow">→</span></a>
+        <a class="btn btn-ghost" href="https://github.com/allengaller/knowledge-graph-basement" target="_blank" rel="noopener">Star on GitHub ↗</a>
+      </div>
+      <div class="proof reveal-l">
+        <span class="dot"></span> live demo behind this text — 226 real notes · 226 links · 8 clusters
+      </div>
+    </div>
+  </div>
+  <div class="scroll-hint" aria-hidden="true">scroll</div>
+</header>
+
+<!-- GTM practice: quantified proof band, honest numbers from the real corpus -->
+<section class="stats" aria-label="Key numbers">
+  <div class="container">
+    <div class="stats-grid">
+      <div class="stat reveal"><div class="num" data-count="16">0</div><div class="lbl">lenses on one index</div></div>
+      <div class="stat reveal"><div class="num" data-count="226">0</div><div class="lbl">notes in the live corpus</div></div>
+      <div class="stat reveal"><div class="num" data-count="1">0</div><div class="lbl">command from corpus to atlas</div></div>
+      <div class="stat reveal"><div class="num">0</div><div class="lbl">bytes of your data sent anywhere</div></div>
+    </div>
+  </div>
+</section>
+
+<!-- GTM practice: problem agitation in the customer's words -->
+<section id="problem">
+  <div class="container">
+    <div class="kicker reveal">The problem</div>
+    <h2 class="reveal">You've written a thousand notes.<br>You've re-read <em>three</em>.</h2>
+    <p class="lede reveal">Every Markdown vault quietly accumulates structure — wiki-links, clusters,
+    hubs, orphans. Almost no tool surfaces it, so your knowledge base behaves like a warehouse:
+    everything is in there, and you can't see any of it.</p>
+    <div class="grid-3">
+      <div class="card reveal">
+        <div class="idx">01</div>
+        <h3>Folders hide structure</h3>
+        <p>Search only finds what you already remember to look for. The connection between two
+        ideas stays buried until you happen to open both files.</p>
+      </div>
+      <div class="card reveal">
+        <div class="idx">02</div>
+        <h3>Graph views are eye candy</h3>
+        <p>Pretty constellations you can't query, share, or act on. You zoom in, shrug, and close
+        the tab. Nothing about your writing changes.</p>
+      </div>
+      <div class="card reveal">
+        <div class="idx">03</div>
+        <h3>Your LLM is flying blind</h3>
+        <p>RAG chunks prose but throws away structure — <em>how concepts link</em> is exactly the
+        context an agent needs to answer like you, not like a search engine.</p>
+      </div>
+    </div>
+    <p class="punch reveal">The structure already exists — it's in your wiki-links.
+    <b>Nothing renders it usefully. Until now.</b></p>
+  </div>
+</section>
+
+<!-- GTM practice: friction removal — show it's 3 commands, real ones -->
+<section id="how" style="padding-top:0">
+  <div class="container">
+    <div class="kicker reveal">How it works</div>
+    <h2 class="reveal">Three commands. <em>Zero config.</em></h2>
+    <div class="how-grid">
+      <div class="steps">
+        <div class="step reveal">
+          <div class="n">i</div>
+          <div><h3>Point</h3>
+          <p>Any folder of <span style="font-family:var(--mono);font-size:13px">.md</span> — Obsidian
+          vault, LLM wiki, digital garden, plain notes. No plugins, no front-matter ceremony.</p></div>
+        </div>
+        <div class="step reveal">
+          <div class="n">ii</div>
+          <div><h3>See</h3>
+          <p>The indexer extracts entities, links, sections and clusters at build time.
+          Sixteen views all read the same index.</p></div>
+        </div>
+        <div class="step reveal">
+          <div class="n">iii</div>
+          <div><h3>Share</h3>
+          <p>Output is 100% static. Drop it on Netlify, GitHub Pages, or a USB stick.
+          Your notes stay exactly where they are.</p></div>
+        </div>
+      </div>
+      <div class="terminal reveal" role="img" aria-label="Terminal showing the three setup commands">
+        <div class="bar"><i></i><i></i><i></i><span>zsh — my-vault</span></div>
+        <div class="body">
+<span class="p">$</span> <span class="u">./scripts/bootstrap.sh</span>
+<span class="c">  cloning test corpus, installing deps…        12s</span>
+<span class="p">$</span> <span class="u">npm run index</span>
+<span class="ok">  ✓ 226 docs · 226 wiki-links · 8 clusters</span>  <span class="c">0.9s</span>
+<span class="p">$</span> <span class="u">npm run dev</span>
+<span class="c">  → astro v5 ready</span>
+<span class="ok">  → dashboard live at localhost:4321</span>
+<span class="c"></span>
+<span class="c">  # force-graph · timeline · calendar · treemap</span>
+<span class="c">  # (+ 12 more lenses on the roadmap)</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- GTM practice: product showcase = breadth moat, honest LIVE vs NEXT badges -->
+<section id="views" style="padding-top:0">
+  <div class="container">
+    <div class="kicker reveal">Sixteen lenses</div>
+    <h2 class="reveal">One index. <em>Sixteen</em> ways to see it.</h2>
+    <p class="lede reveal">The same graph, projected through different lenses — structural, relational,
+    temporal, textual. Each one answers a question the others can't. Four ship today; the rest follow
+    in MVP2 and MVP3.</p>
+    <div class="viz-grid" id="vizGrid"></div>
+    <div class="viz-note reveal">
+      <span><span class="badge live">LIVE</span>&nbsp; shipping in MVP1</span>
+      <span><span class="badge next">NEXT</span>&nbsp; MVP2 — MVP3</span>
+      <span>priority order is data-driven, from the corpus analysis</span>
+    </div>
+  </div>
+</section>
+
+<!-- GTM practice: ICP segmentation — visitor self-identifies -->
+<section id="who" style="padding-top:0">
+  <div class="container">
+    <div class="kicker reveal">Who it's for</div>
+    <h2 class="reveal">Built for the people whose <em>folders became libraries</em>.</h2>
+    <div class="use-grid">
+      <div class="use reveal">
+        <div class="who">Obsidian gardeners</div>
+        <h3>200+ notes and losing the plot</h3>
+        <p>Find your hubs, your orphans, and the threads you abandoned in March. The force graph
+        and treemap show where your garden is dense — and where it's bare.</p>
+      </div>
+      <div class="use reveal">
+        <div class="who">LLM-wiki builders</div>
+        <h3>Give your agent a map</h3>
+        <p>The index is plain JSON at build time: entities, links, clusters. Feed it as context so
+        answers cite the structure of your knowledge, not vibes from a vector dump.</p>
+      </div>
+      <div class="use reveal">
+        <div class="who">Research & writing teams</div>
+        <h3>A docs folder is a black box</h3>
+        <p>Make coverage, clusters and gaps visible in standup. Which topics are dense? Which
+        haven't been touched since last quarter? Now it's a picture, not an argument.</p>
+      </div>
+      <div class="use reveal">
+        <div class="who">Educators & course builders</div>
+        <h3>See if your curriculum connects</h3>
+        <p>Course notes in Markdown become a concept map: prerequisites, tangents, isolated
+        islands. Fix the structure before your students find it.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- GTM practice: differentiation vs named alternatives -->
+<section id="vs" style="padding-top:0">
+  <div class="container">
+    <div class="kicker reveal">Why this one</div>
+    <h2 class="reveal">Everything else shows <em>a</em> graph.<br>This shows yours, sixteen ways.</h2>
+    <div class="vs-wrap reveal">
+      <table>
+        <thead>
+          <tr><th style="width:30%"></th><th class="us">graph basement</th><th>Obsidian graph view</th><th>Gephi</th><th>grep / search</th></tr>
+        </thead>
+        <tbody>
+          <tr><th>Input</th><td class="us">any folder of .md</td><td>Obsidian vault only</td><td>import plugins + tutorials</td><td>any text</td></tr>
+          <tr><th>Lenses on one index</th><td class="us"><span class="yes">16</span></td><td><span class="no">1</span></td><td><span class="no">1 per manual session</span></td><td><span class="no">0 — a linear list</span></td></tr>
+          <tr><th>Publishes a shareable site</th><td class="us"><span class="yes">✓</span> static, one URL</td><td><span class="no">—</span></td><td><span class="no">PNG export</span></td><td><span class="no">—</span></td></tr>
+          <tr><th>Machine-readable index for your LLM</th><td class="us"><span class="yes">✓</span> JSON at build time</td><td><span class="no">—</span></td><td><span class="no">—</span></td><td><span class="no">chunks, no structure</span></td></tr>
+          <tr><th>Setup</th><td class="us">3 commands</td><td>already installed</td><td>steep</td><td>zero — but you outgrow it</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</section>
+
+<!-- GTM practice: pricing transparency + early-access scarcity -->
+<section id="pricing" style="padding-top:0">
+  <div class="container">
+    <div class="kicker reveal">Pricing — early access</div>
+    <h2 class="reveal">Open source at the core. <em>Forever.</em></h2>
+    <div class="price-grid">
+      <div class="plan reveal">
+        <div class="name">Open source</div>
+        <div class="price">$0</div>
+        <small style="font-family:var(--mono);font-size:12px;color:var(--faint)">MIT licensed, today</small>
+        <ul>
+          <li>All 16 views, self-hosted</li>
+          <li>Runs on your machine, fully offline</li>
+          <li>Plain JSON index — yours to hack</li>
+          <li>Community support on GitHub</li>
+        </ul>
+        <a class="btn btn-ghost" href="https://github.com/allengaller/knowledge-graph-basement" target="_blank" rel="noopener">Star on GitHub ↗</a>
+      </div>
+      <div class="plan hot reveal">
+        <div class="flag">Waitlist pricing — locked</div>
+        <div class="name">Cloud</div>
+        <div class="price">$8<small> /mo</small></div>
+        <small style="font-family:var(--mono);font-size:12px;color:var(--faint)">early-bird, lock it forever</small>
+        <ul>
+          <li>Connect a repo → auto-rebuild on push</li>
+          <li>Custom domain & password-private vaults</li>
+          <li>Priority votes on the next lens</li>
+          <li>Zero setup — graph live in 2 minutes</li>
+        </ul>
+        <a class="btn btn-primary" href="#waitlist">Join the waitlist <span class="arrow">→</span></a>
+      </div>
+      <div class="plan reveal">
+        <div class="name">Team</div>
+        <div class="price">$20<small> /seat</small></div>
+        <small style="font-family:var(--mono);font-size:12px;color:var(--faint)">when teams ship, late 2026</small>
+        <ul>
+          <li>Shared corpus, per-team clusters</li>
+          <li>Agent Q&A over your graph</li>
+          <li>Read-only links for stakeholders</li>
+          <li>SSO on the roadmap</li>
+        </ul>
+        <a class="btn btn-ghost" href="#faq">Read the FAQ</a>
+      </div>
+    </div>
+    <p class="price-note reveal">Product is pre-launch. Waitlist members get access in signup order — early-bird price is locked at signup.</p>
+  </div>
+</section>
+
+<!-- GTM practice: objection handling -->
+<section id="faq" style="padding-top:0">
+  <div class="container">
+    <div class="kicker reveal">FAQ</div>
+    <h2 class="reveal">The questions <em>you'd</em> ask.</h2>
+    <div class="faq-list">
+      <details class="reveal"><summary>Does my data leave my machine?<span class="pm">+</span></summary>
+        <p class="a"><b>No.</b> Indexing and rendering are 100% local. The output is plain static
+        files — you host them wherever you want, or don't host them at all. There is no account,
+        no telemetry, no phoning home.</p></details>
+      <details class="reveal"><summary>Is it Obsidian-only?<span class="pm">+</span></summary>
+        <p class="a"><b>No — any Markdown folder works.</b> The indexer reads wiki-links, frontmatter
+        dates and headings. Obsidian vaults, LLM-wikis, digital gardens and plain note folders all
+        work out of the box; no plugins to install.</p></details>
+      <details class="reveal"><summary>How big can my corpus be?<span class="pm">+</span></summary>
+        <p class="a">The public demo runs on <b>226 real notes</b> and the pipeline is comfortably
+        fast there. The roadmap moves the index to SQLite + FTS5, with a design target of
+        <b>10k+ documents</b>. Huge corpora get incremental indexing first.</p></details>
+      <details class="reveal"><summary>What does it cost?<span class="pm">+</span></summary>
+        <p class="a">The core is <b>MIT open source, forever</b> — clone it and run it today at
+        zero cost. The paid Cloud plan is for people who want auto-rebuild, custom domains and
+        zero setup. Early-bird pricing is locked for waitlist members.</p></details>
+      <details class="reveal"><summary>Where's the agent part?<span class="pm">+</span></summary>
+        <p class="a">On the roadmap, deliberately after the visualization foundation:
+        natural-language queries over your graph and a graph-of-thoughts view where the agent's
+        reasoning chain becomes a visible whiteboard — Claude API with a local Ollama fallback.</p></details>
+      <details class="reveal"><summary>Can I use it today?<span class="pm">+</span></summary>
+        <p class="a"><b>Yes, if you're comfortable with git and npm</b> — clone the repo and run
+        three commands (see "How it works"). The four MVP1 views are live. Everyone else:
+        join the waitlist and you'll get the hosted version the week it ships.</p></details>
+    </div>
+  </div>
+</section>
+
+<!-- GTM practice: single final conversion point, risk reversed -->
+<section class="final" id="waitlist">
+  <div class="container">
+    <div class="kicker reveal" style="justify-content:center">Early access</div>
+    <h2 class="reveal">See what you <em>actually</em> know.</h2>
+    <form class="wl-form reveal" id="wlForm" novalidate>
+      <input type="email" name="email" placeholder="you@notes.dev" aria-label="Email address" required>
+      <button class="btn btn-primary" type="submit">Join the waitlist <span class="arrow">→</span></button>
+    </form>
+    <div class="wl-done" id="wlDone">✓ You're on the list. One email on launch day — that's it.</div>
+    <p class="wl-note reveal">ONE LAUNCH EMAIL · NO SPAM · UNSUBSCRIBE IS ONE CLICK</p>
+  </div>
+</section>
+
+<footer>
+  <div class="container foot">
+    <a class="wordmark" href="#top" style="font-size:16px">
+      <svg width="18" height="18" viewBox="0 0 32 32" aria-hidden="true"><line x1="9" y1="10" x2="22" y2="15" stroke="#F0A32E" stroke-width="1.6"/><line x1="22" y1="15" x2="12" y2="24" stroke="#F0A32E" stroke-width="1.6"/><circle cx="9" cy="10" r="3" fill="#E9E4D6"/><circle cx="22" cy="15" r="3.6" fill="#F0A32E"/><circle cx="12" cy="24" r="3" fill="#E9E4D6"/></svg>
+      graph<b>basement</b>
+    </a>
+    <div class="meta">
+      <a href="https://github.com/allengaller/knowledge-graph-basement" target="_blank" rel="noopener">GitHub ↗</a>
+      <span>MIT licensed</span>
+      <span>built with Astro 5 + D3</span>
+      <span>demo corpus: caro401/notes (MIT)</span>
+      <span>© 2026</span>
+    </div>
+  </div>
+</footer>
+
+<script>
+document.documentElement.classList.add('js');
+/* ================= data: real corpus subgraph (extracted from data/index.json) ================= */
+const GRAPH = {"nodes":[{"id":"2bb7c540","t":"Weaving","c":"textile"},{"id":"08fcb808","t":"CS50's Introduction to Database…","c":"sql"},{"id":"c83477bd","t":"Learning Rust","c":"rust"},{"id":"cf8f8302","t":"SQL is a language used to inter…","c":"sql"},{"id":"8763060c","t":"Having a bias means favouring o…","c":"cog"},{"id":"b271e3a8","t":"Tunes","c":"music"},{"id":"8a137958","t":"Project planning and calculations","c":"other"},{"id":"1cd5578f","t":"A database schema defines the t…","c":"sql"},{"id":"c03efb96","t":"Book notes","c":"other"},{"id":"ba3a5b67","t":"Choosing yarn for your weaving …","c":"textile"},{"id":"91a082cf","t":"Column constraints impose const…","c":"sql"},{"id":"56e826f0","t":"Learn about polska","c":"music"},{"id":"5736bac0","t":"Relational databases usually ha…","c":"sql"},{"id":"7c7d2b1c","t":"SQLite is a DBMS","c":"sql"},{"id":"06d43909","t":"Databases support lots of data …","c":"sql"},{"id":"c942f464","t":"SQLite distinguishes storage cl…","c":"sql"},{"id":"598077d7","t":"A foreign key is a column in a …","c":"sql"},{"id":"9e8ad52a","t":"Confirmation bias is when you l…","c":"cog"},{"id":"b95dc45e","t":"False consensus bias is assumin…","c":"cog"},{"id":"636f27a4","t":"Recency bias means we remember …","c":"cog"},{"id":"90fe62d3","t":"The serial position effect mean…","c":"cog"},{"id":"6e0f1fb3","t":"Primacy bias means we remember …","c":"cog"},{"id":"0a5ebd63","t":"Unconscious bias is the collect…","c":"cog"},{"id":"1350226a","t":"The sunk cost fallacy is the mo…","c":"other"},{"id":"709a41e7","t":"Start the UX design process course","c":"ux"},{"id":"77ed8aa7","t":"Work Clean","c":"other"},{"id":"e7a07735","t":"Mend it","c":"other"},{"id":"546f9bf0","t":"Practical SVG - Chris Coyier","c":"other"},{"id":"149484c2","t":"Art-write","c":"other"},{"id":"76425dee","t":"Show Your Work","c":"other"},{"id":"bd36d124","t":"A DBMS is a way to interact wit…","c":"sql"},{"id":"809eff08","t":"keys are used to identify and r…","c":"other"},{"id":"950aed1e","t":"Entity relationship diagrams ar…","c":"sql"},{"id":"27369b6f","t":"Table constraints impose restri…","c":"sql"},{"id":"762fb89c","t":"SQLite imports from CSV as text…","c":"sql"},{"id":"10d9d536","t":"SQL triggers are statements tha…","c":"sql"},{"id":"0ba39408","t":"A view is a virtual table defin…","c":"sql"},{"id":"cc4d6a10","t":"Scanning each row in a database…","c":"sql"},{"id":"b0704fb0","t":"An index is a structure to spee…","c":"sql"},{"id":"aa39e990","t":"Clean up unused space in a data…","c":"sql"},{"id":"fbdfca02","t":"Transactions are single units o…","c":"sql"},{"id":"8f059637","t":"Race conditions","c":"other"},{"id":"749429ea","t":"Transactional locking","c":"sql"},{"id":"0e1f6cd4","t":"Warp is the threads running the…","c":"textile"},{"id":"846413c9","t":"A heddle is aka reed","c":"textile"},{"id":"a6d16d14","t":"Weft is the threads introduced …","c":"textile"},{"id":"b78673cb","t":"Shed is the opening formed when…","c":"textile"},{"id":"a44edb7d","t":"Boda polska","c":"music"},{"id":"486c57aa","t":"Värmland polska","c":"music"},{"id":"78a35e1d","t":"Røros pols","c":"other"},{"id":"c50dcc0c","t":"Springlek","c":"music"},{"id":"af17a80d","t":"Use Rustup to install Rust","c":"rust"},{"id":"5c961fc8","t":"Use cargo by convention","c":"rust"},{"id":"e4b06b2b","t":"Use cargo check to quickly see …","c":"rust"},{"id":"e97c4394","t":"the Result type encodes error h…","c":"code"},{"id":"45b8c56b","t":"Rust variables are immutable by…","c":"sql"},{"id":"d13d6d0d","t":"Rust char type is a scalar type…","c":"rust"},{"id":"00b2187d","t":"Tuples and arrays are the primi…","c":"rust"},{"id":"99b55dd6","t":"Statements perform actions, exp…","c":"code"},{"id":"c18a12be","t":"Rust has 3 kinds of loops","c":"rust"},{"id":"0f1dc056","t":"Ownership in Rust is a discipli…","c":"rust"},{"id":"ec36dccd","t":"A Rust string slice is a refere…","c":"rust"},{"id":"6fd48b5a","t":"Rust structs are like tuples wi…","c":"rust"},{"id":"2ab4dc6f","t":"Rust methods are like functions…","c":"rust"},{"id":"00993db4","t":"A crate is the smallest amount …","c":"rust"},{"id":"2e2fae0b","t":"Search rust docs quickly from r…","c":"rust"},{"id":"a398eb84","t":"Draw-in describes the width los…","c":"textile"},{"id":"1fc0f7df","t":"Take-up describes the length lo…","c":"textile"},{"id":"33b60a91","t":"Sett is the combination of ends…","c":"other"},{"id":"a7f11af0","t":"Balanced weave has the same num…","c":"textile"},{"id":"fa35c70f","t":"Ends per inch measures the numb…","c":"textile"},{"id":"af4325df","t":"Pick is a single weft thread in…","c":"textile"},{"id":"88a48d35","t":"SELECT gets data from rows in a…","c":"sql"},{"id":"32f7846b","t":"LIMIT limits the number of rows…","c":"other"},{"id":"6377d748","t":"WHERE only returns rows that ma…","c":"other"},{"id":"c9cfd5c7","t":"NULL represents missing data","c":"sql"},{"id":"36f4eb73","t":"ORDER BY sorts query results","c":"sql"},{"id":"0ee7fa5f","t":"Aggregate functions return stat…","c":"other"},{"id":"a9f48b8f","t":"a subquery is a SQL query insid…","c":"sql"},{"id":"6c479b25","t":"joins connect tables","c":"sql"},{"id":"d3b64e28","t":"Polska efter Ante Sundin","c":"music"},{"id":"28f2609e","t":"Eklundapolska nr 3","c":"music"},{"id":"a2609619","t":"Slängpolska av Carl Viktor Rulin","c":"music"},{"id":"c9f69646","t":"Halling från Ekshärad efter Per…","c":"other"},{"id":"95594b5d","t":"Rendering music in these notes","c":"music"},{"id":"61455859","t":"A backstrap loom is a loom tens…","c":"textile"},{"id":"700433db","t":"Clasped Weft Weaving","c":"textile"},{"id":"12920edf","t":"Wet-finishing woven pieces","c":"other"},{"id":"2d024341","t":"Weave notebook covers on a rigi…","c":"textile"},{"id":"cb7810c1","t":"Tote bag from a long strip of c…","c":"textile"},{"id":"38ed9964","t":"Colour gamp or colour sampler","c":"other"},{"id":"7298b210","t":"Rag rugs","c":"other"},{"id":"c110dc56","t":"Fell line is the front of your …","c":"textile"},{"id":"7c0b138d","t":"A dent is an opening in the heddle","c":"textile"},{"id":"9d44c0f0","t":"The cloth beam is at the front …","c":"textile"},{"id":"3442aa91","t":"The back beam is at the back of…","c":"textile"},{"id":"5b033c82","t":"Apron rods are mounted to beams","c":"other"},{"id":"755e0141","t":"Stick shuttles should be in pro…","c":"other"},{"id":"f135ac3e","t":"Loom waste","c":"textile"},{"id":"67d67b3f","t":"Plain weave is one weft thread …","c":"textile"},{"id":"f9616468","t":"Nap is a fluffy surface from ra…","c":"other"}],"edges":[["1cd5578f","5736bac0"],["1cd5578f","7c7d2b1c"],["1cd5578f","06d43909"],["1cd5578f","c942f464"],["1cd5578f","598077d7"],["8763060c","9e8ad52a"],["8763060c","b95dc45e"],["8763060c","636f27a4"],["8763060c","90fe62d3"],["8763060c","6e0f1fb3"],["8763060c","0a5ebd63"],["8763060c","1350226a"],["8763060c","709a41e7"],["c03efb96","77ed8aa7"],["c03efb96","e7a07735"],["c03efb96","546f9bf0"],["c03efb96","149484c2"],["c03efb96","76425dee"],["08fcb808","bd36d124"],["08fcb808","cf8f8302"],["08fcb808","5736bac0"],["08fcb808","809eff08"],["08fcb808","950aed1e"],["08fcb808","1cd5578f"],["08fcb808","27369b6f"],["08fcb808","762fb89c"],["08fcb808","10d9d536"],["08fcb808","0ba39408"],["08fcb808","cc4d6a10"],["08fcb808","b0704fb0"],["08fcb808","aa39e990"],["08fcb808","fbdfca02"],["08fcb808","8f059637"],["08fcb808","749429ea"],["ba3a5b67","0e1f6cd4"],["ba3a5b67","846413c9"],["ba3a5b67","a6d16d14"],["ba3a5b67","b78673cb"],["91a082cf","1cd5578f"],["91a082cf","27369b6f"],["91a082cf","7c7d2b1c"],["91a082cf","598077d7"],["56e826f0","a44edb7d"],["56e826f0","486c57aa"],["56e826f0","78a35e1d"],["56e826f0","c50dcc0c"],["c83477bd","af17a80d"],["c83477bd","5c961fc8"],["c83477bd","e4b06b2b"],["c83477bd","e97c4394"],["c83477bd","45b8c56b"],["c83477bd","d13d6d0d"],["c83477bd","00b2187d"],["c83477bd","99b55dd6"],["c83477bd","c18a12be"],["c83477bd","0f1dc056"],["c83477bd","ec36dccd"],["c83477bd","6fd48b5a"],["c83477bd","2ab4dc6f"],["c83477bd","00993db4"],["c83477bd","2e2fae0b"],["8a137958","a398eb84"],["8a137958","1fc0f7df"],["8a137958","33b60a91"],["8a137958","a7f11af0"],["8a137958","fa35c70f"],["8a137958","af4325df"],["cf8f8302","bd36d124"],["cf8f8302","88a48d35"],["cf8f8302","32f7846b"],["cf8f8302","6377d748"],["cf8f8302","c9cfd5c7"],["cf8f8302","36f4eb73"],["cf8f8302","0ee7fa5f"],["cf8f8302","a9f48b8f"],["cf8f8302","6c479b25"],["b271e3a8","d3b64e28"],["b271e3a8","c50dcc0c"],["b271e3a8","a44edb7d"],["b271e3a8","28f2609e"],["b271e3a8","a2609619"],["b271e3a8","c9f69646"],["b271e3a8","95594b5d"],["2bb7c540","61455859"],["2bb7c540","700433db"],["2bb7c540","ba3a5b67"],["2bb7c540","8a137958"],["2bb7c540","12920edf"],["2bb7c540","2d024341"],["2bb7c540","cb7810c1"],["2bb7c540","38ed9964"],["2bb7c540","7298b210"],["2bb7c540","b78673cb"],["2bb7c540","af4325df"],["2bb7c540","0e1f6cd4"],["2bb7c540","a6d16d14"],["2bb7c540","846413c9"],["2bb7c540","c110dc56"],["2bb7c540","7c0b138d"],["2bb7c540","9d44c0f0"],["2bb7c540","3442aa91"],["2bb7c540","5b033c82"],["2bb7c540","755e0141"],["2bb7c540","fa35c70f"],["2bb7c540","33b60a91"],["2bb7c540","1fc0f7df"],["2bb7c540","a398eb84"],["2bb7c540","f135ac3e"],["2bb7c540","a7f11af0"],["2bb7c540","67d67b3f"],["2bb7c540","f9616468"]]};
+
+const CLUSTER = {sql:"#6FB7FF",rust:"#F0703A",textile:"#E4B95B",music:"#7EDAB5",ux:"#E97BA8",cog:"#B99BF0",code:"#8FD06C",other:"#7C828C"};
+
+/* ================= hero force simulation ================= */
+(function(){
+  const canvas = document.getElementById('gcanvas');
+  const hero = document.querySelector('.hero');
+  const ctx = canvas.getContext('2d');
+  const reduced = matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+  let W=0,H=0,dpr=1, nodes=[], edges=[], mouse={x:-9e3,y:-9e3};
+
+  function resize(){
+    dpr = Math.min(devicePixelRatio||1, 2);
+    W = hero.clientWidth; H = hero.clientHeight;
+    canvas.width = W*dpr; canvas.height = H*dpr;
+    ctx.setTransform(dpr,0,0,dpr,0,0);
+  }
+
+  function init(){
+    const deg = {};
+    GRAPH.edges.forEach(([a,b])=>{deg[a]=(deg[a]||0)+1;deg[b]=(deg[b]||0)+1;});
+    nodes = GRAPH.nodes.map((n,i)=>{
+      // bias layout to the right half on wide screens (hero text sits left)
+      const wide = W > 860;
+      const x = wide ? W*(0.46+0.5*Math.random()) : W*(0.08+0.84*Math.random());
+      const y = H*(0.12+0.72*Math.random());
+      return {t:n.t, c:n.c, d:deg[n.id]||1, x, y, vx:0, vy:0, r: 2.4+Math.min(deg[n.id]||1,10)*0.55, i};
+    });
+    const idx = {}; GRAPH.nodes.forEach((n,i)=>idx[n.id]=i);
+    edges = GRAPH.edges.map(([a,b])=>[idx[a],idx[b]]).filter(e=>e[0]!=null&&e[1]!=null);
+  }
+
+  function tick(){
+    const alpha = 0.9;
+    // repulsion (cheap n^2, n=101)
+    for(let i=0;i<nodes.length;i++){
+      const a=nodes[i];
+      for(let j=i+1;j<nodes.length;j++){
+        const b=nodes[j];
+        let dx=a.x-b.x, dy=a.y-b.y, d2=dx*dx+dy*dy;
+        if(d2<1) d2=1;
+        const d=Math.sqrt(d2), f=Math.min(1400/d2,0.6);
+        dx/=d; dy/=d;
+        a.vx+=dx*f; a.vy+=dy*f; b.vx-=dx*f; b.vy-=dy*f;
+      }
+    }
+    // springs
+    for(const [ai,bi] of edges){
+      const a=nodes[ai], b=nodes[bi];
+      const dx=b.x-a.x, dy=b.y-a.y, d=Math.max(Math.hypot(dx,dy),0.01);
+      const rest=68, f=(d-rest)*0.006;
+      const ux=dx/d, uy=dy/d;
+      a.vx+=ux*f*d*0.02; a.vy+=uy*f*d*0.02;
+      b.vx-=ux*f*d*0.02; b.vy-=uy*f*d*0.02;
+    }
+    // mouse repulsion
+    if(mouse.x>-1e3){
+      for(const n of nodes){
+        const dx=n.x-mouse.x, dy=n.y-mouse.y, d2=dx*dx+dy*dy, R=110;
+        if(d2<R*R && d2>0.01){
+          const d=Math.sqrt(d2), f=(1-d/R)*1.5;
+          n.vx+=dx/d*f; n.vy+=dy/d*f;
+        }
+      }
+    }
+    for(const n of nodes){
+      // gentle pull toward own lane + centering
+      const wide=W>860, laneX = wide ? W*0.72 : W*0.5;
+      n.vx += (laneX-n.x)*0.00035;
+      n.vy += (H*0.5-n.y)*0.00035;
+      n.vx*=0.86; n.vy*=0.86;
+      n.x+=n.vx*alpha*0.4; n.y+=n.vy*alpha*0.4;
+      n.x=Math.max(20,Math.min(W-20,n.x));
+      n.y=Math.max(14,Math.min(H-14,n.y));
+    }
+  }
+
+  function draw(){
+    ctx.clearRect(0,0,W,H);
+    // edges
+    ctx.lineWidth=1;
+    for(const [ai,bi] of edges){
+      const a=nodes[ai],b=nodes[bi];
+      const dx=a.x-b.x, dy=a.y-b.y, dist=Math.hypot(dx,dy);
+      if(dist>190) continue;
+      ctx.strokeStyle='rgba(233,228,214,'+(0.16*(1-dist/190))+')';
+      ctx.beginPath(); ctx.moveTo(a.x,a.y); ctx.lineTo(b.x,b.y); ctx.stroke();
+    }
+    // hubs first labels later
+    const hubs = nodes.filter(n=>n.d>=6);
+    for(const n of nodes){
+      const col = CLUSTER[n.c]||CLUSTER.other;
+      // halo
+      ctx.fillStyle = col+'22';
+      ctx.beginPath(); ctx.arc(n.x,n.y,n.r*2.6,0,7); ctx.fill();
+      // core
+      ctx.fillStyle = col;
+      ctx.beginPath(); ctx.arc(n.x,n.y,n.r,0,7); ctx.fill();
+    }
+    // labels for hubs
+    ctx.font='500 10px "Spline Sans Mono", monospace';
+    ctx.textBaseline='middle';
+    for(const n of hubs){
+      ctx.fillStyle='rgba(233,228,214,0.62)';
+      ctx.fillText(n.t, n.x+n.r+6, n.y);
+    }
+  }
+
+  let running=true, visible=true;
+  function frame(){ if(running&&visible){ tick(); draw(); } requestAnimationFrame(frame); }
+
+  resize(); init();
+  if(reduced){ for(let i=0;i<420;i++) tick(); draw(); }
+  else{
+    for(let i=0;i<180;i++) tick();
+    frame();
+    addEventListener('resize',()=>{resize(); init(); for(let i=0;i<120;i++) tick(); if(reduced) draw();});
+    hero.addEventListener('pointermove',e=>{
+      const r=hero.getBoundingClientRect();
+      mouse.x=e.clientX-r.left; mouse.y=e.clientY-r.top;
+    });
+    hero.addEventListener('pointerleave',()=>{mouse.x=-9e3;mouse.y=-9e3;});
+    new IntersectionObserver(en=>{visible=en[0].isIntersecting;}).observe(hero);
+  }
+})();
+
+/* ================= 16-view thumbnails (hand-drawn SVG specs) ================= */
+(function(){
+  const live = new Set(['force','timeline','calendar','treemap']);
+  const VIEWS = [
+    ['force','Force-directed graph','Entities + wiki-links, clusters colored. The classic.',1],
+    ['tree','Collapsible tree','Heading + folder hierarchy at a glance.',0],
+    ['sunburst','Sunburst','Zoomable rings: cluster → doc.',0],
+    ['treemap','Treemap','Dense notes vs thin ones, sized by words.',1],
+    ['sankey','Sankey','Topic flow between sections.',0],
+    ['chord','Chord diagram','Which entities show up together.',0],
+    ['matrix','Matrix heatmap','Pairwise relations, sorted by cluster.',0],
+    ['alluvial','Alluvial','Concepts migrating across time.',0],
+    ['timeline','Timeline','When you wrote it, colored by topic.',1],
+    ['stream','Stream graph','Topic evolution, stacked and flowing.',0],
+    ['calendar','Calendar heatmap','GitHub-style writing activity, per day.',1],
+    ['wordtree','Word tree','Phrase patterns with a shared prefix.',0],
+    ['cloud','Tag cloud','Frequency first, semantic zoom on click.',0],
+    ['lattice','Concept lattice','Formal concept analysis over note × entity.',0],
+    ['galaxy','3D knowledge galaxy','Fly-through force graph, clusters as nebulae.',0],
+    ['got','Graph-of-thoughts','The agent\'s reasoning chain as a whiteboard.',0],
+  ];
+  const dim='rgba(233,228,214,.3)', dim2='rgba(233,228,214,.14)';
+  const A='#F0A32E', C=['#6FB7FF','#F0703A','#E4B95B','#7EDAB5','#E97BA8','#B99BF0','#8FD06C'];
+
+  const T = {
+    force(){ const p=[[14,34],[30,16],[52,26],[72,12],[86,36],[26,52],[46,46],[64,54],[18,58],[44,60],[66,60],[82,54],[38,36],[58,38]];
+      const e=[[0,1],[1,2],[2,3],[2,13],[13,6],[5,6],[6,7],[3,4],[7,11],[6,9],[8,9],[9,10],[10,11],[1,12],[12,6],[4,11],[0,5],[0,8],[13,10]];
+      let s=e.map(([a,b])=>`<line x1="${p[a][0]}" y1="${p[a][1]}" x2="${p[b][0]}" y2="${p[b][1]}" stroke="${dim2}"/>`).join('');
+      p.forEach((q,i)=>{const c=C[i%C.length], r=i%5==0?4:2.4;
+        s+=`<circle cx="${q[0]}" cy="${q[1]}" r="${r}" fill="${c}"/>`;});
+      return s; },
+    tree(){ let s=''; const rows=[[10,32],[34,14],[34,32],[34,50],[58,8],[58,22],[58,42],[58,56],[82,14],[82,30],[82,48]];
+      [[0,1],[0,2],[0,3],[1,4],[1,5],[2,6],[3,7],[4,8],[4,9],[6,10]].forEach(([a,b])=>{
+        s+=`<path d="M${rows[a][0]+5} ${rows[a][1]} C ${rows[a][0]+20} ${rows[a][1]}, ${rows[b][0]-14} ${rows[b][1]}, ${rows[b][0]-5} ${rows[b][1]}" fill="none" stroke="${dim2}"/>`;});
+      rows.forEach((q,i)=>{s+=`<rect x="${q[0]-5}" y="${q[1]-2.6}" width="${i==0?12:9}" height="5.2" rx="2.4" fill="${i==0?A:(i%3?dim:C[i%C.length])}"/>`;});
+      return s; },
+    sunburst(){ let s=''; const segs=(r0,r1,n,off)=>{for(let i=0;i<n;i++){const a0=off+i*(Math.PI*1.7/n),a1=a0+Math.PI*1.7/n-0.05;
+        const x0=48+r0*Math.cos(a0),y0=32+r0*Math.sin(a0),x1=48+r1*Math.cos(a0),y1=32+r1*Math.sin(a0),x2=48+r1*Math.cos(a1),y2=32+r1*Math.sin(a1),x3=48+r0*Math.cos(a1),y3=32+r0*Math.sin(a1);
+        s+=`<path d="M${x0} ${y0} L${x1} ${y1} A${r1} ${r1} 0 0 1 ${x2} ${y2} L${x3} ${y3} A${r0} ${r0} 0 0 0 ${x0} ${y0}" fill="${C[(i+off)%C.length]}" opacity="${r1>16?0.75:0.9}"/>`;}};
+      segs(7,15,3,0); segs(18,27,8,0.3); return s+`<circle cx="48" cy="32" r="3.4" fill="${A}"/>`; },
+    treemap(){ const rs=[[6,8,44,30],[6,42,30,16],[40,8,26,18],[40,30,26,28],[70,8,20,42],[6,62,34,12],[44,62,46,12]];
+      return rs.map((r,i)=>`<rect x="${r[0]}" y="${r[1]}" width="${r[2]}" height="${r[3]}" rx="2" fill="${i==0?A:(C[i%C.length])}" opacity="${i==0?0.85:0.5}" stroke="rgba(12,15,19,.9)"/>`).join(''); },
+    sankey(){ let s=''; const L=[[14,14],[14,32],[14,50]],R=[[82,22],[82,46]];
+      [[0,0,.9],[1,1,.7],[2,0,.5],[0,1,.4]].forEach(([a,b,o])=>{
+        s+=`<path d="M${L[a][0]+7} ${L[a][1]} C 48 ${L[a][1]}, 48 ${R[b][1]}, ${R[b][0]-7} ${R[b][1]}" stroke="${C[(a+b)%C.length]}" stroke-width="5" fill="none" opacity="${o*0.55}"/>`;});
+      L.forEach((q,i)=>s+=`<rect x="${q[0]-6}" y="${q[1]-7}" width="6" height="14" rx="2" fill="${C[i]}"/>`);
+      R.forEach((q,i)=>s+=`<rect x="${q[0]}" y="${q[1]-7}" width="6" height="14" rx="2" fill="${C[(i+3)%C.length]}"/>`);
+      return s; },
+    chord(){ let s=''; for(let i=0;i<10;i++){const a=i/10*Math.PI*2-Math.PI/2;
+        s+=`<path d="M ${48+26*Math.cos(a)} ${32+26*Math.sin(a)} A 26 26 0 0 1 ${48+26*Math.cos(a+0.42)} ${32+26*Math.sin(a+0.42)}" fill="none" stroke="${C[i%C.length]}" stroke-width="5" opacity=".8"/>`;}
+      [[0,3],[1,5],[2,7],[4,8],[6,9],[3,8]].forEach(([a,b])=>{
+        const a1=a/10*Math.PI*2-Math.PI/2+0.2,a2=b/10*Math.PI*2-Math.PI/2+0.2;
+        s+=`<line x1="${48+22*Math.cos(a1)}" y1="${32+22*Math.sin(a1)}" x2="${48+22*Math.cos(a2)}" y2="${32+22*Math.sin(a2)}" stroke="${dim}" opacity=".7"/>`;});
+      return s; },
+    matrix(){ let s=''; for(let r=0;r<6;r++)for(let c=0;c<6;c++){const o=(r+c)%5==0?0.9:(r*c)%4==0?0.5:(r+c)%3==0?0.25:0.08;
+        s+=`<rect x="${20+c*10}" y="${8+r*8.6}" width="7" height="6" rx="1.4" fill="${r==c?A:(C[(r+c)%C.length])}" opacity="${o}"/>`;}
+      return s; },
+    alluvial(){ let s=''; const cols=[16,38,60,82];
+      [[0,1],[1,2],[2,3],[0,2],[1,3]].forEach(([a,b],i)=>{const ya=16+(a%2)*20, yb=16+(b%2)*20;
+        s+=`<path d="M${cols[a]+4} ${ya} C ${(cols[a]+cols[b])/2} ${ya}, ${(cols[a]+cols[b])/2} ${yb}, ${cols[b]-4} ${yb}" stroke="${C[i]}" stroke-width="4" fill="none" opacity=".5"/>`;});
+      cols.forEach((x,i)=>{s+=`<rect x="${x-4}" y="${10+(i%2)*20}" width="4" height="34" rx="2" fill="${dim}"/>`;});
+      return s; },
+    timeline(){ let s=`<line x1="10" y1="32" x2="86" y2="32" stroke="${dim2}"/>`;
+      [[16,3,'#6FB7FF'],[30,2.4,'#F0703A'],[42,4,'#E4B95B'],[55,2.8,'#7EDAB5'],[68,3.6,'#E97BA8'],[80,2.4,'#B99BF0']].forEach(([x,r,c],i)=>{
+        const up=i%2==0; s+=`<line x1="${x}" y1="32" x2="${x}" y2="${up?20:44}" stroke="${dim2}"/><circle cx="${x}" cy="32" r="${r}" fill="${c}"/>`;});
+      return s+`<line x1="10" y1="46" x2="50" y2="46" stroke="${A}" stroke-width="2.5" opacity=".8"/><line x1="54" y1="46" x2="84" y2="46" stroke="${dim}" stroke-width="2.5" opacity=".4"/>`; },
+    stream(){ return `<path d="M8 26 C 24 18, 34 30, 48 24 S 74 14, 88 22 L88 40 C 74 48, 60 38, 48 44 S 22 52, 8 42 Z" fill="#F0A32E" opacity=".28"/>
+      <path d="M8 34 C 26 28, 40 40, 54 34 S 76 28, 88 34 L88 44 C 72 52, 58 44, 46 50 S 20 56, 8 48 Z" fill="#6FB7FF" opacity=".22"/>
+      <path d="M8 40 C 26 36, 42 46, 56 42 S 78 38, 88 42 L88 50 C 70 56, 54 50, 44 54 S 18 58, 8 52 Z" fill="#7EDAB5" opacity=".18"/>`; },
+    calendar(){ let s=''; for(let r=0;r<5;r++)for(let c=0;c<12;c++){const v=Math.sin(r*2.7+c*1.3);
+        const o=v>0.4?0.95:v>0?0.55:v>-0.4?0.25:0.08;
+        s+=`<rect x="${12+c*6.4}" y="${10+r*9.4}" width="5" height="7.6" rx="1.4" fill="${A}" opacity="${o}"/>`;}
+      return s; },
+    wordtree(){ const br=[[10,32,28,18],[10,32,28,46],[28,18,46,12],[28,18,46,26],[28,46,46,40],[28,46,46,52],[46,12,64,10],[46,26,64,30],[46,40,64,44],[64,30,82,26],[64,44,82,48]];
+      let s=br.map(([x1,y1,x2,y2])=>`<path d="M${x1} ${y1} C ${x1+10} ${y1}, ${x2-10} ${y2}, ${x2} ${y2}" fill="none" stroke="${dim2}"/>`).join('');
+      [[10,32],[28,18],[28,46],[46,12],[46,26],[46,40],[64,10],[64,30],[64,44],[82,26],[82,48]].forEach((q,i)=>{
+        s+=`<rect x="${q[0]-3}" y="${q[1]-1.6}" width="${18-i%3*4}" height="3.2" rx="1.6" fill="${i%4==0?A:dim}"/>`;});
+      return s; },
+    cloud(){ const w=[['graph',15,A],['notes',9.5,dim],['link',11,'#6FB7FF'],['cluster',8,dim],['wiki',12,'#7EDAB5'],['map',8.5,dim],['agent',10,'#E97BA8'],['seed',7.5,dim],['vault',9,'#B99BF0'],['node',7,dim]];
+      let x=8,y=26; return w.map(([t,fs,c])=>{ x+=t.length*fs*0.32; if(x>80){x=10;y+=15;}
+        const s=`<text x="${x}" y="${y}" font-family="Spline Sans Mono,monospace" font-size="${fs*0.9}" fill="${c}">${t}</text>`; x+=t.length*fs*0.32+6; return s;}).join(''); },
+    lattice(){ const n=[[48,8],[28,24],[68,24],[48,40],[28,56],[68,56],[8,40],[88,40]];
+      let s='';[[0,1],[0,2],[1,3],[2,3],[3,4],[3,5],[1,6],[2,7],[6,4],[7,5]].forEach(([a,b])=>{
+        s+=`<line x1="${n[a][0]}" y1="${n[a][1]}" x2="${n[b][0]}" y2="${n[b][1]}" stroke="${dim2}"/>`;});
+      n.forEach((q,i)=>s+=`<circle cx="${q[0]}" cy="${q[1]}" r="${i==0||i==3?4:2.6}" fill="${i==3?A:C[i%C.length]}"/>`);
+      return s; },
+    galaxy(){ let s=''; for(let i=0;i<34;i++){const a=i*2.39996, r=4+Math.sqrt(i)*4.6;
+        const x=48+r*Math.cos(a), y=32+r*0.62*Math.sin(a);
+        s+=`<circle cx="${x}" cy="${y}" r="${i%7==0?2.6:1.2}" fill="${C[i%C.length]}" opacity="${0.9-r*0.012}"/>`;}
+      return s+`<circle cx="48" cy="32" r="3" fill="${A}"/><text x="60" y="14" font-family="Spline Sans Mono,monospace" font-size="7" fill="${dim}">3D</text>`; },
+    got(){ const n=[[10,32],[30,20],[30,44],[52,14],[52,30],[52,50],[74,22],[74,42]];
+      let s='';[[0,1],[0,2],[1,3],[1,4],[2,5],[3,6],[5,7],[4,6]].forEach(([a,b])=>{
+        const x1=n[a][0]+4,y1=n[a][1],x2=n[b][0]-4,y2=n[b][1];
+        s+=`<line x1="${x1}" y1="${y1}" x2="${x2}" y2="${y2}" stroke="${dim2}"/><circle cx="${(x1+x2)/2}" cy="${(y1+y2)/2}" r="1.3" fill="${dim}"/>`;});
+      n.forEach((q,i)=>s+=`<circle cx="${q[0]}" cy="${q[1]}" r="4" fill="none" stroke="${i==6?A:C[i%C.length]}" stroke-width="1.6"/>`);
+      return s; },
+  };
+
+  const grid = document.getElementById('vizGrid');
+  grid.innerHTML = VIEWS.map(([key,name,desc,isLive])=>`
+    <article class="viz-card reveal">
+      <div class="thumb"><svg viewBox="0 0 96 64" width="100%" height="100%" aria-hidden="true">${T[key]()}</svg></div>
+      <h3>${name} <span class="badge ${isLive?'live':'next'}">${isLive?'LIVE':'NEXT'}</span></h3>
+      <p>${desc}</p>
+    </article>`).join('');
+})();
+
+/* ================= scroll reveals + count-up ================= */
+(function(){
+  const io = new IntersectionObserver(entries=>{
+    entries.forEach(e=>{ if(e.isIntersecting){ e.target.classList.add('in'); io.unobserve(e.target);} });
+  },{threshold:0.12,rootMargin:'0px 0px -40px 0px'});
+  document.querySelectorAll('.reveal').forEach((el,i)=>{ el.style.transitionDelay=(i%4)*60+'ms'; io.observe(el); });
+
+  const nums = document.querySelectorAll('[data-count]');
+  const nio = new IntersectionObserver(entries=>{
+    entries.forEach(e=>{
+      if(!e.isIntersecting) return;
+      const el=e.target, target=+el.dataset.count, t0=performance.now();
+      (function step(t){
+        const p=Math.min((t-t0)/1300,1), v=Math.round(target*(1-Math.pow(1-p,3)));
+        el.textContent=v;
+        if(p<1) requestAnimationFrame(step);
+      })(t0);
+      nio.unobserve(el);
+    });
+  },{threshold:0.6});
+  nums.forEach(n=>nio.observe(n));
+})();
+
+/* ================= nav + hero load-in ================= */
+(function(){
+  const nav=document.getElementById('nav');
+  addEventListener('scroll',()=>nav.classList.toggle('scrolled',scrollY>24),{passive:true});
+
+  // staggered hero entrance
+  if(!matchMedia('(prefers-reduced-motion: reduce)').matches){
+    document.querySelectorAll('.reveal-l').forEach((el,i)=>{
+      el.style.transition='opacity .9s cubic-bezier(.2,.6,.2,1), transform .9s cubic-bezier(.2,.6,.2,1)';
+      el.style.transform='translateY(22px)';
+      setTimeout(()=>{el.style.opacity='1';el.style.transform='none';},180+i*110);
+    });
+  } else {
+    document.querySelectorAll('.reveal-l').forEach(el=>el.style.opacity='1');
+  }
+})();
+
+/* ================= waitlist form (demo: local success state only) ================= */
+(function(){
+  const form=document.getElementById('wlForm'), done=document.getElementById('wlDone');
+  form.addEventListener('submit',e=>{
+    e.preventDefault();
+    const email=form.email.value.trim();
+    if(!/^[^@\s]+@[^@\s]+\.[^@\s]+$/.test(email)){ form.email.focus(); form.email.style.borderColor='#F0703A'; return; }
+    form.style.display='none'; done.style.display='inline-block';
+  });
+})();
+</script>
+<!-- gtm-portal-backlink (managed by _scripts/sync-gtm.py) -->
+<a class="gtmp-back" href="/GTM/" aria-label="返回 GTM 门户">&#8617; GTM 门户</a>
+<style>
+.gtmp-back{position:fixed;right:1rem;bottom:1rem;z-index:2147483000;
+font:500 12px/1 ui-monospace,SFMono-Regular,Menlo,Consolas,monospace;
+letter-spacing:.05em;text-decoration:none;padding:.6rem .85rem;border-radius:999px;
+color:#14130f;background:rgba(251,250,247,.92);border:1px solid rgba(20,19,15,.16);
+box-shadow:0 2px 12px rgba(20,19,15,.14);backdrop-filter:blur(6px);
+transition:transform .15s ease,box-shadow .15s ease}
+.gtmp-back:hover{transform:translateY(-1px);box-shadow:0 4px 16px rgba(20,19,15,.22)}
+@media (prefers-color-scheme:dark){.gtmp-back{color:#f5f2ea;background:rgba(20,19,15,.88);
+border-color:rgba(245,242,234,.22)}}
+</style>
+</body>
+</html>

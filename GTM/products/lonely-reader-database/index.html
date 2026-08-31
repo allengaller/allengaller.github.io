@@ -1,0 +1,683 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>孤独读者 · GTM 总纲 | Lonely Reader Go-To-Market</title>
+<meta name="description" content="孤独读者 Lonely Reader 市场进入战略总纲：定位、读者、价值主张、增长引擎、商业模式、发布路线与度量体系。">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Serif+SC:wght@400;600;700;900&family=Cormorant+Garamond:ital,wght@0,500;0,600;1,500&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/lxgw-wenkai-webfont@1.7.0/style.css">
+<style>
+:root{
+  --ink-0:#131009;
+  --ink-1:#1a1610;
+  --ink-2:#221c13;
+  --paper:#efe6d3;
+  --paper-dim:#b9ad92;
+  --paper-faint:#807558;
+  --cinnabar:#cb4126;
+  --cinnabar-bright:#e05536;
+  --hairline:rgba(239,230,211,.13);
+  --hairline-strong:rgba(239,230,211,.28);
+  --zhusha-line:rgba(203,65,38,.16);
+  --serif:"Noto Serif SC","Songti SC","STSong",serif;
+  --kai:"LXGW WenKai","Kaiti SC","STKaiti","Noto Serif SC",serif;
+  --latin:"Cormorant Garamond",Georgia,serif;
+  --mono:"IBM Plex Mono","SFMono-Regular",Menlo,monospace;
+}
+*{margin:0;padding:0;box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{
+  background:var(--ink-0);
+  color:var(--paper);
+  font-family:var(--serif);
+  font-size:16px;
+  line-height:1.9;
+  -webkit-font-smoothing:antialiased;
+  overflow-x:hidden;
+}
+body::after{
+  content:"";position:fixed;inset:0;pointer-events:none;z-index:2000;opacity:.05;
+  background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.9' numOctaves='2'/%3E%3C/filter%3E%3Crect width='160' height='160' filter='url(%23n)'/%3E%3C/svg%3E");
+}
+::selection{background:var(--cinnabar);color:var(--paper)}
+a{color:inherit;text-decoration:none}
+.wrap{max-width:1120px;margin:0 auto;padding:0 clamp(20px,4vw,48px)}
+
+#progress{position:fixed;top:0;left:0;height:2px;width:0;background:var(--cinnabar);z-index:3000}
+
+header{
+  position:sticky;top:0;z-index:1000;
+  background:rgba(19,16,9,.82);backdrop-filter:blur(14px);-webkit-backdrop-filter:blur(14px);
+  border-bottom:1px solid var(--hairline);
+}
+.nav{display:flex;align-items:center;gap:28px;height:64px}
+.brand{display:flex;align-items:center;gap:12px;flex-shrink:0}
+.seal{
+  display:grid;grid-template-columns:1fr 1fr;place-items:center;
+  width:38px;height:38px;background:var(--cinnabar);color:var(--paper);
+  font-family:var(--kai);font-size:14px;font-weight:700;line-height:1;
+  border-radius:5px;transform:rotate(-4deg);position:relative;flex-shrink:0;
+  box-shadow:0 2px 10px rgba(203,65,38,.35);
+}
+.seal::after{content:"";position:absolute;inset:3px;border:1px solid rgba(239,230,211,.5);border-radius:3px}
+.brand b{font-weight:700;letter-spacing:.14em;font-size:15px}
+.brand i{font-family:var(--latin);font-style:italic;color:var(--paper-faint);font-size:13px;display:block;line-height:1.2}
+.nav-links{display:flex;gap:4px;margin-left:auto}
+.nav-links a{
+  font-size:13.5px;letter-spacing:.12em;color:var(--paper-dim);
+  padding:6px 12px;border-radius:3px;transition:color .25s,background .25s;
+}
+.nav-links a:hover{color:var(--paper)}
+.nav-links a.active{color:var(--cinnabar-bright)}
+.nav-tag{
+  font-family:var(--mono);font-size:11px;color:var(--cinnabar-bright);
+  border:1px solid rgba(203,65,38,.45);padding:4px 10px;border-radius:2px;letter-spacing:.1em;flex-shrink:0;
+}
+@media(max-width:920px){.nav-links{display:none}}
+
+.hero{position:relative;padding:clamp(90px,12vh,150px) 0 0;overflow:hidden}
+.hero::before{
+  content:"";position:absolute;inset:0;pointer-events:none;
+  background:
+    radial-gradient(720px 360px at 50% -120px,rgba(217,164,65,.09),transparent 70%),
+    repeating-linear-gradient(to right,var(--zhusha-line) 0 1px,transparent 1px 112px);
+  -webkit-mask-image:linear-gradient(to bottom,black 55%,transparent);
+          mask-image:linear-gradient(to bottom,black 55%,transparent);
+}
+.hero .wrap{position:relative}
+.hero-meta{
+  display:flex;flex-wrap:wrap;gap:10px 28px;
+  font-family:var(--mono);font-size:12px;color:var(--paper-faint);letter-spacing:.06em;
+  padding-bottom:22px;border-bottom:1px solid var(--hairline);
+}
+.hero-meta em{font-style:normal;color:var(--cinnabar-bright)}
+.hero-grid{display:flex;gap:40px;padding:clamp(48px,7vh,84px) 0 0}
+.hero-main{flex:1;min-width:0}
+.hero-kicker{
+  display:inline-flex;align-items:center;gap:14px;
+  font-family:var(--mono);font-size:12.5px;letter-spacing:.32em;color:var(--cinnabar-bright);
+  text-transform:uppercase;margin-bottom:26px;
+}
+.hero-kicker::before{content:"";width:44px;height:1px;background:var(--cinnabar)}
+h1{
+  font-size:clamp(46px,8.4vw,104px);font-weight:900;line-height:1.14;
+  letter-spacing:.05em;margin:0 0 8px;
+}
+h1 .thin{font-weight:400;color:var(--paper-dim)}
+.hero-latin{
+  font-family:var(--latin);font-style:italic;font-size:clamp(17px,2vw,23px);
+  color:var(--paper-faint);letter-spacing:.06em;margin:6px 0 30px;
+}
+.hero-sub{
+  max-width:560px;color:var(--paper-dim);font-size:16.5px;
+  border-left:2px solid var(--cinnabar);padding-left:20px;
+}
+.hero-sub b{color:var(--paper);font-weight:600}
+.vertical-motto{
+  writing-mode:vertical-rl;font-family:var(--kai);
+  font-size:clamp(20px,2.6vw,30px);letter-spacing:.5em;color:var(--paper);
+  padding-left:26px;border-left:1px solid var(--hairline-strong);
+  align-self:stretch;display:flex;align-items:center;flex-shrink:0;
+  position:relative;
+}
+.vertical-motto span{opacity:.9}
+.vertical-motto::after{
+  content:"待读者如待故人";font-size:12px;letter-spacing:.55em;color:var(--paper-faint);
+  margin-top:28px;
+}
+.metrics{
+  position:relative;margin-top:clamp(56px,8vh,92px);
+  display:grid;grid-template-columns:repeat(4,1fr);
+  border:1px solid var(--hairline-strong);background:var(--ink-1);
+  transform:translateY(34px);
+  box-shadow:0 24px 60px rgba(0,0,0,.45);
+}
+.metric{padding:26px 28px 22px;position:relative}
+.metric+.metric{border-left:1px solid var(--hairline)}
+.metric small{
+  display:block;font-family:var(--mono);font-size:10.5px;letter-spacing:.22em;
+  color:var(--paper-faint);text-transform:uppercase;margin-bottom:10px;
+}
+.metric strong{font-size:clamp(26px,3vw,38px);font-weight:900;letter-spacing:.02em;line-height:1.1}
+.metric strong i{font-style:normal;color:var(--cinnabar-bright);font-family:var(--latin);font-size:.62em;margin-left:2px}
+.metric span{display:block;font-size:12.5px;color:var(--paper-dim);margin-top:6px}
+@media(max-width:820px){
+  .metrics{grid-template-columns:1fr 1fr;transform:translateY(20px)}
+  .metric:nth-child(3){border-left:0}
+  .metric:nth-child(n+3){border-top:1px solid var(--hairline)}
+  .vertical-motto{display:none}
+}
+
+main{padding-bottom:0}
+section{padding:clamp(80px,11vh,128px) 0 0;scroll-margin-top:76px}
+.sec-head{
+  display:flex;align-items:baseline;gap:22px;flex-wrap:wrap;
+  padding-top:26px;border-top:3px double var(--hairline-strong);
+  position:relative;
+}
+.sec-head::before{
+  content:"";position:absolute;top:-1px;left:0;width:88px;height:1px;background:var(--cinnabar);
+}
+.sec-no{
+  font-family:var(--mono);font-size:12px;color:var(--cinnabar-bright);letter-spacing:.18em;
+  writing-mode:vertical-rl;line-height:1;padding-top:2px;align-self:flex-start;
+}
+.sec-title h2{font-size:clamp(30px,4.4vw,50px);font-weight:900;letter-spacing:.06em;line-height:1.2}
+.sec-title .en{font-family:var(--latin);font-style:italic;color:var(--paper-faint);font-size:16px;letter-spacing:.08em}
+.sec-lede{margin-left:auto;max-width:360px;color:var(--paper-dim);font-size:14.5px;line-height:1.8}
+@media(max-width:820px){.sec-lede{margin-left:0}}
+
+.statement{
+  margin:52px 0 0;padding:clamp(28px,4vw,48px);
+  background:linear-gradient(135deg,var(--ink-1),var(--ink-2));
+  border:1px solid var(--hairline-strong);position:relative;
+}
+.statement::before{content:"卷首语";position:absolute;top:-11px;left:32px;background:var(--ink-0);padding:0 14px;font-family:var(--kai);font-size:14px;color:var(--cinnabar-bright);letter-spacing:.4em}
+.statement p{font-size:clamp(17px,1.9vw,21px);line-height:2.1;font-weight:600;letter-spacing:.03em}
+.statement p b{color:var(--cinnabar-bright)}
+.statement p small{display:block;margin-top:14px;font-size:14px;font-weight:400;color:var(--paper-dim);letter-spacing:.02em}
+
+.tbl{width:100%;border-collapse:collapse;margin-top:40px;font-size:14.5px}
+.tbl th{
+  text-align:left;font-weight:600;font-size:12px;letter-spacing:.2em;color:var(--paper-faint);
+  text-transform:uppercase;padding:12px 18px;border-bottom:1px solid var(--hairline-strong);
+}
+.tbl td{padding:18px;border-bottom:1px solid var(--hairline);vertical-align:top;color:var(--paper-dim);line-height:1.8}
+.tbl td:first-child{color:var(--paper);font-weight:600;white-space:nowrap}
+.tbl tr.us td{background:rgba(203,65,38,.07);color:var(--paper)}
+.tbl tr.us td:first-child{color:var(--cinnabar-bright)}
+.tbl .tag{display:inline-block;font-family:var(--mono);font-size:10.5px;border:1px solid var(--hairline-strong);padding:2px 8px;border-radius:2px;color:var(--paper-faint);letter-spacing:.08em;margin-left:8px;vertical-align:middle}
+.tbl-scroll{overflow-x:auto}
+@media(max-width:720px){.tbl td,.tbl th{padding:12px 10px}}
+
+.cards{display:grid;grid-template-columns:repeat(3,1fr);gap:22px;margin-top:48px}
+.card{
+  background:var(--ink-1);border:1px solid var(--hairline);padding:30px 28px 26px;
+  position:relative;transition:border-color .3s,transform .3s;
+}
+.card:hover{border-color:rgba(203,65,38,.55);transform:translateY(-4px)}
+.card::before{
+  content:attr(data-no);position:absolute;top:22px;right:24px;
+  font-family:var(--mono);font-size:11px;color:var(--paper-faint);letter-spacing:.14em;
+}
+.card:hover::before{color:var(--cinnabar-bright)}
+.card h3{font-size:21px;font-weight:700;letter-spacing:.05em;margin-bottom:4px}
+.card .en{font-family:var(--latin);font-style:italic;font-size:13px;color:var(--paper-faint);display:block;margin-bottom:18px}
+.card dl{font-size:13.5px}
+.card dt{color:var(--cinnabar-bright);font-size:11.5px;letter-spacing:.24em;font-family:var(--mono);margin:14px 0 4px}
+.card dd{color:var(--paper-dim);line-height:1.85}
+@media(max-width:920px){.cards{grid-template-columns:1fr}}
+
+.pillars{display:grid;grid-template-columns:repeat(3,1fr);gap:22px;margin-top:48px;counter-reset:pillar}
+.pillar{
+  padding:34px 30px;border-top:1px solid var(--hairline-strong);
+  position:relative;transition:border-color .3s;
+}
+.pillar:hover{border-top-color:var(--cinnabar)}
+.pillar::before{
+  counter-increment:pillar;content:"0" counter(pillar);
+  font-family:var(--latin);font-style:italic;font-size:52px;color:rgba(203,65,38,.5);
+  display:block;line-height:1;margin-bottom:18px;transition:color .3s;
+}
+.pillar:hover::before{color:var(--cinnabar-bright)}
+.pillar h3{font-size:22px;font-weight:900;letter-spacing:.06em;margin-bottom:12px}
+.pillar p{font-size:14.5px;color:var(--paper-dim);line-height:1.95}
+.pillar p b{color:var(--paper);font-weight:600}
+@media(max-width:920px){.pillars{grid-template-columns:1fr}}
+
+.engines{margin-top:48px;border-top:1px solid var(--hairline-strong)}
+.engine{
+  display:grid;grid-template-columns:120px 1fr 300px;gap:28px;
+  padding:34px 0;border-bottom:1px solid var(--hairline);align-items:start;
+}
+.engine-no{font-family:var(--mono);font-size:12px;color:var(--paper-faint);letter-spacing:.14em;padding-top:8px}
+.engine-no b{display:block;color:var(--cinnabar-bright);font-size:15px;margin-top:4px}
+.engine h3{font-size:22px;font-weight:700;letter-spacing:.05em;margin-bottom:10px}
+.engine p{font-size:14.5px;color:var(--paper-dim);line-height:1.95;max-width:560px}
+.engine .kpi{
+  border-left:1px solid var(--hairline);padding-left:26px;
+  font-size:13px;color:var(--paper-dim);line-height:2;
+}
+.engine .kpi b{display:block;font-family:var(--mono);font-size:11px;letter-spacing:.22em;color:var(--paper-faint);margin-bottom:8px}
+.engine .kpi strong{color:var(--paper);font-weight:600}
+@media(max-width:920px){.engine{grid-template-columns:1fr}.engine .kpi{border-left:0;padding-left:0;border-top:1px solid var(--hairline);padding-top:16px}}
+
+.pricing{display:grid;grid-template-columns:repeat(3,1fr);gap:22px;margin-top:48px;align-items:stretch}
+.tier{
+  background:var(--ink-1);border:1px solid var(--hairline);padding:34px 30px;
+  display:flex;flex-direction:column;position:relative;
+}
+.tier.hot{border-color:rgba(203,65,38,.6);background:linear-gradient(160deg,var(--ink-2),var(--ink-1))}
+.tier .badge{
+  position:absolute;top:-11px;right:22px;background:var(--cinnabar);color:var(--paper);
+  font-size:11px;letter-spacing:.3em;padding:3px 12px 3px 14px;border-radius:2px;
+}
+.tier small{font-family:var(--mono);font-size:11px;letter-spacing:.22em;color:var(--paper-faint);text-transform:uppercase}
+.tier h3{font-size:23px;font-weight:900;letter-spacing:.06em;margin:10px 0 2px}
+.tier .price{font-family:var(--latin);font-size:40px;font-weight:600;margin:14px 0 4px;line-height:1}
+.tier .price i{font-style:normal;font-size:15px;color:var(--paper-faint);font-family:var(--serif);letter-spacing:.05em}
+.tier ul{list-style:none;margin-top:20px;font-size:14px;color:var(--paper-dim);line-height:2.15}
+.tier ul li{padding-left:20px;position:relative}
+.tier ul li::before{content:"—";position:absolute;left:0;color:var(--cinnabar);font-size:12px;top:0}
+.tier .note{margin-top:auto;padding-top:20px;font-size:12.5px;color:var(--paper-faint);border-top:1px dashed var(--hairline)}
+.principle{
+  margin-top:26px;padding:22px 30px;border:1px dashed rgba(203,65,38,.4);
+  font-family:var(--kai);font-size:16.5px;letter-spacing:.08em;color:var(--paper);
+}
+.principle b{color:var(--cinnabar-bright)}
+@media(max-width:920px){.pricing{grid-template-columns:1fr}}
+
+.phases{margin-top:56px;position:relative;padding-left:44px}
+.phases::before{content:"";position:absolute;left:10px;top:8px;bottom:8px;width:1px;background:linear-gradient(var(--cinnabar),var(--hairline-strong))}
+.phase{position:relative;padding:0 0 46px}
+.phase::before{
+  content:"";position:absolute;left:-39px;top:10px;width:11px;height:11px;
+  background:var(--ink-0);border:2px solid var(--cinnabar);border-radius:50%;
+}
+.phase:last-child{padding-bottom:0}
+.phase small{font-family:var(--mono);font-size:11.5px;letter-spacing:.2em;color:var(--cinnabar-bright)}
+.phase h3{font-size:24px;font-weight:900;letter-spacing:.06em;margin:6px 0 12px}
+.phase p{max-width:640px;font-size:14.5px;color:var(--paper-dim);line-height:1.95}
+.phase .milestone{
+  display:inline-flex;align-items:baseline;gap:12px;margin-top:16px;
+  border:1px solid var(--hairline-strong);padding:10px 18px;background:var(--ink-1);
+}
+.phase .milestone b{font-family:var(--mono);font-size:10.5px;letter-spacing:.24em;color:var(--paper-faint)}
+.phase .milestone strong{font-size:15px;font-weight:600;color:var(--paper)}
+.phase .milestone strong i{font-style:normal;color:var(--cinnabar-bright)}
+
+.kpi-tbl td strong{color:var(--cinnabar-bright);font-family:var(--mono);font-size:13.5px;font-weight:500}
+.risk-tbl td:first-child{white-space:normal;min-width:150px}
+.risk-tbl td:nth-child(2){color:var(--paper-faint);font-size:13.5px}
+
+.closing{margin-top:clamp(90px,12vh,140px);padding:clamp(60px,9vh,100px) 0;border-top:1px solid var(--hairline-strong);position:relative;overflow:hidden}
+.closing::before{
+  content:"";position:absolute;inset:0;pointer-events:none;
+  background:radial-gradient(560px 300px at 50% 120%,rgba(203,65,38,.12),transparent 70%);
+}
+.closing .wrap{position:relative;text-align:center}
+.closing .seal{width:72px;height:72px;font-size:25px;margin:0 auto 30px;transform:rotate(-5deg)}
+.closing h2{font-family:var(--kai);font-size:clamp(26px,4vw,42px);font-weight:400;letter-spacing:.2em;line-height:1.7}
+.closing p{max-width:520px;margin:22px auto 0;font-size:14.5px;color:var(--paper-dim)}
+.closing .meta{margin-top:40px;font-family:var(--mono);font-size:11px;letter-spacing:.18em;color:var(--paper-faint)}
+
+footer{border-top:1px solid var(--hairline);padding:26px 0 34px}
+.foot{display:flex;flex-wrap:wrap;gap:12px 30px;align-items:center;font-family:var(--mono);font-size:11px;letter-spacing:.12em;color:var(--paper-faint)}
+.foot a{color:var(--paper-dim);transition:color .25s}
+.foot a:hover{color:var(--cinnabar-bright)}
+.foot .right{margin-left:auto}
+
+.reveal{opacity:0;transform:translateY(26px);transition:opacity .8s cubic-bezier(.2,.6,.2,1),transform .8s cubic-bezier(.2,.6,.2,1)}
+.reveal.in{opacity:1;transform:none}
+.hero .reveal:nth-child(1){transition-delay:.05s}
+.hero .reveal:nth-child(2){transition-delay:.18s}
+.hero .reveal:nth-child(3){transition-delay:.32s}
+.hero .reveal:nth-child(4){transition-delay:.46s}
+@media(prefers-reduced-motion:reduce){
+  html{scroll-behavior:auto}
+  .reveal{opacity:1;transform:none;transition:none}
+}
+</style>
+</head>
+<body>
+<div id="progress"></div>
+
+<header>
+  <div class="wrap nav">
+    <a class="brand" href="#top">
+      <span class="seal"><span>孤</span><span>独</span><span>读</span><span>者</span></span>
+      <span><b>孤独读者</b><i>Lonely Reader</i></span>
+    </a>
+    <nav class="nav-links">
+      <a href="#s1">定位</a>
+      <a href="#s2">读者</a>
+      <a href="#s3">价值</a>
+      <a href="#s4">增长</a>
+      <a href="#s5">商业</a>
+      <a href="#s6">路线</a>
+      <a href="#s7">度量</a>
+    </nav>
+    <span class="nav-tag">内部战略 · V1.0</span>
+  </div>
+</header>
+
+<main id="top">
+  <div class="hero">
+    <div class="wrap">
+      <div class="hero-meta reveal">
+        <span>文档编号 <em>LR-GTM-2026-001</em></span>
+        <span>版本 <em>V1.0</em></span>
+        <span>编制日期 <em>2026-08-28</em></span>
+        <span>密级 <em>内部</em></span>
+        <span>状态 <em>评审中</em></span>
+      </div>
+      <div class="hero-grid">
+        <div class="hero-main">
+          <div class="hero-kicker reveal">Go-To-Market Master Plan</div>
+          <h1 class="reveal">GTM 总纲<br><span class="thin">孤独读者</span></h1>
+          <div class="hero-latin reveal">From a literary archive to the reading infrastructure of a generation.</div>
+          <p class="hero-sub reveal">从一座<b>文学知识库</b>出发，成为文学院学生与严肃读者的<b>深度阅读基础设施</b>。本总纲回答五个问题：为谁而做、凭何不同、如何抵达、靠什么持续、以及用什么衡量成败。</p>
+        </div>
+        <div class="vertical-motto reveal"><span>读者不孤 · 必有邻</span></div>
+      </div>
+      <div class="metrics reveal">
+        <div class="metric"><small>学科板块 · 现状</small><strong>7<i>+</i></strong><span>中文、外文、新传、戏影、创写、书单、书架</span></div>
+        <div class="metric"><small>细读文本 · 首年目标</small><strong>500<i>+</i></strong><span>每篇皆为观点性细读，非百科复述</span></div>
+        <div class="metric"><small>作家专题 · 首年目标</small><strong>30<i>+</i></strong><span>以档案结构持续生长</span></div>
+        <div class="metric"><small>注册读者 · 首年目标</small><strong>50<i>K</i></strong><span>周深度阅读为北极星</span></div>
+      </div>
+    </div>
+  </div>
+
+  <section id="s1">
+    <div class="wrap">
+      <div class="sec-head reveal">
+        <span class="sec-no">卷一</span>
+        <div class="sec-title"><h2>市场与定位</h2><span class="en">Market &amp; Positioning</span></div>
+        <p class="sec-lede">中文内容供给的两极之间，存在一个被长期忽视的断层：深度阅读服务。</p>
+      </div>
+      <div class="statement reveal">
+        <p>对于<b>想真正读懂一部经典</b>的文学院学生与严肃读者，孤独读者是一座把作品拆到<b>句子层面</b>的文学知识库。不同于百科式词条的平面复述，也不同于录播课程的单声道讲授——我们以<b>细读</b>为唯一方法，以<b>档案结构</b>沉淀观点，让每一次深读都有处可归、有据可查、有人同行。</p>
+        <small>定位语句 · Positioning Statement · LR-GTM-01-PS</small>
+      </div>
+      <div class="tbl-scroll reveal">
+      <table class="tbl">
+        <thead><tr><th>供给方</th><th>形态</th><th>本质局限</th><th>与我们之交</th></tr></thead>
+        <tbody>
+          <tr><td>百科与文学史教材<span class="tag">知识平面</span></td><td>词条式概述、文学史框架</td><td>只有结论，没有阅读；观点被磨平</td><td>我们把结论还原为论证过程</td></tr>
+          <tr><td>知识付费课程平台<span class="tag">单声道</span></td><td>专家录播课、听书服务</td><td>他者的转述，读者始终在场外</td><td>我们让读者直接面对文本与批评</td></tr>
+          <tr><td>评分社区与书评平台<span class="tag">感想让渡</span></td><td>评分、短评、读后感</td><td>品味的社会证明，而非理解的工具</td><td>我们提供可引用、可检索的理解框架</td></tr>
+          <tr class="us"><td>孤独读者</td><td>细读档案 · 深度专题</td><td>—</td><td>以专业书评人的立场，做内容的慢工业</td></tr>
+        </tbody>
+      </table>
+      </div>
+    </div>
+  </section>
+
+  <section id="s2">
+    <div class="wrap">
+      <div class="sec-head reveal">
+        <span class="sec-no">卷二</span>
+        <div class="sec-title"><h2>目标读者</h2><span class="en">Ideal Reader Profiles</span></div>
+        <p class="sec-lede">三类人群，一个公约数：对「读懂」的执念，大于对「读完」的渴望。</p>
+      </div>
+      <div class="cards">
+        <div class="card reveal" data-no="LR-R-01">
+          <h3>文学院学生</h3><span class="en">The Literature Student</span>
+          <dl>
+            <dt>画像</dt><dd>中文系本科与考研群体，围绕文学史与经典文本构建应试与研究能力。</dd>
+            <dt>核心痛点</dt><dd>教材面目可憎，论文艰深隔膜，高质量细读资料散落且真伪难辨。</dd>
+            <dt>我们的答案</dt><dd>按学科与专题组织的细读档案，直接对接课程体系与考点脉络。</dd>
+            <dt>主渠道</dt><dd>校园共读计划、中文系社群、考研季内容投放。</dd>
+          </dl>
+        </div>
+        <div class="card reveal" data-no="LR-R-02">
+          <h3>严肃文学爱好者</h3><span class="en">The Serious Reader</span>
+          <dl>
+            <dt>画像</dt><dd>豆瓣、读书播客与 B 站读书区重度用户，年均深读 20 部以上。</dd>
+            <dt>核心痛点</dt><dd>网络书评浅尝辄止，找不到与文本强度匹配的批评与同好。</dd>
+            <dt>我们的答案</dt><dd>观点密集的细读与作家专题，以及「读者不孤」的共读社区。</dd>
+            <dt>主渠道</dt><dd>社媒深度长文、播客联合内容、豆瓣小组渗透。</dd>
+          </dl>
+        </div>
+        <div class="card reveal" data-no="LR-R-03">
+          <h3>创作者与执教者</h3><span class="en">The Makers &amp; Teachers</span>
+          <dl>
+            <dt>画像</dt><dd>写作课教师、讲义作者、读书类创作者，需要可引用的深度素材。</dd>
+            <dt>核心痛点</dt><dd>考据成本高，引用无出处，二次创作的版权与质量风险大。</dd>
+            <dt>我们的答案</dt><dd>编号化、版本化的规范页面，引用即署名，检索即取用。</dd>
+            <dt>主渠道</dt><dd>机构合作、引用回流、创作者联名专题。</dd>
+          </dl>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section id="s3">
+    <div class="wrap">
+      <div class="sec-head reveal">
+        <span class="sec-no">卷三</span>
+        <div class="sec-title"><h2>价值主张</h2><span class="en">Value Proposition</span></div>
+        <p class="sec-lede">三根支柱，撑起同一句话：深度，是可以被工业化的。</p>
+      </div>
+      <div class="pillars">
+        <div class="pillar reveal">
+          <h3>细读到句子</h3>
+          <p>拒绝百科式复述。<b>每一篇都是观点</b>——从开篇句的语法反讽到意象的对位结构，把作品拆到句子层面，呈现专业书评人的完整论证，而非结论的搬运。</p>
+        </div>
+        <div class="pillar reveal">
+          <h3>档案式结构</h3>
+          <p>一级学科 → 专题 → 细读，<b>编号可检索</b>。像图书馆一样生长而非像公众号一样流逝：每份档案有版本、有出处、可被课程与论文规范引用。</p>
+        </div>
+        <div class="pillar reveal">
+          <h3>评论家立场</h3>
+          <p>有立场，不骑墙。<b>分析的而非百科的</b>，审美的而非八卦的——在人人复述热点的时代，坚持做内容里的慢工业与深加工。</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section id="s4">
+    <div class="wrap">
+      <div class="sec-head reveal">
+        <span class="sec-no">卷四</span>
+        <div class="sec-title"><h2>增长引擎</h2><span class="en">Growth Engines</span></div>
+        <p class="sec-lede">四台引擎共用一套燃料：站内沉淀的细读档案，向站外持续切片分发。</p>
+      </div>
+      <div class="engines">
+        <div class="engine reveal">
+          <div class="engine-no">ENGINE<b>01</b></div>
+          <div>
+            <h3>长尾检索引擎</h3>
+            <p>细读文章天然是「作品名＋解读」类检索词的最佳答案。以档案结构批量覆盖经典文本的长尾提问，让每一次搜索都成为一次入馆。</p>
+          </div>
+          <div class="kpi"><b>引擎指标</b><span>6 个月收录 <strong>500+ 页面</strong><br>自然流量占比 <strong>≥ 60%</strong></span></div>
+        </div>
+        <div class="engine reveal">
+          <div class="engine-no">ENGINE<b>02</b></div>
+          <div>
+            <h3>社媒切片引擎</h3>
+            <p>公众号深度长文立骨架，小红书金句卡片做钩子，B 站细读视频建人设。站内一篇细读，站外切片为三种形态，双周固定节奏。</p>
+          </div>
+          <div class="kpi"><b>引擎指标</b><span>月更切片 <strong>40+ 条</strong><br>切片回流量占比 <strong>≥ 25%</strong></span></div>
+        </div>
+        <div class="engine reveal">
+          <div class="engine-no">ENGINE<b>03</b></div>
+          <div>
+            <h3>校园与社群引擎</h3>
+            <p>文学院社团共读计划、中文系讲座合作、考研季（9–12 月）重点投放。以「共读营」把读者从孤立的个体变成有邻的群体。</p>
+          </div>
+          <div class="kpi"><b>引擎指标</b><span>合作院校 <strong>20 所</strong><br>共读营留存率 <strong>≥ 55%</strong></span></div>
+        </div>
+        <div class="engine reveal">
+          <div class="engine-no">ENGINE<b>04</b></div>
+          <div>
+            <h3>口碑与引用引擎</h3>
+            <p>规范编号与版本信息使内容可被讲义、论文与课程大纲正式引用；每一次外部引用都是一次带署名的回流的入口。</p>
+          </div>
+          <div class="kpi"><b>引擎指标</b><span>外部引用月增 <strong>100+ 次</strong><br>引用来源站点 <strong>50+ 个</strong></span></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section id="s5">
+    <div class="wrap">
+      <div class="sec-head reveal">
+        <span class="sec-no">卷五</span>
+        <div class="sec-title"><h2>商业模式</h2><span class="en">Business Model</span></div>
+        <p class="sec-lede">内容免费获客，便利与服务收费——付费墙永不挡在文本之前。</p>
+      </div>
+      <div class="pricing">
+        <div class="tier reveal">
+          <small>Free Archive</small>
+          <h3>免费档案</h3>
+          <div class="price">¥0</div>
+          <ul>
+            <li>全部细读开放阅读</li>
+            <li>学科与专题完整目录</li>
+            <li>基础检索</li>
+          </ul>
+          <p class="note">免费不是策略性让利，而是增长引擎本身——它是四台引擎的燃料库。</p>
+        </div>
+        <div class="tier hot reveal">
+          <span class="badge">主力</span>
+          <small>Membership</small>
+          <h3>会员 LR+</h3>
+          <div class="price">¥25<i> / 月 · ¥198 / 年</i></div>
+          <ul>
+            <li>全站高级检索与合集订阅</li>
+            <li>新档案抢先 7 日阅读</li>
+            <li>个人书架与阅读进度同步</li>
+            <li>共读营优先席位</li>
+          </ul>
+          <p class="note">为便利与同步付费，不为文本本身付费。</p>
+        </div>
+        <div class="tier reveal">
+          <small>Programs &amp; B2B</small>
+          <h3>共读营与机构</h3>
+          <div class="price">¥99–399<i> / 期</i></div>
+          <ul>
+            <li>考研文学史共读营</li>
+            <li>经典文本领读课程</li>
+            <li>院校与图书馆机构订阅</li>
+          </ul>
+          <p class="note">B 端试点于第二阶段启动，验证机构付费意愿。</p>
+        </div>
+      </div>
+      <div class="principle reveal"><b>定价原则：</b>凡挡在读者与文本之间的收费，都会损伤「深度」的品牌承诺；我们只对检索、同步、共读等增量服务定价。</div>
+    </div>
+  </section>
+
+  <section id="s6">
+    <div class="wrap">
+      <div class="sec-head reveal">
+        <span class="sec-no">卷六</span>
+        <div class="sec-title"><h2>发布路线</h2><span class="en">Launch Roadmap</span></div>
+        <p class="sec-lede">十二个月，三个阶段：先校准产品，再放大增长，最后验证商业。</p>
+      </div>
+      <div class="phases">
+        <div class="phase reveal">
+          <small>PHASE 0 · M0 – M2</small>
+          <h3>内测校准</h3>
+          <p>招募 500 名种子读者，沉淀首批 100 篇细读档案，重点校准检索体验、阅读排版与专题导航。此阶段不做任何增长投放，只回答一个问题：深度阅读的体验是否值得回头。</p>
+          <div class="milestone"><b>里程碑</b><strong>NPS <i>≥ 60</i> · 种子读者周回访率 ≥ 40%</strong></div>
+        </div>
+        <div class="phase reveal">
+          <small>PHASE 1 · M3 – M6</small>
+          <h3>公测起量</h3>
+          <p>正式上线，检索收录启动，社媒切片进入双周节奏，首期校园共读计划落地。增长重心是让四台引擎同时点火，并验证自然流量的可持续性。</p>
+          <div class="milestone"><b>里程碑</b><strong>注册 <i>20,000</i> · 周活跃 4,000 · 收录页面 500+</strong></div>
+        </div>
+        <div class="phase reveal">
+          <small>PHASE 2 · M7 – M12</small>
+          <h3>商业化验证</h3>
+          <p>会员 LR+ 上线，首期付费共读营开营，院校机构订阅开始试点。商业化的前提是前两个阶段的留存与口碑已经成立——若留存未达标，则推迟商业化，继续投资内容。</p>
+          <div class="milestone"><b>里程碑</b><strong>付费转化 <i>≥ 3%</i> · MRR ¥60K · 机构试点 3 家</strong></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section id="s7">
+    <div class="wrap">
+      <div class="sec-head reveal">
+        <span class="sec-no">卷七</span>
+        <div class="sec-title"><h2>度量与风险</h2><span class="en">Metrics &amp; Risks</span></div>
+        <p class="sec-lede">北极星只有一个：每周完成的深度阅读次数。其余指标皆为其仆从。</p>
+      </div>
+      <div class="statement reveal">
+        <p><b>北极星指标 · WCR</b>（Weekly Completed Readings，周深度阅读完成数）——读者在一周内完整读毕的细读档案数量。它同时度量内容质量、产品体验与读者习惯，是「读懂」而非「注册」的计数器。</p>
+        <small>North Star Metric · LR-GTM-07-NSM</small>
+      </div>
+      <div class="tbl-scroll reveal">
+      <table class="tbl kpi-tbl">
+        <thead><tr><th>指标</th><th>定义</th><th>M6 目标</th><th>M12 目标</th></tr></thead>
+        <tbody>
+          <tr><td>注册读者</td><td>完成注册并留下阅读偏好的独立账户</td><td><strong>20,000</strong></td><td><strong>50,000</strong></td></tr>
+          <tr><td>周活跃读者</td><td>一周内至少一次完整阅读会话</td><td><strong>4,000</strong></td><td><strong>12,000</strong></td></tr>
+          <tr><td>细读完读率</td><td>开始阅读后读毕全文的会话占比</td><td><strong>≥ 45%</strong></td><td><strong>≥ 55%</strong></td></tr>
+          <tr><td>自然流量占比</td><td>检索与直接访问占总流量比例</td><td><strong>≥ 60%</strong></td><td><strong>≥ 65%</strong></td></tr>
+          <tr><td>付费转化率</td><td>注册 90 日内开通 LR+ 的比例</td><td><strong>—</strong></td><td><strong>≥ 3%</strong></td></tr>
+          <tr><td>月度经常性收入</td><td>会员与共读营的月度确认收入</td><td><strong>—</strong></td><td><strong>¥60K</strong></td></tr>
+          <tr><td>净推荐值</td><td>季度读者调研 NPS</td><td><strong>≥ 50</strong></td><td><strong>≥ 60</strong></td></tr>
+        </tbody>
+      </table>
+      </div>
+      <div class="tbl-scroll reveal">
+      <table class="tbl risk-tbl">
+        <thead><tr><th>风险</th><th>预警信号</th><th>对策</th></tr></thead>
+        <tbody>
+          <tr><td>内容产能不足</td><td>周更档案低于计划 70%，完读率下滑</td><td>建立编辑流水线：AI 辅助初稿＋人工终审＋专题批量化生产，宁慢勿浅。</td></tr>
+          <tr><td>检索算法波动</td><td>自然流量周环比降幅超过 20%</td><td>四台引擎分散依赖，社媒与引用回流对冲；不做任何黑帽优化。</td></tr>
+          <tr><td>内容搬运盗版</td><td>外部出现无署名全文转载</td><td>以编号与版本强化规范引用的正途，署名即引流；对恶意镜像依法投诉。</td></tr>
+          <tr><td>付费意愿疲弱</td><td>试用转付费低于 1.5%</td><td>将商业化重心从会员移向共读营与 B 端，回到「为服务付费」验证。</td></tr>
+        </tbody>
+      </table>
+      </div>
+    </div>
+  </section>
+
+  <div class="closing">
+    <div class="wrap">
+      <div class="seal"><span>孤</span><span>独</span><span>读</span><span>者</span></div>
+      <h2>宁慢勿浅 · 读者不孤</h2>
+      <p>一切增长动作，不得损伤「深度」的品牌承诺。我们宁愿用三倍的耐心，换一代人重新学会深读——这就是本总纲唯一的元原则。</p>
+      <div class="meta">LR-GTM-2026-001 · V1.0 · LONELY READER GLOBAL · 2026</div>
+    </div>
+  </div>
+</main>
+
+<footer>
+  <div class="wrap foot">
+    <span>© 2026 Lonely Reader Global</span>
+    <a href="#top">返回总纲 ↑</a>
+    <span class="right">内部战略资料 · 请勿外传</span>
+  </div>
+</footer>
+
+<script>
+(function(){
+  var bar=document.getElementById('progress');
+  function onScroll(){
+    var h=document.documentElement;
+    var p=h.scrollTop/(h.scrollHeight-h.clientHeight);
+    bar.style.width=(p*100)+'%';
+  }
+  addEventListener('scroll',onScroll,{passive:true});onScroll();
+
+  var io=new IntersectionObserver(function(es){
+    es.forEach(function(e){if(e.isIntersecting){e.target.classList.add('in');io.unobserve(e.target);}});
+  },{threshold:.12,rootMargin:'0px 0px -40px 0px'});
+  document.querySelectorAll('.reveal').forEach(function(el){io.observe(el);});
+
+  var links=[].slice.call(document.querySelectorAll('.nav-links a'));
+  var secs=links.map(function(a){return document.querySelector(a.getAttribute('href'));});
+  var spy=new IntersectionObserver(function(es){
+    es.forEach(function(e){
+      if(e.isIntersecting){
+        links.forEach(function(a){a.classList.toggle('active',a.getAttribute('href')==='#'+e.target.id);});
+      }
+    });
+  },{rootMargin:'-40% 0px -55% 0px'});
+  secs.forEach(function(s){if(s)spy.observe(s);});
+})();
+</script>
+<!-- gtm-portal-backlink (managed by _scripts/sync-gtm.py) -->
+<a class="gtmp-back" href="/GTM/" aria-label="返回 GTM 门户">&#8617; GTM 门户</a>
+<style>
+.gtmp-back{position:fixed;right:1rem;bottom:1rem;z-index:2147483000;
+font:500 12px/1 ui-monospace,SFMono-Regular,Menlo,Consolas,monospace;
+letter-spacing:.05em;text-decoration:none;padding:.6rem .85rem;border-radius:999px;
+color:#14130f;background:rgba(251,250,247,.92);border:1px solid rgba(20,19,15,.16);
+box-shadow:0 2px 12px rgba(20,19,15,.14);backdrop-filter:blur(6px);
+transition:transform .15s ease,box-shadow .15s ease}
+.gtmp-back:hover{transform:translateY(-1px);box-shadow:0 4px 16px rgba(20,19,15,.22)}
+@media (prefers-color-scheme:dark){.gtmp-back{color:#f5f2ea;background:rgba(20,19,15,.88);
+border-color:rgba(245,242,234,.22)}}
+</style>
+</body>
+</html>

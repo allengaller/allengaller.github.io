@@ -1,0 +1,1383 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>全球好新闻 · GTM 增长创刊号 Vol.1</title>
+<meta name="description" content="「全球好新闻」的 Go-To-Market 作战手册：以身心灵为滩头的每日好新闻策展媒体增长地图。">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300..900;1,9..144,300..900&family=IBM+Plex+Mono:wght@400;500;600&family=Noto+Serif+SC:wght@400;500;600;700;900&family=Noto+Sans+SC:wght@400;500;700&display=swap" rel="stylesheet">
+<style>
+:root{
+  --paper:#F5EFE2;
+  --paper-2:#EDE4D2;
+  --paper-3:#E5DAC4;
+  --ink:#211E17;
+  --ink-2:#4C463A;
+  --ink-3:#7A7263;
+  --vermilion:#CE4A15;
+  --vermilion-deep:#A83A0E;
+  --teal:#14574E;
+  --teal-soft:rgba(20,87,78,.08);
+  --gold:#B8872B;
+  --night:#171410;
+  --night-2:#211D16;
+  --dawn:#E8A13C;
+  --hairline:rgba(33,30,23,.24);
+  --hairline-soft:rgba(33,30,23,.12);
+  --serif:"Noto Serif SC","Songti SC",serif;
+  --sans:"Noto Sans SC","PingFang SC",sans-serif;
+  --disp:"Fraunces","Noto Serif SC",serif;
+  --mono:"IBM Plex Mono","Noto Sans SC",monospace;
+  --w:1140px;
+}
+*{margin:0;padding:0;box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{
+  background:var(--paper);
+  color:var(--ink);
+  font-family:var(--serif);
+  font-size:16px;
+  line-height:1.85;
+  -webkit-font-smoothing:antialiased;
+  overflow-x:hidden;
+}
+::selection{background:var(--vermilion);color:var(--paper)}
+
+/* ---------- 纸张颗粒 ---------- */
+body::before{
+  content:"";position:fixed;inset:0;z-index:60;pointer-events:none;
+  opacity:.5;mix-blend-mode:multiply;
+  background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='240' height='240'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.9' numOctaves='2' stitchTiles='stitch'/%3E%3CfeColorMatrix type='matrix' values='0 0 0 0 .45 0 0 0 0 .42 0 0 0 0 .36 0 0 0 .05 0'/%3E%3C/filter%3E%3Crect width='240' height='240' filter='url(%23n)'/%3E%3C/svg%3E");
+}
+
+.wrap{max-width:var(--w);margin:0 auto;padding:0 28px}
+.mono{font-family:var(--mono)}
+.en{font-family:var(--disp);font-style:italic}
+
+/* ---------- 顶部报眼 + 报头 ---------- */
+.eyebrow{
+  border-bottom:1px solid var(--hairline);
+  font-family:var(--mono);font-size:11px;letter-spacing:.14em;
+  color:var(--ink-2);
+}
+.eyebrow .wrap{display:flex;justify-content:space-between;gap:16px;padding-top:12px;padding-bottom:10px;flex-wrap:wrap}
+.eyebrow b{color:var(--vermilion);font-weight:600}
+
+.masthead{border-bottom:3px double var(--ink);position:relative}
+.masthead .wrap{padding-top:44px;padding-bottom:0;text-align:center;position:relative}
+.mast-title{
+  font-weight:900;font-size:clamp(46px,7.4vw,88px);letter-spacing:.06em;line-height:1.12;
+}
+.mast-title .gd{color:var(--vermilion)}
+.mast-sub{
+  font-family:var(--disp);font-style:italic;font-size:clamp(13px,1.6vw,17px);
+  color:var(--ink-2);letter-spacing:.06em;margin-top:6px;
+}
+.mast-meta{
+  display:flex;justify-content:center;gap:26px;flex-wrap:wrap;
+  font-family:var(--mono);font-size:11.5px;letter-spacing:.16em;color:var(--ink-2);
+  border-top:1px solid var(--hairline);margin-top:26px;padding:11px 0 13px;
+}
+.mast-meta span::before{content:"◆";font-size:7px;color:var(--vermilion);vertical-align:2px;margin-right:9px}
+.mast-meta span:first-child::before{content:none}
+
+/* ---------- 导航 ---------- */
+nav.toc{
+  position:sticky;top:0;z-index:50;
+  background:rgba(245,239,226,.92);backdrop-filter:blur(8px);
+  border-bottom:1px solid var(--hairline);
+}
+nav.toc .wrap{display:flex;gap:2px;overflow-x:auto;scrollbar-width:none;justify-content:center}
+nav.toc .wrap::-webkit-scrollbar{display:none}
+nav.toc a{
+  flex:0 0 auto;font-family:var(--mono);font-size:11.5px;letter-spacing:.14em;
+  color:var(--ink-2);text-decoration:none;padding:13px 17px;border-bottom:2px solid transparent;
+  white-space:nowrap;transition:color .2s,border-color .2s;
+}
+nav.toc a:hover{color:var(--vermilion)}
+nav.toc a.on{color:var(--vermilion);border-bottom-color:var(--vermilion)}
+nav.toc a i{font-style:normal;color:var(--vermilion);margin-right:6px;font-size:10px}
+
+/* ---------- HERO ---------- */
+.hero{position:relative;overflow:hidden;border-bottom:1px solid var(--hairline)}
+.hero .wrap{position:relative;padding-top:78px;padding-bottom:86px}
+.hero-kicker{
+  font-family:var(--mono);font-size:12px;letter-spacing:.28em;color:var(--vermilion);
+  display:flex;align-items:center;gap:14px;margin-bottom:30px;
+}
+.hero-kicker::after{content:"";flex:0 0 72px;height:1px;background:var(--vermilion)}
+.hero h1{
+  font-size:clamp(40px,6vw,72px);font-weight:900;line-height:1.28;letter-spacing:.04em;
+  max-width:16em;
+}
+.hero h1 em{font-style:normal;color:var(--vermilion);position:relative;white-space:nowrap}
+.hero h1 em::after{
+  content:"";position:absolute;left:2%;right:2%;bottom:.04em;height:.14em;z-index:-1;
+  background:linear-gradient(90deg,rgba(206,74,21,.28),rgba(184,135,43,.3));
+}
+.hero-lede{
+  margin-top:28px;font-size:clamp(16.5px,1.8vw,19.5px);line-height:2.05;color:var(--ink-2);max-width:36em;
+}
+.hero-lede b{color:var(--ink);font-weight:700;border-bottom:2px solid var(--teal)}
+.chips{display:flex;gap:12px;flex-wrap:wrap;margin-top:36px}
+.chip{
+  border:1px solid var(--hairline);background:rgba(255,252,244,.6);
+  padding:10px 18px 9px;font-size:13.5px;letter-spacing:.04em;color:var(--ink-2);
+}
+.chip b{font-family:var(--mono);font-size:10.5px;letter-spacing:.18em;color:var(--vermilion);margin-right:10px;font-weight:500}
+.hero-cta{display:flex;gap:14px;margin-top:40px;flex-wrap:wrap}
+.btn{
+  font-family:var(--mono);font-size:12.5px;letter-spacing:.14em;text-decoration:none;
+  padding:14px 26px;border:1.5px solid var(--ink);color:var(--ink);
+  transition:all .22s;display:inline-flex;align-items:center;gap:10px;
+}
+.btn::before{content:"→";transition:transform .22s}
+.btn:hover{background:var(--ink);color:var(--paper)}
+.btn:hover::before{transform:translateX(4px)}
+.btn.solid{background:var(--vermilion);border-color:var(--vermilion);color:#FFF6EA}
+.btn.solid:hover{background:var(--vermilion-deep);border-color:var(--vermilion-deep)}
+
+/* 日出图形 */
+.sun{
+  position:absolute;right:-70px;top:50%;transform:translateY(-56%);
+  width:480px;height:480px;pointer-events:none;
+}
+.sun .halo{
+  position:absolute;inset:0;border-radius:50%;
+  background:radial-gradient(circle at 50% 62%,rgba(232,161,60,.5),rgba(206,74,21,.16) 42%,transparent 68%);
+}
+.sun .disc{
+  position:absolute;left:50%;top:50%;transform:translate(-50%,-50%);
+  width:190px;height:190px;border-radius:50%;
+  background:radial-gradient(circle at 38% 32%,#F3C877,var(--dawn) 52%,var(--vermilion));
+  box-shadow:0 0 90px rgba(206,74,21,.35);
+}
+.sun .horizon{
+  position:absolute;left:-30px;right:-30px;top:calc(50% + 95px);height:2px;background:var(--ink);opacity:.75;
+}
+.sun .horizon::after{
+  content:"";position:absolute;left:0;right:0;top:5px;height:1px;background:var(--ink);opacity:.4;
+}
+.sun .rays{
+  position:absolute;inset:-40px;
+  background:repeating-conic-gradient(from -8deg at 50% 50%,rgba(184,135,43,.16) 0deg 1.1deg,transparent 1.1deg 15deg);
+  -webkit-mask:radial-gradient(circle,transparent 31%,#000 32%,#000 66%,transparent 67%);
+          mask:radial-gradient(circle,transparent 31%,#000 32%,#000 66%,transparent 67%);
+}
+.vert{
+  position:absolute;right:34px;top:74px;writing-mode:vertical-rl;
+  font-size:15px;letter-spacing:.52em;color:var(--ink-2);border-left:1px solid var(--hairline);padding-left:14px;
+}
+.vert b{color:var(--vermilion);font-weight:700}
+
+/* 编者按 */
+.ednote{
+  margin-top:64px;border:1px solid var(--hairline);background:rgba(255,252,244,.55);
+  display:flex;gap:0;align-items:stretch;position:relative;
+}
+.ednote::before{content:"";position:absolute;inset:5px;border:1px solid var(--hairline-soft);pointer-events:none}
+.ednote .tag{
+  flex:0 0 74px;display:flex;align-items:center;justify-content:center;
+  writing-mode:vertical-rl;letter-spacing:.5em;font-weight:700;font-size:14.5px;
+  color:#FFF6EA;background:var(--ink);
+}
+.ednote p{padding:20px 26px;font-size:14.5px;line-height:2;color:var(--ink-2)}
+.ednote p b{color:var(--vermilion)}
+.ednote p .tri{color:var(--vermilion);font-family:var(--mono)}
+
+/* ---------- 导读 ---------- */
+.index-issue{border-bottom:3px double var(--ink);background:var(--paper-2)}
+.index-issue .wrap{padding-top:34px;padding-bottom:38px}
+.issue-head{display:flex;align-items:baseline;gap:18px;margin-bottom:20px}
+.issue-head h3{font-size:19px;font-weight:900;letter-spacing:.24em}
+.issue-head span{font-family:var(--mono);font-size:11px;letter-spacing:.22em;color:var(--ink-3)}
+.issue-grid{display:grid;grid-template-columns:1fr 1fr;gap:0 56px}
+.issue-grid a{
+  display:flex;gap:16px;align-items:baseline;text-decoration:none;color:var(--ink);
+  padding:11px 4px;border-bottom:1px solid var(--hairline-soft);transition:background .2s;
+}
+.issue-grid a:hover{background:rgba(206,74,21,.06)}
+.issue-grid .no{font-family:var(--disp);font-style:italic;font-size:19px;color:var(--vermilion);min-width:34px}
+.issue-grid .t{font-size:15px;font-weight:600;letter-spacing:.05em}
+.issue-grid .s{margin-left:auto;font-family:var(--mono);font-size:10.5px;color:var(--ink-3);letter-spacing:.08em}
+
+/* ---------- 通用 Section ---------- */
+section{position:relative}
+.sec-head{display:flex;align-items:flex-end;gap:26px;border-top:3px double var(--ink);padding-top:20px}
+.sec-no{
+  font-family:var(--disp);font-weight:300;font-style:italic;font-size:clamp(64px,8vw,108px);
+  line-height:.8;color:transparent;-webkit-text-stroke:1.6px var(--ink);letter-spacing:-.01em;
+}
+.sec-name h2{font-size:clamp(26px,3.4vw,38px);font-weight:900;letter-spacing:.12em;line-height:1.3}
+.sec-name .kicker{font-family:var(--mono);font-size:11.5px;letter-spacing:.3em;color:var(--vermilion);display:block;margin-bottom:10px}
+.sec-lede{max-width:44em;color:var(--ink-2);font-size:16.5px;margin-top:16px}
+.sec-lede b{color:var(--ink)}
+.sec-body{margin-top:44px;padding-bottom:84px}
+
+/* ---------- §01 天时（黎明暗色） ---------- */
+.why{background:var(--night);color:#EFE8D8;overflow:hidden}
+.why::before{
+  content:"";position:absolute;inset:0;pointer-events:none;
+  background:
+    radial-gradient(900px 420px at 82% 108%,rgba(232,161,60,.32),transparent 60%),
+    radial-gradient(700px 380px at 8% 112%,rgba(206,74,21,.22),transparent 60%),
+    linear-gradient(180deg,var(--night) 0%,var(--night-2) 100%);
+}
+.why::after{
+  content:"";position:absolute;left:0;right:0;bottom:0;height:1px;
+  background:linear-gradient(90deg,transparent,var(--dawn),transparent);
+}
+.why .sec-head{border-top-color:rgba(239,232,216,.5)}
+.why .sec-no{-webkit-text-stroke-color:#EFE8D8}
+.why .sec-lede,.why .sec-lede b{color:rgba(239,232,216,.85)}
+.why .sec-lede b{color:var(--dawn)}
+.why .grid{display:grid;grid-template-columns:repeat(2,1fr);gap:1px;background:rgba(239,232,216,.16);border:1px solid rgba(239,232,216,.16)}
+.wcard{background:var(--night-2);padding:34px 32px 30px;position:relative;transition:background .25s}
+.wcard:hover{background:#2A251C}
+.wcard .wno{font-family:var(--disp);font-style:italic;font-size:15px;color:var(--dawn);letter-spacing:.1em}
+.wcard h4{font-size:20px;font-weight:900;letter-spacing:.06em;margin:10px 0 14px}
+.wcard h4 small{display:block;font-family:var(--mono);font-weight:400;font-size:10.5px;letter-spacing:.24em;color:rgba(239,232,216,.55);margin-top:7px}
+.wcard p{font-size:14.5px;line-height:2.02;color:rgba(239,232,216,.78)}
+.wcard p b{color:#F3C877;font-weight:600}
+.wcard .src{margin-top:16px;font-family:var(--mono);font-size:10.5px;letter-spacing:.1em;color:rgba(239,232,216,.45)}
+.why .hand{
+  margin-top:30px;border:1px dashed rgba(239,232,216,.4);padding:20px 26px;
+  font-size:14.5px;color:rgba(239,232,216,.85);display:flex;gap:18px;align-items:baseline;flex-wrap:wrap;
+}
+.why .hand b{font-family:var(--mono);font-size:11px;letter-spacing:.26em;color:var(--dawn);font-weight:500}
+.why .hand em{font-style:normal;color:#F3C877}
+
+/* ---------- §02 人群 ---------- */
+.people{display:grid;grid-template-columns:repeat(3,1fr);gap:0;border:1px solid var(--hairline);background:var(--hairline-soft);position:relative}
+.pcard{background:var(--paper);padding:36px 30px 30px;position:relative;display:flex;flex-direction:column;transition:background .25s}
+.pcard+.pcard{border-left:1px solid var(--hairline)}
+.pcard:hover{background:rgba(255,252,244,.75)}
+.pcard .stage{
+  align-self:flex-start;font-family:var(--mono);font-size:10.5px;letter-spacing:.2em;
+  padding:6px 12px;border:1px solid var(--hairline);color:var(--ink-2);margin-bottom:20px;
+}
+.pcard.beach .stage{background:var(--vermilion);border-color:var(--vermilion);color:#FFF6EA}
+.pcard.grow .stage{background:var(--teal);border-color:var(--teal);color:#FFF6EA}
+.pcard.biz .stage{background:var(--gold);border-color:var(--gold);color:#FFF6EA}
+.pcard h4{font-size:21px;font-weight:900;letter-spacing:.05em;line-height:1.5}
+.pcard .who{font-family:var(--mono);font-size:11px;letter-spacing:.1em;color:var(--ink-3);margin:8px 0 18px}
+.pcard dl{display:flex;flex-direction:column;gap:14px;font-size:13.8px}
+.pcard dt{font-family:var(--mono);font-size:10.5px;letter-spacing:.24em;color:var(--vermilion);margin-bottom:4px;font-weight:500}
+.pcard dd{color:var(--ink-2);line-height:1.95}
+.pcard dd b{color:var(--ink);font-weight:600}
+.pcard .win{margin-top:auto;padding-top:20px}
+.pcard .win dt{color:var(--teal)}
+.seal{
+  position:absolute;top:20px;right:20px;transform:rotate(7deg);
+  border:2.5px solid var(--vermilion);color:var(--vermilion);border-radius:8px;
+  font-family:var(--mono);font-size:11px;letter-spacing:.3em;padding:8px 12px 8px 15px;
+  font-weight:600;opacity:.9;box-shadow:inset 0 0 0 1.5px rgba(206,74,21,.35);
+  animation:stampIn .5s cubic-bezier(.2,1.6,.4,1) both;animation-delay:var(--d,0s);
+}
+@keyframes stampIn{from{transform:rotate(7deg) scale(2.1);opacity:0}to{transform:rotate(7deg) scale(1);opacity:.9}}
+.anti{
+  margin-top:26px;border-left:3px solid var(--vermilion);background:rgba(206,74,21,.06);
+  padding:16px 24px;font-size:14.5px;color:var(--ink-2);
+}
+.anti b{color:var(--vermilion);font-family:var(--mono);font-size:11px;letter-spacing:.24em;margin-right:14px}
+
+/* ---------- §03 定位 ---------- */
+.pos-wrap{display:grid;grid-template-columns:1fr 220px;gap:48px;align-items:start}
+.pos{
+  font-size:clamp(21px,2.6vw,29px);font-weight:600;line-height:2.15;letter-spacing:.02em;
+  border:1px solid var(--hairline);background:rgba(255,252,244,.6);padding:52px 52px;position:relative;
+}
+.pos::before{
+  content:"“";position:absolute;top:-34px;left:22px;font-family:var(--disp);
+  font-size:110px;color:var(--vermilion);line-height:1;
+}
+.pos u{
+  text-decoration:none;font-weight:900;color:var(--vermilion);
+  border-bottom:2.5px solid var(--vermilion);padding-bottom:2px;
+}
+.pos i{font-style:normal;font-weight:900;color:var(--teal);border-bottom:2.5px solid var(--teal);padding-bottom:2px}
+.pos .lbl{
+  position:absolute;font-family:var(--mono);font-size:9.5px;letter-spacing:.14em;color:var(--paper);
+  background:var(--ink);padding:3px 8px;letter-spacing:.18em;
+}
+.anchors{display:flex;flex-direction:column;gap:14px}
+.anchors .a{
+  border:1px solid var(--hairline);padding:16px 20px;background:rgba(255,252,244,.5);
+}
+.anchors .a b{display:block;font-family:var(--mono);font-size:10px;letter-spacing:.26em;color:var(--teal);margin-bottom:7px;font-weight:500}
+.anchors .a span{font-size:13.8px;color:var(--ink-2);line-height:1.9}
+.anchors .a span strong{color:var(--ink)}
+
+/* ---------- §04 差异 ---------- */
+.tblwrap{overflow-x:auto;border:1px solid var(--hairline)}
+table.cmp{border-collapse:collapse;width:100%;min-width:860px;font-size:13.6px}
+.cmp th,.cmp td{padding:15px 18px;text-align:left;vertical-align:top;border-bottom:1px solid var(--hairline-soft);line-height:1.85}
+.cmp thead th{
+  font-family:var(--mono);font-size:11px;letter-spacing:.16em;color:var(--ink-2);
+  border-bottom:2px solid var(--ink);background:var(--paper-2);font-weight:500;
+}
+.cmp thead th.dim{color:var(--ink-3)}
+.cmp tbody tr:last-child td{border-bottom:none}
+.cmp td:first-child{font-family:var(--mono);font-size:11px;letter-spacing:.12em;color:var(--ink-3);white-space:nowrap;background:var(--paper-2)}
+.cmp .us{background:var(--teal-soft);border-left:1.5px solid var(--teal);border-right:1.5px solid var(--teal);font-weight:600;color:var(--ink)}
+.cmp thead .us{background:var(--teal);color:#F2EEE2;font-weight:700;letter-spacing:.22em;border-bottom:2px solid var(--teal)}
+.cmp tbody .us b{color:var(--teal)}
+.edge-note{margin-top:22px;font-size:14px;color:var(--ink-3);font-family:var(--mono);letter-spacing:.06em}
+
+/* ---------- §05 信息屋 ---------- */
+.house{border:1.5px solid var(--ink);background:rgba(255,252,244,.6)}
+.roof{
+  padding:40px 48px 36px;text-align:center;position:relative;
+  background:linear-gradient(180deg,var(--vermilion) 0%,var(--vermilion-deep) 100%);color:#FFF6EA;
+  clip-path:polygon(0 12%,4% 0,96% 0,100% 12%,100% 100%,0 100%);
+}
+.roof .rk{font-family:var(--mono);font-size:10.5px;letter-spacing:.34em;opacity:.85}
+.roof h3{font-size:clamp(21px,2.8vw,30px);font-weight:900;letter-spacing:.06em;margin:12px 0 8px;line-height:1.6}
+.roof p{font-size:14px;opacity:.92;letter-spacing:.04em}
+.pillars{display:grid;grid-template-columns:repeat(3,1fr);border-top:1.5px solid var(--ink)}
+.pillar{padding:34px 30px 28px}
+.pillar+.pillar{border-left:1px solid var(--hairline)}
+.pillar .pk{font-family:var(--disp);font-style:italic;font-size:15px;color:var(--vermilion)}
+.pillar h4{font-size:18.5px;font-weight:900;letter-spacing:.08em;margin:8px 0 12px}
+.pillar p{font-size:13.8px;color:var(--ink-2);line-height:2}
+.pillar p b{color:var(--ink)}
+.foundation{
+  border-top:1.5px solid var(--ink);background:var(--ink);color:rgba(239,232,216,.82);
+  padding:22px 34px;display:flex;gap:26px;flex-wrap:wrap;align-items:center;
+}
+.foundation b{font-family:var(--mono);font-size:10.5px;letter-spacing:.3em;color:var(--dawn);font-weight:500}
+.foundation span{font-size:13px;letter-spacing:.05em}
+.slogans{margin-top:30px;display:grid;grid-template-columns:repeat(3,1fr);gap:14px}
+.slogan{border:1px dashed var(--hairline);padding:18px 20px;background:rgba(255,252,244,.4)}
+.slogan b{display:block;font-family:var(--mono);font-size:10px;letter-spacing:.26em;color:var(--vermilion);margin-bottom:9px;font-weight:500}
+.slogan span{font-size:15px;font-weight:700;letter-spacing:.03em;line-height:1.8}
+
+/* ---------- §06 节奏 ---------- */
+.timeline{position:relative;padding-left:56px}
+.timeline::before{content:"";position:absolute;left:19px;top:8px;bottom:8px;width:1.5px;background:var(--ink)}
+.phase{position:relative;padding:0 0 46px 26px}
+.phase:last-child{padding-bottom:0}
+.phase .node{
+  position:absolute;left:-56px;top:0;width:40px;height:40px;border-radius:50%;
+  display:flex;align-items:center;justify-content:center;
+  font-family:var(--disp);font-style:italic;font-weight:600;font-size:16px;
+  background:var(--paper);border:2px solid var(--ink);
+}
+.phase.p1 .node{background:var(--vermilion);border-color:var(--vermilion);color:#FFF6EA}
+.phase.p2 .node{background:var(--teal);border-color:var(--teal);color:#FFF6EA}
+.phase.p3 .node{background:var(--gold);border-color:var(--gold);color:#FFF6EA}
+.phase-card{border:1px solid var(--hairline);background:rgba(255,252,244,.6)}
+.phase-head{
+  display:flex;align-items:baseline;gap:18px;flex-wrap:wrap;
+  padding:22px 28px;border-bottom:1px solid var(--hairline-soft);
+}
+.phase-head h4{font-size:20px;font-weight:900;letter-spacing:.06em}
+.phase-head .rng{font-family:var(--mono);font-size:11px;letter-spacing:.18em;color:var(--ink-3)}
+.phase-head .north{margin-left:auto;font-family:var(--mono);font-size:11px;letter-spacing:.12em;color:var(--teal)}
+.phase-body{display:grid;grid-template-columns:1.5fr 1fr;gap:0}
+.phase-acts{padding:24px 28px;border-right:1px solid var(--hairline-soft)}
+.phase-acts .k,.phase-gate .k{font-family:var(--mono);font-size:10px;letter-spacing:.28em;color:var(--vermilion);margin-bottom:12px;font-weight:500}
+.phase-acts ul{list-style:none;font-size:14px;color:var(--ink-2);display:flex;flex-direction:column;gap:9px}
+.phase-acts li{padding-left:20px;position:relative;line-height:1.9}
+.phase-acts li::before{content:"—";position:absolute;left:0;color:var(--vermilion)}
+.phase-gate{padding:24px 28px;background:rgba(20,87,78,.05)}
+.phase-gate .k{color:var(--teal)}
+.phase-gate p{font-size:13.8px;line-height:2;color:var(--ink-2)}
+.phase-gate p b{color:var(--teal)}
+.phase-gate .stop{margin-top:14px;font-size:12.5px;color:var(--ink-3);border-top:1px dashed var(--hairline);padding-top:12px}
+.phase-gate .stop b{color:var(--vermilion)}
+.nodes-note{margin-top:26px;border:1px dashed var(--hairline);padding:18px 26px;font-size:14px;color:var(--ink-2);background:rgba(184,135,43,.06)}
+.nodes-note b{font-family:var(--mono);font-size:10.5px;letter-spacing:.26em;color:var(--gold);margin-right:14px;font-weight:500}
+.nodes-note em{font-style:normal;color:var(--ink);font-weight:600}
+
+/* ---------- §07 渠道 ---------- */
+.channels{display:grid;grid-template-columns:repeat(3,1fr);gap:16px}
+.chan{
+  border:1px solid var(--hairline);background:rgba(255,252,244,.6);padding:26px 26px 22px;
+  position:relative;transition:transform .25s,box-shadow .25s;
+}
+.chan:hover{transform:translateY(-4px);box-shadow:0 14px 34px -18px rgba(33,30,23,.4)}
+.chan .top{display:flex;align-items:center;gap:12px;margin-bottom:14px}
+.chan h4{font-size:18px;font-weight:900;letter-spacing:.06em}
+.pri{
+  margin-left:auto;font-family:var(--mono);font-size:10px;letter-spacing:.14em;font-weight:600;
+  padding:4px 9px;border-radius:2px;
+}
+.pri.p0{background:var(--vermilion);color:#FFF6EA}
+.pri.p1{background:var(--teal);color:#FFF6EA}
+.pri.p2{background:transparent;border:1px solid var(--hairline);color:var(--ink-3)}
+.chan .role{font-family:var(--mono);font-size:10.5px;letter-spacing:.14em;color:var(--teal);margin-bottom:12px}
+.chan dl{font-size:13px;color:var(--ink-2);display:flex;flex-direction:column;gap:7px;line-height:1.85}
+.chan dt{font-family:var(--mono);font-size:10px;letter-spacing:.2em;color:var(--ink-3);display:inline;margin-right:8px}
+.chan dt,.chan dd{display:inline}
+.chan .one{
+  margin-top:16px;padding-top:14px;border-top:1px dashed var(--hairline-soft);
+  font-size:13.5px;font-weight:700;letter-spacing:.02em;color:var(--ink);
+}
+.chan .one::before{content:"「 ";color:var(--vermilion)}
+.chan .one::after{content:" 」";color:var(--vermilion)}
+
+/* ---------- §08 指标 ---------- */
+.metrics-grid{display:grid;grid-template-columns:1fr 1.15fr;gap:40px;align-items:start}
+.north-star{
+  border:1.5px solid var(--ink);background:var(--ink);color:#EFE8D8;padding:36px 34px;position:relative;overflow:hidden;
+}
+.north-star::before{
+  content:"★";position:absolute;right:-26px;top:-30px;font-size:150px;color:rgba(232,161,60,.14);
+}
+.north-star .k{font-family:var(--mono);font-size:10.5px;letter-spacing:.3em;color:var(--dawn)}
+.north-star h4{font-size:21px;font-weight:900;line-height:1.85;margin:14px 0 10px;letter-spacing:.03em}
+.north-star h4 b{color:var(--dawn)}
+.north-star p{font-size:13.8px;line-height:2.05;color:rgba(239,232,216,.78)}
+.north-star .formula{
+  margin-top:18px;border-top:1px dashed rgba(239,232,216,.3);padding-top:16px;
+  font-family:var(--mono);font-size:12px;letter-spacing:.06em;color:var(--dawn);line-height:1.9;
+}
+.funnel{display:flex;flex-direction:column;gap:9px}
+.fstep{display:grid;grid-template-columns:118px 1fr;gap:16px;align-items:center}
+.fstep .fl{font-family:var(--mono);font-size:11px;letter-spacing:.1em;color:var(--ink-2);text-align:right;line-height:1.7}
+.fstep .fl b{display:block;font-family:var(--sans);font-size:14px;color:var(--ink);letter-spacing:.06em;font-weight:700}
+.fbar{
+  height:44px;display:flex;align-items:center;padding:0 16px;color:#FFF6EA;
+  font-family:var(--mono);font-size:11.5px;letter-spacing:.08em;white-space:nowrap;
+  background:linear-gradient(90deg,var(--teal),#1E6E62);
+  clip-path:polygon(0 0,100% 0,calc(100% - 14px) 100%,0 100%);
+  transition:filter .2s;
+}
+.fstep:hover .fbar{filter:brightness(1.12)}
+.fstep:nth-child(2) .fbar{opacity:.92}
+.fstep:nth-child(3) .fbar{opacity:.84}
+.fstep:nth-child(4) .fbar{opacity:.76}
+.fstep:nth-child(5) .fbar{opacity:.68}
+.fstep:nth-child(6) .fbar{opacity:.6}
+.fstep:nth-child(7) .fbar{opacity:.52}
+.metrics-bottom{margin-top:44px;display:grid;grid-template-columns:1.2fr 1fr;gap:40px;align-items:start}
+.mtable{width:100%;border-collapse:collapse;font-size:13.6px}
+.mtable th{
+  font-family:var(--mono);font-size:10.5px;letter-spacing:.22em;color:var(--ink-2);text-align:left;
+  border-bottom:2px solid var(--ink);padding:0 14px 10px 2px;font-weight:500;
+}
+.mtable td{padding:12px 14px 12px 2px;border-bottom:1px solid var(--hairline-soft);line-height:1.9;color:var(--ink-2);vertical-align:top}
+.mtable td:first-child{font-weight:700;color:var(--ink);white-space:nowrap}
+.mtable .ok{color:var(--teal);font-family:var(--mono);font-size:12px;white-space:nowrap}
+.mtable .as{color:var(--vermilion);font-family:var(--mono);font-size:12px}
+.redlines{border:1px solid var(--hairline);background:rgba(206,74,21,.05);padding:26px 28px}
+.redlines h5{font-family:var(--mono);font-size:11px;letter-spacing:.3em;color:var(--vermilion);margin-bottom:16px;font-weight:600}
+.redlines li{list-style:none;font-size:13.8px;color:var(--ink-2);line-height:2;padding-left:26px;position:relative;margin-bottom:8px}
+.redlines li::before{content:"✕";position:absolute;left:0;color:var(--vermilion);font-family:var(--mono);font-size:12px}
+.vanity{margin-top:20px;font-size:12.8px;color:var(--ink-3);line-height:1.95}
+.vanity b{color:var(--ink-2)}
+
+/* ---------- §09 打法 ---------- */
+.play{display:grid;grid-template-columns:repeat(3,1fr);gap:16px}
+.sprint{border:1px solid var(--hairline);background:rgba(255,252,244,.6);display:flex;flex-direction:column}
+.sprint .sh{
+  padding:20px 26px;border-bottom:1px solid var(--hairline-soft);
+  display:flex;align-items:baseline;gap:12px;
+}
+.sprint .sh .d{font-family:var(--disp);font-style:italic;font-size:26px;color:var(--vermilion)}
+.sprint .sh h4{font-size:16.5px;font-weight:900;letter-spacing:.1em}
+.sprint .goal{padding:16px 26px 0;font-size:12.5px;color:var(--teal);font-family:var(--mono);letter-spacing:.06em;line-height:1.8}
+.sprint ul{list-style:none;padding:14px 26px 22px;display:flex;flex-direction:column;gap:10px;font-size:13.8px;color:var(--ink-2)}
+.sprint li{padding-left:26px;position:relative;line-height:1.9}
+.sprint li::before{
+  content:"";position:absolute;left:0;top:.52em;width:11px;height:11px;
+  border:1.5px solid var(--ink-3);background:transparent;
+}
+.sprint li:nth-child(-n+2)::before{background:var(--teal);border-color:var(--teal)}
+.sprint .rev{
+  margin-top:auto;padding:14px 26px;border-top:1px dashed var(--hairline);
+  font-size:12px;color:var(--ink-3);font-family:var(--mono);letter-spacing:.1em;
+}
+.sprint .rev b{color:var(--vermilion)}
+
+/* ---------- §10 变现 ---------- */
+.ladder{display:grid;grid-template-columns:repeat(4,1fr);gap:16px;align-items:end}
+.rung{border:1px solid var(--hairline);background:rgba(255,252,244,.6);padding:24px 24px 20px;transition:transform .25s}
+.rung:hover{transform:translateY(-4px)}
+.rung:nth-child(1){min-height:200px}
+.rung:nth-child(2){min-height:250px;border-top:3px solid var(--teal)}
+.rung:nth-child(3){min-height:300px;border-top:3px solid var(--gold)}
+.rung:nth-child(4){min-height:350px;border-top:3px solid var(--vermilion)}
+.rung .lv{font-family:var(--disp);font-style:italic;font-size:15px;color:var(--ink-3)}
+.rung h4{font-size:17.5px;font-weight:900;letter-spacing:.06em;margin:6px 0 10px}
+.rung p{font-size:13px;color:var(--ink-2);line-height:1.95}
+.rung .price{margin-top:14px;font-family:var(--mono);font-size:11px;letter-spacing:.1em;color:var(--teal)}
+.rung .price .tri{color:var(--vermilion)}
+.model-note{
+  margin-top:30px;border:1.5px solid var(--vermilion);padding:22px 30px;
+  display:flex;gap:22px;align-items:baseline;background:rgba(206,74,21,.05);
+}
+.model-note b{font-family:var(--mono);font-size:11px;letter-spacing:.3em;color:var(--vermilion);white-space:nowrap;font-weight:600}
+.model-note p{font-size:14px;color:var(--ink-2);line-height:2}
+.model-note p strong{color:var(--ink)}
+
+/* ---------- 尾版 ---------- */
+.colophon{background:var(--night);color:rgba(239,232,216,.75);position:relative;overflow:hidden}
+.colophon::before{
+  content:"";position:absolute;inset:0;pointer-events:none;
+  background:radial-gradient(700px 300px at 50% 118%,rgba(232,161,60,.25),transparent 65%);
+}
+.colophon .wrap{position:relative;padding-top:64px;padding-bottom:70px;text-align:center}
+.colophon .mast-mini{font-size:30px;font-weight:900;letter-spacing:.14em;color:#EFE8D8}
+.colophon .mast-mini span{color:var(--dawn)}
+.colophon .next{
+  font-family:var(--mono);font-size:11.5px;letter-spacing:.22em;color:var(--dawn);
+  margin-top:20px;
+}
+.colophon .meta{
+  margin-top:34px;display:flex;justify-content:center;gap:0;flex-wrap:wrap;
+  border-top:1px solid rgba(239,232,216,.2);border-bottom:1px solid rgba(239,232,216,.2);
+}
+.colophon .meta span{
+  font-family:var(--mono);font-size:11px;letter-spacing:.14em;
+  padding:14px 26px;border-right:1px solid rgba(239,232,216,.14);
+}
+.colophon .meta span:last-child{border-right:none}
+.colophon .meta b{color:#EFE8D8;font-weight:500}
+.colophon a{color:var(--dawn);text-decoration:none;border-bottom:1px dotted rgba(232,161,60,.6)}
+.colophon .motto{
+  margin-top:30px;font-size:14.5px;letter-spacing:.34em;color:rgba(239,232,216,.6);
+}
+
+/* ---------- Reveal ---------- */
+.rv{opacity:0;transform:translateY(22px);transition:opacity .8s cubic-bezier(.2,.6,.2,1),transform .8s cubic-bezier(.2,.6,.2,1);transition-delay:var(--d,0s)}
+.rv.on{opacity:1;transform:none}
+@media (prefers-reduced-motion:reduce){
+  .rv{opacity:1;transform:none;transition:none}
+  .seal{animation:none}
+}
+
+/* ---------- 响应式 ---------- */
+@media (max-width:980px){
+  .sun{opacity:.35;right:-160px}
+  .vert{display:none}
+  .why .grid{grid-template-columns:1fr}
+  .people{grid-template-columns:1fr}
+  .pcard+.pcard{border-left:none;border-top:1px solid var(--hairline)}
+  .pos-wrap{grid-template-columns:1fr}
+  .pillars{grid-template-columns:1fr}
+  .pillar+.pillar{border-left:none;border-top:1px solid var(--hairline)}
+  .phase-body{grid-template-columns:1fr}
+  .phase-acts{border-right:none;border-bottom:1px solid var(--hairline-soft)}
+  .channels{grid-template-columns:1fr 1fr}
+  .metrics-grid,.metrics-bottom{grid-template-columns:1fr}
+  .play{grid-template-columns:1fr}
+  .ladder{grid-template-columns:1fr 1fr}
+  .slogans{grid-template-columns:1fr}
+}
+@media (max-width:640px){
+  .channels,.ladder{grid-template-columns:1fr}
+  .issue-grid{grid-template-columns:1fr}
+  .pos{padding:40px 26px}
+  .roof{padding:34px 24px 28px}
+}
+</style>
+</head>
+<body>
+
+<!-- ═══════════ 报眼 ═══════════ -->
+<div class="eyebrow">
+  <div class="wrap">
+    <span>PEACE LAB · GLOBAL GOODNEWS</span>
+    <span>内部对齐文档 · <b>非对外营销物料</b></span>
+    <span>GO-TO-MARKET PLAYBOOK · <b>VOL.1</b></span>
+  </div>
+</div>
+
+<!-- ═══════════ 报头 ═══════════ -->
+<header class="masthead">
+  <div class="wrap">
+    <div class="mast-title rv">全球<span class="gd">好</span>新闻</div>
+    <div class="mast-sub rv" style="--d:.08s">The Global Goodnews — A Growth Playbook for Curated Hope</div>
+    <div class="mast-meta rv" style="--d:.16s">
+      <span>增长创刊号 GTM VOL.1</span>
+      <span>2026 年 8 月 29 日 · 星期六</span>
+      <span>法喜 / ALLEN GALLER + MAVIS 出品</span>
+      <span>双周修订 · 活文档</span>
+    </div>
+  </div>
+</header>
+
+<!-- ═══════════ 导航 ═══════════ -->
+<nav class="toc">
+  <div class="wrap">
+    <a href="#whynow"><i>01</i>天时</a>
+    <a href="#icp"><i>02</i>人群</a>
+    <a href="#positioning"><i>03</i>定位</a>
+    <a href="#edge"><i>04</i>差异</a>
+    <a href="#messaging"><i>05</i>信息</a>
+    <a href="#phases"><i>06</i>节奏</a>
+    <a href="#channels"><i>07</i>渠道</a>
+    <a href="#metrics"><i>08</i>指标</a>
+    <a href="#playbook"><i>09</i>打法</a>
+    <a href="#model"><i>10</i>变现</a>
+  </div>
+</nav>
+
+<!-- ═══════════ HERO ═══════════ -->
+<section class="hero">
+  <div class="sun" aria-hidden="true">
+    <div class="halo"></div>
+    <div class="rays"></div>
+    <div class="disc"></div>
+    <div class="horizon"></div>
+  </div>
+  <div class="vert" aria-hidden="true">早上好，<b>世界</b></div>
+  <div class="wrap">
+    <div class="hero-kicker rv">GTM · 增长作战手册 · 滩头：身心灵</div>
+    <h1 class="rv" style="--d:.08s">世界比你听到的，<em>更好</em>。</h1>
+    <p class="hero-lede rv" style="--d:.16s">
+      这是「全球好新闻」的 Go-To-Market 地图——<b>以身心灵为滩头</b>，做一款把
+      <b>坏消息疲劳</b>换成<b>可核查的安心</b>的每日策展媒体。它回答五个问题：
+      为谁而做、凭什么赢、在哪开打、怎么推进、如何算赢。
+    </p>
+    <div class="chips rv" style="--d:.24s">
+      <span class="chip"><b>品类</b>好新闻策展媒体</span>
+      <span class="chip"><b>滩头</b>身心灵同路人</span>
+      <span class="chip"><b>节奏</b>每日一刊 · 双周复盘</span>
+      <span class="chip"><b>市场</b>全球 + 中国双维度</span>
+    </div>
+    <div class="hero-cta rv" style="--d:.32s">
+      <a class="btn solid" href="#playbook">看 90 天打法</a>
+      <a class="btn" href="#metrics">查北极星指标</a>
+    </div>
+
+    <aside class="ednote rv" style="--d:.4s">
+      <div class="tag">编者按</div>
+      <p>
+        这不是一篇营销文案，而是一份作战地图。所有标注 <span class="tri">△</span> 的数字都是<b>待验证假设</b>——
+        90 天内，要么被数据证实，要么被替换。增长的前提是诚实：先定义「赢」，再谈「打」。
+      </p>
+    </aside>
+  </div>
+</section>
+
+<!-- ═══════════ 导读 ═══════════ -->
+<section class="index-issue">
+  <div class="wrap">
+    <div class="issue-head rv">
+      <h3>本期导读</h3>
+      <span>IN THIS ISSUE · 按 GTM 十问编排</span>
+    </div>
+    <div class="issue-grid rv" style="--d:.1s">
+      <a href="#whynow"><span class="no">01</span><span class="t">天时 · 为什么是现在</span><span class="s">WHY NOW</span></a>
+      <a href="#phases"><span class="no">06</span><span class="t">节奏 · 滩头与三阶段</span><span class="s">PHASES &amp; GATES</span></a>
+      <a href="#icp"><span class="no">02</span><span class="t">人群 · 为谁而做</span><span class="s">ICP</span></a>
+      <a href="#channels"><span class="no">07</span><span class="t">渠道 · 在哪开打</span><span class="s">CHANNEL MIX</span></a>
+      <a href="#positioning"><span class="no">03</span><span class="t">定位 · 凭什么赢</span><span class="s">POSITIONING</span></a>
+      <a href="#metrics"><span class="no">08</span><span class="t">指标 · 如何算赢</span><span class="s">METRICS</span></a>
+      <a href="#edge"><span class="no">04</span><span class="t">差异 · 和谁不同</span><span class="s">DIFFERENTIATION</span></a>
+      <a href="#playbook"><span class="no">09</span><span class="t">打法 · 90 天清单</span><span class="s">PLAYBOOK</span></a>
+      <a href="#messaging"><span class="no">05</span><span class="t">信息 · 说什么</span><span class="s">MESSAGING</span></a>
+      <a href="#model"><span class="no">10</span><span class="t">变现 · 如何持续</span><span class="s">MONETIZATION</span></a>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════ 01 天时 ═══════════ -->
+<section class="why" id="whynow">
+  <div class="wrap">
+    <div class="sec-head rv">
+      <div class="sec-no">01</div>
+      <div class="sec-name">
+        <span class="kicker">WHY NOW · 天时</span>
+        <h2>为什么是现在</h2>
+      </div>
+    </div>
+    <p class="sec-lede rv" style="--d:.1s">
+      好新闻不是一个「内容题材」，而是这个时代稀缺的<b>情绪基础设施</b>。四个风向，正在同一时刻到站。
+    </p>
+    <div class="sec-body">
+      <div class="grid">
+        <div class="wcard rv">
+          <div class="wno">No.1</div>
+          <h4>坏消息疲劳成为全球流行病<small>NEWS FATIGUE GOES MAINSTREAM</small></h4>
+          <p>
+            路透新闻学研究所年度报告连年显示，全球受众<b>主动回避新闻</b>的比例持续走高；
+            「刷完更焦虑」的 doomscrolling 成为普遍行为。供给端人人生产焦虑，
+            需求端人人寻找出口——<b>出口稀缺，就是生意。</b>
+          </p>
+          <div class="src">来源：Reuters Institute Digital News Report（趋势判断）</div>
+        </div>
+        <div class="wcard rv" style="--d:.08s">
+          <div class="wno">No.2</div>
+          <h4>心理健康升格为国家工程<small>MENTAL WELLNESS AS INFRASTRUCTURE</small></h4>
+          <p>
+            2026-04 国家 <b>25 部委</b>联合印发《健全社会心理服务体系实施方案》；
+            卫健委 <b>12356</b> 全国心理援助热线已提供 <b>460 万+ 分钟</b>支持。
+            政策把情绪价值从「消费」升级为「基础设施」，赛道获得历史性正当性。
+          </p>
+          <div class="src">来源：本库 2026-08-03 · 条目 11 / 12</div>
+        </div>
+        <div class="wcard rv" style="--d:.16s">
+          <div class="wno">No.3</div>
+          <h4>身心灵赛道已完成用户教育<small>THE VERTICAL IS READY</small></h4>
+          <p>
+            潮汐、暂停实验室把正念产品化，KnowYourself <b>2000 万+ 用户</b>、
+            简单心理 <b>100 万+ 人次</b>、壹心理鲸鱼 Alice-AI 以 <b>92%</b> 对话准确率免费开放。
+            赛道不缺产品，缺的是——<b>一个每天值得打开的内容入口。</b>
+          </p>
+          <div class="src">来源：本库 2026-08-03 · 身心灵赛道专题</div>
+        </div>
+        <div class="wcard rv" style="--d:.24s">
+          <div class="wno">No.4</div>
+          <h4>AI 让「一人全球编辑部」成立<small>AI-POWERED NEWSROOM OF ONE</small></h4>
+          <p>
+            策展、翻译、核查、归档的成本降至过去的零头；双库资产
+            （global-goodnews 全球库 + goodnews-database 中国库）让内容
+            <b>可积累、可检索、可复利</b>——小团队第一次能负担「每日全球策展」的野心。
+          </p>
+          <div class="src">来源：本目录 INDEX-2026.md 工作流规则</div>
+        </div>
+      </div>
+      <div class="hand rv">
+        <b>我们手里的牌</b>
+        <span>已沉淀 <em>25 条</em>双维度好消息 · 身心灵占比 <em>60%</em> · 每条含「为什么是好消息」解读 · 全部权威信源可核查</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════ 02 人群 ═══════════ -->
+<section id="icp">
+  <div class="wrap">
+    <div class="sec-head rv">
+      <div class="sec-no">02</div>
+      <div class="sec-name">
+        <span class="kicker">IDEAL CUSTOMER PROFILE · 人群</span>
+        <h2>为谁而做</h2>
+      </div>
+    </div>
+    <p class="sec-lede rv" style="--d:.1s">
+      增长的第一纪律：<b>从 1000 个「对的人」开始，而不是 10 万个「随便的人」。</b>
+      三层人群，只做一层——直到滩头站稳。
+    </p>
+    <div class="sec-body">
+      <div class="people">
+        <div class="pcard beach rv">
+          <span class="seal" style="--d:.5s">滩头阵地</span>
+          <span class="stage">STAGE 1 · BEACHHEAD</span>
+          <h4>身心灵同路人</h4>
+          <div class="who">25–40 岁 · 都市练习者 · 冥想 / 心理学 / 成长圈层</div>
+          <dl>
+            <div><dt>画像</dt><dd>潮汐、暂停实验室的重度用户；关注 KnowYourself、Lachel；有每日练习习惯。</dd></div>
+            <div><dt>痛点</dt><dd>好内容分散在各 App；坏消息带来无力感；想要<b>可信、有出处、能转发</b>的好消息。</dd></div>
+            <div><dt>我们给的</dt><dd>每日双维度好消息 + 循证解读，把睡前刷屏换成安心时间。</dd></div>
+            <div><dt>触达场域</dt><dd>公众号 · 小红书 · 即刻</dd></div>
+          </dl>
+          <div class="win"><dt>成功标志</dt><dd>主动转发与收藏；评论区出现「今天也是安心的一天」。</dd></div>
+        </div>
+        <div class="pcard grow rv" style="--d:.12s">
+          <span class="stage">STAGE 2 · EXPANSION</span>
+          <h4>被坏消息疲劳困扰的年轻人</h4>
+          <div class="who">学生 / 职场内耗人群 · 未必练习冥想</div>
+          <dl>
+            <div><dt>画像</dt><dd>不排斥心理学话题，但没时间系统学习；深夜刷手机的重度用户。</dd></div>
+            <div><dt>痛点</dt><dd>不是缺信息，是缺<b>「值得相信世界还好的理由」</b>。</dd></div>
+            <div><dt>我们给的</dt><dd>更轻的入口：一张卡片、一句话、每天一条。</dd></div>
+            <div><dt>触达场域</dt><dd>小红书 · 视频号</dd></div>
+          </dl>
+          <div class="win"><dt>成功标志</dt><dd>卡片完播率与收藏率；关注转化。</dd></div>
+        </div>
+        <div class="pcard biz rv" style="--d:.24s">
+          <span class="stage">STAGE 3 · MONETIZE</span>
+          <h4>需要正向叙事的机构</h4>
+          <div class="who">身心灵品牌 / 医疗健康企业 / 媒体公关团队</div>
+          <dl>
+            <div><dt>画像</dt><dd>想借「积极情绪」做品牌，但缺可信的内容资产与行业数据。</dd></div>
+            <div><dt>痛点</dt><dd>正向叙事难自证：没有中立策展方，自夸不可信。</dd></div>
+            <div><dt>我们给的</dt><dd>身心灵行业月报、联名内容、定制策展。</dd></div>
+            <div><dt>触达场域</dt><dd>定向触达 · 行业活动</dd></div>
+          </dl>
+          <div class="win"><dt>成功标志</dt><dd>Day 60 起的付费意愿访谈。</dd></div>
+        </div>
+      </div>
+      <div class="anti rv">
+        <b>反画像</b>我们不做给「吃瓜群众」的猎奇正能量，不做鸡汤号——一切内容必须可核查、有出处。拒绝的人群，就是定位本身。
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════ 03 定位 ═══════════ -->
+<section id="positioning" style="background:var(--paper-2)">
+  <div class="wrap">
+    <div class="sec-head rv">
+      <div class="sec-no">03</div>
+      <div class="sec-name">
+        <span class="kicker">POSITIONING STATEMENT · 定位</span>
+        <h2>凭什么赢</h2>
+      </div>
+    </div>
+    <p class="sec-lede rv" style="--d:.1s">
+      按 Geoffrey Moore 定位句式成文——每个空格都经过选择，每个选择都有代价。
+    </p>
+    <div class="sec-body">
+      <div class="pos-wrap">
+        <div class="pos rv">
+          <span class="lbl" style="top:20px;right:22px">G. MOORE FRAMEWORK</span>
+          对于 <u>被坏消息疲劳困扰、同时在练习安顿自己的都市同路人</u>来说，
+          「全球好新闻」是一个 <i>每日更新的好消息策展媒体</i>，
+          它 <u>用全球 + 中国双维度的循证叙事，把每天 10 分钟的刷屏焦虑，换成可核查的安心</u>。
+          不同于 <i>算法推荐流的信息茧房</i> 和 <u>贩卖焦虑的流量媒体</u>，
+          我们 <i>只收录权威信源的好消息，每条都回答「为什么是好消息」，并沉淀为可检索的资产库</i>。
+        </div>
+        <div class="anchors">
+          <div class="a rv" style="--d:.1s">
+            <b>品类锚点 · CATEGORY</b>
+            <span><strong>好新闻策展媒体</strong>——不是资讯聚合，是「策展」：有立场、有标准、有解读。</span>
+          </div>
+          <div class="a rv" style="--d:.2s">
+            <b>人群锚点 · WHO</b>
+            <span><strong>练习安顿自己的人</strong>——不是吃瓜群众；窄到能赢，再谈宽。</span>
+          </div>
+          <div class="a rv" style="--d:.3s">
+            <b>方法锚点 · HOW</b>
+            <span><strong>循证 + 可核查</strong>——不是鸡汤；每条消息都要过「信源关」。</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════ 04 差异 ═══════════ -->
+<section id="edge">
+  <div class="wrap">
+    <div class="sec-head rv">
+      <div class="sec-no">04</div>
+      <div class="sec-name">
+        <span class="kicker">DIFFERENTIATION · 差异</span>
+        <h2>和谁不同</h2>
+      </div>
+    </div>
+    <p class="sec-lede rv" style="--d:.1s">
+      竞争不是同类账号，而是用户手里<b>已有的替代品</b>。逐项对表，只宣称我们做得到的。
+    </p>
+    <div class="sec-body">
+      <div class="tblwrap rv">
+        <table class="cmp">
+          <thead>
+            <tr>
+              <th class="dim">维度 DIM</th>
+              <th>传统新闻媒体</th>
+              <th>算法推荐流</th>
+              <th>泛正能量账号</th>
+              <th class="us">★ 全球好新闻</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>选题标准</td>
+              <td>负面偏倚：「人咬狗才是新闻」</td>
+              <td>算法放大愤怒与冲突</td>
+              <td>无标准，鸡汤化、注水化</td>
+              <td class="us">只有<b>可核查的好消息</b>，全球+中国每日双维度精选</td>
+            </tr>
+            <tr>
+              <td>全球视野</td>
+              <td>有，但中文语境延迟、立场化</td>
+              <td>无地域叙事，只有标签</td>
+              <td>基本无</td>
+              <td class="us"><b>双维度每日策展</b>：UN / NASA / Reuters / 新华社 / 卫健委</td>
+            </tr>
+            <tr>
+              <td>赛道纵深</td>
+              <td>泛领域</td>
+              <td>泛领域</td>
+              <td>泛领域</td>
+              <td class="us"><b>身心灵 60% 深耕</b>：政策 / AI / 医学 / 平台 / 工具</td>
+            </tr>
+            <tr>
+              <td>内容方法</td>
+              <td>客观报道，不回答「与我何干」</td>
+              <td>标题党收割注意力</td>
+              <td>编译摘抄，无解读</td>
+              <td class="us">每条含<b>「发生了什么 + 为什么是好消息」</b>双层解读</td>
+            </tr>
+            <tr>
+              <td>沉淀方式</td>
+              <td>报纸档案，检索困难</td>
+              <td>信息流即焚</td>
+              <td>发完即忘</td>
+              <td class="us"><b>按日归档的资产库</b>：INDEX 索引 + 双库联动，越用越值钱</td>
+            </tr>
+            <tr>
+              <td>情绪产出</td>
+              <td>焦虑</td>
+              <td>愤怒 / 短暂多巴胺</td>
+              <td>廉价感动</td>
+              <td class="us"><b>安心感 + 可行动的希望</b></td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+      <div class="edge-note rv">※ 差异化的检验标准：这句话竞品能不能原样说？「可核查 + 双维度 + 资产化」——不能。这就是我们的位置。</div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════ 05 信息 ═══════════ -->
+<section id="messaging" style="background:var(--paper-2)">
+  <div class="wrap">
+    <div class="sec-head rv">
+      <div class="sec-no">05</div>
+      <div class="sec-name">
+        <span class="kicker">MESSAGING HOUSE · 信息</span>
+        <h2>说什么</h2>
+      </div>
+    </div>
+    <p class="sec-lede rv" style="--d:.1s">
+      一栋信息屋：屋顶是一句话主张，三根支柱是可传播的论点，地基是它们站得住的证据。
+      <b>所有渠道的内容，都从这里长出来。</b>
+    </p>
+    <div class="sec-body">
+      <div class="house rv">
+        <div class="roof">
+          <div class="rk">ROOF · 一句话主张</div>
+          <h3>世界比你听到的更好。<br>每天 10 分钟，把坏消息疲劳换成可核查的安心。</h3>
+          <p>对外的每一个字，都必须能回溯到这句话。</p>
+        </div>
+        <div class="pillars">
+          <div class="pillar">
+            <div class="pk">Pillar 1</div>
+            <h4>全球视野 · 双维策展</h4>
+            <p>每天，全球与中国<b>各</b>有一件值得知道的好事。样本：全球可再生能源年新增 <b>6.9 亿千瓦</b>；中哈传统医学中心两年接诊 <b>3.6 万人次</b>。</p>
+          </div>
+          <div class="pillar">
+            <div class="pk">Pillar 2</div>
+            <h4>身心灵纵深 · 循证底色</h4>
+            <p><b>60%</b> 内容深耕身心灵：从 25 部委政策到 P-tau217 血液检测，从 MBCT 数字化到 AI 心理陪伴——好消息也要讲证据。</p>
+          </div>
+          <div class="pillar">
+            <div class="pk">Pillar 3</div>
+            <h4>每日沉淀 · 可检索资产</h4>
+            <p>不做即焚信息流：<b>按日归档、按主题索引</b>，一个月后仍然可查、可引、可复用。时间是内容资产的朋友。</p>
+          </div>
+        </div>
+        <div class="foundation">
+          <b>地基 · 证据</b>
+          <span>权威信源：UN · Reuters · NASA · 新华社 · 国家卫健委</span>
+          <span>每条可核查、有出处</span>
+          <span>「为什么是好消息」标准化解读</span>
+          <span>双库资产复用</span>
+        </div>
+      </div>
+      <div class="slogans">
+        <div class="slogan rv"><b>公众号场景</b><span>今天，世界也有好消息。</span></div>
+        <div class="slogan rv" style="--d:.1s"><b>小红书场景</b><span>睡前刷 3 条好消息，比刷 30 条坏消息更睡得着。</span></div>
+        <div class="slogan rv" style="--d:.2s"><b>招募场景</b><span>加入每天先看到好消息的 1000 个人。</span></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════ 06 节奏 ═══════════ -->
+<section id="phases">
+  <div class="wrap">
+    <div class="sec-head rv">
+      <div class="sec-no">06</div>
+      <div class="sec-name">
+        <span class="kicker">BEACHHEAD &amp; PHASES · 节奏</span>
+        <h2>滩头与三阶段</h2>
+      </div>
+    </div>
+    <p class="sec-lede rv" style="--d:.1s">
+      跨越鸿沟的打法：<b>先在身心灵滩头做到极致，再放大。</b>每个阶段设「过关条件」——
+      达标才进入下一阶段，不达标就回到定位迭代，不硬冲。
+    </p>
+    <div class="sec-body">
+      <div class="timeline">
+        <div class="phase p1 rv">
+          <div class="node">Ⅰ</div>
+          <div class="phase-card">
+            <div class="phase-head">
+              <h4>验证期 · 滩头站稳</h4>
+              <span class="rng">NOW → 2026-09-15</span>
+              <span class="north">目标：500 精准同路人 △</span>
+            </div>
+            <div class="phase-body">
+              <div class="phase-acts">
+                <div class="k">关键动作 ACTIONS</div>
+                <ul>
+                  <li>公众号 + 即刻 + 小红书三端日更「今日全球好消息」</li>
+                  <li>身心灵专题每周 1 期（政策 / AI / 医学 / 平台轮动）</li>
+                  <li>固化选题—信源—沉淀 SOP，复用双库工作流</li>
+                  <li>记录全量基线数据，为复盘做准备</li>
+                </ul>
+              </div>
+              <div class="phase-gate">
+                <div class="k">过关条件 GATE</div>
+                <p>单条自然转发率 <b>&gt; 5%</b>，且出现 <b>≥ 3 次</b>「自来水」引用。</p>
+                <p class="stop"><b>不达标 →</b> 停止扩张，回到 §03 定位迭代，重测人群。</p>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="phase p2 rv">
+          <div class="node">Ⅱ</div>
+          <div class="phase-card">
+            <div class="phase-head">
+              <h4>放大期 · 借节点破圈</h4>
+              <span class="rng">2026-09-16 → 10-31</span>
+              <span class="north">目标：3000 关注 △ · 打开率 &gt; 40% △</span>
+            </div>
+            <div class="phase-body">
+              <div class="phase-acts">
+                <div class="k">关键动作 ACTIONS</div>
+                <ul>
+                  <li>从身心灵扩展至全品类好新闻（能源 / 航天 / 体育）</li>
+                  <li>Newsletter 周刊内测，沉淀超级用户</li>
+                  <li>知乎长尾铺设「今天有什么好消息」搜索入口</li>
+                  <li>启动 10 场用户访谈，验证付费形态</li>
+                </ul>
+              </div>
+              <div class="phase-gate">
+                <div class="k">过关条件 GATE</div>
+                <p>30 日回访留存 <b>&gt; 35%</b> △，Newsletter 打开率 <b>&gt; 40%</b> △。</p>
+                <p class="stop"><b>不达标 →</b> 内容形态有问题，先改产品再投放大。</p>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="phase p3 rv">
+          <div class="node">Ⅲ</div>
+          <div class="phase-card">
+            <div class="phase-head">
+              <h4>规模化 · IP 与商业化</h4>
+              <span class="rng">2026 Q4 → 2027 H1</span>
+              <span class="north">决策点：C 端订阅 vs B 端报告</span>
+            </div>
+            <div class="phase-body">
+              <div class="phase-acts">
+                <div class="k">关键动作 ACTIONS</div>
+                <ul>
+                  <li>人格化 IP：「早安，好消息」3 分钟晨读 / 播客</li>
+                  <li>身心灵行业月报（B 端）0.1 版发布</li>
+                  <li>会员体系与档案库全文检索上线</li>
+                  <li>由 Day 60–90 访谈数据决定主押注方向</li>
+                </ul>
+              </div>
+              <div class="phase-gate">
+                <div class="k">过关条件 GATE</div>
+                <p>出现<b>首个付费意愿验证</b>：访谈中 ≥ 4/10 人愿意为具体形态付具体价格 △。</p>
+                <p class="stop"><b>不达标 →</b> 保持免费增长，商业化推迟一个季度。</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="nodes-note rv">
+        <b>发射窗口</b>
+        GTM 的节奏要挂在真实日历上：<em>9-21 国际和平日</em>（和平实验室的母题）、
+        <em>9-10 世界预防自杀日 × 12356 热线</em>、<em>10-10 世界精神卫生日</em>——
+        三个节点 = 三次天然放大器，全部落在 Phase 1–2 区间内。
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════ 07 渠道 ═══════════ -->
+<section id="channels" style="background:var(--paper-2)">
+  <div class="wrap">
+    <div class="sec-head rv">
+      <div class="sec-no">07</div>
+      <div class="sec-name">
+        <span class="kicker">CHANNEL MIX · 渠道</span>
+        <h2>在哪开打</h2>
+      </div>
+    </div>
+    <p class="sec-lede rv" style="--d:.1s">
+      渠道不在多，在<b>角色清楚</b>：哪些要「沉淀资产」，哪些要「拉新破圈」，哪些要「运营超级用户」。
+      P0 打透之前，不碰 P2。
+    </p>
+    <div class="sec-body">
+      <div class="channels">
+        <div class="chan rv">
+          <div class="top"><h4>微信公众号</h4><span class="pri p0">P0</span></div>
+          <div class="role">主阵地 · 资产沉淀</div>
+          <dl>
+            <div><dt>形态</dt><dd>每日图文「今日全球好消息」+ 每周身心灵专题</dd></div>
+            <div><dt>节奏</dt><dd>日更</dd></div>
+          </dl>
+          <div class="one">让转发发生在「家人群」里</div>
+        </div>
+        <div class="chan rv" style="--d:.08s">
+          <div class="top"><h4>小红书</h4><span class="pri p0">P0</span></div>
+          <div class="role">拉新种草 · 人群破圈</div>
+          <dl>
+            <div><dt>形态</dt><dd>好消息卡片（1 图 1 事）+ 身心灵科普合集</dd></div>
+            <div><dt>节奏</dt><dd>每周 4–5 条</dd></div>
+          </dl>
+          <div class="one">用「睡前刷点好的」承接坏消息疲劳</div>
+        </div>
+        <div class="chan rv" style="--d:.16s">
+          <div class="top"><h4>即刻</h4><span class="pri p1">P1</span></div>
+          <div class="role">同好冷启动 · 反馈回路</div>
+          <dl>
+            <div><dt>形态</dt><dd>碎片精选 + 策展幕后故事</dd></div>
+            <div><dt>节奏</dt><dd>日更</dd></div>
+          </dl>
+          <div class="one">先赢下 1000 个高浓度同路人</div>
+        </div>
+        <div class="chan rv" style="--d:.24s">
+          <div class="top"><h4>知乎</h4><span class="pri p1">P1</span></div>
+          <div class="role">搜索长尾 · 问答入口</div>
+          <dl>
+            <div><dt>形态</dt><dd>回答「最近有什么好消息」「身心灵行业动态」</dd></div>
+            <div><dt>节奏</dt><dd>每周 2–3 答</dd></div>
+          </dl>
+          <div class="one">让「好消息」变成可搜索的入口</div>
+        </div>
+        <div class="chan rv" style="--d:.32s">
+          <div class="top"><h4>Newsletter</h4><span class="pri p2">P2</span></div>
+          <div class="role">超级用户 · 私域复利</div>
+          <dl>
+            <div><dt>形态</dt><dd>周刊精编 + 策展人手记</dd></div>
+            <div><dt>节奏</dt><dd>周更 · Phase 2 上线</dd></div>
+          </dl>
+          <div class="one">不依赖算法的直达容器</div>
+        </div>
+        <div class="chan rv" style="--d:.4s">
+          <div class="top"><h4>视频号 / 播客</h4><span class="pri p2">P2</span></div>
+          <div class="role">人格化 · 破圈放大</div>
+          <dl>
+            <div><dt>形态</dt><dd>3 分钟晨读「早安，好消息」</dd></div>
+            <div><dt>节奏</dt><dd>Phase 3 启动</dd></div>
+          </dl>
+          <div class="one">从内容到陪伴，从读到听</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════ 08 指标 ═══════════ -->
+<section id="metrics">
+  <div class="wrap">
+    <div class="sec-head rv">
+      <div class="sec-no">08</div>
+      <div class="sec-name">
+        <span class="kicker">METRICS · 指标</span>
+        <h2>如何算赢</h2>
+      </div>
+    </div>
+    <p class="sec-lede rv" style="--d:.1s">
+      媒体的北极星不该是粉丝数——那是投入的函数，不是价值的证据。
+      我们只认一个数字，和它上游的漏斗。
+    </p>
+    <div class="sec-body">
+      <div class="metrics-grid">
+        <div class="north-star rv">
+          <div class="k">NORTH STAR METRIC · 北极星</div>
+          <h4>每周被「真正读完并带走」的<br><b>好消息条数</b></h4>
+          <p>
+            它同时约束三件事：产量（得有新内容）、质量（得读完）、分发（得被带走）。
+            刷量涨粉不会让它变好，买流量也不会——这是选它做北极星的原因。
+          </p>
+          <div class="formula">
+            = 周活跃读者 × 人均完读条数<br>
+            基线：待 Phase 1 建立 △ &nbsp;·&nbsp; 复盘节奏：双周
+          </div>
+        </div>
+        <div class="rv" style="--d:.12s">
+          <div class="funnel">
+            <div class="fstep"><div class="fl"><b>曝光</b>AWARENESS</div><div class="fbar" style="width:100%">内容触达 · 小红书卡片 / 转发</div></div>
+            <div class="fstep"><div class="fl"><b>关注</b>ACQUISITION</div><div class="fbar" style="width:86%">关注转化率 &gt; 3% △</div></div>
+            <div class="fstep"><div class="fl"><b>激活</b>ACTIVATION</div><div class="fbar" style="width:72%">读完第一条 · 完读率 &gt; 60%</div></div>
+            <div class="fstep"><div class="fl"><b>留存</b>RETENTION</div><div class="fbar" style="width:58%">周回访 &gt; 35% △</div></div>
+            <div class="fstep"><div class="fl"><b>收入</b>REVENUE</div><div class="fbar" style="width:44%">Day 60 起验证（§10）</div></div>
+            <div class="fstep"><div class="fl"><b>推荐</b>REFERRAL</div><div class="fbar" style="width:30%">转发率 &gt; 5%</div></div>
+          </div>
+        </div>
+      </div>
+      <div class="metrics-bottom">
+        <div class="rv">
+          <table class="mtable">
+            <thead><tr><th>输入指标 · 我们唯一能直接控制的</th><th>标准</th></tr></thead>
+            <tbody>
+              <tr><td>周产量</td><td>≥ 7 条 / 周 <span class="ok">✓ 可控</span></td></tr>
+              <tr><td>信源可核查率</td><td>100%，无出处不发布 <span class="ok">✓ 红线</span></td></tr>
+              <tr><td>「为什么是好消息」覆盖率</td><td>每条必有 <span class="ok">✓ 红线</span></td></tr>
+              <tr><td>双维度覆盖</td><td>全球 + 中国每日至少各 1 条 <span class="ok">✓ 可控</span></td></tr>
+              <tr><td>关注转化率 / 周回访</td><td>&gt; 3% △ / &gt; 35% △ <span class="as">△ 待验证</span></td></tr>
+            </tbody>
+          </table>
+        </div>
+        <div class="redlines rv" style="--d:.12s">
+          <h5>健康红线 RED LINES</h5>
+          <ul>
+            <li>不贩卖焦虑——哪怕是以「反焦虑」的名义贩卖焦虑</li>
+            <li>不做无出处的鸡汤，不传播未核实的「好消息」</li>
+            <li>不提供医疗建议（心理医学条目只做转述与转介）</li>
+            <li>所有 △ 假设必须标注，复盘时逐条裁决</li>
+          </ul>
+          <p class="vanity"><b>反指标（vanity metrics）：</b>粉丝数、总曝光。只用于诊断放大效率，永不作为目标与汇报口径。</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════ 09 打法 ═══════════ -->
+<section id="playbook" style="background:var(--paper-2)">
+  <div class="wrap">
+    <div class="sec-head rv">
+      <div class="sec-no">09</div>
+      <div class="sec-name">
+        <span class="kicker">90-DAY PLAYBOOK · 打法</span>
+        <h2>90 天作战清单</h2>
+      </div>
+    </div>
+    <p class="sec-lede rv" style="--d:.1s">
+      三个 30 天冲刺，每个冲刺有明确交付物与一次复盘。<b>前两项默认完成，后八项靠系统。</b>
+    </p>
+    <div class="sec-body">
+      <div class="play">
+        <div class="sprint rv">
+          <div class="sh"><span class="d">30</span><h4>定位校准 · 日更引擎</h4></div>
+          <div class="goal">GOAL：跑通「选题→信源→发布→沉淀」日循环</div>
+          <ul>
+            <li>公众号 / 即刻 / 小红书三端上线日更</li>
+            <li>固化 SOP：复用双库工作流与格式模板</li>
+            <li>身心灵专题第 1 期（政策线：25 部委 + 12356）</li>
+            <li>埋点与基线数据记录</li>
+          </ul>
+          <div class="rev">REVIEW 1 · <b>2026-09-15</b> <span style="white-space:nowrap">裁决：滩头方向</span></div>
+        </div>
+        <div class="sprint rv" style="--d:.12s">
+          <div class="sh"><span class="d">60</span><h4>滩头深耕 · 资产化</h4></div>
+          <div class="goal">GOAL：国际和平日专题 + 私域容器内测</div>
+          <ul>
+            <li>9-21 国际和平日特别专题（和平实验室母题）</li>
+            <li>知乎长尾 5 篇，「好消息」搜索入口铺设</li>
+            <li>Newsletter 内测 100 人 △</li>
+            <li>启动 10 场用户访谈（定价与形态验证）</li>
+          </ul>
+          <div class="rev">REVIEW 2 · <b>2026-10-15</b> <span style="white-space:nowrap">裁决：定位迭代 / 放大</span></div>
+        </div>
+        <div class="sprint rv" style="--d:.24s">
+          <div class="sh"><span class="d">90</span><h4>放大实验 · 商业验证</h4></div>
+          <div class="goal">GOAL：世界精神卫生日策划 + Go / No-Go</div>
+          <ul>
+            <li>10-10 世界精神卫生日特别策划</li>
+            <li>小红书小额投流测试，验证 CAC △</li>
+            <li>会员 / 报告冷启动访谈汇总</li>
+            <li>输出 Phase 3 押注建议</li>
+          </ul>
+          <div class="rev">REVIEW 3 · <b>2026-11-15</b> <span style="white-space:nowrap">裁决：Go / No-Go</span></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════ 10 变现 ═══════════ -->
+<section id="model">
+  <div class="wrap">
+    <div class="sec-head rv">
+      <div class="sec-no">10</div>
+      <div class="sec-name">
+        <span class="kicker">MONETIZATION · 变现</span>
+        <h2>如何持续</h2>
+      </div>
+    </div>
+    <p class="sec-lede rv" style="--d:.1s">
+      变现阶梯：每一级都建立在前一级的<b>信任</b>之上。先做深，不做广；
+      信任是这家媒体唯一的护城河，任何收入都不能以透支它为代价。
+    </p>
+    <div class="sec-body">
+      <div class="ladder">
+        <div class="rung rv">
+          <div class="lv">L0</div>
+          <h4>免费日刊</h4>
+          <p>每日双维度好消息 + 每周专题。它是获客引擎，也是信任资产本身。</p>
+          <div class="price">角色：获客 · 长期免费</div>
+        </div>
+        <div class="rung rv" style="--d:.1s">
+          <div class="lv">L1</div>
+          <h4>会员订阅</h4>
+          <p>周刊精编、档案库全文检索、同路人社群。为「省下的筛选时间」付费。</p>
+          <div class="price">¥20 / 月 △ <span class="tri">△ 待访谈验证</span></div>
+        </div>
+        <div class="rung rv" style="--d:.2s">
+          <div class="lv">L2</div>
+          <h4>B 端报告与联名</h4>
+          <p>身心灵行业月报、品牌联名内容、定制策展。卖给需要正向叙事的机构。</p>
+          <div class="price">Day 60 起访谈验证 △</div>
+        </div>
+        <div class="rung rv" style="--d:.3s">
+          <div class="lv">L3</div>
+          <h4>课程与共创</h4>
+          <p>循证「好情绪」训练营、公益共读、与冥想品牌共建。离钱最近，离信任最远——最后做。</p>
+          <div class="price">Phase 3 之后评估 △</div>
+        </div>
+      </div>
+      <div class="model-note rv">
+        <b>信任先于变现</b>
+        <p>
+          <strong>12 个月内不接硬广。</strong>若做商业化合作，只做「本身就是一个好消息」的品牌共创，
+          并且任何动作都要通过同一个测试：<strong>读者会不会因此少信我们一分？</strong>
+          会，就不做。
+        </p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════ 尾版 ═══════════ -->
+<footer class="colophon">
+  <div class="wrap">
+    <div class="mast-mini rv">全球<span>好</span>新闻 · 增长刊</div>
+    <div class="next rv" style="--d:.1s">NEXT ISSUE · VOL.2 将收录 PHASE 1 复盘数据与定位修订案</div>
+    <div class="meta rv" style="--d:.2s">
+      <span>版本 <b>GTM VOL.1 · 2026-08-29</b></span>
+      <span>维护 <b>法喜 / Allen Galler + Mavis</b></span>
+      <span>下次复盘 <b>2026-09-15 △</b></span>
+      <span>关联 <b><a href="../INDEX-2026.md">INDEX-2026.md</a></b></span>
+    </div>
+    <div class="motto rv" style="--d:.3s">先定义赢，再谈打。 · DEFINE WINNING FIRST, THEN FIGHT.</div>
+  </div>
+</footer>
+
+<script>
+(function(){
+  var io = new IntersectionObserver(function(entries){
+    entries.forEach(function(e){
+      if(e.isIntersecting){ e.target.classList.add('on'); io.unobserve(e.target); }
+    });
+  },{threshold:.12,rootMargin:'0px 0px -6% 0px'});
+  document.querySelectorAll('.rv').forEach(function(el){ io.observe(el); });
+
+  var links = Array.prototype.slice.call(document.querySelectorAll('nav.toc a'));
+  var secs = links.map(function(a){ return document.querySelector(a.getAttribute('href')); });
+  var spy = new IntersectionObserver(function(entries){
+    entries.forEach(function(e){
+      if(e.isIntersecting){
+        links.forEach(function(a,i){
+          a.classList.toggle('on', secs[i] === e.target);
+        });
+      }
+    });
+  },{rootMargin:'-30% 0px -60% 0px'});
+  secs.forEach(function(s){ if(s) spy.observe(s); });
+})();
+</script>
+<!-- gtm-portal-backlink (managed by _scripts/sync-gtm.py) -->
+<a class="gtmp-back" href="/GTM/" aria-label="返回 GTM 门户">&#8617; GTM 门户</a>
+<style>
+.gtmp-back{position:fixed;right:1rem;bottom:1rem;z-index:2147483000;
+font:500 12px/1 ui-monospace,SFMono-Regular,Menlo,Consolas,monospace;
+letter-spacing:.05em;text-decoration:none;padding:.6rem .85rem;border-radius:999px;
+color:#14130f;background:rgba(251,250,247,.92);border:1px solid rgba(20,19,15,.16);
+box-shadow:0 2px 12px rgba(20,19,15,.14);backdrop-filter:blur(6px);
+transition:transform .15s ease,box-shadow .15s ease}
+.gtmp-back:hover{transform:translateY(-1px);box-shadow:0 4px 16px rgba(20,19,15,.22)}
+@media (prefers-color-scheme:dark){.gtmp-back{color:#f5f2ea;background:rgba(20,19,15,.88);
+border-color:rgba(245,242,234,.22)}}
+</style>
+</body>
+</html>

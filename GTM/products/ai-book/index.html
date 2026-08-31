@@ -1,0 +1,1000 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>GTM 上市作战简报 —《大模型全栈实战指南》</title>
+<meta name="description" content="《大模型全栈实战指南》Go-to-Market 战略简报：市场洞察、目标客户、定位、定价、渠道、发布节奏与增长指标。">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Serif+SC:wght@600;700;900&family=Noto+Sans+SC:wght@400;500;700&family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+:root{
+  --paper:#F5F0E6;
+  --paper-2:#EDE6D6;
+  --card:#FBF8F1;
+  --ink:#1B1712;
+  --ink-soft:#57503F;
+  --ink-faint:#8A8069;
+  --line:#D6CBB2;
+  --line-strong:#B9AC8E;
+  --accent:#CE3B22;
+  --accent-deep:#9E2A15;
+  --blue:#1E3F7F;
+  --gold:#9C7B2D;
+  --green:#3E6B3A;
+  --serif:'Noto Serif SC',serif;
+  --sans:'Noto Sans SC',sans-serif;
+  --mono:'IBM Plex Mono',monospace;
+}
+*{margin:0;padding:0;box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{
+  background:var(--paper);
+  color:var(--ink);
+  font-family:var(--sans);
+  font-size:16px;
+  line-height:1.75;
+  -webkit-font-smoothing:antialiased;
+  background-image:
+    linear-gradient(var(--paper) 0,var(--paper) 100%),
+    repeating-linear-gradient(0deg,transparent,transparent 47px,rgba(27,23,18,.045) 47px,rgba(27,23,18,.045) 48px);
+}
+::selection{background:var(--accent);color:var(--paper)}
+
+/* ---------- 进度条 & 顶栏 ---------- */
+#progress{position:fixed;top:0;left:0;height:3px;width:0;background:var(--accent);z-index:99;transition:width .1s linear}
+.topbar{
+  position:sticky;top:0;z-index:90;
+  background:rgba(245,240,230,.92);backdrop-filter:blur(8px);
+  border-bottom:1px solid var(--line-strong);
+}
+.topbar-inner{
+  max-width:1180px;margin:0 auto;padding:0 28px;
+  display:flex;align-items:center;justify-content:space-between;height:56px;gap:16px;
+}
+.brand{font-family:var(--mono);font-size:12px;letter-spacing:.08em;font-weight:600;color:var(--ink);white-space:nowrap}
+.brand b{color:var(--accent)}
+.topnav{display:flex;gap:2px;overflow-x:auto;scrollbar-width:none}
+.topnav::-webkit-scrollbar{display:none}
+.topnav a{
+  font-family:var(--mono);font-size:11.5px;color:var(--ink-soft);text-decoration:none;
+  padding:6px 10px;border-radius:2px;white-space:nowrap;letter-spacing:.03em;
+  border-bottom:2px solid transparent;transition:color .2s,border-color .2s;
+}
+.topnav a:hover{color:var(--ink)}
+.topnav a.active{color:var(--accent-deep);border-bottom-color:var(--accent)}
+@media(max-width:860px){.topnav{display:none}}
+
+/* ---------- 版心 ---------- */
+.wrap{max-width:1180px;margin:0 auto;padding:0 28px}
+
+/* ---------- 简报眉头 ---------- */
+.doc-head{border-bottom:2px solid var(--ink);margin-top:34px}
+.doc-head .row{
+  display:flex;flex-wrap:wrap;gap:8px 28px;justify-content:space-between;
+  font-family:var(--mono);font-size:11.5px;letter-spacing:.1em;color:var(--ink-soft);
+  padding:10px 0;border-top:1px solid var(--line-strong);
+}
+.doc-head .row span b{color:var(--accent-deep);font-weight:600}
+
+/* ---------- HERO ---------- */
+.hero{position:relative;padding:72px 0 64px;border-bottom:1px solid var(--line-strong);overflow:hidden}
+.hero-grid{display:grid;grid-template-columns:minmax(0,1fr) 300px;gap:56px;align-items:end}
+@media(max-width:960px){.hero-grid{grid-template-columns:1fr}}
+.kicker{
+  display:inline-flex;align-items:center;gap:10px;
+  font-family:var(--mono);font-size:12px;letter-spacing:.28em;color:var(--accent-deep);font-weight:600;
+}
+.kicker::before{content:"";width:34px;height:1px;background:var(--accent)}
+.hero h1{
+  font-family:var(--serif);font-weight:900;
+  font-size:clamp(36px,4.8vw,60px);line-height:1.2;letter-spacing:.01em;
+  white-space:nowrap;
+  margin:22px 0 8px;
+}
+@media(max-width:640px){.hero h1{white-space:normal}}
+.hero h1 .stroke{color:transparent;-webkit-text-stroke:1.5px var(--ink)}
+.hero .sub{max-width:620px;color:var(--ink-soft);font-size:17px;margin-top:18px}
+.hero .sub strong{color:var(--ink)}
+.hero-actions{display:flex;gap:14px;flex-wrap:wrap;margin-top:34px}
+.btn{
+  display:inline-block;font-family:var(--mono);font-size:13px;letter-spacing:.06em;
+  padding:13px 26px;text-decoration:none;border:1.5px solid var(--ink);
+  transition:transform .15s,box-shadow .15s;box-shadow:3px 3px 0 var(--ink);
+  background:var(--card);color:var(--ink);font-weight:600;
+}
+.btn:hover{transform:translate(-2px,-2px);box-shadow:5px 5px 0 var(--ink)}
+.btn.primary{background:var(--accent);border-color:var(--accent-deep);color:#FBF6EC;box-shadow:3px 3px 0 var(--accent-deep)}
+.btn.primary:hover{box-shadow:5px 5px 0 var(--accent-deep)}
+
+/* 印章 */
+.stamp{
+  position:relative;justify-self:end;align-self:start;
+  width:172px;height:172px;border:2.5px solid var(--accent);border-radius:50%;
+  display:flex;flex-direction:column;align-items:center;justify-content:center;gap:2px;
+  color:var(--accent);transform:rotate(9deg);
+  font-family:var(--mono);letter-spacing:.12em;
+  box-shadow:inset 0 0 0 5px var(--paper),inset 0 0 0 6.5px var(--accent);
+  opacity:.92;animation:stampIn .6s cubic-bezier(.2,1.6,.4,1) .55s both;
+}
+@keyframes stampIn{0%{opacity:0;transform:rotate(9deg) scale(1.8)}100%{opacity:.92;transform:rotate(9deg) scale(1)}}
+.stamp .big{font-size:26px;font-weight:600}
+.stamp .sm{font-size:10px}
+@media(max-width:960px){.stamp{justify-self:start;transform:rotate(6deg) scale(.86);margin-top:-30px}}
+
+/* Hero 统计 */
+.hero-stats{
+  display:grid;grid-template-columns:repeat(4,1fr);
+  border:1.5px solid var(--ink);background:var(--card);
+  margin-top:64px;box-shadow:6px 6px 0 rgba(27,23,18,.14);
+}
+.hstat{padding:22px 24px;border-right:1px solid var(--line)}
+.hstat:last-child{border-right:none}
+.hstat .num{font-family:var(--serif);font-weight:900;font-size:38px;line-height:1.1;color:var(--ink)}
+.hstat .num i{font-style:normal;color:var(--accent);font-size:22px;margin-left:2px}
+.hstat .lbl{font-family:var(--mono);font-size:11px;letter-spacing:.12em;color:var(--ink-faint);margin-top:6px}
+@media(max-width:860px){.hero-stats{grid-template-columns:1fr 1fr}.hstat:nth-child(2){border-right:none}.hstat:nth-child(-n+2){border-bottom:1px solid var(--line)}}
+
+/* ---------- 章节通用 ---------- */
+section.chapter{padding:88px 0 20px;scroll-margin-top:70px}
+.ch-head{display:flex;align-items:baseline;gap:26px;border-bottom:2.5px solid var(--ink);padding-bottom:18px;margin-bottom:44px;position:relative}
+.ch-num{
+  font-family:var(--mono);font-weight:600;font-size:clamp(48px,6vw,84px);line-height:.9;
+  color:transparent;-webkit-text-stroke:1.5px var(--accent);letter-spacing:-.02em;
+}
+.ch-title h2{font-family:var(--serif);font-weight:900;font-size:clamp(26px,3.4vw,40px);line-height:1.25}
+.ch-title .en{font-family:var(--mono);font-size:12px;letter-spacing:.3em;color:var(--ink-faint);display:block;margin-top:6px;text-transform:uppercase}
+.ch-head .tag{
+  margin-left:auto;flex-shrink:0;font-family:var(--mono);font-size:11px;color:var(--accent-deep);
+  border:1px solid var(--accent);padding:5px 12px;letter-spacing:.14em;align-self:center;
+}
+@media(max-width:640px){.ch-head{flex-wrap:wrap}.ch-head .tag{margin-left:0}}
+.lede{max-width:760px;font-size:17px;color:var(--ink-soft);margin-bottom:44px}
+.lede strong{color:var(--ink)}
+
+/* 出场动画 */
+.reveal{opacity:0;transform:translateY(26px);transition:opacity .7s ease,transform .7s ease;transition-delay:var(--d,0s)}
+.reveal.in{opacity:1;transform:none}
+
+/* ---------- 卡片网格 ---------- */
+.grid{display:grid;gap:22px}
+.grid.c3{grid-template-columns:repeat(3,1fr)}
+.grid.c2{grid-template-columns:repeat(2,1fr)}
+.grid.c4{grid-template-columns:repeat(4,1fr)}
+@media(max-width:960px){.grid.c3,.grid.c4{grid-template-columns:1fr 1fr}}
+@media(max-width:620px){.grid.c3,.grid.c4,.grid.c2{grid-template-columns:1fr}}
+.card{
+  background:var(--card);border:1px solid var(--line-strong);padding:26px 26px 22px;
+  position:relative;transition:transform .2s,box-shadow .2s;
+}
+.card:hover{transform:translateY(-4px);box-shadow:6px 6px 0 rgba(27,23,18,.12)}
+.card .idx{font-family:var(--mono);font-size:11px;color:var(--accent-deep);letter-spacing:.16em;font-weight:600}
+.card h3{font-family:var(--serif);font-weight:700;font-size:20px;margin:10px 0 10px;line-height:1.4}
+.card p{font-size:14.5px;color:var(--ink-soft);line-height:1.8}
+.card .foot{margin-top:16px;padding-top:12px;border-top:1px dashed var(--line-strong);font-family:var(--mono);font-size:11.5px;color:var(--ink-faint)}
+.card .foot b{color:var(--green);font-weight:600}
+
+/* ---------- TAM / SAM / SOM ---------- */
+.market-grid{display:grid;grid-template-columns:1.15fr .85fr;gap:48px;align-items:start}
+@media(max-width:960px){.market-grid{grid-template-columns:1fr}}
+.tam{display:flex;flex-direction:column;gap:14px}
+.tam-row{display:grid;grid-template-columns:64px 1fr;gap:16px;align-items:center}
+.tam-label{font-family:var(--mono);font-size:13px;font-weight:600;letter-spacing:.06em}
+.tam-bar{
+  position:relative;height:64px;background:var(--ink);color:var(--paper);
+  display:flex;align-items:center;padding:0 20px;overflow:hidden;
+  width:var(--w,100%);min-width:max-content;
+  transition:width 1.2s cubic-bezier(.25,.8,.25,1);
+}
+.tam-bar .val{font-family:var(--serif);font-weight:700;font-size:19px;white-space:nowrap}
+.tam-bar .cap{font-family:var(--mono);font-size:10.5px;letter-spacing:.1em;opacity:.75;margin-left:14px;white-space:nowrap}
+.tam-bar.l1{background:var(--ink)}
+.tam-bar.l2{background:var(--blue)}
+.tam-bar.l3{background:var(--accent);box-shadow:4px 4px 0 rgba(158,42,21,.25)}
+.tam-note{font-size:13px;color:var(--ink-faint);font-family:var(--mono)}
+.tam-cell{display:flex;align-items:center;gap:14px}
+.tam-out{font-family:var(--mono);font-size:10.5px;letter-spacing:.1em;color:var(--ink-faint);white-space:nowrap}
+.trend-list{display:flex;flex-direction:column}
+.trend{
+  display:grid;grid-template-columns:52px 1fr;gap:18px;padding:20px 4px;
+  border-bottom:1px solid var(--line);align-items:start;
+}
+.trend:first-child{border-top:2px solid var(--ink)}
+.trend .no{font-family:var(--mono);font-weight:600;font-size:15px;color:var(--accent)}
+.trend h4{font-family:var(--serif);font-size:17.5px;font-weight:700;margin-bottom:5px}
+.trend p{font-size:13.5px;color:var(--ink-soft)}
+
+/* ---------- 人物画像 ---------- */
+.persona{
+  background:var(--card);border:1.5px solid var(--ink);padding:0;
+  display:flex;flex-direction:column;transition:transform .2s,box-shadow .2s;
+}
+.persona:hover{transform:translateY(-4px);box-shadow:7px 7px 0 rgba(27,23,18,.14)}
+.persona .head{background:var(--ink);color:var(--paper);padding:16px 22px;display:flex;align-items:center;justify-content:space-between}
+.persona .head .name{font-family:var(--serif);font-weight:700;font-size:18px}
+.persona .head .code{font-family:var(--mono);font-size:10.5px;letter-spacing:.14em;color:var(--gold)}
+.persona .body{padding:22px}
+.persona .meta{display:flex;flex-wrap:wrap;gap:8px;margin-bottom:14px}
+.chip{font-family:var(--mono);font-size:10.5px;border:1px solid var(--line-strong);color:var(--ink-soft);padding:3px 9px;letter-spacing:.05em}
+.persona p.desc{font-size:13.5px;color:var(--ink-soft);margin-bottom:14px}
+.jtbd{
+  border-left:3px solid var(--accent);background:var(--paper-2);
+  padding:12px 14px;font-size:13.5px;line-height:1.7;
+}
+.jtbd b{font-family:var(--mono);font-size:10px;letter-spacing:.2em;color:var(--accent-deep);display:block;margin-bottom:4px}
+
+/* ---------- 定位声明 ---------- */
+.pos-box{
+  background:var(--ink);color:var(--paper);padding:46px 50px;position:relative;
+  box-shadow:8px 8px 0 rgba(27,23,18,.18);
+}
+.pos-box .lbl{font-family:var(--mono);font-size:11px;letter-spacing:.3em;color:var(--gold);margin-bottom:20px}
+.pos-box p.stmt{font-family:var(--serif);font-weight:700;font-size:clamp(19px,2.4vw,26px);line-height:1.75}
+.pos-box p.stmt em{font-style:normal;color:#F0A08E;border-bottom:2px solid var(--accent)}
+.pos-box p.stmt b{color:#fff;background:var(--accent);padding:0 8px}
+@media(max-width:640px){.pos-box{padding:32px 24px}}
+
+/* 竞争对比表 */
+.tbl{width:100%;border-collapse:collapse;background:var(--card);border:1.5px solid var(--ink)}
+.tbl th{
+  font-family:var(--mono);font-size:11.5px;letter-spacing:.1em;font-weight:600;
+  background:var(--ink);color:var(--paper);padding:13px 16px;text-align:left;
+}
+.tbl td{padding:15px 16px;border-bottom:1px solid var(--line);font-size:14px;vertical-align:top;color:var(--ink-soft)}
+.tbl tr:last-child td{border-bottom:none}
+.tbl tr:hover td{background:rgba(206,59,34,.05)}
+.tbl td.dim{font-family:var(--serif);font-weight:700;color:var(--ink);white-space:nowrap}
+.tbl .yes{color:var(--green);font-weight:700}
+.tbl .no{color:var(--ink-faint)}
+.tbl td.us{background:rgba(206,59,34,.07);font-weight:500;color:var(--ink)}
+.tbl-scroll{overflow-x:auto;border:1.5px solid var(--ink)}
+
+/* 信息屋 */
+.house{border:1.5px solid var(--ink);background:var(--card);overflow:hidden}
+.house .roof{
+  background:var(--accent);color:#FBF6EC;text-align:center;padding:26px 20px;
+  font-family:var(--serif);font-weight:900;font-size:clamp(18px,2.4vw,25px);line-height:1.6;
+  border-bottom:1.5px solid var(--accent-deep);
+}
+.house .roof small{display:block;font-family:var(--mono);font-weight:400;font-size:10.5px;letter-spacing:.3em;opacity:.8;margin-bottom:8px}
+.house .pillars{display:grid;grid-template-columns:repeat(3,1fr)}
+.pillar{padding:22px;border-right:1px solid var(--line)}
+.pillar:last-child{border-right:none}
+.pillar .p-k{font-family:var(--mono);font-size:10.5px;letter-spacing:.2em;color:var(--accent-deep);font-weight:600}
+.pillar h4{font-family:var(--serif);font-size:18px;font-weight:700;margin:8px 0 6px}
+.pillar p{font-size:13px;color:var(--ink-soft)}
+.pillar .evi{margin-top:12px;font-family:var(--mono);font-size:11px;color:var(--ink-faint);border-top:1px dashed var(--line-strong);padding-top:10px}
+.house .base{
+  border-top:1.5px solid var(--ink);background:var(--paper-2);padding:14px 22px;text-align:center;
+  font-family:var(--mono);font-size:11.5px;letter-spacing:.08em;color:var(--ink-soft);
+}
+@media(max-width:720px){.house .pillars{grid-template-columns:1fr}.pillar{border-right:none;border-bottom:1px solid var(--line)}}
+
+/* ---------- 定价 ---------- */
+.price-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:22px;align-items:stretch}
+@media(max-width:860px){.price-grid{grid-template-columns:1fr}}
+.price{
+  background:var(--card);border:1.5px solid var(--ink);padding:30px 28px;display:flex;flex-direction:column;
+  transition:transform .2s,box-shadow .2s;position:relative;
+}
+.price:hover{transform:translateY(-4px);box-shadow:7px 7px 0 rgba(27,23,18,.14)}
+.price.hero-plan{background:var(--ink);color:var(--paper);box-shadow:7px 7px 0 rgba(206,59,34,.5)}
+.price .plan{font-family:var(--mono);font-size:11px;letter-spacing:.22em;color:var(--accent-deep);font-weight:600}
+.price.hero-plan .plan{color:var(--gold)}
+.price .amount{font-family:var(--serif);font-weight:900;font-size:46px;line-height:1.1;margin:14px 0 2px}
+.price .amount i{font-style:normal;font-size:20px;vertical-align:top;margin-right:2px}
+.price .was{font-family:var(--mono);font-size:12px;color:var(--ink-faint);text-decoration:line-through;margin-bottom:14px}
+.price.hero-plan .was{color:#8f8875}
+.price ul{list-style:none;margin:16px 0 22px;flex:1}
+.price li{
+  font-size:13.5px;padding:9px 0 9px 24px;border-bottom:1px dashed var(--line);
+  position:relative;color:var(--ink-soft);
+}
+.price.hero-plan li{color:#D8D1C0;border-color:#3a352b}
+.price li::before{content:"▸";position:absolute;left:2px;color:var(--accent)}
+.price .badge{
+  position:absolute;top:-13px;right:18px;background:var(--accent);color:#FBF6EC;
+  font-family:var(--mono);font-size:10.5px;letter-spacing:.14em;padding:5px 13px;font-weight:600;
+}
+.anchor-note{
+  margin-top:26px;border:1px dashed var(--line-strong);background:var(--paper-2);
+  padding:18px 24px;font-size:14px;color:var(--ink-soft);display:flex;gap:16px;align-items:flex-start;
+}
+.anchor-note .k{font-family:var(--mono);font-size:10.5px;letter-spacing:.2em;color:var(--accent-deep);font-weight:600;white-space:nowrap;padding-top:3px}
+
+/* ---------- 渠道矩阵 ---------- */
+.channel-note{font-family:var(--mono);font-size:12px;color:var(--ink-faint);margin-top:14px}
+
+/* ---------- 时间轴 ---------- */
+.timeline{display:grid;grid-template-columns:repeat(6,1fr);gap:0;border-top:2.5px solid var(--ink);position:relative}
+.tl-item{position:relative;padding:26px 18px 10px 0;border-right:1px solid var(--line)}
+.tl-item:last-child{border-right:none}
+.tl-item::before{
+  content:"";position:absolute;top:-7px;left:0;width:12px;height:12px;border-radius:50%;
+  background:var(--paper);border:2.5px solid var(--ink);
+}
+.tl-item.key::before{background:var(--accent);border-color:var(--accent-deep)}
+.tl-item .t{font-family:var(--mono);font-size:12px;font-weight:600;letter-spacing:.08em;color:var(--accent-deep)}
+.tl-item .t.today{background:var(--accent);color:#FBF6EC;padding:2px 8px}
+.tl-item h4{font-family:var(--serif);font-weight:700;font-size:16.5px;margin:8px 0 8px}
+.tl-item ul{list-style:none}
+.tl-item li{font-size:12.5px;color:var(--ink-soft);padding:3px 0 3px 14px;position:relative;line-height:1.6}
+.tl-item li::before{content:"·";position:absolute;left:0;font-weight:700;color:var(--accent)}
+@media(max-width:960px){
+  .timeline{grid-template-columns:1fr 1fr}
+  .tl-item{border-bottom:1px solid var(--line);padding-bottom:22px}
+}
+@media(max-width:560px){.timeline{grid-template-columns:1fr}}
+
+/* ---------- 漏斗 & 指标 ---------- */
+.metric-grid{display:grid;grid-template-columns:1.05fr .95fr;gap:48px;align-items:start}
+@media(max-width:960px){.metric-grid{grid-template-columns:1fr}}
+.funnel{display:flex;flex-direction:column;gap:13px}
+.f-head,.f-row{display:grid;grid-template-columns:112px 1fr 112px;gap:14px;align-items:center}
+.f-head{font-family:var(--mono);font-size:9.5px;letter-spacing:.18em;color:var(--ink-faint);border-bottom:1px solid var(--line-strong);padding-bottom:8px}
+.f-head span:last-child{text-align:right}
+.f-label{font-size:14.5px;font-weight:700;text-align:right;line-height:1.35}
+.f-label b{display:block;font-family:var(--mono);font-weight:400;font-size:9.5px;letter-spacing:.14em;color:var(--ink-faint)}
+.f-track{height:44px;background:rgba(27,23,18,.06)}
+.f-bar{height:100%;width:var(--w,100%);transition:width 1.1s cubic-bezier(.25,.8,.25,1)}
+.f-bar.c1{background:var(--ink)}
+.f-bar.c2{background:#33405C}
+.f-bar.c3{background:var(--blue)}
+.f-bar.c4{background:var(--accent)}
+.f-bar.c5{background:var(--accent-deep)}
+.f-val{font-family:var(--serif);font-weight:700;font-size:18px;line-height:1.2}
+.f-val small{display:block;font-family:var(--mono);font-weight:400;font-size:10px;letter-spacing:.06em;color:var(--ink-faint);margin-top:3px}
+.kpi-card{border:1.5px solid var(--ink);background:var(--card)}
+.kpi-card .head{background:var(--ink);color:var(--paper);padding:14px 22px;display:flex;justify-content:space-between;align-items:center}
+.kpi-card .head .t{font-family:var(--serif);font-weight:700;font-size:16px}
+.kpi-card .head .k{font-family:var(--mono);font-size:10px;letter-spacing:.2em;color:var(--gold)}
+.kpi-card .body{padding:22px}
+.ns{
+  text-align:center;padding:18px 12px 22px;border:1px dashed var(--line-strong);background:var(--paper-2);margin-bottom:20px;
+}
+.ns .k{font-family:var(--mono);font-size:10.5px;letter-spacing:.26em;color:var(--accent-deep);font-weight:600}
+.ns .v{font-family:var(--serif);font-weight:900;font-size:clamp(24px,3vw,32px);margin-top:8px}
+.ns .v i{font-style:normal;color:var(--accent)}
+.ns .d{font-size:12.5px;color:var(--ink-soft);margin-top:6px}
+.guard{display:grid;grid-template-columns:repeat(3,1fr);gap:12px}
+.guard .g{border:1px solid var(--line-strong);padding:14px;text-align:center}
+.guard .g .v{font-family:var(--serif);font-weight:700;font-size:22px;color:var(--green)}
+.guard .g .k{font-family:var(--mono);font-size:10px;letter-spacing:.1em;color:var(--ink-faint);margin-top:4px}
+@media(max-width:620px){.guard{grid-template-columns:1fr}}
+
+/* ---------- 风险矩阵 ---------- */
+.risk-grid{display:grid;grid-template-columns:1fr 1.25fr;gap:48px;align-items:start}
+@media(max-width:960px){.risk-grid{grid-template-columns:1fr}}
+.matrix{position:relative;aspect-ratio:1/1;border-left:2px solid var(--ink);border-bottom:2px solid var(--ink);background:
+  linear-gradient(to right,transparent calc(50% - .5px),var(--line) calc(50% - .5px),var(--line) calc(50% + .5px),transparent calc(50% + .5px)),
+  linear-gradient(to top,transparent calc(50% - .5px),var(--line) calc(50% - .5px),var(--line) calc(50% + .5px),transparent calc(50% + .5px));
+}
+.matrix .axis{position:absolute;font-family:var(--mono);font-size:10.5px;letter-spacing:.14em;color:var(--ink-faint)}
+.matrix .axis.x{bottom:-28px;right:0}
+.matrix .axis.y{top:-8px;left:-64px;writing-mode:vertical-rl;transform:rotate(180deg)}
+.matrix .quad{position:absolute;font-family:var(--mono);font-size:10px;letter-spacing:.1em;color:var(--line-strong)}
+.dot{
+  position:absolute;width:112px;transform:translate(-50%,50%);
+  font-family:var(--mono);font-size:10.5px;line-height:1.4;font-weight:500;
+}
+.dot .pin{
+  width:15px;height:15px;border-radius:50%;margin:0 auto 5px;border:2.5px solid var(--paper);
+  box-shadow:0 0 0 1.5px var(--ink);
+}
+.dot.hi .pin{background:var(--accent)}
+.dot.mid .pin{background:var(--gold)}
+.dot.low .pin{background:var(--green)}
+.dot span{display:block;text-align:center;background:var(--card);border:1px solid var(--line-strong);padding:4px 6px;color:var(--ink-soft)}
+.risk-list .risk{
+  display:grid;grid-template-columns:20px 1fr;gap:14px;padding:18px 4px;border-bottom:1px solid var(--line);align-items:start;
+}
+.risk-list .risk:first-child{border-top:2px solid var(--ink)}
+.risk .lv{width:12px;height:12px;border-radius:50%;margin-top:7px}
+.risk .lv.hi{background:var(--accent)}.risk .lv.mid{background:var(--gold)}.risk .lv.low{background:var(--green)}
+.risk h4{font-family:var(--serif);font-size:16.5px;font-weight:700}
+.risk h4 small{font-family:var(--mono);font-weight:400;font-size:10.5px;color:var(--ink-faint);margin-left:10px;letter-spacing:.08em}
+.risk p{font-size:13.5px;color:var(--ink-soft);margin-top:4px}
+.risk p b{color:var(--accent-deep);font-weight:600}
+
+/* ---------- 清单 ---------- */
+.check-grid{display:grid;grid-template-columns:1fr 1fr;gap:0 44px;border:1.5px solid var(--ink);background:var(--card);padding:34px 38px}
+@media(max-width:760px){.check-grid{grid-template-columns:1fr;padding:26px}}
+.chk{display:flex;gap:14px;padding:11px 0;border-bottom:1px dashed var(--line);align-items:flex-start;font-size:14px}
+.chk .box{
+  flex-shrink:0;width:18px;height:18px;border:2px solid var(--ink);margin-top:4px;position:relative;transition:background .2s;
+}
+.chk:hover .box{background:var(--accent)}
+.chk .w{font-family:var(--mono);font-size:10.5px;color:var(--accent-deep);font-weight:600;white-space:nowrap;margin-top:3px;letter-spacing:.06em}
+.chk .tx b{font-weight:700}
+.chk .tx span{color:var(--ink-faint);font-size:12.5px;display:block}
+
+/* ---------- 附录注记 & 页脚 ---------- */
+.foot-note{
+  margin:64px 0 0;border-top:2px solid var(--ink);padding:22px 0 8px;
+  font-family:var(--mono);font-size:11.5px;color:var(--ink-faint);line-height:1.9;
+}
+.foot-note b{color:var(--accent-deep)}
+footer{margin-top:60px;background:var(--ink);color:var(--paper);padding:44px 0 52px}
+footer .wrap{display:flex;flex-wrap:wrap;gap:20px 40px;justify-content:space-between;align-items:flex-end}
+footer .sig{font-family:var(--serif);font-weight:900;font-size:22px}
+footer .sig i{font-style:normal;color:var(--accent)}
+footer .meta{font-family:var(--mono);font-size:11px;color:#8f8875;letter-spacing:.1em;line-height:2}
+footer .meta a{color:#c9c0aa;text-decoration:none;border-bottom:1px dotted #8f8875}
+</style>
+</head>
+<body>
+
+<div id="progress"></div>
+
+<header class="topbar">
+  <div class="topbar-inner">
+    <div class="brand">GTM//<b>作战简报</b> — 大模型全栈实战指南</div>
+    <nav class="topnav">
+      <a href="#s1">01 市场</a>
+      <a href="#s2">02 客户</a>
+      <a href="#s3">03 定位</a>
+      <a href="#s4">04 定价</a>
+      <a href="#s5">05 渠道</a>
+      <a href="#s6">06 节奏</a>
+      <a href="#s7">07 指标</a>
+      <a href="#s8">08 风险</a>
+      <a href="#s9">09 清单</a>
+    </nav>
+  </div>
+</header>
+
+<main class="wrap">
+
+  <!-- 简报眉头 -->
+  <div class="doc-head">
+    <div class="row">
+      <span>DOC NO. <b>GTM-2026-001</b></span>
+      <span>CLASSIFICATION: <b>内部战略</b></span>
+      <span>VERSION: <b>v1.0</b></span>
+      <span>DATE: <b>2026-08-29</b></span>
+      <span>OWNER: <b>出版与增长团队</b></span>
+    </div>
+  </div>
+
+  <!-- ================= HERO ================= -->
+  <section class="hero">
+    <div class="hero-grid">
+      <div>
+        <span class="kicker">GO-TO-MARKET STRATEGY</span>
+        <h1>上市作战简报<br><span class="stroke">《大模型全栈实战指南》</span></h1>
+        <p class="sub">一本从数学积木到工业级落地的<strong>大模型全栈实战书</strong>。本简报按 Go-to-Market 最佳实践，回答九个问题：<strong>卖给谁、凭什么、什么价、走哪条路、什么时候打、怎么度量输赢。</strong></p>
+        <div class="hero-actions">
+          <a class="btn primary" href="#s6">查看 90 天发布节奏 →</a>
+          <a class="btn" href="#s3">先看定位声明</a>
+        </div>
+      </div>
+      <div class="stamp" aria-hidden="true">
+        <span class="big">GTM</span>
+        <span class="big" style="font-size:17px">v1.0</span>
+        <span class="sm">APPROVED · 2026</span>
+      </div>
+    </div>
+
+    <div class="hero-stats">
+      <div class="hstat"><div class="num" data-count="6">0</div><div class="lbl">大部分 · 全栈知识体系</div></div>
+      <div class="hstat"><div class="num" data-count="40" data-suffix="+">0</div><div class="lbl">章节 · 理论到实战</div></div>
+      <div class="hstat"><div class="num" data-count="10000" data-suffix="">0</div><div class="lbl">首年付费读者（北极星）</div></div>
+      <div class="hstat"><div class="num" data-count="90">0</div><div class="lbl">天 · 发布作战周期</div></div>
+    </div>
+  </section>
+
+  <!-- ================= 01 市场 ================= -->
+  <section class="chapter" id="s1">
+    <div class="ch-head reveal">
+      <div class="ch-num">01</div>
+      <div class="ch-title"><h2>市场洞察</h2><span class="en">Market Landscape</span></div>
+      <div class="tag">先看清战场</div>
+    </div>
+    <p class="lede reveal">GTM 的第一步不是想"我们卖什么"，而是<strong>看清市场在哪、有多大、正在发生什么变化</strong>。生成式 AI 正从"模型 Demo"进入"工程深水区"，系统性工程能力是当前最大的供需缺口。</p>
+
+    <div class="market-grid">
+      <div class="reveal">
+        <div class="tam">
+          <div class="tam-row">
+            <div class="tam-label">TAM</div>
+            <div class="tam-bar l1" style="--w:100%"><span class="val">≈ 500 万人</span><span class="cap">中国 AI 相关从业者与学习者</span></div>
+          </div>
+          <div class="tam-row">
+            <div class="tam-label">SAM</div>
+            <div class="tam-bar l2" style="--w:58%"><span class="val">≈ 80 万人</span><span class="cap">大模型工程化方向开发者</span></div>
+          </div>
+          <div class="tam-row">
+            <div class="tam-label">SOM</div>
+            <div class="tam-cell">
+              <div class="tam-bar l3" style="--w:22%"><span class="val">1 万付费读者</span></div>
+              <span class="tam-out">首年可获取市场</span>
+            </div>
+          </div>
+          <p class="tam-note">* 漏斗宽度按相对比例示意；基线假设，可随调研数据替换。</p>
+        </div>
+      </div>
+      <div class="trend-list reveal" style="--d:.15s">
+        <div class="trend">
+          <div class="no">T1</div>
+          <div><h4>企业落地进入"工程深水区"</h4><p>企业已不缺模型，缺的是把模型做成可靠系统的工程方法论——正是本书第三至六部分的核心。</p></div>
+        </div>
+        <div class="trend">
+          <div class="no">T2</div>
+          <div><h4>人才缺口与转岗潮并存</h4><p>生成式 AI 岗位需求持续增长，后端/前端/算法工程师的"系统化进阶"学习需求旺盛。</p></div>
+        </div>
+        <div class="trend">
+          <div class="no">T3</div>
+          <div><h4>深度内容价值回归</h4><p>碎片化内容信任度下降，读者愿意为"一本读完、体系完整"的深度内容付费。</p></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ================= 02 客户 ================= -->
+  <section class="chapter" id="s2">
+    <div class="ch-head reveal">
+      <div class="ch-num">02</div>
+      <div class="ch-title"><h2>目标客户画像</h2><span class="en">ICP &amp; Personas</span></div>
+      <div class="tag">卖给谁</div>
+    </div>
+    <p class="lede reveal">为每类理想客户（ICP）定义一张画像与一个"待完成任务"（JTBD）。<strong>所有信息、渠道与定价，都只对这三个人说话。</strong></p>
+
+    <div class="grid c3">
+      <div class="persona reveal">
+        <div class="head"><span class="name">转型工程师</span><span class="code">P-01 / 主力客群</span></div>
+        <div class="body">
+          <div class="meta"><span class="chip">27–35 岁</span><span class="chip">后端 / 前端</span><span class="chip">一线大厂与中厂</span></div>
+          <p class="desc">有扎实工程功底，但 AI 知识碎片化；想在 12 个月内完成向 AI 应用开发的岗位跃迁。</p>
+          <div class="jtbd"><b>JTBD</b>"当 AI 岗位红利出现时，我需要一套可验证的完整能力证明，而不是又一堆收藏夹里的零散教程。"</div>
+        </div>
+      </div>
+      <div class="persona reveal" style="--d:.12s">
+        <div class="head"><span class="name">落地算法工程师</span><span class="code">P-02 / 高价值客群</span></div>
+        <div class="body">
+          <div class="meta"><span class="chip">24–32 岁</span><span class="chip">算法 / AI 平台</span><span class="chip">负责生产环境</span></div>
+          <p class="desc">论文读得多、demo 写得快，但模型一上生产就"水土不服"：成本、延迟、评测、迭代全是坑。</p>
+          <div class="jtbd"><b>JTBD</b>"我要把模型从 notebook 推到工业级上线，并且在上出事之前知道坑在哪。"</div>
+        </div>
+      </div>
+      <div class="persona reveal" style="--d:.24s">
+        <div class="head"><span class="name">技术决策者 &amp; 深潜学生</span><span class="code">P-03 / 口碑客群</span></div>
+        <div class="body">
+          <div class="meta"><span class="chip">技术 Leader / 研究生</span><span class="chip">需要全景认知</span></div>
+          <p class="desc">不亲手写每一行代码，但要做技术选型、带团队、定方向；或为深造打地基。</p>
+          <div class="jtbd"><b>JTBD</b>"我要在最短时间内建立大模型全景地图，做出不后悔的技术决策。"</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ================= 03 定位 ================= -->
+  <section class="chapter" id="s3">
+    <div class="ch-head reveal">
+      <div class="ch-num">03</div>
+      <div class="ch-title"><h2>定位与信息</h2><span class="en">Positioning &amp; Messaging</span></div>
+      <div class="tag">凭什么赢</div>
+    </div>
+    <p class="lede reveal">定位回答一个问题：<strong>当读者有替代选择时，为什么选我们？</strong>我们不做"又一本 AI 书"，而是占领"工业级落地"这一空放心智。</p>
+
+    <div class="pos-box reveal" style="margin-bottom:44px">
+      <div class="lbl">POSITIONING STATEMENT · 定位声明</div>
+      <p class="stmt">对于<em>需要把大模型真正落地的专业工程师</em>而言，《大模型全栈实战指南》是唯一一本<b>从数学直觉一路讲到工业级工程</b>的体系化实战书——市面上的替代品要么"新而散"（论文与文档），要么"全而旧"（传统教材），要么"快而浅"（碎片课程），而它让读者<em>读得懂原理，更做得出系统</em>。</p>
+    </div>
+
+    <div class="tbl-scroll reveal" style="margin-bottom:44px">
+      <table class="tbl">
+        <thead>
+          <tr><th style="width:18%">维度</th><th>本书</th><th>论文 / 官方文档</th><th>传统 AI 教材</th><th>短视频 / 碎片课</th></tr>
+        </thead>
+        <tbody>
+          <tr><td class="dim">体系完整度</td><td class="us"><span class="yes">✓</span> 数学 → 深度学习 → 全生命周期</td><td>✗ 按论文时间散落</td><td><span class="yes">✓</span> 但止步于经典模型</td><td>✗ 主题孤岛</td></tr>
+          <tr><td class="dim">工程实用性</td><td class="us"><span class="yes">✓</span> 工业级实战章节</td><td>△ 只有理想条件代码</td><td><span class="no">✗ 无生产视角</span></td><td>△ demo 级</td></tr>
+          <tr><td class="dim">入门友好度</td><td class="us"><span class="yes">✓</span> 图解 + 比喻（积木 / 游乐场）</td><td><span class="no">✗ 门槛极高</span></td><td>△ 抽象枯燥</td><td><span class="yes">✓</span> 但学不会真东西</td></tr>
+          <tr><td class="dim">时效性</td><td class="us"><span class="yes">✓</span> 版本化更新 + 会员订阅</td><td><span class="yes">✓</span> 最新但无上下文</td><td><span class="no">✗ 滞后一个时代</span></td><td>△ 热点驱动</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="house reveal">
+      <div class="roof"><small>MASTER MESSAGE · 主信息</small>从算法底座到工业级落地，一本书打通大模型全栈</div>
+      <div class="pillars">
+        <div class="pillar">
+          <span class="p-k">PILLAR 01</span>
+          <h4>深度 · 讲透为什么</h4>
+          <p>微积分、线性代数、概率论变成"积木玩具"，从直觉而非公式恐惧出发。</p>
+          <div class="evi">证据：图解数学六讲 / 70 年 AI 进化史</div>
+        </div>
+        <div class="pillar">
+          <span class="p-k">PILLAR 02</span>
+          <h4>实战 · 教会怎么做</h4>
+          <p>备料→造→调→评→用→榨→换，大模型全生命周期的工业级方法论。</p>
+          <div class="evi">证据：六大部分 29 章核心技术 + 实战篇</div>
+        </div>
+        <div class="pillar">
+          <span class="p-k">PILLAR 03</span>
+          <h4>体系 · 学完能迁移</h4>
+          <p>不是知识点清单，而是一张可以反复使用的工程路线图。</p>
+          <div class="evi">证据：全书导航 + 概念速查 + 学习路径</div>
+        </div>
+      </div>
+      <div class="base">FOUNDATION · 基座：作者工程实战背书 × 源码仓库 × 持续更新承诺</div>
+    </div>
+  </section>
+
+  <!-- ================= 04 定价 ================= -->
+  <section class="chapter" id="s4">
+    <div class="ch-head reveal">
+      <div class="ch-num">04</div>
+      <div class="ch-title"><h2>定价与包装</h2><span class="en">Pricing &amp; Packaging</span></div>
+      <div class="tag">什么价</div>
+    </div>
+    <p class="lede reveal">三档阶梯覆盖三类客群：低价档<strong>降低决策门槛</strong>走量，中档承接主力需求，高档把"持续更新 + 答疑"变成<strong>订阅型收入</strong>。</p>
+
+    <div class="price-grid">
+      <div class="price reveal">
+        <div class="plan">TIER 1 · 数字版</div>
+        <div class="amount"><i>¥</i>79</div>
+        <div class="was">上市价 ¥99</div>
+        <ul>
+          <li>全本电子书（EPUB / PDF）</li>
+          <li>前两章免费试读引流</li>
+          <li>适合：转化新读者、走量</li>
+        </ul>
+        <div style="font-family:var(--mono);font-size:11px;color:var(--ink-faint)">早鸟限量 2,000 份</div>
+      </div>
+      <div class="price hero-plan reveal" style="--d:.12s">
+        <div class="badge">主力档 · 预期销量 60%</div>
+        <div class="plan">TIER 2 · 纸质 + 数字套装</div>
+        <div class="amount"><i>¥</i>149</div>
+        <div class="was">单买合计 ¥198</div>
+        <ul>
+          <li>纸质书 + 电子书双版本</li>
+          <li>首印赠：全书思维导图折页</li>
+          <li>适合：P-01 / P-02 主力客群</li>
+        </ul>
+        <div style="font-family:var(--mono);font-size:11px;color:var(--gold)">锚定：一套系统网课 ¥999+，"一本书价，一套课的体系"</div>
+      </div>
+      <div class="price reveal" style="--d:.24s">
+        <div class="plan">TIER 3 · 读者会员</div>
+        <div class="amount"><i>¥</i>299<span style="font-size:15px;font-family:var(--mono);color:var(--ink-faint)"> /年</span></div>
+        <div class="was">含纸质 + 数字全部权益</div>
+        <ul>
+          <li>配套源码仓库全量访问</li>
+          <li>章末实战答疑 + 更新订阅</li>
+          <li>适合：P-02 / P-03 高价值客群</li>
+        </ul>
+        <div style="font-family:var(--mono);font-size:11px;color:var(--ink-faint)">反盗版核心：增值服务只在正版</div>
+      </div>
+    </div>
+
+    <div class="anchor-note reveal">
+      <span class="k">定价逻辑</span>
+      <span>不参与价格战：我们的参照物不是同类书（¥60–120），而是<strong>体系化网课与企业内训（¥999–5000）</strong>。以 1/7 的价格交付同量级的知识体系，让"贵得有道理"变成"便宜得不可思议"。免费钩子 = 前 2 章开放 + GitHub 示例仓库，先给足再转化。</span>
+    </div>
+  </section>
+
+  <!-- ================= 05 渠道 ================= -->
+  <section class="chapter" id="s5">
+    <div class="ch-head reveal">
+      <div class="ch-num">05</div>
+      <div class="ch-title"><h2>渠道与分发</h2><span class="en">Channels &amp; Distribution</span></div>
+      <div class="tag">走哪条路</div>
+    </div>
+    <p class="lede reveal">内容即渠道：每一章都可以拆成一篇深度长文、一组图解卡片、一条短视频。<strong>自有阵地建信任，公域内容做破圈，电商平台收转化，开源社区立信誉。</strong></p>
+
+    <div class="tbl-scroll reveal">
+      <table class="tbl">
+        <thead>
+          <tr><th style="width:20%">渠道</th><th style="width:15%">战略角色</th><th>关键动作</th><th style="width:18%">阶段 KPI（首年）</th></tr>
+        </thead>
+        <tbody>
+          <tr><td class="dim">公众号 / 知乎 / 掘金</td><td>信任与种草</td><td>每周 2 篇章节精讲长文，"图解大模型"系列连载，文末挂试读与购买入口</td><td class="us">自有阵地 5 万关注</td></tr>
+          <tr><td class="dim">B 站 / 抖音 / 小红书</td><td>破圈与曝光</td><td>"AI 积木玩具"图解动画短片、金句卡片、编辑/作者出镜讲书中比喻</td><td class="us">系列播放 100 万+</td></tr>
+          <tr><td class="dim">京东 / 当当 / 天猫</td><td>成交转化</td><td>预售冲首发榜、大促节点卡位、页面文案统一信息屋主信息</td><td class="us">首月 3,000 册</td></tr>
+          <tr><td class="dim">GitHub 开源仓库</td><td>技术信誉</td><td>书中示例代码全开源、Issue 技术答疑、README 挂书购买链接</td><td class="us">5,000 Star</td></tr>
+          <tr><td class="dim">KOL / 技术社群</td><td>背书放大</td><td>10 位技术大 V 联合荐书、3 场作者直播、20 个核心读者群分发试读</td><td class="us">10 场联动曝光</td></tr>
+        </tbody>
+      </table>
+      <p class="channel-note">* 飞轮逻辑：章节精选 → 公域短视频曝光 → 试读/仓库引流私域 → 电商/会员转化 → 读者笔记 UGC → 反哺内容选题。</p>
+    </div>
+  </section>
+
+  <!-- ================= 06 节奏 ================= -->
+  <section class="chapter" id="s6">
+    <div class="ch-head reveal">
+      <div class="ch-num">06</div>
+      <div class="ch-title"><h2>发布节奏</h2><span class="en">Launch Timeline</span></div>
+      <div class="tag">什么时候打</div>
+    </div>
+    <p class="lede reveal">以发布日（T-Day）为锚点的六阶段作战节奏：<strong>先攒势能（T-60），再蓄水（T-30），单点引爆（T-Day），最后用口碑与会员完成长尾</strong>。</p>
+
+    <div class="timeline reveal">
+      <div class="tl-item">
+        <div class="t">T-60</div>
+        <h4>筹备期</h4>
+        <ul>
+          <li>50 名内测读者深度共读</li>
+          <li>收集证言与迭代清单</li>
+          <li>全渠道素材库建仓</li>
+        </ul>
+      </div>
+      <div class="tl-item">
+        <div class="t">T-30</div>
+        <h4>预热期</h4>
+        <ul>
+          <li>前 2 章多平台连载</li>
+          <li>预售开启 · 早鸟价</li>
+          <li>KOL 评测与荐书排期</li>
+        </ul>
+      </div>
+      <div class="tl-item">
+        <div class="t">T-7</div>
+        <h4>冲刺期</h4>
+        <ul>
+          <li>预售冲平台新书榜</li>
+          <li>核心读者群裂变</li>
+          <li>发布直播预约蓄水</li>
+        </ul>
+      </div>
+      <div class="tl-item key">
+        <div class="t today">T-DAY</div>
+        <h4>发布日</h4>
+        <ul>
+          <li>作者首讲直播</li>
+          <li>全渠道通稿同步</li>
+          <li>首发限定权益发放</li>
+        </ul>
+      </div>
+      <div class="tl-item">
+        <div class="t">T+30</div>
+        <h4>口碑期</h4>
+        <ul>
+          <li>读者笔记 / 书评 UGC 运营</li>
+          <li>答疑直播双周更</li>
+          <li>评论与评分持续经营</li>
+        </ul>
+      </div>
+      <div class="tl-item">
+        <div class="t">T+90</div>
+        <h4>规模期</h4>
+        <ul>
+          <li>会员体系正式上线</li>
+          <li>企业团购渠道启动</li>
+          <li>续作 / 增订内容立项</li>
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <!-- ================= 07 指标 ================= -->
+  <section class="chapter" id="s7">
+    <div class="ch-head reveal">
+      <div class="ch-num">07</div>
+      <div class="ch-title"><h2>增长模型与度量</h2><span class="en">Growth Model &amp; Metrics</span></div>
+      <div class="tag">怎么算赢</div>
+    </div>
+    <p class="lede reveal">北极星指标只有一句话：<strong>年度付费读者数。</strong>下方漏斗给出从曝光到推荐的量化基线，每周一 GTM 例会对表，双周复盘调仓。</p>
+
+    <div class="metric-grid">
+      <div class="reveal">
+        <div class="funnel">
+          <div class="f-head"><span>阶段 · STAGE</span><span></span><span>年度规模 · SCALE</span></div>
+          <div class="f-row">
+            <div class="f-label">曝光<b>AWARENESS</b></div>
+            <div class="f-track"><div class="f-bar c1" style="--w:100%"></div></div>
+            <div class="f-val">120 万<small>全渠道曝光</small></div>
+          </div>
+          <div class="f-row">
+            <div class="f-label">到访<b>ACQUISITION</b></div>
+            <div class="f-track"><div class="f-bar c2" style="--w:62%"></div></div>
+            <div class="f-val">12 万<small>点击率 10%</small></div>
+          </div>
+          <div class="f-row">
+            <div class="f-label">试读<b>ACTIVATION</b></div>
+            <div class="f-track"><div class="f-bar c3" style="--w:44%"></div></div>
+            <div class="f-val">3.6 万<small>试读率 30%</small></div>
+          </div>
+          <div class="f-row">
+            <div class="f-label">付费<b>REVENUE</b></div>
+            <div class="f-track"><div class="f-bar c4" style="--w:30%"></div></div>
+            <div class="f-val">1.2 万<small>转化率 33%</small></div>
+          </div>
+          <div class="f-row">
+            <div class="f-label">转介绍<b>REFERRAL</b></div>
+            <div class="f-track"><div class="f-bar c5" style="--w:22%"></div></div>
+            <div class="f-val">3,600<small>推荐率 30%</small></div>
+          </div>
+        </div>
+        <p class="tam-note" style="margin-top:14px">* 漏斗为年度基线假设：转化率按行业基准设定，随实际数据滚动校准。</p>
+      </div>
+
+      <div class="kpi-card reveal" style="--d:.15s">
+        <div class="head"><span class="t">北极星与护栏指标</span><span class="k">NORTH STAR &amp; GUARDRAILS</span></div>
+        <div class="body">
+          <div class="ns">
+            <div class="k">NORTH STAR METRIC</div>
+            <div class="v"><i>10,000</i> 年度付费读者</div>
+            <div class="d">唯一代表"价值交付 × 商业结果"的指标</div>
+          </div>
+          <div class="guard">
+            <div class="g"><div class="v">&gt; 40%</div><div class="k">完读率</div></div>
+            <div class="g"><div class="v">NPS &gt; 50</div><div class="k">读者净推荐值</div></div>
+            <div class="g"><div class="v">&lt; 3%</div><div class="k">退款率</div></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ================= 08 风险 ================= -->
+  <section class="chapter" id="s8">
+    <div class="ch-head reveal">
+      <div class="ch-num">08</div>
+      <div class="ch-title"><h2>风险与预案</h2><span class="en">Risks &amp; Mitigation</span></div>
+      <div class="tag">先想败局</div>
+    </div>
+    <p class="lede reveal">GTM 不是乐观计划书。<strong>把四个最可能杀死这场发布的问题提前摆上台面</strong>，每一项都配好预案再开打。</p>
+
+    <div class="risk-grid">
+      <div class="reveal">
+        <div class="matrix">
+          <span class="axis x">影响 →</span>
+          <span class="axis y">概率 →</span>
+          <span class="quad" style="top:8px;right:10px">高危区</span>
+          <span class="quad" style="bottom:8px;left:10px">观察区</span>
+          <div class="dot hi" style="left:78%;bottom:84%"><span class="pin"></span><span>内容过时</span></div>
+          <div class="dot mid" style="left:34%;bottom:74%"><span class="pin"></span><span>盗版扩散</span></div>
+          <div class="dot mid" style="left:42%;bottom:38%"><span class="pin"></span><span>流量政策变化</span></div>
+          <div class="dot low" style="left:70%;bottom:24%"><span class="pin"></span><span>竞品同期上市</span></div>
+        </div>
+        <p class="tam-note" style="margin-top:34px">风险矩阵：横轴 = 影响程度，纵轴 = 发生概率。先处理高危区。</p>
+      </div>
+      <div class="risk-list reveal" style="--d:.15s">
+        <div class="risk">
+          <div class="lv hi"></div>
+          <div>
+            <h4>大模型技术快速迭代，内容过时<small>概率 高 × 影响 高</small></h4>
+            <p>预案：<b>版本化更新承诺</b>——会员订阅含全年内容更新；核心章节按"生命周期方法论"写法降低时效依赖。</p>
+          </div>
+        </div>
+        <div class="risk">
+          <div class="lv mid"></div>
+          <div>
+            <h4>盗版 PDF 扩散<small>概率 中 × 影响 中</small></h4>
+            <p>预案：<b>把增值做进正版</b>——源码仓库、答疑直播、更新服务只在正版体系内；盗版反成"试读入口"。</p>
+          </div>
+        </div>
+        <div class="risk">
+          <div class="lv mid"></div>
+          <div>
+            <h4>平台流量政策变化<small>概率 中 × 影响 中</small></h4>
+            <p>预案：<b>多渠道 + 私域双备份</b>——内容五处分发，核心读者沉淀自有社群，不押注单一平台。</p>
+          </div>
+        </div>
+        <div class="risk">
+          <div class="lv low"></div>
+          <div>
+            <h4>同类书 / 课同期上市<small>概率 低 × 影响 中</small></h4>
+            <p>预案：<b>收紧差异化心智</b>——所有物料只重复一个词："工业级落地"，避免被拖入同质化比价。</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ================= 09 清单 ================= -->
+  <section class="chapter" id="s9">
+    <div class="ch-head reveal">
+      <div class="ch-num">09</div>
+      <div class="ch-title"><h2>90 天执行清单</h2><span class="en">Execution Checklist</span></div>
+      <div class="tag">落到下周</div>
+    </div>
+    <p class="lede reveal">战略的价值在于被执行。<strong>以下 12 项按周排期，全部可勾选、可追责</strong>——每周一例会逐项过表。</p>
+
+    <div class="check-grid reveal">
+      <div class="chk"><div class="box"></div><div class="w">W1–2</div><div class="tx"><b>锁定定位声明与信息屋</b><span>产出：一页纸定位文档，全渠道物料统一话术</span></div></div>
+      <div class="chk"><div class="box"></div><div class="w">W1–2</div><div class="tx"><b>招募 50 名内测读者</b><span>产出：证言素材 + 内容迭代清单</span></div></div>
+      <div class="chk"><div class="box"></div><div class="w">W3–4</div><div class="tx"><b>三档定价上线测试</b><span>产出：价格页 A/B 数据与早鸟转化基线</span></div></div>
+      <div class="chk"><div class="box"></div><div class="w">W3–4</div><div class="tx"><b>GitHub 仓库开源上架</b><span>产出：示例代码 + README 转化路径</span></div></div>
+      <div class="chk"><div class="box"></div><div class="w">W5–6</div><div class="tx"><b>前 2 章五渠道连载</b><span>产出：试读引流数据（到访 / 留资）</span></div></div>
+      <div class="chk"><div class="box"></div><div class="w">W5–6</div><div class="tx"><b>预售开启 + 早鸟价卡位</b><span>产出：首批 500 单，冲新书榜</span></div></div>
+      <div class="chk"><div class="box"></div><div class="w">W7–8</div><div class="tx"><b>10 位 KOL 荐书排期落位</b><span>产出：评测内容日历，覆盖发布周</span></div></div>
+      <div class="chk"><div class="box"></div><div class="w">W7–8</div><div class="tx"><b>发布直播策划与预约</b><span>产出：预约人数 ≥ 3,000</span></div></div>
+      <div class="chk"><div class="box"></div><div class="w">W9</div><div class="tx"><b>T-DAY 全渠道同步引爆</b><span>产出：首月 3,000 册 / 北极星进度 25%</span></div></div>
+      <div class="chk"><div class="box"></div><div class="w">W10–11</div><div class="tx"><b>读者 UGC 征集与书评运营</b><span>产出：50 篇真实笔记，NPS 首次采样</span></div></div>
+      <div class="chk"><div class="box"></div><div class="w">W12</div><div class="tx"><b>90 天复盘与调仓</b><span>产出：漏斗实际 vs 基线，修正下一周期打法</span></div></div>
+      <div class="chk"><div class="box"></div><div class="w">W12</div><div class="tx"><b>会员体系与企业团购启动</b><span>产出：订阅型收入通道正式打开</span></div></div>
+    </div>
+
+    <div class="foot-note">
+      <b>注</b>：本简报中的市场规模、KPI 与价格均为战略基线假设（Baseline Assumptions），用于统一团队作战语言；上线前应以真实调研与历史数据滚动校准。文档遵循 Go-to-Market 标准实践框架：市场洞察 → ICP → 定位 → 定价 → 渠道 → 发布节奏 → 度量 → 风险 → 执行。
+    </div>
+  </section>
+
+</main>
+
+<footer>
+  <div class="wrap">
+    <div>
+      <div class="sig">GTM//作战简报 <i>— 大模型全栈实战指南</i></div>
+      <div class="meta" style="margin-top:10px">从算法底座到工业级落地 · 一本书打通大模型全栈</div>
+    </div>
+    <div class="meta">
+      DOC NO. GTM-2026-001 · VERSION v1.0<br>
+      2026-08-29 · <a href="#s1">BACK TO TOP ↑</a>
+    </div>
+  </div>
+</footer>
+
+<script>
+// 阅读进度条
+const bar=document.getElementById('progress');
+addEventListener('scroll',()=>{
+  const h=document.documentElement;
+  bar.style.width=(h.scrollTop/(h.scrollHeight-h.clientHeight)*100)+'%';
+},{passive:true});
+
+// 滚动出场
+const io=new IntersectionObserver(es=>{
+  es.forEach(e=>{if(e.isIntersecting){e.target.classList.add('in');io.unobserve(e.target)}});
+},{threshold:.15});
+document.querySelectorAll('.reveal').forEach(el=>io.observe(el));
+
+// 漏斗 / TAM 条动画
+const grow=new IntersectionObserver(es=>{
+  es.forEach(e=>{
+    if(e.isIntersecting){
+      const el=e.target,target=el.dataset.w;
+      requestAnimationFrame(()=>{el.style.width=target});
+      grow.unobserve(el);
+    }
+  });
+},{threshold:.4});
+document.querySelectorAll('.tam-bar,.f-bar').forEach(el=>{
+  el.dataset.w=el.style.getPropertyValue('--w');
+  el.style.width='0';
+  grow.observe(el);
+});
+
+// Hero 数字滚动
+const nums=new IntersectionObserver(es=>{
+  es.forEach(e=>{
+    if(!e.isIntersecting)return;
+    const el=e.target,end=+el.dataset.count,suf=el.dataset.suffix||'',t0=performance.now();
+    const tick=t=>{
+      const p=Math.min((t-t0)/1400,1),v=Math.floor(end*(1-Math.pow(1-p,3)));
+      el.innerHTML=v.toLocaleString()+(suf?'<i>'+suf+'</i>':'');
+      if(p<1)requestAnimationFrame(tick);
+    };
+    requestAnimationFrame(tick);
+    nums.unobserve(el);
+  });
+},{threshold:.6});
+document.querySelectorAll('[data-count]').forEach(el=>nums.observe(el));
+
+// 导航高亮
+const links=[...document.querySelectorAll('.topnav a')];
+const secs=links.map(a=>document.querySelector(a.getAttribute('href')));
+addEventListener('scroll',()=>{
+  const y=scrollY+120;
+  let cur=-1;
+  secs.forEach((s,i)=>{if(s&&s.offsetTop<=y)cur=i});
+  links.forEach((a,i)=>a.classList.toggle('active',i===cur));
+},{passive:true});
+</script>
+<!-- gtm-portal-backlink (managed by _scripts/sync-gtm.py) -->
+<a class="gtmp-back" href="/GTM/" aria-label="返回 GTM 门户">&#8617; GTM 门户</a>
+<style>
+.gtmp-back{position:fixed;right:1rem;bottom:1rem;z-index:2147483000;
+font:500 12px/1 ui-monospace,SFMono-Regular,Menlo,Consolas,monospace;
+letter-spacing:.05em;text-decoration:none;padding:.6rem .85rem;border-radius:999px;
+color:#14130f;background:rgba(251,250,247,.92);border:1px solid rgba(20,19,15,.16);
+box-shadow:0 2px 12px rgba(20,19,15,.14);backdrop-filter:blur(6px);
+transition:transform .15s ease,box-shadow .15s ease}
+.gtmp-back:hover{transform:translateY(-1px);box-shadow:0 4px 16px rgba(20,19,15,.22)}
+@media (prefers-color-scheme:dark){.gtmp-back{color:#f5f2ea;background:rgba(20,19,15,.88);
+border-color:rgba(245,242,234,.22)}}
+</style>
+</body>
+</html>

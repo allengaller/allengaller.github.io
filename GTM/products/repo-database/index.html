@@ -1,0 +1,412 @@
+<!DOCTYPE html>
+<html lang="zh-CN" data-lang="zh">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="repo-database — 机器聚合 1000+ 仓库，人工评审留下 117 篇档案。Machine-ranked thousands, human-kept 117.">
+  <meta property="og:title" content="repo-database · GitHub Treasure">
+  <meta property="og:description" content="出发大厅：四源聚合 × 人工策展 × CI 门禁的 GitHub 仓库知识库。117 篇档案，10 个领域，评审后留下。">
+  <meta name="theme-color" content="#0b150f">
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Ccircle cx='16' cy='16' r='15' fill='%23f5a623'/%3E%3Ccircle cx='16' cy='16' r='9.5' fill='%230d1a14'/%3E%3Cpath d='M16 10.5l1.7 3.4 3.8.6-2.7 2.7.6 3.8-3.4-1.8-3.4 1.8.6-3.8-2.7-2.7 3.8-.6z' fill='%23f5a623'/%3E%3C/svg%3E">
+  <title>repo-database · GitHub Treasure — 机器排万仓，人工留 117</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Saira:wght@500;600;700&family=Saira+Condensed:wght@600;700;800&family=Spline+Sans+Mono:wght@400;500;700&family=Noto+Sans+SC:wght@400;500;700;900&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="gtm.css">
+</head>
+<body>
+  <!--
+    DIRECTION CONTRACT — The Departure Board (seed key fe398aec, degraded roll, code-first)
+    THESIS: repo-database 是一间出发大厅——机器管时刻表（四源聚合、评分排序、每月发车），策展人是站长（117 篇人工档案钉成告示）。拒绝类别默认的暗色英雄区 + 特性卡网格。
+    OWN-WORLD: 深绿珐琅板面（#0d1a14）、骨白翻牌（#f2eee2）、琥珀运行高亮（#f5a623）、印章红人工痕迹（#c8452c）；Saira（DIN 系车站字）+ Spline Sans Mono 翻牌字 + Noto Sans SC；铆接板框、纸质告示卡、红墨印章、地铁线路图。
+    STORY: 访客看懂「活的优质仓库出发板 + 有站长的档案库」，相信机器节奏与人工评审都真实（行行真实数据），动作是 Star（票根）+ 读档案。
+    FIRST VIEWPORT: h1「机器排万仓，人工留 117」+ 全宽出发板：板楣 DEPARTURES·MONTHLY SERVICE·UPDATED 2026-08；十行线路（双语域名 | 翻牌真实仓库名 | STARS | 5★ 档案数）；板下票根式主 CTA「Star on GitHub」+ 次级「浏览档案」；板脚注注明数据截至 2026-08。
+    FORM: The Departure Board — 7 候选按共鸣排序后的第 7 位（骰子分配）；候选列表其余 6 位未展示（degraded roll）。
+    FINISH: unreviewed and undocumented is unfinished; this build ends with the finish review, the verdict, DESIGN.md, and every shipping raster carrying its provenance.
+  -->
+  <a class="skip-link" href="#board">跳到出发板 · Skip to board</a>
+
+  <header class="station-bar">
+    <a class="brand" href="https://github.com/allengaller/repo-database" target="_blank" rel="noopener">
+      <svg class="brand-mark" viewBox="0 0 32 32" fill="none" aria-hidden="true">
+        <circle cx="16" cy="16" r="14" stroke="currentColor" stroke-width="2.5"/>
+        <path d="M16 8l2.1 5.2 5.6.4-4.3 3.6 1.4 5.4L16 19.6l-4.8 3 1.4-5.4-4.3-3.6 5.6-.4L16 8z" fill="currentColor"/>
+      </svg>
+      <span class="brand-name">REPO-DATABASE<small data-i18n="brandSub">GitHub 宝藏仓库</small></span>
+    </a>
+    <div class="clock" aria-hidden="true">
+      <span class="clock-time" id="clockTime">--:--:--</span>
+      <span class="clock-date" id="clockDate"></span>
+    </div>
+    <div class="bar-actions">
+      <button id="langToggle" class="lang-toggle" type="button" aria-label="切换语言 / Switch language">EN</button>
+      <a class="star-stub" href="https://github.com/allengaller/repo-database" target="_blank" rel="noopener">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M12 3l2.7 5.9 6.3.6-4.8 4.2 1.4 6.2L12 16.7l-5.6 3.2 1.4-6.2L3 9.5l6.3-.6L12 3z"/></svg>
+        <span>Star</span>
+      </a>
+    </div>
+  </header>
+
+  <main>
+    <!-- ============ 出发大厅 ============ -->
+    <section class="hall">
+      <div class="hall-head">
+        <h1 class="hall-title">
+          <span class="zh-block" data-i18n="h1main">机器排万仓，人工留 117。</span>
+          <span class="en-block" data-i18n="h1sub">Machine-ranked thousands, human-kept 117.</span>
+        </h1>
+        <p class="hall-lede" data-i18n="lede">四路数据源每月聚合 1000+ 仓库，经过评分、评审、CI 校验——最后钉在这块板上的，是真正值得你时间的 117 篇档案。</p>
+      </div>
+
+      <div class="board-frame" id="board">
+        <div class="board-header">
+          <span class="bh-zh" data-i18n="boardTitle">出发时刻</span>
+          <span class="bh-en">DEPARTURES</span>
+          <span class="bh-service" data-i18n="boardService">每月发车 · MONTHLY SERVICE</span>
+          <span class="bh-updated" data-i18n="boardUpdated">数据截至 2026-08</span>
+        </div>
+
+        <div class="board" aria-hidden="true">
+          <div class="brow" data-line="ai-engineering">
+            <div class="r-line"><b>AI ENGINEERING</b><i data-i18n-line>智能体工程</i></div>
+            <div class="r-dest"><span class="flap"><span class="flap-name">anomalyco/opencode</span></span></div>
+            <div class="r-stars">197,000</div>
+            <div class="r-rating"><span class="five-count">7</span><span class="rating-sep">/</span><span class="total">35</span><span class="rating-unit">5★</span></div>
+          </div>
+          <div class="brow" data-line="ai-agents">
+            <div class="r-line"><b>AI AGENTS</b><i data-i18n-line>智能体框架</i></div>
+            <div class="r-dest"><span class="flap"><span class="flap-name">openclaw/openclaw</span></span></div>
+            <div class="r-stars">380,000</div>
+            <div class="r-rating"><span class="five-count">2</span><span class="rating-sep">/</span><span class="total">28</span><span class="rating-unit">5★</span></div>
+          </div>
+          <div class="brow" data-line="interview-career">
+            <div class="r-line"><b>INTERVIEW CAREER</b><i data-i18n-line>求职面试</i></div>
+            <div class="r-dest"><span class="flap"><span class="flap-name">jwasham/coding-interview-university</span></span></div>
+            <div class="r-stars">359,685</div>
+            <div class="r-rating"><span class="five-count">4</span><span class="rating-sep">/</span><span class="total">11</span><span class="rating-unit">5★</span></div>
+          </div>
+          <div class="brow" data-line="fullstack-arch">
+            <div class="r-line"><b>SYSTEM DESIGN</b><i data-i18n-line>全栈架构</i></div>
+            <div class="r-dest"><span class="flap"><span class="flap-name">donnemartin/system-design-primer</span></span></div>
+            <div class="r-stars">365,155</div>
+            <div class="r-rating"><span class="five-count">3</span><span class="rating-sep">/</span><span class="total">10</span><span class="rating-unit">5★</span></div>
+          </div>
+          <div class="brow" data-line="maas-platform">
+            <div class="r-line"><b>MAAS PLATFORM</b><i data-i18n-line>模型服务</i></div>
+            <div class="r-dest"><span class="flap"><span class="flap-name">vllm-project/vllm</span></span></div>
+            <div class="r-stars">89,589</div>
+            <div class="r-rating"><span class="five-count">4</span><span class="rating-sep">/</span><span class="total">10</span><span class="rating-unit">5★</span></div>
+          </div>
+          <div class="brow" data-line="ai-mental-health">
+            <div class="r-line"><b>AI × MENTAL HEALTH</b><i data-i18n-line>心理健康</i></div>
+            <div class="r-dest"><span class="flap"><span class="flap-name">Emo-gml/PsyLLM</span></span></div>
+            <div class="r-stars">51</div>
+            <div class="r-rating"><span class="five-count">2</span><span class="rating-sep">/</span><span class="total">7</span><span class="rating-unit">5★</span></div>
+          </div>
+          <div class="brow" data-line="creative-coding">
+            <div class="r-line"><b>CREATIVE CODING</b><i data-i18n-line>创意编程</i></div>
+            <div class="r-dest"><span class="flap"><span class="flap-name">terkelg/awesome-creative-coding</span></span></div>
+            <div class="r-stars">15,121</div>
+            <div class="r-rating"><span class="five-count">2</span><span class="rating-sep">/</span><span class="total">5</span><span class="rating-unit">5★</span></div>
+          </div>
+          <div class="brow" data-line="culture-arts">
+            <div class="r-line"><b>DIGITAL HUMANITIES</b><i data-i18n-line>数字人文</i></div>
+            <div class="r-dest"><span class="flap"><span class="flap-name">chinese-poetry/chinese-poetry</span></span></div>
+            <div class="r-stars">52,975</div>
+            <div class="r-rating"><span class="five-count">1</span><span class="rating-sep">/</span><span class="total">5</span><span class="rating-unit">5★</span></div>
+          </div>
+          <div class="brow" data-line="mind-philosophy">
+            <div class="r-line"><b>MIND &amp; PHILOSOPHY</b><i data-i18n-line>心智哲学</i></div>
+            <div class="r-dest"><span class="flap"><span class="flap-name">SecurityRonin/alaya</span></span></div>
+            <div class="r-stars">13</div>
+            <div class="r-rating"><span class="five-count">0</span><span class="rating-sep">/</span><span class="total">4</span><span class="rating-unit">5★</span></div>
+          </div>
+          <div class="brow" data-line="mindfulness-apps">
+            <div class="r-line"><b>MINDFULNESS</b><i data-i18n-line>正念冥想</i></div>
+            <div class="r-dest"><span class="flap"><span class="flap-name">giekaton/vipassana-app</span></span></div>
+            <div class="r-stars">9</div>
+            <div class="r-rating"><span class="five-count">0</span><span class="rating-sep">/</span><span class="total">2</span><span class="rating-unit">5★</span></div>
+          </div>
+        </div>
+
+        <ul class="board-sr">
+          <li>ai-engineering 智能体工程：35 篇，7 篇五星；代表档案 anomalyco/opencode（197,000 stars，5/5）</li>
+          <li>ai-agents 智能体框架：28 篇，2 篇五星；代表档案 openclaw/openclaw（380,000 stars，4/5）</li>
+          <li>interview-career 求职面试：11 篇，4 篇五星；代表档案 jwasham/coding-interview-university（359,685 stars，5/5）</li>
+          <li>fullstack-arch 全栈架构：10 篇，3 篇五星；代表档案 donnemartin/system-design-primer（365,155 stars，5/5）</li>
+          <li>maas-platform 模型服务：10 篇，4 篇五星；代表档案 vllm-project/vllm（89,589 stars，5/5）</li>
+          <li>ai-mental-health 心理健康：7 篇，2 篇五星；代表档案 Emo-gml/PsyLLM（51 stars，5/5）</li>
+          <li>creative-coding 创意编程：5 篇，2 篇五星；代表档案 terkelg/awesome-creative-coding（15,121 stars，5/5）</li>
+          <li>culture-arts 数字人文：5 篇，1 篇五星；代表档案 chinese-poetry/chinese-poetry（52,975 stars，5/5）</li>
+          <li>mind-philosophy 心智哲学：4 篇，0 篇五星；代表档案 SecurityRonin/alaya（13 stars，4/5）</li>
+          <li>mindfulness-apps 正念冥想：2 篇，0 篇五星；代表档案 giekaton/vipassana-app（9 stars，4/5）</li>
+        </ul>
+
+        <div class="board-foot" data-i18n="boardFoot">每一行都是 catalog 真实档案 · 板上翻牌每 4 秒轮换一次</div>
+      </div>
+
+      <div class="hall-cta">
+        <a class="ticket-main" href="https://github.com/allengaller/repo-database" target="_blank" rel="noopener">
+          <span class="ticket-star">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M12 3l2.7 5.9 6.3.6-4.8 4.2 1.4 6.2L12 16.7l-5.6 3.2 1.4-6.2L3 9.5l6.3-.6L12 3z"/></svg>
+            <span data-i18n="ctaStar">Star on GitHub</span>
+          </span>
+          <small data-i18n="ctaStarSub">收藏这座正在发车的档案库</small>
+        </a>
+        <a class="ticket-alt" href="https://github.com/allengaller/repo-database/blob/main/catalog/INDEX.md" target="_blank" rel="noopener">
+          <span data-i18n="ctaIndex">浏览 117 篇档案 →</span>
+        </a>
+      </div>
+    </section>
+
+    <!-- ============ 机器时刻表 ============ -->
+    <section class="how">
+      <h2 class="sec-title"><span data-i18n="howTitle">机器时刻表</span><b>MACHINE TIMETABLE</b></h2>
+      <div class="how-grid">
+        <div class="how-flow">
+          <div class="flow-step">
+            <span class="fs-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><circle cx="11" cy="11" r="7"/><path d="M21 21l-4.3-4.3"/></svg></span>
+            <div><h3 data-i18n="flow1T">四路抓取</h3><p data-i18n="flow1P">Awesome 榜单 ×8、GitHub Search API、Hacker News、DEV.to，由 scripts/scrape.py 每月聚合。</p></div>
+          </div>
+          <div class="flow-step">
+            <span class="fs-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M4 19V5m0 14h16M8 15l3-6 3 4 4-8"/></svg></span>
+            <div><h3 data-i18n="flow2T">评分排序</h3><p data-i18n="flow2P">stars + forks + 参与度 + 增长势头 ×10 + 提交活跃 ×2——势头信号用真实 commit 数据校准。</p></div>
+          </div>
+          <div class="flow-step">
+            <span class="fs-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><rect x="4" y="3" width="16" height="18" rx="2"/><path d="M8 8h8M8 12h8M8 16h5"/></svg></span>
+            <div><h3 data-i18n="flow3T">人工评审</h3><p data-i18n="flow3P">值得留下的仓库逐个手写六段式档案：技术栈、特性、场景、个人评价、关联资源。</p></div>
+          </div>
+          <div class="flow-step">
+            <span class="fs-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M20 6L9 17l-5-5"/></svg></span>
+            <div><h3 data-i18n="flow4T">CI 放行</h3><p data-i18n="flow4P">catalog.py validate 强制校验字段、文件名与内链，月度工作流自动刷新 stars 与索引。</p></div>
+          </div>
+        </div>
+        <div class="how-formula">
+          <h3 data-i18n="formulaT">综合得分</h3>
+          <pre class="formula"><code>score = stars
+      + forks
+      + (forks / stars) × 1000   <span class="fx-c"> community</span>
+      + today_stars × 10         <span class="fx-c"> momentum</span>
+      + commit_activity × 2      <span class="fx-c"> freshness</span></code></pre>
+          <p class="formula-note" data-i18n="formulaNote">公式原样来自 README——机器只负责把队列排出来，进不进库由人说了算。</p>
+          <table class="wf-table">
+            <caption data-i18n="wfCap">月度自动化的四班列车</caption>
+            <thead><tr><th data-i18n="wfHead1">班次</th><th data-i18n="wfHead2">发车时刻</th><th data-i18n="wfHead3">任务</th></tr></thead>
+            <tbody>
+              <tr><td>ci.yml</td><td>push / PR</td><td>pytest → validate → lint</td></tr>
+              <tr><td>monthly-scrape</td><td>01 日 00:00 UTC</td><td data-i18n="wf1">全量四源抓取，提交 repos.json</td></tr>
+              <tr><td>monthly-update</td><td>01 日 06:00 UTC</td><td data-i18n="wf2">增量抓取 + refresh + 重建索引</td></tr>
+              <tr><td>deploy-pages</td><td>push to main</td><td data-i18n="wf3">web/ 发布 GitHub Pages</td></tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============ 站长告示 ============ -->
+    <section class="notices">
+      <h2 class="sec-title"><span data-i18n="noticesTitle">站长告示</span><b>KEEPER'S NOTICES</b></h2>
+      <p class="sec-lede" data-i18n="noticesLede">档案不是摘要生成的，是一篇一篇写出来的。三张告示，直接从 catalog 里钉上来。</p>
+      <div class="notice-board">
+        <article class="notice-card">
+          <span class="pin" aria-hidden="true"></span>
+          <header class="nc-head">
+            <h3>obra/superpowers</h3>
+            <span class="nc-stamp" aria-label="rating 5/5">5/5</span>
+          </header>
+          <dl class="nc-meta">
+            <div><dt>domain</dt><dd>ai-engineering</dd></div>
+            <div><dt>type</dt><dd>framework</dd></div>
+            <div><dt>stars</dt><dd>28,000</dd></div>
+            <div><dt>updated</dt><dd>2026-08-13</dd></div>
+            <div><dt>lineage</dt><dd>anthropics/skills</dd></div>
+          </dl>
+          <p class="nc-body" data-i18n="nc1">跨 13+ 编码 agent harness 的「方法论技能包」——把 brainstorming / TDD / systematic-debugging 等工程实践装成可被任何 harness 加载的 SKILL.md，~28k stars，harness 工程的标杆方法论库。</p>
+          <a class="nc-link" href="https://github.com/allengaller/repo-database/blob/main/catalog/ai-engineering/superpowers.md" target="_blank" rel="noopener" data-i18n="ncLink">阅读完整档案 →</a>
+        </article>
+        <article class="notice-card">
+          <span class="pin" aria-hidden="true"></span>
+          <header class="nc-head">
+            <h3>jwasham/coding-interview-university</h3>
+            <span class="nc-stamp" aria-label="rating 5/5">5/5</span>
+          </header>
+          <dl class="nc-meta">
+            <div><dt>domain</dt><dd>interview-career</dd></div>
+            <div><dt>type</dt><dd>course</dd></div>
+            <div><dt>stars</dt><dd>359,685</dd></div>
+            <div><dt>updated</dt><dd>2026-08-25</dd></div>
+            <div><dt>license</dt><dd>CC-BY-SA-4.0</dd></div>
+          </dl>
+          <p class="nc-body" data-i18n="nc2">转行软件工程师的自学路线图，把 CS 核心课程压缩成一份可执行的数月学习计划——README 置顶阅读清单的总路线图。</p>
+          <a class="nc-link" href="https://github.com/allengaller/repo-database/blob/main/catalog/interview-career/coding-interview-university.md" target="_blank" rel="noopener" data-i18n="ncLink">阅读完整档案 →</a>
+        </article>
+        <article class="notice-card">
+          <span class="pin" aria-hidden="true"></span>
+          <header class="nc-head">
+            <h3>vllm-project/vllm</h3>
+            <span class="nc-stamp" aria-label="rating 5/5">5/5</span>
+          </header>
+          <dl class="nc-meta">
+            <div><dt>domain</dt><dd>maas-platform</dd></div>
+            <div><dt>type</dt><dd>framework</dd></div>
+            <div><dt>stars</dt><dd>89,589</dd></div>
+            <div><dt>updated</dt><dd>2026-08-21</dd></div>
+            <div><dt>license</dt><dd>Apache-2.0</dd></div>
+          </dl>
+          <p class="nc-body" data-i18n="nc3">PagedAttention 起家的高吞吐 LLM 推理引擎，事实上的 MaaS 平台推理层标准底座——十个 MaaS 档案里第一个写完的。</p>
+          <a class="nc-link" href="https://github.com/allengaller/repo-database/blob/main/catalog/maas-platform/vllm.md" target="_blank" rel="noopener" data-i18n="ncLink">阅读完整档案 →</a>
+        </article>
+      </div>
+    </section>
+
+    <!-- ============ 范式谱系 ============ -->
+    <section class="lineage">
+      <h2 class="sec-title"><span data-i18n="lineageTitle">范式谱系</span><b>PARADIGM LINEAGE</b></h2>
+      <p class="sec-lede" data-i18n="lineageLede">catalog/_lineage/ 追踪五个范式的来龙去脉：谁首创、谁衍生、谁混血。像查线路图一样查一个想法的祖先。</p>
+      <div class="metro">
+        <svg class="metro-svg" viewBox="0 0 1200 560" role="img" aria-label="五条范式谱系线路图">
+          <g class="mline" data-line-name="CLI 流式 diff 编辑器 CLI streaming diff editor">
+            <path class="rail" d="M90 90 H 620" />
+            <circle class="stn origin" cx="90" cy="90" r="9"/>
+            <text class="stn-name" x="90" y="60" text-anchor="middle">aider · 2022-05</text>
+            <circle class="stn" cx="280" cy="90" r="7"/>
+            <text class="stn-name" x="280" y="126" text-anchor="middle">claude-code</text>
+            <circle class="stn" cx="450" cy="90" r="7"/>
+            <text class="stn-name" x="450" y="126" text-anchor="middle">opencode</text>
+            <circle class="stn" cx="620" cy="90" r="7"/>
+            <text class="stn-name" x="620" y="126" text-anchor="middle">crush +5</text>
+          </g>
+          <g class="mline" data-line-name="Agent harness 配置 agent harness config">
+            <path class="rail" d="M90 210 H 480" />
+            <circle class="stn origin" cx="90" cy="210" r="9"/>
+            <text class="stn-name" x="90" y="180" text-anchor="middle">anthropics/skills · 2024-11</text>
+            <circle class="stn" cx="290" cy="210" r="7"/>
+            <text class="stn-name" x="290" y="246" text-anchor="middle">superpowers</text>
+            <circle class="stn" cx="480" cy="210" r="7"/>
+            <text class="stn-name" x="480" y="246" text-anchor="middle">get-shit-done +2</text>
+          </g>
+          <g class="mline" data-line-name="多 agent 编排 multi-agent orchestration">
+            <path class="rail" d="M90 330 H 520" />
+            <circle class="stn origin" cx="90" cy="330" r="9"/>
+            <text class="stn-name" x="90" y="300" text-anchor="middle">OpenHands · 2024-03</text>
+            <circle class="stn" cx="310" cy="330" r="7"/>
+            <text class="stn-name" x="310" y="366" text-anchor="middle">open-multi-agent</text>
+            <circle class="stn" cx="520" cy="330" r="7"/>
+            <text class="stn-name" x="520" y="366" text-anchor="middle">openfang +2</text>
+          </g>
+          <g class="mline" data-line-name="Prompt 演化 prompt evolution">
+            <path class="rail" d="M90 450 H 420" />
+            <circle class="stn origin" cx="90" cy="450" r="9"/>
+            <text class="stn-name" x="90" y="420" text-anchor="middle">DSPy · 2023-01</text>
+            <circle class="stn" cx="420" cy="450" r="7"/>
+            <text class="stn-name" x="420" y="486" text-anchor="middle">evolver</text>
+          </g>
+          <g class="mline" data-line-name="oh-my-zsh 家族 oh-my-zsh family">
+            <path class="rail" d="M780 90 H 1080" />
+            <circle class="stn origin" cx="780" cy="90" r="9"/>
+            <text class="stn-name" x="780" y="60" text-anchor="middle">ohmyzsh · 2009-08</text>
+            <circle class="stn" cx="1080" cy="90" r="7"/>
+            <text class="stn-name" x="1080" y="126" text-anchor="middle">oh-my-codex / oh-my-pi</text>
+          </g>
+          <g class="mline" data-line-name="oh-my-zsh 家族（独立演化）oh-my-zsh family cousin">
+            <path class="rail dashed" d="M780 210 H 1080" />
+            <circle class="stn cousin" cx="780" cy="210" r="8"/>
+            <text class="stn-name" x="780" y="180" text-anchor="middle">prezto · 2011-01</text>
+            <text class="stn-note" x="930" y="196" text-anchor="middle" data-i18n="cousinNote">同期表亲 · 独立演化</text>
+          </g>
+          <g class="mline" data-line-name="Prompt 演化（同期表亲）prompt evolution cousin">
+            <path class="rail dashed" d="M780 330 H 1080" />
+            <circle class="stn cousin" cx="780" cy="330" r="8"/>
+            <text class="stn-name" x="780" y="300" text-anchor="middle">TextGrad · 2024-06</text>
+          </g>
+          <g class="mline" data-line-name="多 agent 编排（同期表亲）multi-agent orchestration cousin">
+            <path class="rail dashed" d="M780 450 H 1080" />
+            <circle class="stn cousin" cx="780" cy="450" r="8"/>
+            <text class="stn-name" x="780" y="420" text-anchor="middle">MetaGPT · 2023-08</text>
+          </g>
+        </svg>
+        <div class="metro-legend">
+          <span><i class="lg-origin"></i><span data-i18n="lgOrigin">范式源头</span></span>
+          <span><i class="lg-stn"></i><span data-i18n="lgDeriv">catalog 内衍生品</span></span>
+          <span><i class="lg-cousin"></i><span data-i18n="lgCousin">同期表亲（独立演化）</span></span>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============ 发车前检查 ============ -->
+    <section class="gate">
+      <h2 class="sec-title"><span data-i18n="gateTitle">发车前检查</span><b>BEFORE DEPARTURE</b></h2>
+      <div class="gate-grid">
+        <div class="gate-item">
+          <span class="gate-stamp" aria-hidden="true">PASS</span>
+          <h3 data-i18n="gate1T">schema 校验</h3>
+          <p data-i18n="gate1P">8 个必填 frontmatter 字段缺失即非零退出：name、url、domain、type、discovered、updated、rating、summary。</p>
+        </div>
+        <div class="gate-item">
+          <span class="gate-stamp" aria-hidden="true">PASS</span>
+          <h3 data-i18n="gate2T">文件名规范</h3>
+          <p data-i18n="gate2P">只取 repo 部分，小写、下划线转连字符——Project-HAMi/HAMi 必须落成 hami.md。</p>
+        </div>
+        <div class="gate-item">
+          <span class="gate-stamp" aria-hidden="true">PASS</span>
+          <h3 data-i18n="gate3T">内链可达</h3>
+          <p data-i18n="gate3P">正文里每一条指向其他档案的 Markdown 链接都必须解析到真实文件，断链即拦截。</p>
+        </div>
+        <div class="gate-item">
+          <span class="gate-stamp" aria-hidden="true">PASS</span>
+          <h3 data-i18n="gate4T">100 个测试用例</h3>
+          <p data-i18n="gate4P">scripts / catalog / frontend 三层 pytest 全离线运行，CI 在每次 push 与 PR 上执行。</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============ 自行发车 ============ -->
+    <section class="quickstart">
+      <h2 class="sec-title"><span data-i18n="qsTitle">自行发车</span><b>QUICK START</b></h2>
+      <p class="sec-lede" data-i18n="qsLede">全部数据随仓库分发，克隆即可离线浏览——无需联网、无需 token。</p>
+      <div class="qs-ticket">
+        <div class="qs-cmd"><span class="qs-no">1</span><pre><code>git clone https://github.com/allengaller/repo-database.git
+cd repo-database &amp;&amp; uv sync --extra dev</code></pre><span class="qs-label" data-i18n="qs1">取票 · 克隆与安装</span></div>
+        <div class="qs-cmd"><span class="qs-no">2</span><pre><code>cd web &amp;&amp; python3 -m http.server 8000</code></pre><span class="qs-label" data-i18n="qs2">检票 · 本地浏览 UI</span></div>
+        <div class="qs-cmd"><span class="qs-no">3</span><pre><code>python3 scripts/catalog.py new https://github.com/owner/repo \
+  --domain maas-platform</code></pre><span class="qs-label" data-i18n="qs3">建档 · 生成档案草稿</span></div>
+      </div>
+      <p class="qs-note" data-i18n="qsNote">想要在线版本？Fork 后在 Settings → Pages 选择 GitHub Actions，deploy-pages.yml 会把 web/ 发布到你的 github.io——这座车站随时可以复制。</p>
+    </section>
+
+    <!-- ============ 终到 ============ -->
+    <section class="terminus">
+      <div class="terminus-board">
+        <p class="term-line" data-i18n="termLine">本次列车终点：你的下一个好仓库。</p>
+        <a class="ticket-main big" href="https://github.com/allengaller/repo-database" target="_blank" rel="noopener">
+          <span class="ticket-star">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M12 3l2.7 5.9 6.3.6-4.8 4.2 1.4 6.2L12 16.7l-5.6 3.2 1.4-6.2L3 9.5l6.3-.6L12 3z"/></svg>
+            <span data-i18n="ctaStar2">Star repo-database</span>
+          </span>
+          <small data-i18n="ctaStarSub2">117 篇档案 · 10 个领域 · 每月发车</small>
+        </a>
+      </div>
+    </section>
+  </main>
+
+  <footer class="station-foot">
+    <span>repo-database · <span data-i18n="footCurated">人工策展的 GitHub 仓库知识库</span></span>
+    <span><a href="https://github.com/allengaller/repo-database/blob/main/catalog/INDEX.md" target="_blank" rel="noopener">catalog/INDEX.md</a> · <a href="https://github.com/allengaller/repo-database/issues" target="_blank" rel="noopener" data-i18n="footIssues">报告问题</a> · MIT License</span>
+  </footer>
+
+  <script src="gtm.js"></script>
+<!-- gtm-portal-backlink (managed by _scripts/sync-gtm.py) -->
+<a class="gtmp-back" href="/GTM/" aria-label="返回 GTM 门户">&#8617; GTM 门户</a>
+<style>
+.gtmp-back{position:fixed;right:1rem;bottom:1rem;z-index:2147483000;
+font:500 12px/1 ui-monospace,SFMono-Regular,Menlo,Consolas,monospace;
+letter-spacing:.05em;text-decoration:none;padding:.6rem .85rem;border-radius:999px;
+color:#14130f;background:rgba(251,250,247,.92);border:1px solid rgba(20,19,15,.16);
+box-shadow:0 2px 12px rgba(20,19,15,.14);backdrop-filter:blur(6px);
+transition:transform .15s ease,box-shadow .15s ease}
+.gtmp-back:hover{transform:translateY(-1px);box-shadow:0 4px 16px rgba(20,19,15,.22)}
+@media (prefers-color-scheme:dark){.gtmp-back{color:#f5f2ea;background:rgba(20,19,15,.88);
+border-color:rgba(245,242,234,.22)}}
+</style>
+</body>
+</html>

@@ -1,0 +1,994 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>入市战略 · GTM — Open Cognition 开放认知数据库</title>
+<meta name="description" content="Open Cognition 开放认知数据库的 Go-to-Market 战略：市场时机、目标用户、定位信息、竞争差异化、渠道分发、发布节奏、商业模式、北极星指标与风险对策。">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300..900;1,9..144,300..900&family=Noto+Serif+SC:wght@400;600;700;900&family=IBM+Plex+Mono:ital,wght@0,400;0,500;1,400&display=swap" rel="stylesheet">
+<style>
+:root{
+  --paper:#F4EEE1;
+  --paper-deep:#EDE4D2;
+  --ink:#1C1712;
+  --ink-soft:#4A4137;
+  --ink-faint:#8A7E6D;
+  --cinnabar:#B5321F;
+  --cinnabar-deep:#8E2416;
+  --indigo:#28394F;
+  --gold:#A07B2D;
+  --hairline:rgba(28,23,18,.16);
+  --hairline-strong:rgba(28,23,18,.34);
+  --dark:#171310;
+  --paper-on-dark:#EFE7D6;
+  --serif-cn:'Noto Serif SC','Songti SC','STSong',serif;
+  --serif-en:'Fraunces','Didot','Georgia',serif;
+  --mono:'IBM Plex Mono','Menlo','Courier New',monospace;
+}
+*{margin:0;padding:0;box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{
+  background:var(--paper);
+  color:var(--ink);
+  font-family:var(--serif-cn);
+  font-size:16px;
+  line-height:1.85;
+  -webkit-font-smoothing:antialiased;
+  overflow-x:hidden;
+}
+/* ---- 纸纹 grain ---- */
+body::before{
+  content:"";position:fixed;inset:0;z-index:60;pointer-events:none;opacity:.5;
+  background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='140' height='140'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.9' numOctaves='2' stitchTiles='stitch'/%3E%3CfeColorMatrix type='saturate' values='0'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='.05'/%3E%3C/svg%3E");
+}
+::selection{background:rgba(181,50,31,.22)}
+
+a{color:inherit}
+
+/* ================= NAV ================= */
+nav{
+  position:fixed;top:0;left:0;right:0;z-index:50;
+  display:flex;align-items:center;justify-content:space-between;
+  padding:0 clamp(16px,3vw,40px);height:56px;
+  background:rgba(244,238,225,.88);backdrop-filter:blur(10px);
+  border-bottom:1px solid var(--hairline);
+}
+nav .brand{display:flex;align-items:center;gap:10px;text-decoration:none}
+nav .brand .seal-mini{
+  width:26px;height:26px;border:1.5px solid var(--cinnabar);color:var(--cinnabar);
+  display:grid;place-items:center;font-size:14px;font-weight:900;line-height:1;
+}
+nav .brand b{font-size:14px;letter-spacing:.12em;font-weight:700}
+nav .links{display:flex;gap:clamp(10px,1.6vw,22px);overflow-x:auto;scrollbar-width:none}
+nav .links::-webkit-scrollbar{display:none}
+nav .links a{
+  text-decoration:none;font-family:var(--mono);font-size:11.5px;letter-spacing:.08em;
+  color:var(--ink-soft);white-space:nowrap;padding:4px 2px;border-bottom:2px solid transparent;
+  transition:color .2s,border-color .2s;
+}
+nav .links a:hover{color:var(--cinnabar);border-color:var(--cinnabar)}
+nav .links a i{font-style:normal;color:var(--cinnabar);margin-right:3px}
+@media(max-width:720px){nav .brand b{display:none}}
+
+/* ================= HERO ================= */
+.hero{
+  min-height:100svh;position:relative;
+  display:flex;flex-direction:column;justify-content:center;
+  padding:120px clamp(20px,6vw,90px) 90px;
+  border-bottom:1px solid var(--hairline-strong);
+}
+.hero .doc-meta{
+  display:flex;flex-wrap:wrap;gap:8px 22px;align-items:baseline;
+  font-family:var(--mono);font-size:12px;letter-spacing:.14em;color:var(--ink-faint);
+  animation:rise .8s .05s cubic-bezier(.2,.7,.2,1) both;
+}
+.hero .doc-meta .dot{color:var(--cinnabar)}
+.hero h1{
+  margin-top:34px;
+  font-weight:900;font-size:clamp(40px,7.2vw,92px);line-height:1.18;letter-spacing:.02em;
+  animation:rise .9s .18s cubic-bezier(.2,.7,.2,1) both;
+}
+.hero h1 .vermilion{color:var(--cinnabar)}
+.hero .sub{
+  margin-top:26px;max-width:640px;
+  font-size:clamp(15px,1.5vw,19px);color:var(--ink-soft);line-height:2;
+  animation:rise .9s .32s cubic-bezier(.2,.7,.2,1) both;
+}
+.hero .sub mark{
+  background:linear-gradient(transparent 62%,rgba(181,50,31,.28) 62%);
+  color:var(--ink);padding:0 2px;
+}
+.hero .cta-row{margin-top:44px;display:flex;flex-wrap:wrap;gap:14px;align-items:center;animation:rise .9s .46s cubic-bezier(.2,.7,.2,1) both}
+.btn{
+  display:inline-flex;align-items:center;gap:10px;text-decoration:none;
+  font-family:var(--mono);font-size:13px;letter-spacing:.1em;
+  padding:13px 24px;border:1px solid var(--ink);color:var(--ink);
+  transition:all .25s;background:transparent;
+}
+.btn.primary{background:var(--cinnabar);border-color:var(--cinnabar);color:var(--paper)}
+.btn.primary:hover{background:var(--cinnabar-deep);border-color:var(--cinnabar-deep);transform:translateY(-2px);box-shadow:0 10px 24px rgba(181,50,31,.28)}
+.btn.ghost:hover{background:var(--ink);color:var(--paper);transform:translateY(-2px)}
+/* 巨型印章 */
+.seal{
+  position:absolute;right:clamp(16px,8vw,120px);top:16vh;
+  width:clamp(96px,12vw,168px);aspect-ratio:1;
+  border:3px solid var(--cinnabar);color:var(--cinnabar);
+  display:grid;place-items:center;
+  writing-mode:vertical-rl;
+  font-size:clamp(30px,4vw,52px);font-weight:900;letter-spacing:.3em;
+  transform:rotate(6deg);
+  animation:stamp .7s .8s cubic-bezier(.34,1.56,.64,1) both;
+  box-shadow:0 0 0 1px rgba(181,50,31,.25) inset;
+  mix-blend-mode:multiply;opacity:.92;
+}
+.seal::after{content:"";position:absolute;inset:5px;border:1px solid rgba(181,50,31,.4)}
+@keyframes stamp{0%{opacity:0;transform:rotate(6deg) scale(1.7)}100%{opacity:.92;transform:rotate(6deg) scale(1)}}
+/* 侧栏竖排 */
+.hero .vert{
+  position:absolute;left:clamp(8px,2.2vw,34px);top:50%;transform:translateY(-50%);
+  writing-mode:vertical-rl;font-family:var(--mono);font-size:11px;letter-spacing:.5em;
+  color:var(--ink-faint);border-left:1px solid var(--hairline);padding-left:12px;
+  animation:rise 1s .6s both;
+}
+@media(max-width:900px){.hero .vert{display:none}.seal{top:auto;bottom:14vh;right:6vw;opacity:.75}}
+/* 数据带 */
+.stats-band{
+  margin-top:70px;display:grid;grid-template-columns:repeat(4,1fr);
+  border-top:1px solid var(--hairline-strong);
+  animation:rise .9s .6s cubic-bezier(.2,.7,.2,1) both;
+}
+.stats-band .cell{padding:20px 18px 6px;border-right:1px solid var(--hairline)}
+.stats-band .cell:last-child{border-right:none}
+.stats-band .num{
+  font-family:var(--serif-en);font-weight:600;font-size:clamp(26px,3.4vw,44px);
+  font-variant-numeric:tabular-nums;letter-spacing:-.01em;
+}
+.stats-band .num sup{font-size:.45em;color:var(--cinnabar);font-family:var(--mono);letter-spacing:.05em}
+.stats-band .lbl{font-family:var(--mono);font-size:11px;letter-spacing:.16em;color:var(--ink-faint);margin-top:2px}
+@media(max-width:720px){.stats-band{grid-template-columns:repeat(2,1fr)}.stats-band .cell:nth-child(2){border-right:none}.stats-band .cell:nth-child(-n+2){border-bottom:1px solid var(--hairline)}}
+.scroll-hint{
+  position:absolute;bottom:26px;left:50%;transform:translateX(-50%);
+  font-family:var(--mono);font-size:10.5px;letter-spacing:.4em;color:var(--ink-faint);
+  animation:bob 2.4s ease-in-out infinite;
+}
+@keyframes bob{0%,100%{transform:translate(-50%,0)}50%{transform:translate(-50%,8px)}}
+
+/* ================= 布局骨架 ================= */
+main{position:relative}
+section.chapter{position:relative;padding:clamp(70px,9vw,130px) clamp(20px,6vw,90px)}
+.chapter-head{display:flex;align-items:baseline;gap:clamp(14px,2.5vw,30px);margin-bottom:clamp(34px,4vw,58px);border-bottom:2px solid var(--ink);padding-bottom:18px}
+.chapter-head .no{
+  font-family:var(--serif-en);font-weight:300;font-style:italic;
+  font-size:clamp(40px,5vw,64px);color:var(--cinnabar);line-height:1;
+}
+.chapter-head h2{font-size:clamp(26px,3.4vw,44px);font-weight:900;letter-spacing:.04em}
+.chapter-head .en{
+  margin-left:auto;font-family:var(--mono);font-size:11.5px;letter-spacing:.3em;
+  color:var(--ink-faint);text-transform:uppercase;text-align:right;
+}
+@media(max-width:640px){.chapter-head{flex-wrap:wrap}.chapter-head .en{margin-left:0;width:100%;text-align:left}}
+.lede{max-width:720px;font-size:clamp(15px,1.4vw,18px);color:var(--ink-soft);margin-bottom:clamp(30px,4vw,50px)}
+.lede strong{color:var(--ink)}
+.eyebrow{font-family:var(--mono);font-size:11px;letter-spacing:.28em;color:var(--cinnabar);text-transform:uppercase;display:block;margin-bottom:10px}
+
+/* reveal */
+.reveal{opacity:0;transform:translateY(28px);transition:opacity .8s cubic-bezier(.2,.7,.2,1),transform .8s cubic-bezier(.2,.7,.2,1)}
+.reveal.in{opacity:1;transform:none}
+/* 静态模式（无头渲染/打印）：?static=1 时跳过动画 */
+.static .reveal{opacity:1!important;transform:none!important;transition:none!important}
+@media(prefers-reduced-motion:reduce){
+  .reveal{opacity:1;transform:none;transition:none}
+  .hero .doc-meta,.hero h1,.hero .sub,.hero .cta-row,.stats-band,.seal,.hero .vert{animation:none;opacity:1}
+}
+
+/* ================= §01 市场与时机 ================= */
+.why-now{display:grid;grid-template-columns:repeat(3,1fr);gap:1px;background:var(--hairline-strong);border:1px solid var(--hairline-strong)}
+.why-now .card{background:var(--paper);padding:clamp(22px,2.6vw,36px)}
+.why-now .card .idx{font-family:var(--mono);font-size:11px;color:var(--cinnabar);letter-spacing:.2em}
+.why-now .card h3{font-size:clamp(18px,1.8vw,23px);font-weight:700;margin:10px 0 12px}
+.why-now .card p{font-size:14.5px;color:var(--ink-soft);line-height:1.9}
+.why-now .card p b{color:var(--cinnabar);font-weight:700}
+@media(max-width:900px){.why-now{grid-template-columns:1fr}}
+.market-layers{margin-top:clamp(30px,4vw,50px);display:flex;flex-direction:column;gap:0;max-width:860px}
+.layer{display:grid;grid-template-columns:150px 1fr;gap:18px;align-items:center;padding:16px 0;border-bottom:1px dashed var(--hairline-strong)}
+.layer:first-child{border-top:1px dashed var(--hairline-strong)}
+.layer .tag{font-family:var(--mono);font-size:11.5px;letter-spacing:.12em;color:var(--ink-faint)}
+.layer .bar-wrap{position:relative}
+.layer .bar{
+  height:44px;display:flex;align-items:center;padding:0 16px;
+  font-size:14px;font-weight:600;color:var(--paper-on-dark);
+}
+.layer .bar small{margin-left:auto;font-family:var(--mono);font-weight:400;font-size:11px;opacity:.75;letter-spacing:.06em}
+.layer:nth-child(1) .bar{width:96%;background:var(--ink)}
+.layer:nth-child(2) .bar{width:74%;background:var(--indigo)}
+.layer:nth-child(3) .bar{width:48%;background:var(--gold)}
+.layer:nth-child(4) .bar{width:30%;background:var(--cinnabar)}
+@media(max-width:720px){.layer{grid-template-columns:1fr;gap:6px}.layer .bar{width:100%!important}}
+.market-note{margin-top:18px;font-family:var(--mono);font-size:11.5px;color:var(--ink-faint);letter-spacing:.05em}
+
+/* ================= §02 人群 ================= */
+.persona-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:22px}
+@media(max-width:860px){.persona-grid{grid-template-columns:1fr}}
+.persona{
+  position:relative;border:1px solid var(--hairline-strong);background:var(--paper);
+  padding:clamp(24px,2.8vw,38px);padding-top:34px;
+  transition:transform .3s cubic-bezier(.2,.7,.2,1),box-shadow .3s;
+}
+.persona::before{content:"";position:absolute;top:-1px;left:-1px;width:56px;height:6px;background:var(--cinnabar)}
+.persona:hover{transform:translateY(-6px);box-shadow:0 18px 40px rgba(28,23,18,.13)}
+.persona .p-tag{font-family:var(--mono);font-size:11px;letter-spacing:.22em;color:var(--cinnabar)}
+.persona h3{font-size:clamp(20px,2.2vw,26px);font-weight:900;margin:8px 0 4px}
+.persona .p-en{font-family:var(--serif-en);font-style:italic;font-weight:400;font-size:14px;color:var(--ink-faint)}
+.persona dl{margin-top:18px;display:grid;gap:12px;font-size:14.5px}
+.persona dt{font-family:var(--mono);font-size:11px;letter-spacing:.2em;color:var(--ink-faint)}
+.persona dd{color:var(--ink-soft);margin-top:3px;line-height:1.85}
+.persona dd b{color:var(--ink)}
+.persona .fit{margin-top:18px;padding:12px 16px;background:var(--paper-deep);border-left:3px solid var(--cinnabar);font-size:14px;line-height:1.8}
+.persona .fit b{color:var(--cinnabar)}
+
+/* ================= §03 定位 ================= */
+.pos-block{
+  position:relative;max-width:920px;
+  border:1px solid var(--ink);background:var(--paper);
+  padding:clamp(30px,4.5vw,60px) clamp(24px,4vw,56px);
+}
+.pos-block::before{
+  content:"定位宣言 POSITIONING STATEMENT";
+  position:absolute;top:-11px;left:28px;background:var(--paper);padding:0 12px;
+  font-family:var(--mono);font-size:11px;letter-spacing:.26em;color:var(--cinnabar);
+}
+.pos-block p{font-size:clamp(19px,2.4vw,30px);font-weight:600;line-height:1.9;letter-spacing:.02em}
+.pos-block p .u{background:linear-gradient(transparent 68%,rgba(181,50,31,.32) 68%)}
+.pos-block p .red{color:var(--cinnabar)}
+.pos-block .sig{margin-top:22px;display:flex;justify-content:flex-end;font-family:var(--mono);font-size:11.5px;letter-spacing:.14em;color:var(--ink-faint)}
+.pillars{margin-top:clamp(36px,5vw,60px);display:grid;grid-template-columns:repeat(3,1fr);gap:22px}
+@media(max-width:900px){.pillars{grid-template-columns:1fr}}
+.pillar{border-top:2px solid var(--ink);padding-top:20px}
+.pillar .pn{font-family:var(--serif-en);font-style:italic;font-weight:300;font-size:34px;color:var(--cinnabar);line-height:1}
+.pillar h3{font-size:19px;font-weight:900;margin:12px 0 4px}
+.pillar .pen{font-family:var(--serif-en);font-style:italic;font-size:13.5px;color:var(--ink-faint)}
+.pillar p{margin-top:12px;font-size:14.5px;color:var(--ink-soft);line-height:1.9}
+.msg-matrix{margin-top:clamp(36px,5vw,56px);overflow-x:auto}
+.msg-matrix table{width:100%;border-collapse:collapse;min-width:760px}
+.msg-matrix th{
+  font-family:var(--mono);font-size:11px;letter-spacing:.18em;color:var(--ink-faint);
+  text-align:left;padding:12px 16px;border-bottom:2px solid var(--ink);font-weight:500;
+}
+.msg-matrix td{padding:16px;border-bottom:1px solid var(--hairline);font-size:14.5px;vertical-align:top;line-height:1.8}
+.msg-matrix td:first-child{font-weight:700;white-space:nowrap}
+.msg-matrix tr:hover td{background:rgba(181,50,31,.045)}
+
+/* ================= §04 竞争 ================= */
+.compare{overflow-x:auto;border:1px solid var(--ink)}
+.compare table{width:100%;border-collapse:collapse;min-width:820px}
+.compare th{
+  background:var(--ink);color:var(--paper-on-dark);
+  font-family:var(--mono);font-size:11.5px;letter-spacing:.16em;font-weight:500;
+  padding:14px 16px;text-align:left;
+}
+.compare th:first-child{color:var(--gold)}
+.compare td{padding:16px;border-bottom:1px solid var(--hairline);font-size:14px;vertical-align:top;line-height:1.8;color:var(--ink-soft)}
+.compare td:first-child{font-weight:700;color:var(--ink);white-space:nowrap;background:rgba(28,23,18,.03)}
+.compare td .yes{color:var(--cinnabar);font-weight:700}
+.compare td .no{color:var(--ink-faint)}
+.compare tr:last-child td{border-bottom:none}
+.compare tr.us td{background:rgba(181,50,31,.06)}
+.compare tr.us td:first-child{color:var(--cinnabar);border-left:3px solid var(--cinnabar)}
+.moat{margin-top:clamp(30px,4vw,46px);display:grid;grid-template-columns:repeat(3,1fr);gap:1px;background:var(--hairline-strong);border:1px solid var(--hairline-strong)}
+@media(max-width:900px){.moat{grid-template-columns:1fr}}
+.moat .m{background:var(--paper);padding:24px 26px}
+.moat .m .mn{font-family:var(--mono);font-size:11px;color:var(--cinnabar);letter-spacing:.2em}
+.moat .m h4{font-size:17px;font-weight:900;margin:8px 0 8px}
+.moat .m p{font-size:13.5px;color:var(--ink-soft);line-height:1.85}
+
+/* ================= §05 渠道 ================= */
+.channel-table{overflow-x:auto}
+.channel-table table{width:100%;border-collapse:collapse;min-width:860px}
+.channel-table th{
+  font-family:var(--mono);font-size:11px;letter-spacing:.18em;color:var(--ink-faint);
+  text-align:left;padding:12px 14px;border-bottom:2px solid var(--ink);font-weight:500;
+}
+.channel-table td{padding:15px 14px;border-bottom:1px solid var(--hairline);font-size:14px;vertical-align:top;line-height:1.75;color:var(--ink-soft)}
+.channel-table td b{color:var(--ink)}
+.chip{
+  display:inline-block;font-family:var(--mono);font-size:10.5px;letter-spacing:.14em;
+  padding:3px 10px;border:1px solid currentColor;border-radius:999px;white-space:nowrap;
+}
+.chip.p0{color:var(--cinnabar)}
+.chip.p1{color:var(--indigo)}
+.chip.p2{color:var(--ink-faint)}
+.channel-note{margin-top:16px;font-size:13.5px;color:var(--ink-faint);font-family:var(--mono)}
+.flywheel{
+  margin-top:clamp(34px,4.5vw,54px);padding:clamp(24px,3vw,40px);
+  background:var(--ink);color:var(--paper-on-dark);
+}
+.flywheel h3{font-size:20px;font-weight:900;letter-spacing:.05em}
+.flywheel h3 span{color:#E4A26A}
+.flywheel ol{margin-top:16px;display:grid;grid-template-columns:repeat(4,1fr);gap:20px;list-style:none;counter-reset:fw}
+@media(max-width:900px){.flywheel ol{grid-template-columns:repeat(2,1fr)}}
+@media(max-width:560px){.flywheel ol{grid-template-columns:1fr}}
+.flywheel li{counter-increment:fw;font-size:13.5px;line-height:1.8;color:rgba(239,231,214,.82);position:relative;padding-top:26px}
+.flywheel li::before{
+  content:"0" counter(fw);position:absolute;top:0;left:0;
+  font-family:var(--serif-en);font-style:italic;font-size:19px;color:#E4A26A;
+}
+.flywheel li b{color:var(--paper-on-dark)}
+.flywheel .arrow-note{margin-top:20px;font-family:var(--mono);font-size:11.5px;letter-spacing:.12em;color:rgba(239,231,214,.55)}
+
+/* ================= §06 发布节奏（暗色卷轴） ================= */
+section.dark{
+  background:var(--dark);color:var(--paper-on-dark);
+}
+section.dark .chapter-head{border-color:var(--paper-on-dark)}
+section.dark .chapter-head .en{color:rgba(239,231,214,.45)}
+section.dark .lede{color:rgba(239,231,214,.75)}
+section.dark .lede strong{color:var(--paper-on-dark)}
+.timeline{position:relative;max-width:900px;margin:0 auto;padding-left:0}
+.timeline::before{content:"";position:absolute;left:11px;top:8px;bottom:8px;width:1px;background:rgba(239,231,214,.25)}
+.phase{position:relative;padding:0 0 clamp(40px,5vw,60px) 56px}
+.phase:last-child{padding-bottom:0}
+.phase .node{
+  position:absolute;left:0;top:6px;width:23px;height:23px;border-radius:50%;
+  border:1.5px solid rgba(239,231,214,.5);display:grid;place-items:center;background:var(--dark);
+}
+.phase .node::after{content:"";width:7px;height:7px;border-radius:50%;background:var(--cinnabar)}
+.phase.now .node{border-color:#E4A26A}
+.phase .ph-head{display:flex;flex-wrap:wrap;align-items:baseline;gap:10px 18px}
+.phase .ph-no{font-family:var(--serif-en);font-style:italic;font-weight:300;font-size:30px;color:#E4A26A;line-height:1}
+.phase h3{font-size:clamp(20px,2.2vw,26px);font-weight:900;letter-spacing:.03em}
+.phase .ph-time{font-family:var(--mono);font-size:11.5px;letter-spacing:.16em;color:rgba(239,231,214,.5)}
+.phase .badge{
+  font-family:var(--mono);font-size:10.5px;letter-spacing:.14em;color:#E4A26A;
+  border:1px solid #E4A26A;padding:2px 10px;border-radius:999px;
+}
+.phase p{margin-top:12px;font-size:14.5px;line-height:1.95;color:rgba(239,231,214,.78);max-width:640px}
+.phase ul{margin-top:14px;list-style:none;display:grid;gap:8px;max-width:640px}
+.phase ul li{font-size:14px;color:rgba(239,231,214,.78);padding-left:20px;position:relative;line-height:1.8}
+.phase ul li::before{content:"—";position:absolute;left:0;color:#E4A26A}
+.phase .exit{
+  margin-top:16px;display:inline-block;font-family:var(--mono);font-size:11.5px;letter-spacing:.1em;
+  color:rgba(239,231,214,.6);border-left:2px solid var(--cinnabar);padding:4px 0 4px 14px;line-height:1.8;
+}
+.phase .exit b{color:#E4A26A}
+
+/* ================= §07 商业模式 ================= */
+.biz-grid{display:grid;grid-template-columns:1.05fr .95fr;gap:clamp(30px,4vw,60px);align-items:start}
+@media(max-width:900px){.biz-grid{grid-template-columns:1fr}}
+.biz-principle{
+  border:1px solid var(--ink);padding:clamp(24px,3vw,40px);position:relative;background:var(--paper-deep);
+}
+.biz-principle::before{content:"";position:absolute;inset:6px;border:1px solid var(--hairline-strong);pointer-events:none}
+.biz-principle h3{font-size:clamp(20px,2.2vw,26px);font-weight:900}
+.biz-principle h3 span{color:var(--cinnabar)}
+.biz-principle p{margin-top:14px;font-size:14.5px;color:var(--ink-soft);line-height:2}
+.biz-streams h4{font-family:var(--mono);font-size:11px;letter-spacing:.24em;color:var(--cinnabar);margin-bottom:6px}
+.biz-streams .stream{display:grid;grid-template-columns:26px 1fr;gap:14px;padding:18px 0;border-bottom:1px dashed var(--hairline-strong)}
+.biz-streams .stream .sn{font-family:var(--serif-en);font-style:italic;font-weight:300;font-size:21px;color:var(--ink-faint)}
+.biz-streams .stream b{font-size:16px;font-weight:700;display:block}
+.biz-streams .stream p{font-size:13.5px;color:var(--ink-soft);line-height:1.8;margin-top:4px}
+.biz-streams .stream .state{font-family:var(--mono);font-size:10.5px;letter-spacing:.12em;color:var(--ink-faint);margin-top:6px;display:block}
+.biz-streams .stream .state.on{color:var(--cinnabar)}
+
+/* ================= §08 度量 ================= */
+.northstar{
+  text-align:center;padding:clamp(40px,5vw,70px) 20px;
+  border:1px solid var(--ink);position:relative;max-width:860px;margin:0 auto;
+  background:
+    radial-gradient(circle at 50% 0%,rgba(181,50,31,.07),transparent 60%),
+    var(--paper);
+}
+.northstar .ns-label{font-family:var(--mono);font-size:11px;letter-spacing:.3em;color:var(--cinnabar)}
+.northstar .ns-big{
+  margin-top:14px;font-size:clamp(22px,3.2vw,40px);font-weight:900;line-height:1.6;letter-spacing:.03em;
+}
+.northstar .ns-big .u{background:linear-gradient(transparent 66%,rgba(181,50,31,.3) 66%)}
+.northstar .ns-sub{margin-top:14px;font-family:var(--mono);font-size:12px;letter-spacing:.08em;color:var(--ink-faint)}
+.kpi-grid{margin-top:clamp(36px,5vw,56px);display:grid;grid-template-columns:repeat(4,1fr);gap:18px}
+@media(max-width:1000px){.kpi-grid{grid-template-columns:repeat(2,1fr)}}
+.kpi{border:1px solid var(--hairline-strong);padding:22px 20px;background:var(--paper);transition:transform .3s,box-shadow .3s}
+.kpi:hover{transform:translateY(-4px);box-shadow:0 14px 30px rgba(28,23,18,.12)}
+.kpi .k-lv{font-family:var(--mono);font-size:10.5px;letter-spacing:.2em;color:var(--cinnabar)}
+.kpi h4{font-size:16.5px;font-weight:900;margin:10px 0 6px}
+.kpi p{font-size:13px;color:var(--ink-soft);line-height:1.8}
+.kpi .k-target{margin-top:12px;font-family:var(--mono);font-size:11.5px;color:var(--ink);letter-spacing:.05em;border-top:1px dashed var(--hairline-strong);padding-top:10px}
+.kpi .k-target b{color:var(--cinnabar)}
+.metric-cadence{margin-top:26px;font-family:var(--mono);font-size:11.5px;color:var(--ink-faint);text-align:center;letter-spacing:.06em}
+
+/* ================= §09 风险 ================= */
+.risk-list{max-width:960px}
+.risk{display:grid;grid-template-columns:minmax(180px,260px) 1fr;gap:clamp(16px,3vw,40px);padding:clamp(20px,2.6vw,30px) 0;border-bottom:1px solid var(--hairline)}
+.risk:first-child{border-top:2px solid var(--ink)}
+@media(max-width:720px){.risk{grid-template-columns:1fr;gap:8px}}
+.risk h4{font-size:17px;font-weight:900;line-height:1.6}
+.risk h4 .r-lv{display:block;font-family:var(--mono);font-size:10.5px;letter-spacing:.18em;color:var(--cinnabar);margin-bottom:6px;font-weight:500}
+.risk p{font-size:14px;color:var(--ink-soft);line-height:1.9}
+.risk p b{color:var(--ink)}
+.risk p .fix{color:var(--cinnabar);font-weight:700}
+
+/* ================= 终章 CTA ================= */
+.finale{
+  position:relative;background:var(--dark);color:var(--paper-on-dark);
+  padding:clamp(90px,12vw,160px) clamp(20px,6vw,90px);
+  text-align:center;overflow:hidden;
+}
+.finale::before{
+  content:"识";position:absolute;left:50%;top:50%;transform:translate(-50%,-50%);
+  font-size:clamp(300px,45vw,640px);font-weight:900;color:rgba(239,231,214,.035);
+  line-height:1;pointer-events:none;
+}
+.finale .f-label{font-family:var(--mono);font-size:11px;letter-spacing:.34em;color:#E4A26A}
+.finale h2{margin-top:20px;font-size:clamp(28px,4.6vw,58px);font-weight:900;line-height:1.5;letter-spacing:.04em;position:relative}
+.finale h2 .u{background:linear-gradient(transparent 66%,rgba(181,50,31,.5) 66%)}
+.finale p{margin:26px auto 0;max-width:600px;font-size:15px;line-height:2.1;color:rgba(239,231,214,.72)}
+.finale .cta-row{margin-top:44px;display:flex;justify-content:center;flex-wrap:wrap;gap:14px}
+.finale .btn{border-color:var(--paper-on-dark);color:var(--paper-on-dark)}
+.finale .btn.primary{background:var(--cinnabar);border-color:var(--cinnabar)}
+.finale .btn.primary:hover{background:#C84230;border-color:#C84230}
+.finale .btn.ghost:hover{background:var(--paper-on-dark);color:var(--dark)}
+.finale .seal-fin{
+  margin:56px auto 0;width:88px;height:88px;border:2.5px solid #C8421F;color:#D24A2A;
+  display:grid;place-items:center;writing-mode:vertical-rl;
+  font-size:26px;font-weight:900;letter-spacing:.2em;transform:rotate(6deg);
+}
+
+footer{background:var(--dark);color:rgba(239,231,214,.45);border-top:1px solid rgba(239,231,214,.12);
+  padding:26px clamp(20px,6vw,90px);display:flex;flex-wrap:wrap;gap:10px 30px;justify-content:space-between;
+  font-family:var(--mono);font-size:11px;letter-spacing:.1em}
+footer a{color:rgba(239,231,214,.7);text-decoration:none}
+footer a:hover{color:#E4A26A}
+
+@keyframes rise{from{opacity:0;transform:translateY(26px)}to{opacity:1;transform:none}}
+</style>
+</head>
+<body>
+
+<nav>
+  <a class="brand" href="#top">
+    <span class="seal-mini">识</span>
+    <b>开放认知 · GTM</b>
+  </a>
+  <div class="links">
+    <a href="#market"><i>§01</i>时机</a>
+    <a href="#segments"><i>§02</i>人群</a>
+    <a href="#positioning"><i>§03</i>定位</a>
+    <a href="#competition"><i>§04</i>竞争</a>
+    <a href="#channels"><i>§05</i>渠道</a>
+    <a href="#launch"><i>§06</i>节奏</a>
+    <a href="#business"><i>§07</i>模式</a>
+    <a href="#metrics"><i>§08</i>度量</a>
+    <a href="#risks"><i>§09</i>风险</a>
+  </div>
+</nav>
+
+<header class="hero" id="top">
+  <div class="vert">OPEN&nbsp;COGNITION&nbsp;DATABASE&nbsp;·&nbsp;GO&nbsp;TO&nbsp;MARKET&nbsp;·&nbsp;PEACE&nbsp;LAB&nbsp;GLOBAL</div>
+  <div class="seal">入世</div>
+  <div class="doc-meta">
+    <span>GO-TO-MARKET&nbsp;STRATEGY</span><span class="dot">◆</span>
+    <span>v1.0&nbsp;·&nbsp;2026-08</span><span class="dot">◆</span>
+    <span>REPO&nbsp;v0.9</span><span class="dot">◆</span>
+    <span>CC&nbsp;BY-SA&nbsp;4.0</span>
+  </div>
+  <h1>让<span class="vermilion">人类</span>与&nbsp;Agent，<br>共用同一份思想库。</h1>
+  <p class="sub">Open Cognition 已把 <mark>9 大领域 · 2400+ 思想家与概念 · 137 个可执行 Skill</mark> 整理成人可深读、机可调用的开源知识结构。本页回答一个问题：<strong>它如何走向市场</strong>——谁最需要它、说什么话、走什么渠道、按什么节奏推进、用什么指标校准。</p>
+  <div class="cta-row">
+    <a class="btn primary" href="https://github.com/peace-lab-global/open-cognition-database" target="_blank" rel="noopener">GitHub 仓库 →</a>
+    <a class="btn ghost" href="https://github.com/peace-lab-global/open-cognition-database/blob/main/AGENT.md" target="_blank" rel="noopener">Agent 接入指南</a>
+  </div>
+  <div class="stats-band">
+    <div class="cell"><div class="num" data-count="2438">0</div><div class="lbl">被索引条目 ENTRIES</div></div>
+    <div class="cell"><div class="num" data-count="9">0</div><div class="lbl">知识领域 DOMAINS</div></div>
+    <div class="cell"><div class="num" data-count="137">0</div><div class="lbl">可执行 Skills</div></div>
+    <div class="cell"><div class="num">$0<sup>永远</sup></div><div class="lbl">开放许可 OPEN LICENSE</div></div>
+  </div>
+  <div class="scroll-hint">SCROLL&nbsp;↓</div>
+</header>
+
+<main>
+
+<!-- ============ §01 ============ -->
+<section class="chapter" id="market">
+  <div class="chapter-head reveal">
+    <span class="no">§01</span>
+    <h2>市场与时机</h2>
+    <span class="en">Market&nbsp;&amp;&nbsp;Why&nbsp;Now</span>
+  </div>
+  <p class="lede reveal">我们不在卖一本书，而在给一场正在发生的范式转移供给<strong>「语料级的知识基础设施」</strong>。Agent 生态越繁荣，对「可信、结构化、可商用」人文知识库的稀缺性就越强——现在是供给它的最佳窗口。</p>
+  <div class="why-now">
+    <div class="card reveal">
+      <span class="idx">WHY-01</span>
+      <h3>Agent 大爆发，但「可用的知识」是短板</h3>
+      <p>2024–2026 年 Agent / RAG 应用指数增长，而通用语料（网页抓取、维基 dump）<b>噪声大、无策展、许可模糊</b>。高质量、结构明确、许可清晰的人文知识语料是公认的稀缺品。</p>
+    </div>
+    <div class="card reveal">
+      <span class="idx">WHY-02</span>
+      <h3>Skill / MCP 把「知识」变成「可调用能力」</h3>
+      <p>Claude Skills、MCP 等协议让知识库从「被检索的文本」升级为<b>「被执行的框架」</b>。本库 137 个 Skill 天然契合这一标准——这是纯文档库没有的时间窗口。</p>
+    </div>
+    <div class="card reveal">
+      <span class="idx">WHY-03</span>
+      <h3>中文人文深度内容的「鸡汤化」真空</h3>
+      <p>知识付费以简化换流量，严肃内容又锁在付费墙与学术黑话里。<b>「拒绝简化、免费开放、对 Agent 友好」</b>三个条件同时满足的库，在中文世界几乎空缺。</p>
+    </div>
+  </div>
+
+  <div class="market-layers reveal">
+    <div class="layer">
+      <span class="tag"> TAM · 知识基础设施</span>
+      <div class="bar-wrap"><div class="bar" style="background:var(--ink)">全球 Agent / RAG 知识供给<small>海量 · 通用 · 高噪声</small></div></div>
+    </div>
+    <div class="layer">
+      <span class="tag"> SAM · 结构化人文库</span>
+      <div class="bar-wrap"><div class="bar" style="background:var(--indigo)">策展型跨学科知识库<small>百科 / 学术百科 / 精选语料</small></div></div>
+    </div>
+    <div class="layer">
+      <span class="tag"> SOM · 切入带</span>
+      <div class="bar-wrap"><div class="bar" style="background:var(--gold)">中文 · 人机双读者 · 可商用许可<small>竞品近乎空缺</small></div></div>
+    </div>
+    <div class="layer">
+      <span class="tag"> WEDGE · 楔子</span>
+      <div class="bar-wrap"><div class="bar" style="background:var(--cinnabar)">佛教认知专题 + CSE 安全科学<small>旗舰专题先行立住深度</small></div></div>
+    </div>
+  </div>
+  <p class="market-note reveal">※ 层级为相对规模示意，非货币化测算。开源知识库的市场以「采用与调用」计，而非直接收入。</p>
+</section>
+
+<!-- ============ §02 ============ -->
+<section class="chapter" id="segments" style="background:var(--paper-deep)">
+  <div class="chapter-head reveal">
+    <span class="no">§02</span>
+    <h2>目标用户与细分</h2>
+    <span class="en">Segments&nbsp;&amp;&nbsp;ICP</span>
+  </div>
+  <p class="lede reveal">四类人群，<strong>一个共同点</strong>：他们要的不是「更快的答案」，而是「更可信的思想结构」。优先级 P0 = Agent 构建者与深度学人——他们是启动口碑的两端。</p>
+  <div class="persona-grid">
+    <article class="persona reveal">
+      <span class="p-tag">ICP-A · P0</span>
+      <h3>Agent 构建者</h3>
+      <span class="p-en">AI-native Developers</span>
+      <dl>
+        <dt>PAIN 痛点</dt>
+        <dd>给 Agent 喂维基语料太浅、喂爬取语料太脏；想要<b>开箱即用的领域 Skill 与可追溯引用</b>，且许可必须可商用。</dd>
+        <dt>GAIN 我们给的</dt>
+        <dd><b>137 个标准化 Skill</b>（统一 frontmatter）、index.json 机器索引、10 类显式关联构成可推理图谱、CC BY-SA 全量开放。</dd>
+      </dl>
+      <div class="fit"><b>首战切入：</b>把「佛教认知 15 Skill + CSE 16 Skill」打包成两套示范 Skill 包，进 Agent 注册表分发。</div>
+    </article>
+    <article class="persona reveal">
+      <span class="p-tag">ICP-B · P0</span>
+      <h3>研究者与深度学人</h3>
+      <span class="p-en">Researchers &amp; Scholars</span>
+      <dl>
+        <dt>PAIN 痛点</dt>
+        <dd>原典难读、学派互不通话；跨学科检索靠运气，<b>没有一个「先建立整体感」的入口</b>。</dd>
+        <dt>GAIN 我们给的</dt>
+        <dd>每条目 ~100 行建立思想家整体感，<b>原典 / 研究 / 入门三层阅读阶梯</b>，跨学科关联显式标注类型，可直接进文献综述。</dd>
+      </dl>
+      <div class="fit"><b>首战切入：</b>知乎 / 豆瓣连载「条目精读」，每篇以一个概念为透镜，文末链回全库。</div>
+    </article>
+    <article class="persona reveal">
+      <span class="p-tag">ICP-C · P1</span>
+      <h3>深度学习者与创作者</h3>
+      <span class="p-en">Lifelong Learners &amp; Makers</span>
+      <dl>
+        <dt>PAIN 痛点</dt>
+        <dd>被鸡汤式内容喂养到反胃，想要<b>不简化的第二遍学习</b>；写作者需要跨人物的思想素材。</dd>
+        <dt>GAIN 我们给的</dt>
+        <dd><b>诊断式阅读</b>：迷茫 → 马斯洛诊断，认知卡点 → 八识诊断，叙事困住 → 三性诊断；另有 99 张跨人物素材清单。</dd>
+      </dl>
+      <div class="fit"><b>首战切入：</b>少数派 / 即刻发布「用 Skill 给自己做一次认知诊断」互动文章。</div>
+    </article>
+    <article class="persona reveal">
+      <span class="p-tag">ICP-D · P2</span>
+      <h3>教育与文化机构</h3>
+      <span class="p-en">Institutions &amp; Educators</span>
+      <dl>
+        <dt>PAIN 痛点</dt>
+        <dd>课程缺乏体系化、许可清晰的开放教材；佛学院 / 人文通识课<b>缺一套可引用的现代知识底座</b>。</dd>
+        <dt>GAIN 我们给的</dt>
+        <dd>佛学院五大支柱专题（戒律 / 三论 / 俱舍 / 唯识 / 五明）、CSE 学派体系——<b>课程级模块 + 明确署名许可</b>。</dd>
+      </dl>
+      <div class="fit"><b>首战切入：</b>向 3–5 所佛学院与 CSE 课程捐赠定制专题索引，换取教学场景背书。</div>
+    </article>
+  </div>
+</section>
+
+<!-- ============ §03 ============ -->
+<section class="chapter" id="positioning">
+  <div class="chapter-head reveal">
+    <span class="no">§03</span>
+    <h2>定位与信息</h2>
+    <span class="en">Positioning&nbsp;&amp;&nbsp;Messaging</span>
+  </div>
+  <div class="pos-block reveal">
+    <p>对于<span class="u">需要可信人文知识的开发者与深度学人</span>，Open Cognition 是<span class="red">首个以「人类与 Agent 共用」为第一原则</span>构建的跨学科认知数据库——它不是又一个百科，而是<span class="u">人可深读、机可调用的知识基础设施</span>：拒绝鸡汤式简化，每一条都可追溯、可链接、可执行。</p>
+    <div class="sig">— POSITIONING STATEMENT · v1.0</div>
+  </div>
+  <div class="pillars">
+    <div class="pillar reveal">
+      <div class="pn">i.</div>
+      <h3>拒绝知识快餐</h3>
+      <span class="pen">Depth over Digest</span>
+      <p>每条目附「原典 / 研究 / 入门」三层进阶阅读，保留学派争论与常见误读。我们卖的是「第二遍学习」，永远不与爽文比快。</p>
+    </div>
+    <div class="pillar reveal">
+      <div class="pn">ii.</div>
+      <h3>人机同源</h3>
+      <span class="pen">One Corpus, Two Readers</span>
+      <p>人类读条目建立整体感，Agent 调用 Skill 执行框架——同一份数据、同一套结构、同一份许可。这是本库与一切传统知识库的分界线。</p>
+    </div>
+    <div class="pillar reveal">
+      <div class="pn">iii.</div>
+      <h3>关联即结构</h3>
+      <span class="pen">Typed Links as Graph</span>
+      <p>同源 / 互补 / 对立 / 批判 / 继承……10 类显式关联让知识成为可追问「为什么相关」的图谱，而非孤立的词条堆。</p>
+    </div>
+  </div>
+  <div class="msg-matrix reveal">
+    <table>
+      <thead><tr><th>受众</th><th>一句话信息（对谁说什么）</th><th>证据锚点</th><th>主战场</th></tr></thead>
+      <tbody>
+        <tr><td>Agent 构建者</td><td>「别再喂维基 dump 了——这里有 137 个可直接挂载的人文 Skill，许可干净。」</td><td>SKILL frontmatter 规范 · AGENT.md · index.json</td><td>GitHub · Agent 注册表 · HN</td></tr>
+        <tr><td>研究者 / 学人</td><td>「100 行读懂一个思想家，三层阶梯读回原典，跨学派关联标给你看。」</td><td>条目模板十段式 · 三层阅读 · 关联类型</td><td>知乎 · 豆瓣 · 学术圈</td></tr>
+        <tr><td>深度学习者</td><td>「迷茫的时候，让一千个头脑给你做一次诊断。」</td><td>诊断式阅读 Skills · 素材清单</td><td>少数派 · 即刻 · 小红书</td></tr>
+        <tr><td>机构 / 教育</td><td>「一套课程级、许可清晰、可整体引入的开放知识底座。」</td><td>佛学院五大支柱 · CSE 学派体系</td><td>直接合作 · 会议 · 捐赠</td></tr>
+      </tbody>
+    </table>
+  </div>
+</section>
+
+<!-- ============ §04 ============ -->
+<section class="chapter" id="competition" style="background:var(--paper-deep)">
+  <div class="chapter-head reveal">
+    <span class="no">§04</span>
+    <h2>竞争与差异化</h2>
+    <span class="en">Competitive&nbsp;Landscape</span>
+  </div>
+  <p class="lede reveal">真正的对手不是某个具体产品，而是<strong>「继续用维基 dump 喂模型」的默认选项</strong>。下表回答：用户为什么要把默认选项换成本库。</p>
+  <div class="compare reveal">
+    <table>
+      <thead>
+        <tr><th>维度</th><th>维基百科 / 通用语料</th><th>学术百科（SEP 等）</th><th>知识付费 / 问答社区</th><th>Open Cognition（本库）</th></tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>内容深度</td>
+          <td><span class="no">广而浅</span>，无进阶阶梯</td>
+          <td><span class="yes">深</span>，但单领域</td>
+          <td>简化换流量</td>
+          <td><span class="yes">紧凑 + 三层阶梯</span>，保留争论与误读</td>
+        </tr>
+        <tr>
+          <td>跨学科结构</td>
+          <td>条目孤立</td>
+          <td>基本无跨域链接</td>
+          <td>无</td>
+          <td><span class="yes">10 类显式关联</span>，跨域可推理</td>
+        </tr>
+        <tr>
+          <td>机器可调用</td>
+          <td>纯文本 dump</td>
+          <td>不可商用抓取</td>
+          <td>封闭 API</td>
+          <td><span class="yes">137 Skills + index.json</span>，Agent 直接挂载</td>
+        </tr>
+        <tr>
+          <td>中文原生</td>
+          <td><span class="yes">有</span>但质量参差</td>
+          <td><span class="no">无</span></td>
+          <td><span class="yes">强</span>但封闭</td>
+          <td><span class="yes">中文一手撰写</span>，英文版在路上</td>
+        </tr>
+        <tr>
+          <td>许可与商用水位</td>
+          <td>CC BY-SA</td>
+          <td><span class="no">限制严格</span></td>
+          <td><span class="no">付费墙</span></td>
+          <td><span class="yes">CC BY-SA 4.0</span>，署名即可商用</td>
+        </tr>
+        <tr class="us">
+          <td>定位一句话</td>
+          <td>世界的默认词条</td>
+          <td>哲学的学术权威</td>
+          <td>大众的知识消费</td>
+          <td><span class="yes">人机共用的认知基础设施</span></td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+  <div class="moat">
+    <div class="m reveal">
+      <span class="mn">MOAT-01</span>
+      <h4>结构复利</h4>
+      <p>2400+ 条目间的显式关联一旦建成，每新增一条都在增强整张图谱——后来者可抄词条，抄不走关系网络。</p>
+    </div>
+    <div class="m reveal">
+      <span class="mn">MOAT-02</span>
+      <h4>双读者的标准卡位</h4>
+      <p>「人类条目 + Agent Skill」的统一 frontmatter 正在成为事实格式。谁先在 Agent 注册表里铺开人文 Skill，谁就定义类别。</p>
+    </div>
+    <div class="m reveal">
+      <span class="mn">MOAT-03</span>
+      <h4>策展信任</h4>
+      <p>质量准则 + 统一模板 + 拒绝简化的编辑立场，长期沉淀为「这里说的可以信」的品牌资产——信任是知识库最贵的护城河。</p>
+    </div>
+  </div>
+</section>
+
+<!-- ============ §05 ============ -->
+<section class="chapter" id="channels">
+  <div class="chapter-head reveal">
+    <span class="no">§05</span>
+    <h2>渠道与分发</h2>
+    <span class="en">Channels&nbsp;&amp;&nbsp;Distribution</span>
+  </div>
+  <p class="lede reveal">开源知识库的渠道哲学：<strong>去知识已经在场的地方</strong>，而不是把人拉到新地方。P0 渠道是发布周的火力点，P1 是复利引擎，P2 是规模期权。</p>
+  <div class="channel-table reveal">
+    <table>
+      <thead><tr><th>优先级</th><th>渠道</th><th>动作</th><th>衡量</th></tr></thead>
+      <tbody>
+        <tr><td><span class="chip p0">P0</span></td><td><b>GitHub 有机 + SEO</b></td><td>README 双语改写为「30 秒看懂」；permalinks 条目被搜索引擎收录；仓库 Topics 全配。</td><td>外链点击 · 搜索收录条数</td></tr>
+        <tr><td><span class="chip p0">P0</span></td><td><b>Agent 生态注册表</b></td><td>把示范 Skill 包提交到 Claude Skills / MCP 目录与主流 agent runtime 示例；提供一行接入命令。</td><td>Skill 安装量 · 被 fork 的接入示例</td></tr>
+        <tr><td><span class="chip p0">P0</span></td><td><b>开发者社区发布</b></td><td>v1.0 发布周：Product Hunt + Hacker News（英文帖）+ V2EX / 少数派（中文帖），统一叙事「给 Agent 的人文知识库」。</td><td>发布周 stars · 讨论质量</td></tr>
+        <tr><td><span class="chip p1">P1</span></td><td><b>人文学术社区</b></td><td>知乎专栏 / 豆瓣连载「条目精读」；与哲学、佛学、CSE 读书会共创专题索引。</td><td>连载关注数 · 条目深读率</td></tr>
+        <tr><td><span class="chip p1">P1</span></td><td><b>通识学习者社区</b></td><td>即刻 / 小红书「认知诊断」互动内容；每张素材清单切一条短视频脚本。</td><td>互动率 · 新访客占比</td></tr>
+        <tr><td><span class="chip p1">P1</span></td><td><b>Newsletter 双周报</b></td><td>「本周一个概念 + 一个 Skill」固定栏目，沉淀私域复读者。</td><td>订阅数 · 打开率 ≥ 40%</td></tr>
+        <tr><td><span class="chip p2">P2</span></td><td><b>学术 / 国际渠道</b></td><td>英文版上线后进 Reddit（r/philosophy、r/Buddhism、r/LocalLLaMA）与学术会议 poster。</td><td>国际 stars · 引用次数</td></tr>
+        <tr><td><span class="chip p2">P2</span></td><td><b>机构合作</b></td><td>佛学院 / 高校课程捐赠定制索引，换教学场景背书与联合署名。</td><td>课程采用数</td></tr>
+      </tbody>
+    </table>
+    <p class="channel-note">※ 每条渠道只保留一个负责人、一个衡量指标；连续两周期无产出即降级或砍掉。</p>
+  </div>
+  <div class="flywheel reveal">
+    <h3>增长飞轮 · <span>Growth Flywheel</span></h3>
+    <ol>
+      <li><b>条目被检索 / 被调用</b>——搜索引擎与 Agent 注册表带来第一波精准访客。</li>
+      <li><b>访客变读者</b>——三层阅读阶梯把一次点击变成一次深度会话。</li>
+      <li><b>读者变贡献者</b>——模板与质量准则让贡献门槛低而质量稳。</li>
+      <li><b>贡献扩大图谱</b>——新条目增强整网结构，搜索引擎与 Agent 更愿意引用。</li>
+    </ol>
+    <div class="arrow-note">01 → 02 → 03 → 04 → 01&nbsp;&nbsp;每一圈都让下一圈更省力。</div>
+  </div>
+</section>
+
+<!-- ============ §06 暗色 ============ -->
+<section class="chapter dark" id="launch">
+  <div class="chapter-head reveal">
+    <span class="no">§06</span>
+    <h2>发布节奏</h2>
+    <span class="en">Launch&nbsp;Plan</span>
+  </div>
+  <p class="lede reveal">以 <strong>v1.0 为点火点</strong>的四个阶段。每阶段有明确退出条件（Exit Criteria）——<strong>达标才进入下一阶段，不达标就留在原地打磨</strong>。节奏比速度重要。</p>
+  <div class="timeline">
+    <div class="phase now reveal">
+      <div class="node"></div>
+      <div class="ph-head"><span class="ph-no">Ph.0</span><h3>地基</h3><span class="ph-time">现在 → v1.0 前</span><span class="badge">进行中</span></div>
+      <p>不发声，先把「可被引用的地基」打牢：发布动作一旦开始，每一次曝光都必须落在一个经得起打开的库上。</p>
+      <ul>
+        <li>index.json 结构冻结并写版本承诺；AGENT.md 成为 Agent 接入唯一入口</li>
+        <li>两套旗舰示范 Skill 包（佛教认知 / CSE）打包、可一行安装</li>
+        <li>英文 Hero 页与「30 秒看懂」README 就位</li>
+      </ul>
+      <div class="exit"><b>EXIT：</b>接入文档 10 分钟内可跑通一个最小 Agent 调用示例。</div>
+    </div>
+    <div class="phase reveal">
+      <div class="node"></div>
+      <div class="ph-head"><span class="ph-no">Ph.1</span><h3>点火</h3><span class="ph-time">v1.0 发布周</span></div>
+      <p>集中弹药打一次「品类宣告」：不是又一个百科，而是人机共用的认知基础设施。所有渠道同一周、同一叙事。</p>
+      <ul>
+        <li>Product Hunt + Hacker News + V2EX / 少数派四线同发</li>
+        <li>发布周每日一条「条目精读」内容弹药（预热 3 天 + 发布 + 续燃 3 天）</li>
+        <li>收集 issue 与首批贡献者，48 小时内响应每一条反馈</li>
+      </ul>
+      <div class="exit"><b>EXIT：</b>GitHub ≥ 1k stars，或任一 Skill 包 ≥ 100 次安装，且出现 5 位非核心贡献者。</div>
+    </div>
+    <div class="phase reveal">
+      <div class="node"></div>
+      <div class="ph-head"><span class="ph-no">Ph.2</span><h3>生态</h3><span class="ph-time">v0.10 → v1.x</span></div>
+      <p>从「被看见」转向「被依赖」：让 Agent 生态把本库当作默认的人文知识层。</p>
+      <ul>
+        <li>MCP Server + Agent SDK 集成示例，接入从「复制文件」降为「一行配置」</li>
+        <li>可视化关联图谱上线，跨域浏览成为传播素材本身</li>
+        <li>英文版覆盖佛教认知与 CSE 两大旗舰专题优先</li>
+      </ul>
+      <div class="exit"><b>EXIT：</b>月度知识调用（北极星）连续 3 个月环比增长 ≥ 20%。</div>
+    </div>
+    <div class="phase reveal">
+      <div class="node"></div>
+      <div class="ph-head"><span class="ph-no">Ph.3</span><h3>规模</h3><span class="ph-time">v1.x 之后</span></div>
+      <p>建立可持续性结构，让开放承诺与长期维护可以同时成立。</p>
+      <ul>
+        <li>赞助 / 基金会化运作（OpenCollective、NLnet 等开源资助）</li>
+        <li>机构合作与课程采用进入制度化（模板化共创流程）</li>
+        <li>托管增值服务（可选）反哺核心库维护</li>
+      </ul>
+      <div class="exit"><b>EXIT：</b>维护成本被多元资金覆盖，核心贡献者 ≥ 15 人且领域分权。</div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ §07 ============ -->
+<section class="chapter" id="business">
+  <div class="chapter-head reveal">
+    <span class="no">§07</span>
+    <h2>商业模式与可持续性</h2>
+    <span class="en">Business&nbsp;Model</span>
+  </div>
+  <p class="lede reveal">本库的价值随<strong>引用与调用</strong>增长，而非随稀缺增长——所以正确姿势是<strong>永远开放核心，靠生态位变现</strong>。</p>
+  <div class="biz-grid">
+    <div class="biz-principle reveal">
+      <span class="eyebrow">Non-negotiable 不可谈判项</span>
+      <h3>核心永远是 <span>CC BY-SA 4.0</span>，永远免费、永远可被 Agent 调用。</h3>
+      <p>开放不是营销话术，而是分发策略本身：每一次合规商用、每一个 Agent 挂载、每一篇学术引用，都是本库的免费分销网络。任何收缩许可的行为都会摧毁整个 GTM 的前提。商业化只发生在生态位，不发生在核心上。</p>
+    </div>
+    <div class="biz-streams reveal">
+      <h4>收入流 STREAMS</h4>
+      <div class="stream">
+        <span class="sn">a.</span>
+        <div><b>赞助与资助</b><p>OpenCollective / 爱发电 + 开源基金（NLnet、OSF 类）——为「公共知识品」付费的正当通道。</p><span class="state on">PHASE 3 起重点</span></div>
+      </div>
+      <div class="stream">
+        <span class="sn">b.</span>
+        <div><b>托管增值服务</b><p>托管 MCP 端点 / 检索 API：免运维的即插即用版本，企业为便利付费，数据永远可自行拉取。</p><span class="state">PHASE 3 期权</span></div>
+      </div>
+      <div class="stream">
+        <span class="sn">c.</span>
+        <div><b>教育与出版授权</b><p>课程共创、定制专题索引、纸质精选集——机构为「策展人力」付费，而非为内容付费。</p><span class="state">PHASE 2 试点</span></div>
+      </div>
+      <div class="stream">
+        <span class="sn">d.</span>
+        <div><b>共创与咨询</b><p>为 Agent 团队提供「人文知识层接入」咨询，反哺核心库的接入体验。</p><span class="state">按需 · 不主动扩张</span></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ §08 ============ -->
+<section class="chapter" id="metrics" style="background:var(--paper-deep)">
+  <div class="chapter-head reveal">
+    <span class="no">§08</span>
+    <h2>北极星与度量</h2>
+    <span class="en">North&nbsp;Star&nbsp;&amp;&nbsp;Metrics</span>
+  </div>
+  <div class="northstar reveal">
+    <span class="ns-label">★ NORTH STAR METRIC 北极星指标</span>
+    <div class="ns-big">每月<span class="u">知识调用数</span>：Skill 被 Agent 加载次数<br>＋ 条目被人类深读次数</div>
+    <div class="ns-sub">同时校准「机器价值」与「人的价值」——只涨一半，就说明我们在偏离第一原则。</div>
+  </div>
+  <div class="kpi-grid">
+    <div class="kpi reveal">
+      <span class="k-lv">AWARENESS 认知</span>
+      <h4>GitHub Stars / 外部引用</h4>
+      <p>品类的入场券：被收藏、被链接、被论文与博客提及的频次。</p>
+      <div class="k-target">目标：<b>发布周 1k</b> → 首年 5k</div>
+    </div>
+    <div class="kpi reveal">
+      <span class="k-lv">ACQUISITION 获取</span>
+      <h4>仓库克隆 / 条目外链点击</h4>
+      <p>渠道效率的直接读数：每个 P0 渠道单独归因，按周复盘。</p>
+      <div class="k-target">目标：<b>月克隆 ≥ 2k</b></div>
+    </div>
+    <div class="kpi reveal">
+      <span class="k-lv">ACTIVATION 激活</span>
+      <h4>Skill 安装 / 首次调用成功</h4>
+      <p>开发者侧的 Aha 时刻：接入示例跑通率是最重要的转化闸门。</p>
+      <div class="k-target">目标：<b>接入成功率 ≥ 90%</b></div>
+    </div>
+    <div class="kpi reveal">
+      <span class="k-lv">RETENTION 留存</span>
+      <h4>贡献者数 / 内容复用率</h4>
+      <p>生态健康度：非核心贡献者与外部项目对条目的再引用。</p>
+      <div class="k-target">目标：<b>首年 30 位活跃贡献者</b></div>
+    </div>
+  </div>
+  <p class="metric-cadence reveal">度量纪律：北极星看月 · KPI 看周 · 任何两周无新数据的指标直接废弃。</p>
+</section>
+
+<!-- ============ §09 ============ -->
+<section class="chapter" id="risks">
+  <div class="chapter-head reveal">
+    <span class="no">§09</span>
+    <h2>风险与对策</h2>
+    <span class="en">Risks&nbsp;&amp;&nbsp;Mitigation</span>
+  </div>
+  <div class="risk-list">
+    <div class="risk reveal">
+      <h4><span class="r-lv">RISK-01 · HIGH</span>扩张导致质量稀释</h4>
+      <p>快速加条目复利最快，但一旦「鸡汤化」就摧毁唯一护城河。<span class="fix">对策：</span>质量准则（quality-criteria）为合并硬门槛；任何新领域先立模板与样例再放量；宁缺毋滥写进贡献指南。</p>
+    </div>
+    <div class="risk reveal">
+      <h4><span class="r-lv">RISK-02 · MED</span>Agent 生态格式漂移</h4>
+      <p>Skills / MCP 标准仍在演化，押错格式会让 137 个 Skill 失去入口。<span class="fix">对策：</span>核心资产保持纯 Markdown + 最小 frontmatter，格式层做成薄转换器；跟随两大生态主流，不自造协议。</p>
+    </div>
+    <div class="risk reveal">
+      <h4><span class="r-lv">RISK-03 · HIGH</span>维护者倦怠与单点依赖</h4>
+      <p>2400+ 条目的维护强度对核心作者不可持续，倦怠是最现实的死亡方式。<span class="fix">对策：</span>领域分权 ownership；Issue 模板化降低协作成本；Phase 3 的资金结构以「让维护者可持续」为第一目标。</p>
+    </div>
+    <div class="risk reveal">
+      <h4><span class="r-lv">RISK-04 · MED</span>版权与引用争议</h4>
+      <p>综述类内容难免被质疑「搬运」；CC BY-SA 的署名要求在下游被忽略。<span class="fix">对策：</span>只存原创综述 + 完整出处层（sources）；提供标准引用格式；建立 takedown 快速响应流程。</p>
+    </div>
+    <div class="risk reveal">
+      <h4><span class="r-lv">RISK-05 · LOW</span>大厂推出同类知识层</h4>
+      <p>模型厂商自建人文语料的可能性存在。<span class="fix">对策：</span>中立、开放、可审计正是相对厂商自有语料的差异化；积极寻求被集成而非对抗——成为它们的供给方。</p>
+    </div>
+  </div>
+</section>
+
+</main>
+
+<!-- ============ FINALE ============ -->
+<section class="finale">
+  <span class="f-label">GO&nbsp;TO&nbsp;MARKET&nbsp;·&nbsp;OPEN&nbsp;COGNITION</span>
+  <h2>知识的命运，不该是<span class="u">躺在书堆里</span>，<br>而是被每一次思考<span class="u">调用</span>。</h2>
+  <p>把这份战略变成一次发布、一个 Skill 包、一场对话。所有指标、渠道与节奏都已就位——剩下的是开始。</p>
+  <div class="cta-row">
+    <a class="btn primary" href="https://github.com/peace-lab-global/open-cognition-database" target="_blank" rel="noopener">Star the Repo →</a>
+    <a class="btn ghost" href="https://github.com/peace-lab-global/open-cognition-database/blob/main/CONTRIBUTING.md" target="_blank" rel="noopener">成为贡献者</a>
+  </div>
+  <div class="seal-fin">行</div>
+</section>
+
+<footer>
+  <span>OPEN COGNITION DATABASE · GTM v1.0 · 2026-08</span>
+  <span><a href="https://github.com/peace-lab-global/open-cognition-database">GITHUB</a>&nbsp;&nbsp;/&nbsp;&nbsp;<a href="https://creativecommons.org/licenses/by-sa/4.0/">CC BY-SA 4.0</a>&nbsp;&nbsp;/&nbsp;&nbsp;PEACE LAB GLOBAL</span>
+</footer>
+
+<script>
+(function(){
+  var reduce=window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  var qsa=document.querySelectorAll.bind(document);
+  if(location.search.indexOf('static')>-1||location.hash.indexOf('static')>-1||reduce){
+    document.documentElement.classList.add('static');
+  }
+  /* 数字滚动 */
+  function count(el){
+    var target=parseInt(el.getAttribute('data-count'),10);
+    if(document.documentElement.classList.contains('static')){el.textContent=target.toLocaleString();return}
+    var t0=null,dur=1400;
+    function step(t){
+      if(!t0)t0=t;var p=Math.min((t-t0)/dur,1);p=1-Math.pow(1-p,3);
+      el.textContent=Math.round(target*p).toLocaleString();
+      if(p<1)requestAnimationFrame(step);
+    }
+    requestAnimationFrame(step);
+  }
+  var counted=new WeakSet();
+  if(document.documentElement.classList.contains('static')){
+    qsa('[data-count]').forEach(function(n){if(!counted.has(n)){counted.add(n);count(n)}});
+    qsa('.reveal').forEach(function(el){el.classList.add('in')});
+    return;
+  }
+  var io=new IntersectionObserver(function(es){
+    es.forEach(function(e){
+      if(e.isIntersecting){
+        e.target.classList.add('in');
+        e.target.querySelectorAll('[data-count]').forEach(function(n){
+          if(!counted.has(n)){counted.add(n);count(n)}
+        });
+        io.unobserve(e.target);
+      }
+    });
+  },{threshold:.12,rootMargin:'0px 0px -6% 0px'});
+  document.querySelectorAll('.reveal').forEach(function(el){io.observe(el)});
+  /* hero 数字在载入后即滚 */
+  setTimeout(function(){document.querySelectorAll('.stats-band [data-count]').forEach(function(n){if(!counted.has(n)){counted.add(n);count(n)}})},600);
+})();
+</script>
+<!-- gtm-portal-backlink (managed by _scripts/sync-gtm.py) -->
+<a class="gtmp-back" href="/GTM/" aria-label="返回 GTM 门户">&#8617; GTM 门户</a>
+<style>
+.gtmp-back{position:fixed;right:1rem;bottom:1rem;z-index:2147483000;
+font:500 12px/1 ui-monospace,SFMono-Regular,Menlo,Consolas,monospace;
+letter-spacing:.05em;text-decoration:none;padding:.6rem .85rem;border-radius:999px;
+color:#14130f;background:rgba(251,250,247,.92);border:1px solid rgba(20,19,15,.16);
+box-shadow:0 2px 12px rgba(20,19,15,.14);backdrop-filter:blur(6px);
+transition:transform .15s ease,box-shadow .15s ease}
+.gtmp-back:hover{transform:translateY(-1px);box-shadow:0 4px 16px rgba(20,19,15,.22)}
+@media (prefers-color-scheme:dark){.gtmp-back{color:#f5f2ea;background:rgba(20,19,15,.88);
+border-color:rgba(245,242,234,.22)}}
+</style>
+</body>
+</html>

@@ -1,0 +1,194 @@
+{
+  "total": 1030,
+  "cityCount": 116,
+  "categoryCount": 51,
+  "topCities": [
+    [
+      "深圳",
+      133
+    ],
+    [
+      "成都",
+      51
+    ],
+    [
+      "北京",
+      41
+    ],
+    [
+      "西安",
+      40
+    ],
+    [
+      "杭州",
+      36
+    ],
+    [
+      "武汉",
+      34
+    ],
+    [
+      "广州",
+      34
+    ],
+    [
+      "南京",
+      33
+    ],
+    [
+      "沈阳",
+      29
+    ],
+    [
+      "上海",
+      28
+    ],
+    [
+      "重庆",
+      21
+    ],
+    [
+      "桂林",
+      18
+    ],
+    [
+      "长沙",
+      18
+    ],
+    [
+      "大理",
+      16
+    ],
+    [
+      "郑州",
+      16
+    ]
+  ],
+  "topCategories": [
+    [
+      "gov-affairs",
+      93
+    ],
+    [
+      "parks",
+      65
+    ],
+    [
+      "culture",
+      60
+    ],
+    [
+      "scenery",
+      45
+    ],
+    [
+      "streets",
+      42
+    ],
+    [
+      "museums",
+      32
+    ],
+    [
+      "beaches",
+      25
+    ],
+    [
+      "nightview",
+      23
+    ],
+    [
+      "ancient-towns",
+      21
+    ],
+    [
+      "bridges",
+      21
+    ],
+    [
+      "greenways",
+      21
+    ],
+    [
+      "healing",
+      21
+    ],
+    [
+      "hot-springs",
+      21
+    ],
+    [
+      "food-streets",
+      19
+    ],
+    [
+      "tea-culture",
+      19
+    ],
+    [
+      "birdwatching",
+      18
+    ],
+    [
+      "citywalk",
+      18
+    ],
+    [
+      "playgrounds",
+      18
+    ]
+  ],
+  "allCategories": {
+    "ancient-towns": 21,
+    "beaches": 25,
+    "birdwatching": 18,
+    "botanical-gardens": 15,
+    "bridges": 21,
+    "camping": 17,
+    "citywalk": 18,
+    "coffee": 12,
+    "community": 12,
+    "culture": 60,
+    "exhibitions": 12,
+    "farms": 13,
+    "festivals": 13,
+    "flower-viewing": 12,
+    "food-streets": 19,
+    "fountain": 11,
+    "free-day": 12,
+    "garden-streets": 14,
+    "gov-affairs": 93,
+    "greenways": 21,
+    "healing": 21,
+    "hot-springs": 21,
+    "islands": 15,
+    "libraries": 16,
+    "markets": 12,
+    "markets-free": 14,
+    "memorials": 14,
+    "mosque": 9,
+    "museums": 32,
+    "night-walks": 15,
+    "nightview": 23,
+    "old-industrial": 10,
+    "parks": 65,
+    "pets": 12,
+    "photo-spots": 17,
+    "playgrounds": 18,
+    "rain-snow": 16,
+    "rooftop": 12,
+    "scenery": 45,
+    "sculpture": 13,
+    "squares": 9,
+    "street-art": 18,
+    "streets": 42,
+    "sunrise": 15,
+    "sunset-list": 13,
+    "tea-culture": 19,
+    "temples": 18,
+    "trails": 17,
+    "underground": 12,
+    "universities": 16,
+    "water-play": 12
+  }
+}

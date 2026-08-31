@@ -1,0 +1,977 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>dana · 大拿 — Go-to-Market 战略页 v1.0</title>
+<meta name="description" content="dana（大拿）开源知识平台的 Go-to-Market 战略：市场、目标用户、定位、信息、渠道、发布节奏与增长指标。">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Serif+SC:wght@500;600;700;900&family=Noto+Sans+SC:wght@400;500;700&family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+:root{
+  --paper:#F4EFE3;
+  --paper-2:#ECE4D0;
+  --card:#F9F5EC;
+  --ink:#221B0F;
+  --ink-soft:#695F49;
+  --verm:#BE3410;
+  --verm-deep:#8E2506;
+  --gold:#96762C;
+  --line:rgba(34,27,15,.16);
+  --line-strong:rgba(34,27,15,.55);
+  --serif:"Noto Serif SC","Songti SC","STSong",serif;
+  --sans:"Noto Sans SC","PingFang SC",sans-serif;
+  --mono:"IBM Plex Mono","SF Mono",monospace;
+}
+*{margin:0;padding:0;box-sizing:border-box}
+html{scroll-behavior:smooth;scroll-padding-top:72px}
+body{
+  background:var(--paper);
+  color:var(--ink);
+  font-family:var(--sans);
+  font-size:16px;
+  line-height:1.85;
+  -webkit-font-smoothing:antialiased;
+}
+/* paper grain */
+body::before{
+  content:"";position:fixed;inset:0;pointer-events:none;z-index:0;opacity:.5;
+  background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2'/%3E%3CfeColorMatrix type='saturate' values='0'/%3E%3CfeComponentTransfer%3E%3CfeFuncA type='linear' slope='0.05'/%3E%3C/feComponentTransfer%3E%3C/filter%3E%3Crect width='160' height='160' filter='url(%23n)'/%3E%3C/svg%3E");
+}
+.page{position:relative;z-index:1;max-width:1120px;margin:0 auto;padding:0 32px}
+
+/* ============ masthead ============ */
+.masthead{border-bottom:3px double var(--line-strong)}
+.masthead-row{
+  display:flex;justify-content:space-between;align-items:center;gap:16px;
+  padding:14px 0 12px;font-family:var(--mono);font-size:12px;letter-spacing:.06em;color:var(--ink-soft);
+  border-bottom:1px solid var(--line);flex-wrap:wrap;
+}
+.masthead-row strong{color:var(--ink);font-weight:600}
+.masthead-row .red{color:var(--verm)}
+.masthead-brand{
+  display:flex;justify-content:space-between;align-items:baseline;gap:16px;
+  padding:22px 0 18px;flex-wrap:wrap;
+}
+.brand-name{font-family:var(--serif);font-weight:900;font-size:30px;letter-spacing:.02em}
+.brand-name span{color:var(--verm)}
+.brand-sub{font-family:var(--mono);font-size:12px;color:var(--ink-soft);letter-spacing:.14em;text-transform:uppercase}
+
+/* ============ nav ============ */
+nav.toc{
+  position:sticky;top:0;z-index:50;
+  background:rgba(244,239,227,.94);backdrop-filter:blur(8px);
+  border-bottom:1px solid var(--line);
+}
+.toc-inner{max-width:1120px;margin:0 auto;padding:0 32px;display:flex;gap:2px;overflow-x:auto;scrollbar-width:none}
+.toc-inner::-webkit-scrollbar{display:none}
+.toc-inner a{
+  font-family:var(--mono);font-size:11.5px;letter-spacing:.04em;white-space:nowrap;
+  color:var(--ink-soft);text-decoration:none;padding:12px 10px;border-bottom:2px solid transparent;
+  transition:color .2s,border-color .2s;
+}
+.toc-inner a b{color:var(--verm);font-weight:600;margin-right:4px}
+.toc-inner a:hover{color:var(--ink)}
+.toc-inner a.active{color:var(--ink);border-bottom-color:var(--verm)}
+
+/* ============ hero ============ */
+.hero{padding:72px 0 0;display:grid;grid-template-columns:1fr 300px;gap:56px}
+.kicker{
+  font-family:var(--mono);font-size:12.5px;letter-spacing:.28em;color:var(--verm);
+  text-transform:uppercase;display:flex;align-items:center;gap:14px;margin-bottom:26px;
+}
+.kicker::before{content:"";width:44px;height:1px;background:var(--verm)}
+h1{
+  font-family:var(--serif);font-weight:900;
+  font-size:clamp(34px,5.2vw,58px);line-height:1.28;letter-spacing:.01em;margin-bottom:26px;
+}
+h1 em{font-style:normal;color:var(--verm);position:relative}
+h1 em::after{content:"";position:absolute;left:0;right:0;bottom:6px;height:8px;background:rgba(190,52,16,.14);z-index:-1}
+.hero-lede{font-size:17.5px;color:var(--ink-soft);max-width:36em;margin-bottom:34px}
+.hero-lede strong{color:var(--ink)}
+.hero-ctas{display:flex;gap:14px;flex-wrap:wrap;margin-bottom:52px}
+.btn{
+  display:inline-block;text-decoration:none;font-family:var(--mono);font-size:13px;letter-spacing:.05em;
+  padding:13px 24px;border:1.5px solid var(--ink);color:var(--ink);
+  transition:all .22s;position:relative;
+}
+.btn.primary{background:var(--ink);color:var(--paper)}
+.btn.primary:hover{background:var(--verm);border-color:var(--verm)}
+.btn.ghost:hover{background:var(--ink);color:var(--paper)}
+/* meta card */
+.meta-card{border:1.5px solid var(--ink);background:var(--card);align-self:start;box-shadow:6px 6px 0 rgba(34,27,15,.12)}
+.meta-card h3{
+  font-family:var(--mono);font-size:11.5px;letter-spacing:.22em;text-transform:uppercase;
+  padding:12px 18px;border-bottom:1px solid var(--line);color:var(--verm);
+}
+.meta-card dl{padding:16px 18px;font-size:13.5px}
+.meta-card dt{font-family:var(--mono);font-size:11px;color:var(--ink-soft);letter-spacing:.1em;margin-bottom:2px}
+.meta-card dd{margin-bottom:13px;font-weight:500}
+.meta-card dd:last-child{margin-bottom:0}
+/* exec summary */
+.exec{
+  margin:0 0 64px;border:1.5px solid var(--ink);background:var(--card);
+  box-shadow:8px 8px 0 rgba(190,52,16,.1);
+}
+.exec-grid{display:grid;grid-template-columns:1.25fr 1fr 1fr 1fr}
+.exec-cell{padding:22px 24px;border-right:1px solid var(--line)}
+.exec-cell:last-child{border-right:none}
+.exec-cell h4{font-family:var(--mono);font-size:11px;letter-spacing:.2em;text-transform:uppercase;color:var(--verm);margin-bottom:8px}
+.exec-cell p{font-size:14px;line-height:1.7}
+.exec-cell p b{font-family:var(--serif);font-size:16px}
+
+/* ============ stat strip ============ */
+.stats{
+  border-top:3px double var(--line-strong);border-bottom:3px double var(--line-strong);
+  display:grid;grid-template-columns:repeat(5,1fr);margin-bottom:0;
+}
+.stat{padding:26px 18px;text-align:center;border-right:1px solid var(--line)}
+.stat:last-child{border-right:none}
+.stat .num{font-family:var(--serif);font-weight:900;font-size:40px;line-height:1.1;color:var(--verm)}
+.stat .num small{font-size:20px}
+.stat .lbl{font-family:var(--mono);font-size:11px;letter-spacing:.14em;color:var(--ink-soft);margin-top:6px}
+.stats-note{font-family:var(--mono);font-size:11px;color:var(--ink-soft);text-align:right;padding:10px 0 0}
+
+/* ============ sections ============ */
+section.block{padding:76px 0 8px;border-bottom:1px solid var(--line)}
+.sec-head{display:grid;grid-template-columns:150px 1fr;gap:28px;margin-bottom:14px;align-items:start}
+.sec-num{
+  font-family:var(--mono);font-weight:600;font-size:74px;line-height:.9;
+  color:transparent;-webkit-text-stroke:1.4px var(--verm);
+}
+.sec-head h2{font-family:var(--serif);font-weight:700;font-size:clamp(24px,3vw,34px);line-height:1.3}
+.sec-en{font-family:var(--mono);font-size:12px;letter-spacing:.22em;text-transform:uppercase;color:var(--ink-soft);margin-top:6px}
+.sec-body{padding:10px 0 26px 178px;max-width:62em}
+.sec-body>p{margin-bottom:16px;color:#3d3628}
+.sec-body>p strong{color:var(--ink)}
+
+/* pull quote */
+.pull{
+  margin:30px 0;padding:22px 30px;border-left:4px solid var(--verm);background:var(--card);
+  font-family:var(--serif);font-size:19px;line-height:1.75;font-weight:600;
+}
+.pull cite{display:block;font-family:var(--mono);font-style:normal;font-size:11.5px;color:var(--ink-soft);margin-top:10px;letter-spacing:.08em}
+
+/* cards */
+.cards{display:grid;gap:16px;margin:26px 0}
+.cards.c3{grid-template-columns:repeat(3,1fr)}
+.cards.c2{grid-template-columns:repeat(2,1fr)}
+.card{
+  border:1.5px solid var(--line-strong);background:var(--card);padding:22px 22px 18px;position:relative;
+  transition:transform .22s,box-shadow .22s,border-color .22s;
+}
+.card:hover{transform:translate(-3px,-3px);box-shadow:6px 6px 0 rgba(190,52,16,.16);border-color:var(--verm)}
+.card .tag{
+  position:absolute;top:-11px;left:16px;background:var(--ink);color:var(--paper);
+  font-family:var(--mono);font-size:10.5px;letter-spacing:.14em;padding:3px 10px;text-transform:uppercase;
+}
+.card.hot .tag{background:var(--verm)}
+.card h4{font-family:var(--serif);font-size:18.5px;font-weight:700;margin:6px 0 10px}
+.card .sub{font-family:var(--mono);font-size:11.5px;color:var(--verm);margin-bottom:10px;letter-spacing:.04em}
+.card p{font-size:13.8px;line-height:1.75;color:#453d2c}
+.card ul{list-style:none;margin-top:12px;border-top:1px dashed var(--line);padding-top:10px}
+.card ul li{font-size:13px;padding:3px 0 3px 18px;position:relative;color:#453d2c}
+.card ul li::before{content:"→";position:absolute;left:0;color:var(--verm);font-family:var(--mono);font-size:12px}
+.card ul li b{color:var(--ink)}
+
+/* tables */
+.tbl-wrap{overflow-x:auto;margin:26px 0}
+table{width:100%;border-collapse:collapse;font-size:13.5px;background:var(--card)}
+caption{caption-side:top;text-align:left;font-family:var(--mono);font-size:11.5px;letter-spacing:.12em;color:var(--ink-soft);padding:0 0 10px;text-transform:uppercase}
+th,td{border:1px solid var(--line);padding:11px 13px;text-align:left;vertical-align:top;line-height:1.6}
+thead th{
+  font-family:var(--mono);font-size:11px;letter-spacing:.1em;text-transform:uppercase;
+  background:var(--paper-2);color:var(--ink);font-weight:600;
+}
+tbody th{font-family:var(--mono);font-size:12px;font-weight:600;background:var(--paper-2);white-space:nowrap}
+.col-dana{background:rgba(190,52,16,.07)!important;border-left:2px solid var(--verm)!important;border-right:2px solid var(--verm)!important}
+thead .col-dana{background:var(--verm)!important;color:var(--paper)}
+td .yes{color:var(--verm);font-weight:700}
+td .no{color:var(--ink-soft)}
+td .part{color:var(--gold);font-weight:600}
+tr:hover td{background:rgba(34,27,15,.035)}
+tr:hover td.col-dana{background:rgba(190,52,16,.12)!important}
+.legend{font-family:var(--mono);font-size:11px;color:var(--ink-soft);margin-top:-14px;margin-bottom:26px}
+
+/* positioning statement */
+.posn{
+  margin:26px 0;border:1.5px solid var(--ink);background:var(--card);padding:28px 30px;
+  font-family:var(--serif);font-size:17.5px;line-height:2.1;box-shadow:6px 6px 0 rgba(34,27,15,.1);
+}
+.posn .slot{color:var(--verm);font-weight:700;border-bottom:1.5px dashed var(--verm)}
+
+/* timeline */
+.timeline{margin:30px 0;border-left:3px solid var(--ink);padding-left:0}
+.phase{position:relative;padding:0 0 40px 34px}
+.phase:last-child{padding-bottom:0}
+.phase::before{
+  content:"";position:absolute;left:-9.5px;top:6px;width:16px;height:16px;background:var(--paper);
+  border:3px solid var(--ink);border-radius:50%;
+}
+.phase.now::before{background:var(--verm);border-color:var(--verm);box-shadow:0 0 0 5px rgba(190,52,16,.18)}
+.phase-head{display:flex;align-items:baseline;gap:14px;flex-wrap:wrap;margin-bottom:6px}
+.phase-head h4{font-family:var(--serif);font-size:21px;font-weight:700}
+.phase-head .ph-date{font-family:var(--mono);font-size:12px;color:var(--verm);letter-spacing:.06em}
+.phase-head .ph-goal{font-family:var(--mono);font-size:11px;color:var(--paper);background:var(--ink);padding:3px 10px;letter-spacing:.08em}
+.phase ul{list-style:none;margin-top:10px}
+.phase ul li{padding:5px 0 5px 20px;position:relative;font-size:14px;color:#3d3628;border-bottom:1px dashed var(--line)}
+.phase ul li::before{content:"▸";position:absolute;left:2px;color:var(--verm);font-size:12px}
+.phase ul li b{color:var(--ink)}
+.phase .metric{font-family:var(--mono);font-size:12px;margin-top:12px;color:var(--verm)}
+.phase .metric::before{content:"目标 ▸ ";color:var(--ink-soft)}
+
+/* funnel */
+.funnel{margin:28px 0}
+.f-row{display:grid;grid-template-columns:120px 1fr;gap:18px;align-items:center;margin-bottom:10px}
+.f-lbl{font-family:var(--mono);font-size:12px;letter-spacing:.06em;text-align:right;color:var(--ink-soft)}
+.f-lbl b{display:block;color:var(--ink);font-size:13px}
+.f-bar{
+  height:52px;display:flex;align-items:center;padding:0 16px;color:var(--paper);
+  font-family:var(--mono);font-size:12px;letter-spacing:.03em;white-space:nowrap;overflow:hidden;
+  width:0;transition:width 1s cubic-bezier(.22,.8,.3,1);
+}
+.f-bar span{overflow:hidden;text-overflow:ellipsis}
+.f1{background:#221B0F}.f2{background:#5A3317}.f3{background:#8E2506}
+.f4{background:#BE3410}.f5{background:#D9541F}.f6{background:#C98A2D}
+.f-defs{display:grid;grid-template-columns:repeat(3,1fr);gap:14px;margin-top:18px}
+.f-defs p{font-size:12.8px;color:var(--ink-soft);line-height:1.7;border-top:1px solid var(--line);padding-top:8px}
+.f-defs b{color:var(--ink);font-family:var(--mono);font-size:12px}
+
+/* north star */
+.northstar{
+  margin:30px 0;padding:30px 34px;background:var(--ink);color:var(--paper);
+  display:grid;grid-template-columns:auto 1fr;gap:30px;align-items:center;
+}
+.northstar .ns-ic{font-family:var(--mono);font-size:12px;letter-spacing:.2em;color:#E8B84B;writing-mode:vertical-rl;border-right:1px solid rgba(244,239,227,.25);padding-right:22px}
+.northstar h4{font-family:var(--serif);font-size:23px;font-weight:700;margin-bottom:8px}
+.northstar h4 span{color:#F0824F}
+.northstar p{font-size:14px;line-height:1.8;color:rgba(244,239,227,.82)}
+.northstar p b{color:var(--paper)}
+
+/* risk dots */
+.dots{font-family:var(--mono);letter-spacing:2px;font-size:12px;color:var(--verm)}
+.dots i{font-style:normal;color:rgba(34,27,15,.22)}
+
+/* checklist */
+.check{margin:26px 0;border:1.5px solid var(--ink);background:var(--card);box-shadow:8px 8px 0 rgba(34,27,15,.1)}
+.check h3{font-family:var(--mono);font-size:12px;letter-spacing:.2em;text-transform:uppercase;padding:14px 22px;border-bottom:1px solid var(--line);color:var(--verm)}
+.check ol{list-style:none;counter-reset:ck;padding:14px 22px;display:grid;grid-template-columns:1fr 1fr;gap:2px 34px}
+.check ol li{
+  counter-increment:ck;padding:9px 0 9px 40px;position:relative;font-size:14px;border-bottom:1px dashed var(--line);
+}
+.check ol li::before{
+  content:"";position:absolute;left:0;top:12px;width:17px;height:17px;border:1.5px solid var(--ink);background:var(--paper);
+}
+.check ol li::after{content:counter(ck,decimal-leading-zero);position:absolute;left:0;top:36px;font-family:var(--mono);font-size:10px;color:var(--ink-soft)}
+.check ol li b{color:var(--ink)}
+
+/* footer */
+footer{padding:56px 0 72px}
+.foot-rule{height:3px;background:var(--ink);margin-bottom:22px}
+.foot-grid{display:grid;grid-template-columns:1fr auto;gap:30px;align-items:end}
+.foot-grid .slogan{font-family:var(--serif);font-weight:900;font-size:clamp(24px,3.4vw,38px);line-height:1.5}
+.foot-grid .slogan span{color:var(--verm)}
+.foot-meta{font-family:var(--mono);font-size:11.5px;color:var(--ink-soft);text-align:right;line-height:2}
+.foot-meta a{color:var(--verm);text-decoration:none;border-bottom:1px solid rgba(190,52,16,.4)}
+.foot-meta a:hover{border-bottom-color:var(--verm)}
+
+/* assumptions tag */
+.assume{
+  display:inline-block;font-family:var(--mono);font-size:10px;color:var(--gold);
+  border:1px solid rgba(150,118,44,.5);padding:1px 7px;letter-spacing:.08em;vertical-align:2px;margin-left:6px;white-space:nowrap;
+}
+
+/* reveal animation */
+.rv{opacity:0;transform:translateY(22px);transition:opacity .7s ease,transform .7s cubic-bezier(.22,.8,.3,1)}
+.rv.in{opacity:1;transform:none}
+.rv.d1{transition-delay:.08s}.rv.d2{transition-delay:.16s}.rv.d3{transition-delay:.24s}.rv.d4{transition-delay:.32s}
+@media (prefers-reduced-motion:reduce){
+  html{scroll-behavior:auto}
+  .rv{opacity:1;transform:none;transition:none}
+  .f-bar{transition:none}
+}
+
+/* responsive */
+@media (max-width:980px){
+  .hero{grid-template-columns:1fr;gap:34px}
+  .exec-grid{grid-template-columns:1fr 1fr}
+  .exec-cell{border-bottom:1px solid var(--line)}
+  .sec-body{padding-left:0}
+  .stats{grid-template-columns:repeat(3,1fr)}
+  .stat:nth-child(3){border-right:none}
+  .stat:nth-child(4),.stat:nth-child(5){border-top:1px solid var(--line)}
+  .cards.c3,.cards.c2{grid-template-columns:1fr}
+  .f-defs{grid-template-columns:1fr}
+  .northstar{grid-template-columns:1fr}
+  .northstar .ns-ic{writing-mode:horizontal-tb;border-right:none;border-bottom:1px solid rgba(244,239,227,.25);padding:0 0 10px}
+  .check ol{grid-template-columns:1fr}
+  .foot-grid{grid-template-columns:1fr}
+  .foot-meta{text-align:left}
+}
+@media (max-width:640px){
+  .page{padding:0 18px}
+  .stats{grid-template-columns:repeat(2,1fr)}
+  .stat{border-right:1px solid var(--line)}
+  .stat:nth-child(2n){border-right:none}
+  .stat:nth-child(n+4){display:none}
+  .exec-grid{grid-template-columns:1fr}
+  .sec-num{font-size:52px}
+  .sec-head{grid-template-columns:1fr;gap:6px}
+}
+@media print{
+  nav.toc{display:none}
+  body::before{display:none}
+  section.block{padding:34px 0;page-break-inside:avoid}
+  .rv{opacity:1;transform:none}
+}
+</style>
+</head>
+<body>
+
+<div class="page">
+
+  <!-- ============ masthead ============ -->
+  <header class="masthead">
+    <div class="masthead-row">
+      <span><strong>dana · 大拿</strong>&nbsp;&nbsp;研究大拿 · 成为大拿</span>
+      <span class="red">GO-TO-MARKET STRATEGY</span>
+      <span>v1.0 · 2026-08 · <strong>内部战略文档</strong></span>
+    </div>
+    <div class="masthead-brand">
+      <div class="brand-name">大拿<span>·</span>GTM 战略页</div>
+      <div class="brand-sub">From Open Vault to Default Path</div>
+    </div>
+  </header>
+
+  <!-- ============ nav ============ -->
+  <nav class="toc" aria-label="章节导航">
+    <div class="toc-inner">
+      <a href="#s01"><b>01</b>市场与问题</a>
+      <a href="#s02"><b>02</b>用户与滩头</a>
+      <a href="#s03"><b>03</b>定位</a>
+      <a href="#s04"><b>04</b>信息与证据</a>
+      <a href="#s05"><b>05</b>竞争与护城河</a>
+      <a href="#s06"><b>06</b>商业模式</a>
+      <a href="#s07"><b>07</b>渠道</a>
+      <a href="#s08"><b>08</b>发布节奏</a>
+      <a href="#s09"><b>09</b>漏斗与北极星</a>
+      <a href="#s10"><b>10</b>风险</a>
+      <a href="#s11"><b>＋</b>90 天清单</a>
+    </div>
+  </nav>
+
+  <!-- ============ hero ============ -->
+  <div class="hero">
+    <div>
+      <p class="kicker">Go-to-Market · 2026–2027</p>
+      <h1>让「成为大拿」成为中文技术人的<em>默认成长路径</em>。</h1>
+      <p class="hero-lede">
+        dana 已经建成了中文技术圈最系统的「研究大拿」知识库——<strong>254 篇文档、4,454 个知识链接、生产级 CI</strong>。
+        现在的问题不再是「内容够不够好」，而是「为什么还没人知道」。本页按 GTM 最佳实践，回答五个问题：
+        <strong>卖给谁、凭什么赢、说什么、在哪打、如何衡量。</strong>
+      </p>
+      <div class="hero-ctas">
+        <a class="btn primary" href="https://github.com/allengaller/dana-database" target="_blank" rel="noopener">GitHub 主阵地 →</a>
+        <a class="btn ghost" href="https://allengaller.github.io/dana-database/" target="_blank" rel="noopener">在线阅读版</a>
+        <a class="btn ghost" href="#s08">先看 90 天计划 ↓</a>
+      </div>
+    </div>
+    <aside class="meta-card rv">
+      <h3>Document Meta</h3>
+      <dl>
+        <dt>OBJECTIVE</dt>
+        <dd>12 个月内成为中文技术圈「认真成长」的默认答案</dd>
+        <dt>BEACHHEAD</dt>
+        <dd>2–8 年、感到天花板、有笔记习惯的重度 GitHub 用户</dd>
+        <dt>POSITIONING</dt>
+        <dd>反鸡汤的开源成长操作系统</dd>
+        <dt>NORTH STAR</dt>
+        <dd>月度深度阅读完成数</dd>
+        <dt>OWNER</dt>
+        <dd>allenaller（维护者）· 复盘节奏：月度</dd>
+      </dl>
+    </aside>
+  </div>
+
+  <!-- ============ exec summary ============ -->
+  <div class="exec rv">
+    <div class="exec-grid">
+      <div class="exec-cell">
+        <h4>What we sell</h4>
+        <p><b>不是内容，是一套「研究方法 + 可复制路径」。</b>96 位大拿档案、84 份富豪研究、21 条心法，全部开源、可审计、可贡献。</p>
+      </div>
+      <div class="exec-cell">
+        <h4>Who first</h4>
+        <p>先打 <b>Obsidian / GitHub 重度用户</b>这个最小生态——他们自带传播力，是滩头中的滩头。</p>
+      </div>
+      <div class="exec-cell">
+        <h4>Why we win</h4>
+        <p><b>严肃研究 + 知识网络 + 工程化质保</b>，竞品要么是速成课，要么是鸡汤，要么是散装教程。</p>
+      </div>
+      <div class="exec-cell">
+        <h4>First move</h4>
+        <p><b>修完 P0 再出门</b>：断链清零、首页数字同步，然后用一次「首发公告」点燃 GitHub。</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- ============ stats ============ -->
+  <div class="stats rv" id="stats">
+    <div class="stat"><div class="num" data-count="254">0</div><div class="lbl">篇文档</div></div>
+    <div class="stat"><div class="num" data-count="96">0</div><div class="lbl">位大拿档案</div></div>
+    <div class="stat"><div class="num" data-count="84">0</div><div class="lbl">份富豪研究</div></div>
+    <div class="stat"><div class="num" data-count="21">0</div><div class="lbl">条心法与原则</div></div>
+    <div class="stat"><div class="num" data-count="4454">0</div><div class="lbl">个知识双链</div></div>
+  </div>
+  <p class="stats-note">数据来源：《项目评估报告 v3》（2026-08-04，audit.py 实测）</p>
+
+  <!-- ============ 01 market ============ -->
+  <section class="block" id="s01">
+    <div class="sec-head rv">
+      <div class="sec-num">01</div>
+      <div><h2>市场与问题</h2><div class="sec-en">Market &amp; Problem</div></div>
+    </div>
+    <div class="sec-body rv">
+      <p>
+        AI 冲击之下，中文技术人的职业焦虑被推向历史高点，但市场供给是<b>割裂的两极</b>：
+        一极是「面试速成课」，收割焦虑、交付速朽；另一极是「励志鸡汤」，制造感动、无法执行。
+        <strong>中间缺了一个严肃选项——可验证、可复制、成体系的成长研究。</strong>dana 正是为此存在。
+      </p>
+      <p>README 里写下的三个未被回答的问题，就是需求侧的最佳证词：</p>
+      <div class="pull">
+        一个普通工程师，怎样在 5–10 年内真正脱颖而出？那些我们仰望的「大拿」，哪些关键转折是<strong>可以学习的</strong>？如何建立属于自己的技术判断力与影响力？
+        <cite>—— dana README「为什么存在这个库」</cite>
+      </div>
+      <div class="cards c3">
+        <div class="card">
+          <span class="tag">TAM</span>
+          <h4>≈ 700 万中文开发者</h4>
+          <p class="sub">总盘子（估算口径，待校准）</p>
+          <p>含大陆主要技术社区活跃人群与海外中文技术人。只做曝光天花板，不做经营对象。</p>
+        </div>
+        <div class="card">
+          <span class="tag">SAM</span>
+          <h4>≈ 70 万「认真成长者」</h4>
+          <p class="sub">工作 2–8 年 · 主动寻求系统性突破（按 10% 估算）</p>
+          <p>会用笔记工具、逛技术社区、买过课但失望过——ta 们是知识产品的天然用户。</p>
+        </div>
+        <div class="card hot">
+          <span class="tag">SOM · 12 个月</span>
+          <h4>1 万深度用户 / 500 Stars</h4>
+          <p class="sub">滩头市场可拿下份额（目标假设，Phase 0 校准基线）</p>
+          <p>不追求泛流量，追求「每月精读 + 产出行动项」的深度阅读者。</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ 02 ICP ============ -->
+  <section class="block" id="s02">
+    <div class="sec-head rv">
+      <div class="sec-num">02</div>
+      <div><h2>目标用户与滩头阵地</h2><div class="sec-en">ICP &amp; Beachhead</div></div>
+    </div>
+    <div class="sec-body rv">
+      <p>
+        <strong>滩头策略：先窄后宽。</strong>第一批不追求「所有工程师」，而是打「Obsidian + GitHub 重度用户」这个最小生态——
+        他们认同长期主义、有笔记习惯、了解开源礼仪，<strong>且天然是内容传播节点</strong>。拿下他们，再向泛中文技术社区扩展。
+      </p>
+      <div class="cards c2">
+        <div class="card hot">
+          <span class="tag">ICP · 核心滩头</span>
+          <h4>「瓶颈期工程师」小陈，28 岁，后端 5 年</h4>
+          <p class="sub">业务熟练 → 晋升停滞 → 想要系统性突破</p>
+          <p>读过几篇公众号干货，收藏夹很满，改变很少。需要一个「读完想行动」的体系，而不是又一篇爽文。</p>
+          <ul>
+            <li><b>触达</b>：掘金 / V2EX / GitHub Trending</li>
+            <li><b>dana 给什么</b>：3–7 年突破路径 + 同类案例复盘</li>
+            <li><b>成功标志</b>：完成 quick_start，写下第一个「立刻开始的 1 件事」</li>
+          </ul>
+        </div>
+        <div class="card">
+          <span class="tag">ICP · 进阶</span>
+          <h4>「影响力进阶者」Lisa，32 岁，高级工程师</h4>
+          <p class="sub">技术不差 → 想建立社区影响力 → 不想靠营销号式运营</p>
+          <p>想输出但怕写成流水账。dana 的「影响力 = 深度 × 持续输出 × 连接」和写作杠杆方法论是 ta 的操作手册。</p>
+          <ul>
+            <li><b>触达</b>：知乎 / 即刻 / 技术播客</li>
+            <li><b>dana 给什么</b>：影响力公式 + 输出倒逼输入 + 21 条心法</li>
+            <li><b>成功标志</b>：从读者变成贡献者（提交第一篇人物复盘 PR）</li>
+          </ul>
+        </div>
+        <div class="card">
+          <span class="tag">ICP · 生态节点</span>
+          <h4>「知识体系构建者」老周，35 岁，Obsidian 重度用户</h4>
+          <p class="sub">有完整第二大脑 → 寻找高质量中文内容源 → 影响身边人</p>
+          <p>dana 的 wikilinks、Canvas、frontmatter 对 ta 有天然吸引力——这是一个「能直接 clone 进 vault」的知识库。</p>
+          <ul>
+            <li><b>触达</b>：Obsidian 中文社区 / Reddit r/ObsidianMD / 少数派</li>
+            <li><b>dana 给什么</b>：4,454 双链的活体知识网络 + 8 个 MOC</li>
+            <li><b>成功标志</b>：把 dana 作为常驻 vault，并在社区安利</li>
+          </ul>
+        </div>
+        <div class="card">
+          <span class="tag">ICP · 扩展</span>
+          <h4>「跨界转型者」阿凯，30 岁，量化转 AI</h4>
+          <p class="sub">路径切换期 → 需要参照系 → 怕踩坑</p>
+          <p>案例研究里的「从量化金融到 AI 工程师」就是 ta 的镜子；AI 时代大拿专栏是 ta 的地图。</p>
+          <ul>
+            <li><b>触达</b>：知乎 AI 话题 / X / 公众号转载</li>
+            <li><b>dana 给什么</b>：29 篇案例研究 + AI 大拿研究档案</li>
+            <li><b>成功标志</b>：按「非线性路径」制定自己的 6 个月计划</li>
+          </ul>
+        </div>
+      </div>
+      <p>
+        <strong>主动劝退也是定位的一部分</strong>：面试突击党、纯工具速成党、鸡汤寻求者——README 已明确「不适合」。
+        GTM 上把这条防线变成筛选器：进来的每一个人，都是精准的深度用户。
+      </p>
+    </div>
+  </section>
+
+  <!-- ============ 03 positioning ============ -->
+  <section class="block" id="s03">
+    <div class="sec-head rv">
+      <div class="sec-num">03</div>
+      <div><h2>定位与价值主张</h2><div class="sec-en">Positioning &amp; Value Proposition</div></div>
+    </div>
+    <div class="sec-body rv">
+      <p>采用 Geoffrey Moore 定位句式，一句话说清「为谁、是什么、不同于谁」：</p>
+      <div class="posn">
+        对于<span class="slot">想系统性突破职业瓶颈的中文技术人</span>，dana 是一个<span class="slot">开源的「技术人成长操作系统」</span>——
+        用研究方法论深度复盘 96 位大拿与 84 位富豪的成长路径，并转化为可执行的路线图与心法。
+        不同于<span class="slot">收割焦虑的面试速成课与偶像化的人物故事号</span>，dana 拒绝鸡汤、全部开源、可审计、可贡献。
+      </div>
+      <div class="cards c3">
+        <div class="card">
+          <span class="tag">价值层 1</span>
+          <h4>看见榜样</h4>
+          <p class="sub">人物志 × 富豪榜 × 案例研究</p>
+          <p>180 份深度档案回答「他们到底做对了什么」——只提「心法」，不造「人设」。</p>
+        </div>
+        <div class="card">
+          <span class="tag">价值层 2</span>
+          <h4>拿到方法</h4>
+          <p class="sub">心法与原则 × 方法论与框架</p>
+          <p>刻意练习、杠杆思维、输出倒逼输入……每条都配真实故事 + 可行动 checklist + 反模式。</p>
+        </div>
+        <div class="card">
+          <span class="tag">价值层 3</span>
+          <h4>走出路径</h4>
+          <p class="sub">成长路径 × 系统路径 × quick_start</p>
+          <p>0–3 / 3–7 / 7–12 年分阶段路线 + 自动生成的行动清单，读完就能开始。</p>
+        </div>
+      </div>
+      <div class="pull">
+        内容标准只有一行：<strong>深度 &gt; 广度，行动 &gt; 感悟，具体 &gt; 抽象。</strong>这也是我们对用户的承诺。
+        <cite>—— dana README · 内容原则</cite>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ 04 messaging ============ -->
+  <section class="block" id="s04">
+    <div class="sec-head rv">
+      <div class="sec-num">04</div>
+      <div><h2>信息与证据</h2><div class="sec-en">Messaging &amp; Proof Points</div></div>
+    </div>
+    <div class="sec-body rv">
+      <p>主口号沿用项目旗帜：<strong>「研究大拿 · 成为大拿。」</strong>所有对外信息收敛到三条支柱，每条必须带证据：</p>
+      <div class="tbl-wrap">
+        <table>
+          <caption>Message House · 三大信息支柱</caption>
+          <thead>
+            <tr><th style="width:24%">支柱</th><th style="width:38%">我们说</th><th>证据（Proof）</th></tr>
+          </thead>
+          <tbody>
+            <tr>
+              <th>不是鸡汤，是研究</th>
+              <td>每一条原则都配真实故事、具体案例或可验证方法，拒绝成功学叙事。</td>
+              <td>《研究大拿的方法论》公开可查；5 个 Python 审计工具 + 4 条 CI 流水线；富豪档案字段完整率 100%（audit 实测）。</td>
+            </tr>
+            <tr>
+              <th>不是偶像，是可抄的作业</th>
+              <td>讲大拿，更讲「普通人今天能开始的 1 件事」。</td>
+              <td>每篇档案强制包含「可学习点 + 反模式 + checklist」；extract_actions.py 自动生成行动清单。</td>
+            </tr>
+            <tr>
+              <th>不是文章堆，是知识网络</th>
+              <td>clone 一次，得到一个能在 Obsidian 里生长的第二大脑。</td>
+              <td>4,454 个双链、523 个唯一目标、8 个 MOC 索引、3 张 Canvas 图谱、Obsidian 原生语法。</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+      <p><strong>场景化文案弹药</strong>（供社媒 / README / 社区帖子复用）：</p>
+      <div class="cards c2">
+        <div class="card">
+          <span class="tag">Copy A</span>
+          <h4>读完 96 位大拿的复盘，我们只提炼一件事</h4>
+          <p>——你今天就能开始的那件事。开源、免费、可复制。</p>
+        </div>
+        <div class="card">
+          <span class="tag">Copy B</span>
+          <h4>别再收藏第十篇「认知觉醒」了</h4>
+          <p>来读 4,454 条双链接起来的成长研究：254 篇文档，每篇都逼你行动。GitHub 直达。</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ 05 competition ============ -->
+  <section class="block" id="s05">
+    <div class="sec-head rv">
+      <div class="sec-num">05</div>
+      <div><h2>竞争格局与护城河</h2><div class="sec-en">Competition &amp; Moat</div></div>
+    </div>
+    <div class="sec-body rv">
+      <div class="tbl-wrap">
+        <table>
+          <caption>竞争矩阵 · dana vs 四类替代品</caption>
+          <thead>
+            <tr>
+              <th style="width:26%">维度</th>
+              <th class="col-dana">dana · 大拿</th>
+              <th>面试速成课<br><small style="font-weight:400">极客时间 / 训练营</small></th>
+              <th>知识付费专栏<br><small style="font-weight:400">得到 / 小报童</small></th>
+              <th>技术公众号</th>
+              <th>awesome 教程仓<br><small style="font-weight:400">GitHub 资源清单</small></th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr><th>严肃研究方法论</th><td class="col-dana"><span class="yes">✓ 方法论公开</span></td><td><span class="no">✗</span></td><td><span class="part">部分</span></td><td><span class="no">✗</span></td><td><span class="no">✗</span></td></tr>
+            <tr><th>成体系知识网络</th><td class="col-dana"><span class="yes">✓ 4,454 双链</span></td><td><span class="no">✗ 线性课程</span></td><td><span class="no">✗ 时间流</span></td><td><span class="no">✗ 信息流</span></td><td><span class="part">仅清单</span></td></tr>
+            <tr><th>开源可审计</th><td class="col-dana"><span class="yes">✓ 全量</span></td><td><span class="no">✗ 闭源</span></td><td><span class="no">✗ 付费墙</span></td><td><span class="no">✗</span></td><td><span class="yes">✓</span></td></tr>
+            <tr><th>可行动性</th><td class="col-dana"><span class="yes">✓ checklist 强制</span></td><td><span class="part">应试导向</span></td><td><span class="part">感悟居多</span></td><td><span class="no">✗</span></td><td><span class="no">✗</span></td></tr>
+            <tr><th>反鸡汤立场</th><td class="col-dana"><span class="yes">✓ 写进 README</span></td><td><span class="no">✗ 贩卖焦虑</span></td><td><span class="no">✗ 情绪价值</span></td><td><span class="no">✗</span></td><td><span class="part">中立</span></td></tr>
+            <tr><th>免费可得</th><td class="col-dana"><span class="yes">✓ 永久承诺</span></td><td><span class="no">✗ ¥千级</span></td><td><span class="no">✗ 订阅制</span></td><td><span class="yes">✓</span></td><td><span class="yes">✓</span></td></tr>
+            <tr><th>质量工程保障</th><td class="col-dana"><span class="yes">✓ CI 审计</span></td><td><span class="part">教研团队</span></td><td><span class="no">✗</span></td><td><span class="no">✗</span></td><td><span class="no">✗</span></td></tr>
+          </tbody>
+        </table>
+      </div>
+      <p class="legend">✓=强项 · 部分=有但不成体系 · ✗=缺失</p>
+      <p>
+        <strong>护城河是飞轮，不是单点</strong>：内容深度 → 口碑传播 → 贡献者加入 → 更多案例与视角 → 方法论复利。
+        而 v3 评估指出的现状是——<strong>「工程已超车，社区还没点火」</strong>。GTM 的核心任务，就是点燃这个飞轮的第一圈：
+        单人维护的边际成本已由 5 个自动化工具 + 4 条 CI 压到最低，此刻缺的不是产能，是用户与贡献者。
+      </p>
+    </div>
+  </section>
+
+  <!-- ============ 06 model ============ -->
+  <section class="block" id="s06">
+    <div class="sec-head rv">
+      <div class="sec-num">06</div>
+      <div><h2>商业模式与可持续性</h2><div class="sec-en">Open-Source Business Model</div></div>
+    </div>
+    <div class="sec-body rv">
+      <p>
+        <strong>核心承诺：知识库永久免费开源，写进定位，不许反悔。</strong>可持续性靠「信任阶梯」——
+        每一层都必须在不伤害上一层信任的前提下变现。12 个月内 KPI 不含收入，只含深度使用与贡献。
+      </p>
+      <div class="tbl-wrap">
+        <table>
+          <caption>可持续性阶梯 · 先用户后收入</caption>
+          <thead>
+            <tr><th style="width:16%">层级</th><th style="width:26%">形态</th><th style="width:34%">说明</th><th>时机</th></tr>
+          </thead>
+          <tbody>
+            <tr><th>L0 · 免费</th><td>知识库本体</td><td>全部 254 篇内容 + 工具链，MIT 精神开放，永久承诺。</td><td><b style="color:var(--verm)">已上线</b></td></tr>
+            <tr><th>L1 · 打赏</th><td>GitHub Sponsors / 爱发电</td><td>零摩擦感谢通道，不设付费墙、不给特权。</td><td>Phase 1（90 天内）</td></tr>
+            <tr><th>L2 · 轻产品</th><td>Notion 模板</td><td>导出核心 MOC + 人物模板 + 行动清单，为「懒于 clone」的用户省时间。</td><td>Phase 2（ROADMAP 既定）</td></tr>
+            <tr><th>L3 · 深产品</th><td>共读营 / 方法论工作坊</td><td>围绕「研究大拿的方法论」做季度共读（ROADMAP 阶段二既定），收费但不筛选内容。</td><td>2027 探索</td></tr>
+            <tr><th>L4 · 生态</th><td>企业 / 高校合作</td><td>人才发展体系合作、认证研究者机制，被动 inbound 为主。</td><td>2027+（ROADMAP 阶段三）</td></tr>
+          </tbody>
+        </table>
+      </div>
+      <div class="pull">
+        判断标准只有一条：<strong>任何变现动作如果需要向用户道歉，就不做。</strong>
+        <cite>—— dana GTM 原则</cite>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ 07 channels ============ -->
+  <section class="block" id="s07">
+    <div class="sec-head rv">
+      <div class="sec-num">07</div>
+      <div><h2>渠道与分发</h2><div class="sec-en">Channels &amp; Distribution</div></div>
+    </div>
+    <div class="sec-body rv">
+      <p>
+        <strong>策略：内容主导（content-led），GitHub 承重。</strong>不做投放、不做裂变。每月从知识库中「拆弹」一篇精华内容投放到社区，
+        文末回链——让每一个渠道都只做一件事：<strong>把对的人带回仓库。</strong>
+      </p>
+      <div class="tbl-wrap">
+        <table>
+          <caption>渠道优先级矩阵</caption>
+          <thead>
+            <tr><th style="width:20%">渠道</th><th style="width:14%">角色</th><th style="width:38%">具体动作</th><th style="width:16%">第一目标</th><th>优先级</th></tr>
+          </thead>
+          <tbody>
+            <tr><th>GitHub 仓库</th><td>主阵地 · 信任</td><td>README 首屏打磨（3 秒讲清价值）、Trending 友好发布节奏、Issue 模板接「研究大拿建议」。</td><td>Star / Fork</td><td><span class="dots">●●●<i>○</i></span> P0</td></tr>
+            <tr><th>掘金 / 知乎 / V2EX</th><td>获客 · 主流量</td><td>每月 1 篇「大拿深读」精华版（2,000 字，非摘要），文末回链仓库。</td><td>回链点击</td><td><span class="dots">●●●<i>○</i></span> P0</td></tr>
+            <tr><th>Obsidian 中文社区</th><td>精准 · 高转化</td><td>以「可直接 clone 的中文知识库 vault」身份入驻，晒 Canvas 与双链。</td><td>vault 采用</td><td><span class="dots">●●●<i>○</i></span> P0</td></tr>
+            <tr><th>即刻 / X</th><td>圈层 · 构建</td><td>「今天能开始的 1 件事」卡片连载，塑造项目人格。</td><td>关注 / 转发</td><td><span class="dots">●●<i>○○</i></span> P1</td></tr>
+            <tr><th>播客 / Newsletter</th><td>背书 · 信任</td><td>投稿内核恐慌类技术播客谈「大拿研究」，借势 ROADMAP 阶段二合作计划。</td><td>品牌认知</td><td><span class="dots">●●<i>○○</i></span> P1</td></tr>
+            <tr><th>少数派 / RSS</th><td>长尾 · SEO</td><td>沉淀工具方法论长文（audit 工具链本身就是好选题）。</td><td>搜索流量</td><td><span class="dots">●●<i>○○</i></span> P1</td></tr>
+            <tr><th>高校 / 企业社团</th><td>生态 · 远期</td><td>共读活动试点，L4 合作的前哨。</td><td>试点 1 场</td><td><span class="dots">●<i>○○○</i></span> P2</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ 08 launch ============ -->
+  <section class="block" id="s08">
+    <div class="sec-head rv">
+      <div class="sec-num">08</div>
+      <div><h2>发布节奏 · 180 天作战图</h2><div class="sec-en">Launch Plan &amp; Phases</div></div>
+    </div>
+    <div class="sec-body rv">
+      <p>
+        节奏与《ROADMAP》阶段二（2026 Q3–Q4 发布与影响力建设）对齐，起点是 v3 评估的 P0 整改——
+        <strong>先把名片擦干净，再出门见客。</strong>
+      </p>
+      <div class="timeline">
+        <div class="phase now">
+          <div class="phase-head"><h4>Phase 0 · 点火</h4><span class="ph-date">2026.09 · 0–30 天</span><span class="ph-goal">GOAL 可信地曝光</span></div>
+          <ul>
+            <li><b>修完 P0 再出门</b>：57 条断链清零、docs 首页数字与 audit 同步、frontmatter 错误修复（v3 评估整改项）</li>
+            <li><b>README 首屏重写</b>：3 秒讲清「这是什么、对我有什么用、怎么开始」</li>
+            <li><b>首发公告</b>：掘金 + V2EX + Obsidian 社区三连发，讲述「为什么做这个库」的创建者故事</li>
+            <li><b>记录基线</b>：Stars / 访问量 / quick_start 使用数，作为一切 KPI 的分母</li>
+          </ul>
+          <p class="metric">500 Stars · 1,500 月访客 · 基线数字入档</p>
+        </div>
+        <div class="phase">
+          <div class="phase-head"><h4>Phase 1 · 立柱</h4><span class="ph-date">2026.10 – 11 · 30–90 天</span><span class="ph-goal">GOAL 从流量到留存</span></div>
+          <ul>
+            <li><b>月更节奏制度化</b>：每月 2 人物 + 1 心法 + 1 案例（打破 254 篇停滞）</li>
+            <li><b>激活路径落地</b>：quick_start 引导 + 「1 件事」卡片系列在即刻 / X 连载</li>
+            <li><b>社区点火</b>：邀请制招募首批 5 位社区贡献者，1v1 陪跑首个 PR</li>
+            <li><b>基建补强</b>：Pagefind 搜索升级、Sponsors 上线</li>
+          </ul>
+          <p class="metric">1,000 Stars · 5 位常驻贡献者 · 20 个合并 PR</p>
+        </div>
+        <div class="phase">
+          <div class="phase-head"><h4>Phase 2 · 飞轮</h4><span class="ph-date">2026.12 – 2027.02 · 90–180 天</span><span class="ph-goal">GOAL 社区自转</span></div>
+          <ul>
+            <li><b>认证研究者机制</b>（ROADMAP 阶段三提前试点）：轻量、自愿、基于公开贡献质量</li>
+            <li><b>Notion 模板</b>发布，打通「轻用户」入口</li>
+            <li><b>第一次外部审计</b>：邀请非利益相关者复跑 audit 并公开结果，修复「自评失真」信任问题</li>
+            <li><b>英文精选试点</b>：AI 时代大拿专栏精选 5 篇英译，试水 r/ExperiencedDevs</li>
+          </ul>
+          <p class="metric">2,000 Stars · 贡献者 20+ · 首次外部审计报告发布</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ 09 funnel ============ -->
+  <section class="block" id="s09">
+    <div class="sec-head rv">
+      <div class="sec-num">09</div>
+      <div><h2>增长漏斗与北极星</h2><div class="sec-en">Funnel &amp; North Star Metric</div></div>
+    </div>
+    <div class="sec-body rv">
+      <div class="funnel">
+        <div class="f-row"><div class="f-lbl"><b>曝光</b>AWARENESS</div><div class="f-bar f1" data-w="100%"><span>社区帖子 · Trending · 播客 · 转载</span></div></div>
+        <div class="f-row"><div class="f-lbl"><b>到达</b>ACQUISITION</div><div class="f-bar f2" data-w="78%"><span>访问 GitHub 仓库 / Pages 在线版</span></div></div>
+        <div class="f-row"><div class="f-lbl"><b>激活</b>ACTIVATION</div><div class="f-bar f3" data-w="56%"><span>读完 1 篇人物志 + 写下「立刻开始的 1 件事」</span></div></div>
+        <div class="f-row"><div class="f-lbl"><b>留存</b>RETENTION</div><div class="f-bar f4" data-w="38%"><span>clone 为常驻 vault · 关注更新日志 · 回访</span></div></div>
+        <div class="f-row"><div class="f-lbl"><b>传播</b>REFERRAL</div><div class="f-bar f5" data-w="22%"><span>Star / 安利同事 / 社区晒图</span></div></div>
+        <div class="f-row"><div class="f-lbl"><b>贡献</b>CONTRIBUTION</div><div class="f-bar f6" data-w="10%"><span>提交人物复盘 / 案例 / 心法 PR</span></div></div>
+      </div>
+      <div class="f-defs">
+        <p><b>为什么激活放第三层？</b>知识库产品的「啊哈时刻」不是注册，而是第一次「读完想行动且真的行动」。一切引导都指向它。</p>
+        <p><b>为什么贡献单独成层？</b>对开源项目而言，贡献者是比传播者更深的承诺，CONTRIBUTORS.md 的四级致谢就是为这一层设计。</p>
+        <p><b>漏斗哪里最容易漏？</b>到达→激活。README 必须在 3 秒内给出「读哪篇、怎么开始」，quick_start 是激活的唯一官方入口。</p>
+      </div>
+      <div class="northstar">
+        <div class="ns-ic">NORTH STAR METRIC</div>
+        <div>
+          <h4>月度深度阅读完成数 <span>Monthly Deep Reads</span></h4>
+          <p>
+            定义：<b>当月「完成至少 1 篇档案精读 + 提取 ≥1 个行动项」的阅读会话数</b>。
+            测量代理：Pages 精读页滚动深度 + quick_start 调用 + extract_actions 输出<span class="assume">需埋点，Phase 0 落地</span>。
+            选它的理由：它同时度量「内容质量」与「用户认真度」，而刻意不度量 PV——<b>流量是虚荣的，行动是诚实的。</b>
+          </p>
+        </div>
+      </div>
+      <div class="tbl-wrap">
+        <table>
+          <caption>KPI 记分卡 · 90 天目标（基线以 Phase 0 实测为准）</caption>
+          <thead>
+            <tr><th style="width:18%">阶段</th><th style="width:34%">指标</th><th style="width:24%">90 天目标</th><th>测量方式</th></tr>
+          </thead>
+          <tbody>
+            <tr><th>到达</th><td>GitHub Stars / Forks</td><td>500 / 80</td><td>GitHub API（自动）</td></tr>
+            <tr><th>到达</th><td>Pages 月访客</td><td>1,500</td><td>Pages Insights / 埋点</td></tr>
+            <tr><th>激活</th><td>quick_start 完成数</td><td>300 次/月</td><td>extract_actions 统计 + 埋点</td></tr>
+            <tr><th>留存</th><td>更新日志订阅 / 回访比</td><td>回访 ≥ 35%</td><td>埋点</td></tr>
+            <tr><th>传播</th><td>社区帖均回链点击</td><td>200 / 篇</td><td>UTM 参数</td></tr>
+            <tr><th>贡献</th><td>合并 PR / 常驻贡献者</td><td>20 个 / 5 位</td><td>git + CONTRIBUTORS.md</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ 10 risks ============ -->
+  <section class="block" id="s10">
+    <div class="sec-head rv">
+      <div class="sec-num">10</div>
+      <div><h2>风险与对策</h2><div class="sec-en">Risks &amp; Mitigations</div></div>
+    </div>
+    <div class="sec-body rv">
+      <p>诚实面对风险，是 dana「反鸡汤」立场在 GTM 上的体现。以下按 概率 × 影响 排序：</p>
+      <div class="tbl-wrap">
+        <table>
+          <caption>风险登记表</caption>
+          <thead>
+            <tr><th style="width:22%">风险</th><th style="width:9%">概率</th><th style="width:9%">影响</th><th style="width:38%">对策</th><th>先行指标</th></tr>
+          </thead>
+          <tbody>
+            <tr>
+              <th>单人维护倦怠<br><small style="font-weight:400;color:var(--ink-soft)">7-19 后仅 2 commit 的先例</small></th>
+              <td><span class="dots">●●<i>○</i></span></td><td><span class="dots">●●<i>○</i></span></td>
+              <td>工具自动化继续压边际成本；微任务 issue 化（CONTRIBUTING 已承诺）；月更节奏宁低勿断。</td>
+              <td>commit 频率连续 2 周下滑即触发</td>
+            </tr>
+            <tr>
+              <th>社区冷启动失败</th>
+              <td><span class="dots">●●<i>○</i></span></td><td><span class="dots">●●●</span></td>
+              <td>滩头收窄到 Obsidian 生态；1v1 邀请制贡献者陪跑；首发内容做「创建者故事」而非功能罗列。</td>
+              <td>Phase 0 结束 Stars &lt; 100 即调整叙事</td>
+            </tr>
+            <tr>
+              <th>自评失真透支信任<br><small style="font-weight:400;color:var(--ink-soft)">v2「0 断链」被 v3 证伪的教训</small></th>
+              <td><span class="dots">●●<i>○</i></span></td><td><span class="dots">●●●</span></td>
+              <td>建立外部审计机制：重大版本邀请第三方复跑 audit 并公开；changelog 只写实测数字。</td>
+              <td>每次大版本必须有交叉验证记录</td>
+            </tr>
+            <tr>
+              <th>内容增长停滞<br><small style="font-weight:400;color:var(--ink-soft)">v2→v3 期间 254 篇零新增</small></th>
+              <td><span class="dots">●●<i>○</i></span></td><td><span class="dots">●●<i>○</i></span></td>
+              <td>月更制度化（2+1+1）；把「补充高价值人物建档」拆成社区可认领的微任务。</td>
+              <td>月度新增 &lt; 2 篇即预警</td>
+            </tr>
+            <tr>
+              <th>AI 内容洪流稀释信任</th>
+              <td><span class="dots">●●●</span></td><td><span class="dots">●<i>○○</i></span></td>
+              <td>把「人写 + 可审计 + 工具链公开」反向做成卖点；研究过程留痕（方法论 + 原始资料来源）。</td>
+              <td>社区讨论中「是不是 AI 写的」出现频率</td>
+            </tr>
+            <tr>
+              <th>人物资料合规风险</th>
+              <td><span class="dots">●<i>○○</i></span></td><td><span class="dots">●●<i>○</i></span></td>
+              <td>只用公开访谈/文章并注明出处；不商用肖像；富豪榜研究聚焦公开财报与榜单数据。</td>
+              <td>收到任何权利方询问即下架复核</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ checklist ============ -->
+  <section class="block" id="s11" style="border-bottom:none">
+    <div class="sec-head rv">
+      <div class="sec-num">＋</div>
+      <div><h2>90 天行动清单</h2><div class="sec-en">The First-90-Days Checklist</div></div>
+    </div>
+    <div class="sec-body rv">
+      <p>按「本周就能动手」的粒度拆解 Phase 0–1，完成一项勾一项：</p>
+      <div class="check">
+        <h3>Phase 0–1 · 2026.09 – 11</h3>
+        <ol>
+          <li><b>修复 57 条断链</b>：高价值人物建档，低价值引用转纯文字（v3 P1 #5–7）</li>
+          <li><b>docs 首页数字同步</b>：68+→96、70+→84，纳入 monthly-refresh 自动更新</li>
+          <li><b>audit.py 分类修复</b>：frontmatter 解析失败独立归类（v3 P0 #2）</li>
+          <li><b>README 首屏重写</b>：一句话定位 + 三步开始 + 首个行动引导</li>
+          <li><b>埋点落地</b>：Pages 访问 + 精读深度 + quick_start 调用</li>
+          <li><b>记录基线</b>：Stars / Forks / 访客 / 案例引用数，写入更新日志</li>
+          <li><b>创建者故事首发帖</b>：掘金 + V2EX + Obsidian 社区三连发</li>
+          <li><b>「1 件事」卡片模板</b>：从 extract_actions 输出生成社媒连载素材</li>
+          <li><b>邀请首批 5 位贡献者</b>：从 Issues 提建议者与社群活跃者中 1v1 邀请</li>
+          <li><b>Pagefind 搜索上线</b>：替换 search.json 客户端方案（v3 P2 #12）</li>
+          <li><b>Sponsors / 爱发电开通</b>：L1 打赏层，不设任何特权</li>
+          <li><b>月度 GTM 复盘会</b>：对照 KPI 记分卡，偏差即调整，回写本页</li>
+        </ol>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ footer ============ -->
+  <footer>
+    <div class="foot-rule"></div>
+    <div class="foot-grid">
+      <div class="slogan">大拿，从来不是少数人的专利。<br><span>增长，也不该是玄学。</span></div>
+      <div class="foot-meta">
+        dana · 大拿 — GTM 战略页 v1.0<br>
+        数据来源：项目评估 v3（2026-08-04）· ROADMAP · README<br>
+        <a href="https://github.com/allengaller/dana-database" target="_blank" rel="noopener">github.com/allengaller/dana-database</a><br>
+        本页为活文档：每月复盘后更新 · 标注「估算」处需实测校准
+      </div>
+    </div>
+  </footer>
+
+</div>
+
+<script>
+// reveal on scroll
+const io=new IntersectionObserver(es=>{
+  es.forEach(e=>{if(e.isIntersecting){e.target.classList.add('in');io.unobserve(e.target)}});
+},{threshold:.12,rootMargin:'0px 0px -40px 0px'});
+document.querySelectorAll('.rv,.sec-head,.sec-body,.card,.check,.exec,.stats,.posn,.pull,.northstar,.timeline .phase,.tbl-wrap,.f-defs')
+  .forEach(el=>{el.classList.add('rv');io.observe(el)});
+
+// stat counters
+const so=new IntersectionObserver(es=>{
+  es.forEach(e=>{
+    if(!e.isIntersecting)return;so.unobserve(e.target);
+    e.target.querySelectorAll('.num').forEach(n=>{
+      const t=+n.dataset.count,d=1100,s=performance.now();
+      const tick=now=>{const p=Math.min((now-s)/d,1),v=Math.round(t*(1-Math.pow(1-p,3)));
+        n.textContent=v.toLocaleString('en');if(p<1)requestAnimationFrame(tick)};
+      requestAnimationFrame(tick);
+    });
+  });
+},{threshold:.3});
+const st=document.getElementById('stats');if(st)so.observe(st);
+
+// funnel bars
+const fo=new IntersectionObserver(es=>{
+  es.forEach(e=>{if(e.isIntersecting){e.target.style.width=e.target.dataset.w;fo.unobserve(e.target)}});
+},{threshold:.4});
+document.querySelectorAll('.f-bar').forEach(b=>fo.observe(b));
+
+// nav active state
+const links=[...document.querySelectorAll('.toc-inner a')];
+const secs=links.map(a=>document.querySelector(a.getAttribute('href'))).filter(Boolean);
+const no=new IntersectionObserver(es=>{
+  es.forEach(e=>{
+    if(e.isIntersecting){
+      links.forEach(l=>l.classList.toggle('active',l.getAttribute('href')==='#'+e.target.id));
+    }
+  });
+},{rootMargin:'-20% 0px -70% 0px'});
+secs.forEach(s=>no.observe(s));
+</script>
+<!-- gtm-portal-backlink (managed by _scripts/sync-gtm.py) -->
+<a class="gtmp-back" href="/GTM/" aria-label="返回 GTM 门户">&#8617; GTM 门户</a>
+<style>
+.gtmp-back{position:fixed;right:1rem;bottom:1rem;z-index:2147483000;
+font:500 12px/1 ui-monospace,SFMono-Regular,Menlo,Consolas,monospace;
+letter-spacing:.05em;text-decoration:none;padding:.6rem .85rem;border-radius:999px;
+color:#14130f;background:rgba(251,250,247,.92);border:1px solid rgba(20,19,15,.16);
+box-shadow:0 2px 12px rgba(20,19,15,.14);backdrop-filter:blur(6px);
+transition:transform .15s ease,box-shadow .15s ease}
+.gtmp-back:hover{transform:translateY(-1px);box-shadow:0 4px 16px rgba(20,19,15,.22)}
+@media (prefers-color-scheme:dark){.gtmp-back{color:#f5f2ea;background:rgba(20,19,15,.88);
+border-color:rgba(245,242,234,.22)}}
+</style>
+</body>
+</html>

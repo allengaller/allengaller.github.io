@@ -1,0 +1,673 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>ResolveAgent · GTM 策略中枢 — 让每一次告警都有终点站</title>
+<meta name="description" content="ResolveAgent Go-To-Market 策略页：多路径智能路由 + 排查知识自沉淀闭环。告警进站，四线分岔，终点站是根因。">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Barlow:wght@400;600;700;800&family=Barlow+Condensed:wght@500;600;700&family=JetBrains+Mono:wght@400;500;700&family=Noto+Sans+SC:wght@400;500;700;900&display=swap" rel="stylesheet" media="print" onload="this.media='all'">
+<noscript><link href="https://fonts.googleapis.com/css2?family=Barlow:wght@400;600;700;800&family=Barlow+Condensed:wght@500;600;700&family=JetBrains+Mono:wght@400;500;700&family=Noto+Sans+SC:wght@400;500;700;900&display=swap" rel="stylesheet"></noscript>
+<style>
+:root{
+  --bg:#0b1220; --bg2:#0e1626; --panel:#111c30; --panel2:#0d1524;
+  --line:rgba(232,238,247,.10); --line2:rgba(232,238,247,.20);
+  --ink:#e8eef7; --ink2:#a7b4c9; --ink3:#7d8da6;
+  --fta:#ff6b35; --rag:#00c2a8; --skill:#7c6cff; --code:#ffc94d;
+  --flapbg:#1b2536; --flapbg2:#141c2b; --flap:#dfe8f4;
+  --disp:'Barlow','Noto Sans SC',sans-serif;
+  --cond:'Barlow Condensed','Noto Sans SC',sans-serif;
+  --mono:'JetBrains Mono','Noto Sans SC',monospace;
+  --body:'Noto Sans SC','Barlow',sans-serif;
+}
+*{margin:0;padding:0;box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{background:var(--bg);color:var(--ink);font-family:var(--body);font-size:16px;line-height:1.7;-webkit-font-smoothing:antialiased}
+::selection{background:var(--code);color:#0b1220}
+:focus-visible{outline:2px solid var(--code);outline-offset:3px;border-radius:2px}
+::-webkit-scrollbar{width:10px;height:10px}
+::-webkit-scrollbar-track{background:var(--bg2)}
+::-webkit-scrollbar-thumb{background:#22334f;border-radius:5px;border:2px solid var(--bg2)}
+input,button{font:inherit;color:inherit}
+a{color:inherit}
+.skip{position:absolute;left:-9999px;top:0;background:var(--code);color:#0b1220;padding:8px 16px;z-index:99;font-weight:700}
+.skip:focus{left:12px;top:12px}
+.wrap{max-width:1280px;margin:0 auto;padding:0 28px}
+/* ---------- nav ---------- */
+nav{position:sticky;top:0;z-index:50;background:rgba(11,18,32,.92);backdrop-filter:blur(8px);border-bottom:1px solid var(--line)}
+.navin{display:flex;align-items:center;gap:28px;height:60px}
+.logo{display:flex;align-items:center;gap:10px;text-decoration:none;font-family:var(--disp);font-weight:800;font-size:19px;letter-spacing:.01em}
+.logo svg{display:block}
+.navtag{font-family:var(--cond);font-size:12px;letter-spacing:.22em;color:var(--ink3);border-left:1px solid var(--line2);padding-left:14px;margin-left:2px}
+.navlinks{display:flex;gap:22px;margin-left:auto}
+.navlinks a{text-decoration:none;font-size:13.5px;color:var(--ink2);letter-spacing:.04em;transition:color .2s}
+.navlinks a:hover{color:var(--ink)}
+.btn{display:inline-flex;align-items:center;gap:8px;border:none;cursor:pointer;text-decoration:none;font-family:var(--cond);font-weight:700;letter-spacing:.14em;font-size:15px;padding:11px 22px;border-radius:4px;transition:transform .18s cubic-bezier(.2,.8,.2,1),box-shadow .18s,background .18s}
+.btn-primary{background:var(--fta);color:#160a04;box-shadow:0 8px 20px -8px rgba(0,0,0,.6)}
+.btn-primary:hover{transform:translateY(-2px);box-shadow:0 12px 26px -8px rgba(0,0,0,.65)}
+.btn-ghost{background:transparent;color:var(--ink2);border:1px solid var(--line2)}
+.btn-ghost:hover{color:var(--ink);border-color:var(--ink3)}
+.btn-sm{padding:8px 16px;font-size:13.5px}
+/* ---------- hero / dispatch board ---------- */
+.hero{padding:34px 0 26px}
+.board{border:1px solid var(--line2);border-radius:10px;background:linear-gradient(180deg,#101a2c,#0b1322);overflow:hidden;box-shadow:0 24px 60px -30px rgba(0,0,0,.9)}
+.board-head{display:flex;align-items:center;gap:14px;padding:10px 18px;border-bottom:1px solid var(--line);background:#0f1728}
+.led{width:8px;height:8px;border-radius:50%;background:var(--code);animation:led 2.4s infinite}
+@keyframes led{0%,100%{opacity:1}50%{opacity:.35}}
+.board-title{font-family:var(--cond);letter-spacing:.24em;font-size:12px;color:var(--ink2)}
+.board-clock{margin-left:auto;font-family:var(--mono);font-size:12px;color:var(--ink3)}
+.flapgrid{display:grid;grid-template-columns:max-content max-content 1fr 26px max-content max-content;gap:6px;padding:12px 14px}
+.farrow{display:flex;align-items:center;justify-content:center;color:var(--ink3);font-family:var(--cond);font-size:17px}
+.sysok{margin-left:auto;display:flex;align-items:center;gap:7px;font-family:var(--mono);font-size:11px;color:#9fe3b0}
+.sysok i{width:7px;height:7px;border-radius:50%;background:#3fb950}
+.board-clock{margin-left:14px}
+.mapframe{position:relative}
+.stampcta{position:absolute;right:20px;bottom:20px;display:inline-flex;align-items:center;gap:12px;background:var(--fta);color:#160a04;text-decoration:none;font-family:var(--cond);font-weight:700;letter-spacing:.16em;font-size:20px;padding:16px 26px;border-radius:6px;box-shadow:0 14px 30px -12px rgba(0,0,0,.7);transition:transform .18s cubic-bezier(.2,.8,.2,1)}
+.stampcta:hover{transform:translateY(-3px)}
+.flapgrid .fh{font-family:var(--cond);font-size:10.5px;letter-spacing:.2em;color:var(--ink3);padding:0 2px 4px}
+.fcell{display:flex;gap:2px;min-width:0}
+.ftile{position:relative;flex:0 0 auto;background:linear-gradient(180deg,var(--flapbg) 0 49%,var(--flapbg2) 51% 100%);color:var(--flap);font-family:var(--cond);font-weight:600;font-size:17px;line-height:1;border-radius:3px;padding:7px 5px 8px;text-align:center;min-width:17px;box-shadow:inset 0 1px 0 rgba(255,255,255,.08),0 1px 2px rgba(0,0,0,.6)}
+.ftile::after{content:"";position:absolute;left:0;right:0;top:50%;height:1px;background:rgba(0,0,0,.55)}
+.ftile.flip{animation:flip .5s cubic-bezier(.3,.7,.3,1)}
+@keyframes flip{0%{transform:rotateX(0)}45%{transform:rotateX(-88deg)}55%{transform:rotateX(88deg)}100%{transform:rotateX(0)}}
+.frow{display:contents}
+.fstatus .ftile{color:var(--ink)}
+.fstatus.warn .ftile{color:var(--code)}
+.fstatus.ok .ftile{color:#9fe3b0}
+/* ---------- metro map ---------- */
+.mapwrap{position:relative;margin-top:26px}
+.mapscroll{overflow-x:auto;border:1px solid var(--line);border-radius:12px;background:
+  radial-gradient(1200px 500px at 50% 40%,rgba(23,36,60,.55),transparent 70%),var(--bg2)}
+.mapscroll svg{display:block;min-width:980px;width:100%;height:auto}
+.plate rect{fill:rgba(13,21,36,.92);stroke:var(--line2)}
+.plate .t1{font-family:var(--body);font-weight:700;font-size:12.5px;fill:var(--ink)}
+.plate .t2{font-family:var(--body);font-size:10px;fill:var(--ink2)}
+.plate .t3{font-family:var(--mono);font-size:9.5px;fill:var(--ink3)}
+.plate .tag{font-family:var(--cond);font-weight:700;font-size:10px;letter-spacing:.12em}
+.term rect{stroke-width:1.5}
+.term .tn{font-family:var(--disp);font-weight:800;font-size:17px;fill:var(--ink)}
+.term .ts{font-family:var(--body);font-size:10.5px;fill:var(--ink2)}
+.term .te{font-family:var(--cond);font-size:8.5px;letter-spacing:.18em;fill:var(--ink3)}
+.station circle.o{fill:var(--bg);stroke-width:5}
+.station circle.i{fill:var(--ink)}
+.hub .ring1{fill:#0e1626;stroke:var(--flap);stroke-width:5}
+.hub .ring2{fill:none;stroke:var(--line2);stroke-width:1.5}
+.hub text{fill:var(--flap)}
+.hub .h1{font-family:var(--body);font-weight:900;font-size:17px}
+.hub .h2{font-family:var(--cond);font-size:8.5px;letter-spacing:.26em;fill:var(--ink3)}
+.legend{display:flex;gap:26px;align-items:center;margin-top:14px;font-size:12px;color:var(--ink3)}
+.legend svg{vertical-align:-3px;margin-right:6px}
+/* simulator */
+.simrow{display:flex;flex-wrap:wrap;gap:10px;align-items:center;margin-top:18px}
+.simlabel{font-family:var(--cond);letter-spacing:.2em;font-size:12px;color:var(--ink3)}
+.chip{border:1px solid var(--line2);background:var(--panel2);color:var(--ink2);border-radius:999px;padding:7px 16px;font-size:13px;cursor:pointer;transition:all .2s}
+.chip:hover{color:var(--ink);border-color:var(--ink3)}
+.chip.on{color:#160a04;background:var(--fta);border-color:var(--fta);font-weight:700}
+.ticker{margin-top:14px;font-family:var(--mono);font-size:12.5px;color:var(--ink2);background:var(--panel2);border:1px solid var(--line);border-radius:8px;padding:10px 14px;min-height:42px}
+.ticker .tk{color:var(--code)}
+.heroline{display:flex;flex-wrap:wrap;align-items:flex-end;gap:22px;justify-content:space-between;margin-top:26px}
+h1{font-family:var(--disp);font-weight:900;font-size:clamp(30px,4.6vw,54px);line-height:1.16;letter-spacing:.01em;max-width:15em}
+h1 em{font-style:normal;color:var(--fta)}
+.herosub{max-width:46ch;color:var(--ink2);font-size:15.5px;margin-top:14px}
+.herobtns{display:flex;gap:12px;flex-wrap:wrap}
+.datanote{font-size:11px;color:var(--ink3);margin-top:10px}
+/* ---------- sections ---------- */
+section{padding:88px 0}
+h2{font-family:var(--disp);font-weight:900;font-size:clamp(26px,3.2vw,40px);line-height:1.2;margin-bottom:14px}
+h2 .huen{display:block;font-family:var(--cond);font-weight:600;font-size:13px;letter-spacing:.3em;color:var(--ink3);margin-top:8px}
+.lede{color:var(--ink2);max-width:62ch;font-size:15.5px}
+.reveal{opacity:1;transform:none}
+.reveal.in{animation:rise .7s cubic-bezier(.2,.8,.2,1) both}
+@keyframes rise{from{opacity:0;transform:translateY(16px)}to{opacity:1;transform:none}}
+/* terminal instrument */
+.termwin{border:1px solid var(--line2);border-radius:10px;background:#0a0e14;box-shadow:0 30px 70px -35px rgba(0,0,0,.95);overflow:hidden}
+.termbar{display:flex;align-items:center;gap:8px;padding:10px 14px;background:#10151d;border-bottom:1px solid var(--line)}
+.termbar .led{background:#3fb950}
+.termbar .tt{margin-left:8px;font-family:var(--mono);font-size:12px;color:var(--ink3)}
+.termbody{padding:22px 24px;font-family:var(--mono);font-size:13px;line-height:2.05;overflow-x:auto}
+.termbody .p{color:#9fe3b0}
+.termbody .c{color:var(--ink)}
+.termbody .o{color:var(--ink2)}
+.termbody .dim{color:var(--ink3)}
+.termbody .hl{color:var(--fta)}
+.termbody .ok{color:#9fe3b0;font-weight:700}
+.termbody .cur{display:inline-block;width:8px;height:15px;background:#9fe3b0;vertical-align:-2px;animation:led 1.1s steps(1) infinite}
+.tl{opacity:1;transform:none}
+.tl.in{animation:linein .35s ease-out both}
+@keyframes linein{from{opacity:0;transform:translateX(-8px)}to{opacity:1;transform:none}}
+/* replay instrument */
+.replay{display:grid;grid-template-columns:minmax(300px,5fr) 7fr;gap:44px;align-items:center}
+.scope{border:1px solid var(--line);border-radius:12px;background:radial-gradient(600px 400px at 55% 45%,rgba(23,36,60,.5),transparent 70%),#050810;overflow:hidden}
+.scope svg{display:block;width:100%;height:auto}
+.track{cursor:pointer;transition:opacity .35s}
+.scope.iso .track{opacity:.14}
+.scope.iso .track.sel{opacity:1}
+.scope .ghost{opacity:.16}
+.trklist{display:flex;flex-direction:column;gap:8px;margin-top:22px}
+.trk{display:grid;grid-template-columns:14px 1fr auto;gap:12px;align-items:center;text-align:left;background:var(--panel2);border:1px solid var(--line);border-radius:8px;padding:10px 14px;cursor:pointer;transition:border-color .2s,background .2s}
+.trk:hover{border-color:var(--line2)}
+.trk.on{border-color:var(--tc);background:rgba(255,255,255,.03)}
+.trk .dot{width:10px;height:10px;border-radius:50%;background:var(--tc)}
+.trk .nm{font-weight:700;font-size:14px}
+.trk .md{font-family:var(--mono);font-size:11px;color:var(--ink3)}
+/* flywheel */
+.fly{display:grid;grid-template-columns:1fr 1fr;gap:44px;align-items:center}
+.flywheel svg{width:100%;height:auto}
+.docchips{display:flex;flex-wrap:wrap;gap:8px;margin-top:18px}
+.dchip{font-family:var(--mono);font-size:11.5px;border:1px solid var(--line2);border-radius:6px;padding:6px 10px;color:var(--ink2);background:var(--panel2)}
+.dchip b{color:var(--code);font-weight:500}
+/* strategy */
+.strat{background:var(--bg2);border-top:1px solid var(--line);border-bottom:1px solid var(--line)}
+.pos{font-family:var(--disp);font-weight:800;font-size:clamp(20px,2.4vw,28px);line-height:1.5;max-width:34em}
+.pos mark{background:none;color:var(--code)}
+.stratgrid{display:grid;grid-template-columns:1fr 1fr;gap:56px;margin-top:56px}
+.strath{font-family:var(--cond);letter-spacing:.24em;font-size:13px;color:var(--ink3);margin-bottom:18px}
+.icp{display:flex;flex-direction:column;gap:14px}
+.icprow{border:1px solid var(--line);border-radius:10px;background:var(--panel2);padding:18px 20px}
+.icprow h3{font-size:16px;font-weight:800;display:flex;align-items:center;gap:10px}
+.icprow h3 .stn{width:12px;height:12px;border-radius:50%;border:3px solid var(--lc);background:var(--bg)}
+.icprow p{font-size:13.5px;color:var(--ink2);margin-top:8px}
+.icprow p b{color:var(--ink);font-weight:700}
+.timetable{border:1px solid var(--line2);border-radius:10px;overflow:hidden;background:var(--panel2)}
+.ttrow{display:grid;grid-template-columns:64px 1fr 130px 92px;gap:10px;align-items:center;padding:12px 16px;border-bottom:1px solid var(--line);font-size:13.5px}
+.ttrow:last-child{border-bottom:none}
+.ttrow .m{font-family:var(--cond);font-weight:700;letter-spacing:.14em;color:var(--ink2)}
+.ttrow .what{color:var(--ink2)}
+.ttrow .when{font-family:var(--mono);font-size:11.5px;color:var(--ink3)}
+.stat{display:inline-block;font-family:var(--cond);font-weight:700;letter-spacing:.14em;font-size:12px;padding:4px 10px;border-radius:4px;background:var(--flapbg);color:var(--code)}
+.stat.go{background:#12301c;color:#9fe3b0}
+.metrics{display:grid;grid-template-columns:repeat(4,1fr);gap:14px;margin-top:56px}
+.metric{border:1px solid var(--line);border-radius:10px;background:var(--panel2);padding:18px 20px}
+.metric .v{font-family:var(--mono);font-weight:700;font-size:clamp(22px,2.4vw,32px);color:var(--mc);font-variant-numeric:tabular-nums}
+.metric .l{font-size:12.5px;color:var(--ink2);margin-top:6px}
+.metric .s{font-size:11px;color:var(--ink3);margin-top:2px}
+/* close */
+.close{padding:110px 0;text-align:left}
+.close h2{font-size:clamp(30px,4.4vw,56px);max-width:16em}
+.close .herobtns{margin-top:30px}
+footer{border-top:1px solid var(--line);padding:26px 0}
+.foot{display:flex;flex-wrap:wrap;gap:14px;justify-content:space-between;font-size:12px;color:var(--ink3)}
+@media (max-width:960px){
+  .replay,.fly,.stratgrid{grid-template-columns:1fr}
+  .metrics{grid-template-columns:repeat(2,1fr)}
+  .navlinks{display:none}
+  .board{overflow-x:auto}
+  .flapgrid{grid-template-columns:max-content 1fr max-content max-content;min-width:620px}
+  .fcol-id,.fcol-arrow{display:none}
+  .ftile{font-size:14px;min-width:14px;padding:6px 4px 7px}
+}
+@media (prefers-reduced-motion:reduce){
+  *,*::before,*::after{animation-duration:.01ms !important;animation-iteration-count:1 !important;transition-duration:.01ms !important}
+  html{scroll-behavior:auto}
+  .reveal,.tl{opacity:1;transform:none}
+}
+</style>
+</head>
+<body>
+<!--
+THESIS: GTM 页是一张运行中的调度总图——告警进站、四线分岔、终点站根因；拒绝居中 hero + 三卡网格。
+OWN-WORLD: 深夜蓝 #0b1220，四线路色（橙/青/紫/琥珀），石板冷底 split-flap 翻牌，站名三层铭牌；Barlow / Barlow Condensed / JetBrains Mono / Noto Sans SC。全页企业级冷色纪律：暖奶油/琥珀底退役、无 glow、仪表元素只用仪器语法。
+STORY: 访客 3 秒看懂机制（意图→路由→根因），相信闭环飞轮，读透战略（ICP/渠道/里程碑/北极星），最后预约演示。
+FIRST VIEWPORT: 顶部翻牌发车板四行；中部 SVG 总图：枢纽「告警入口」+ 四线 + 铭牌；下方意图 chips 与预约演示 CTA。
+FORM: 调度总图世界（seed 69c678c1），用户锁定融合：总图主导 + 终端/事件回放为控制室仪器 + 类别标准转化层。
+FINISH: unreviewed and undocumented is unfinished; this build ends with the finish review, the verdict, DESIGN.md, and every shipping raster carrying its provenance
+-->
+<a class="skip" href="#main">跳到主要内容</a>
+<nav>
+  <div class="wrap navin">
+    <a class="logo" href="#" aria-label="ResolveAgent 首页">
+      <svg width="26" height="26" viewBox="0 0 26 26" fill="none" aria-hidden="true"><path d="M4 22 13 4l4 8h5" stroke="#ff6b35" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/><circle cx="4" cy="22" r="3" fill="#dfe8f4"/></svg>
+      ResolveAgent
+    </a>
+    <span class="navtag">GTM 策略中枢 · LIVE DISPATCH</span>
+    <div class="navlinks">
+      <a href="#board">调度总图</a><a href="#session">审计会话</a><a href="#replay">事件回放</a><a href="#flywheel">语料飞轮</a><a href="#strategy">GTM 战略</a>
+    </div>
+    <a class="btn btn-primary btn-sm" href="#close">预约演示</a>
+  </div>
+</nav>
+
+<main id="main">
+<!-- ================= HERO / DISPATCH BOARD ================= -->
+<section class="hero" id="board">
+  <div class="wrap">
+    <div class="board" role="table" aria-label="实时路由发车板（示意数据）">
+      <div class="board-head">
+        <span class="led" aria-hidden="true"></span>
+        <span class="board-title">路由发车板 · ROUTE DEPARTURES</span>
+        <span class="sysok"><i aria-hidden="true"></i>系统运行正常 · SYSTEM OK</span>
+        <span class="board-clock" id="clock">--:--:--</span>
+      </div>
+      <div class="flapgrid" id="flapgrid">
+        <span class="fh fcol-t">时间 TIME</span><span class="fh fcol-id">事件 ID</span><span class="fh fcol-alarm">告警摘要 ALARM</span><span class="fh fcol-arrow"></span><span class="fh fcol-route">路由 ROUTE</span><span class="fh fcol-st">状态 STATUS</span>
+        <noscript>
+          <span class="fcell fcol-t">14:31</span><span class="fcell fcol-id">INT-8841</span><span class="fcell fcol-alarm">Pod NotReady</span><span class="farrow fcol-arrow">→</span><span class="fcell fcol-route">LINE FTA</span><span class="fcell fcol-st fstatus ok">已发车</span>
+        </noscript>
+      </div>
+    </div>
+
+    <div class="heroline">
+      <div>
+        <h1>告警进站，<em>四线分岔</em>，<br>终点站是根因。</h1>
+        <p class="herosub">ResolveAgent 用智能路由把每一次 Kubernetes 告警分发给最合适的处理路径：故障树推理、技能编排、RAG 检索、代码分析，并把每次排查沉淀为下一班的语料。</p>
+      </div>
+      <div class="herobtns">
+        <a class="btn btn-primary" href="#close">预约演示
+          <svg width="16" height="16" viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="M2 8h11M9 3.5 13.5 8 9 12.5" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        </a>
+        <a class="btn btn-ghost" href="#strategy">查看 GTM 战略</a>
+      </div>
+    </div>
+
+    <div class="mapwrap">
+      <div class="mapframe">
+      <div class="mapscroll">
+      <svg viewBox="0 0 1440 660" role="img" aria-label="ResolveAgent 调度总图：告警入口枢纽，四条分析线路分岔至根因终点站">
+        <!-- faint network texture -->
+        <g stroke="rgba(232,238,247,.05)" stroke-width="1.5" fill="none">
+          <path d="M60 620 240 460 240 220 420 60"/><path d="M1380 620 1200 460 1200 220 1020 60"/><path d="M60 60 300 300"/><path d="M1380 60 1140 300"/>
+        </g>
+        <!-- FTA line (active, solid, thick) -->
+        <path id="pfta" class="line" d="M678 306 552 230 Q528 216 528 188 L528 168 Q528 144 504 144 L214 144" fill="none" stroke="#ff6b35" stroke-width="10" stroke-linecap="round"/>
+        <!-- RAG line -->
+        <path id="prag" class="line" d="M762 306 888 230 Q912 216 912 188 L912 168 Q912 144 936 144 L1226 144" fill="none" stroke="#00c2a8" stroke-width="7" stroke-linecap="round" stroke-dasharray="16 12"/>
+        <!-- SKILL line -->
+        <path id="pskill" class="line" d="M678 354 552 430 Q528 444 528 472 L528 492 Q528 516 504 516 L214 516" fill="none" stroke="#7c6cff" stroke-width="7" stroke-linecap="round" stroke-dasharray="16 12"/>
+        <!-- CODE line -->
+        <path id="pcode" class="line" d="M762 354 888 430 Q912 444 912 472 L912 492 Q912 516 936 516 L1226 516" fill="none" stroke="#ffc94d" stroke-width="7" stroke-linecap="round" stroke-dasharray="16 12"/>
+
+        <!-- stations -->
+        <g class="station"><circle class="o" cx="612" cy="266" r="10" stroke="#ff6b35"/><circle class="i" cx="612" cy="266" r="3.5"/></g>
+        <g class="station"><circle class="o" cx="430" cy="144" r="10" stroke="#ff6b35"/><circle class="i" cx="430" cy="144" r="3.5"/></g>
+        <g class="station"><circle class="o" cx="300" cy="144" r="10" stroke="#ff6b35"/><circle class="i" cx="300" cy="144" r="3.5"/></g>
+        <g class="station"><circle class="o" cx="828" cy="266" r="10" stroke="#00c2a8"/><circle class="i" cx="828" cy="266" r="3.5"/></g>
+        <g class="station"><circle class="o" cx="1010" cy="144" r="10" stroke="#00c2a8"/><circle class="i" cx="1010" cy="144" r="3.5"/></g>
+        <g class="station"><circle class="o" cx="1140" cy="144" r="10" stroke="#00c2a8"/><circle class="i" cx="1140" cy="144" r="3.5"/></g>
+        <g class="station"><circle class="o" cx="612" cy="394" r="10" stroke="#7c6cff"/><circle class="i" cx="612" cy="394" r="3.5"/></g>
+        <g class="station"><circle class="o" cx="430" cy="516" r="10" stroke="#7c6cff"/><circle class="i" cx="430" cy="516" r="3.5"/></g>
+        <g class="station"><circle class="o" cx="300" cy="516" r="10" stroke="#7c6cff"/><circle class="i" cx="300" cy="516" r="3.5"/></g>
+        <g class="station"><circle class="o" cx="828" cy="394" r="10" stroke="#ffc94d"/><circle class="i" cx="828" cy="394" r="3.5"/></g>
+        <g class="station"><circle class="o" cx="1010" cy="516" r="10" stroke="#ffc94d"/><circle class="i" cx="1010" cy="516" r="3.5"/></g>
+        <g class="station"><circle class="o" cx="1140" cy="516" r="10" stroke="#ffc94d"/><circle class="i" cx="1140" cy="516" r="3.5"/></g>
+
+        <!-- station plates: FTA (top row) -->
+        <g class="plate"><rect x="537" y="176" width="150" height="62" rx="8"/><text class="tag" x="549" y="194" fill="#ff6b35">FTA</text><text class="t1" x="577" y="194">场景建模</text><text class="t2" x="549" y="212">构建故障树模型</text><text class="t3" x="549" y="228">调用 8,732 次</text></g>
+        <g class="plate"><rect x="355" y="176" width="150" height="62" rx="8"/><text class="tag" x="367" y="194" fill="#ff6b35">FTA</text><text class="t1" x="395" y="194">证据收集</text><text class="t2" x="367" y="212">事件证据聚合</text><text class="t3" x="367" y="228">调用 15,621 次</text></g>
+        <g class="plate"><rect x="225" y="176" width="150" height="62" rx="8"/><text class="tag" x="237" y="194" fill="#ff6b35">FTA</text><text class="t1" x="265" y="194">根因推理</text><text class="t2" x="237" y="212">最小割集求解</text><text class="t3" x="237" y="228">调用 21,943 次</text></g>
+        <!-- RAG plates -->
+        <g class="plate"><rect x="753" y="176" width="150" height="62" rx="8"/><text class="tag" x="765" y="194" fill="#00c2a8">RAG</text><text class="t1" x="795" y="194">查询理解</text><text class="t2" x="765" y="212">语义意图解析</text><text class="t3" x="765" y="228">调用 6,214 次</text></g>
+        <g class="plate"><rect x="935" y="176" width="150" height="62" rx="8"/><text class="tag" x="947" y="194" fill="#00c2a8">RAG</text><text class="t1" x="977" y="194">检索召回</text><text class="t2" x="947" y="212">多源知识检索</text><text class="t3" x="947" y="228">调用 18,276 次</text></g>
+        <g class="plate"><rect x="1065" y="176" width="150" height="62" rx="8"/><text class="tag" x="1077" y="194" fill="#00c2a8">RAG</text><text class="t1" x="1107" y="194">答案生成</text><text class="t2" x="1077" y="212">证据融合推理</text><text class="t3" x="1077" y="228">调用 9,871 次</text></g>
+        <!-- SKILL plates -->
+        <g class="plate"><rect x="537" y="422" width="150" height="62" rx="8"/><text class="tag" x="549" y="440" fill="#7c6cff">SKILL</text><text class="t1" x="589" y="440">意图识别</text><text class="t2" x="549" y="458">告警意图分类</text><text class="t3" x="549" y="474">调用 7,452 次</text></g>
+        <g class="plate"><rect x="355" y="422" width="150" height="62" rx="8"/><text class="tag" x="367" y="440" fill="#7c6cff">SKILL</text><text class="t1" x="407" y="440">技能匹配</text><text class="t2" x="367" y="458">技能推荐与选择</text><text class="t3" x="367" y="474">调用 12,093 次</text></g>
+        <g class="plate"><rect x="225" y="422" width="150" height="62" rx="8"/><text class="tag" x="237" y="440" fill="#7c6cff">SKILL</text><text class="t1" x="277" y="440">执行验证</text><text class="t2" x="237" y="458">执行并验证结果</text><text class="t3" x="237" y="474">调用 10,541 次</text></g>
+        <!-- CODE plates -->
+        <g class="plate"><rect x="753" y="422" width="150" height="62" rx="8"/><text class="tag" x="765" y="440" fill="#ffc94d">CODE</text><text class="t1" x="801" y="440">静态分析</text><text class="t2" x="765" y="458">代码缺陷扫描</text><text class="t3" x="765" y="474">调用 5,912 次</text></g>
+        <g class="plate"><rect x="935" y="422" width="150" height="62" rx="8"/><text class="tag" x="947" y="440" fill="#ffc94d">CODE</text><text class="t1" x="983" y="440">依赖分析</text><text class="t2" x="947" y="458">依赖关系分析</text><text class="t3" x="947" y="474">调用 11,603 次</text></g>
+        <g class="plate"><rect x="1065" y="422" width="150" height="62" rx="8"/><text class="tag" x="1077" y="440" fill="#ffc94d">CODE</text><text class="t1" x="1113" y="440">根因定位</text><text class="t2" x="1077" y="458">缺陷根因定位</text><text class="t3" x="1077" y="474">调用 8,118 次</text></g>
+
+        <!-- termini -->
+        <g class="term"><circle class="o" cx="214" cy="144" r="12" fill="#0b1220" stroke="#ff6b35" stroke-width="5"/><rect x="60" y="96" width="140" height="76" rx="10" stroke="#ff6b35"/><text class="tn" x="76" y="126">FTA</text><text class="ts" x="76" y="146">故障树推理 → 根因</text><text class="te" x="76" y="162">FAULT TREE ANALYSIS</text></g>
+        <g class="term"><circle class="o" cx="1226" cy="144" r="12" fill="#0b1220" stroke="#00c2a8" stroke-width="5"/><rect x="1240" y="96" width="150" height="76" rx="10" stroke="#00c2a8"/><text class="tn" x="1256" y="126">RAG</text><text class="ts" x="1256" y="146">检索增强 → 根因</text><text class="te" x="1256" y="162">RETRIEVAL AUGMENTED</text></g>
+        <g class="term"><circle class="o" cx="214" cy="516" r="12" fill="#0b1220" stroke="#7c6cff" stroke-width="5"/><rect x="60" y="468" width="140" height="76" rx="10" stroke="#7c6cff"/><text class="tn" x="76" y="498">技能 SKILL</text><text class="ts" x="76" y="518">技能编排 → 根因</text><text class="te" x="76" y="534">SKILL ORCHESTRATION</text></g>
+        <g class="term"><circle class="o" cx="1226" cy="516" r="12" fill="#0b1220" stroke="#ffc94d" stroke-width="5"/><rect x="1240" y="468" width="150" height="76" rx="10" stroke="#ffc94d"/><text class="tn" x="1256" y="498">代码分析</text><text class="ts" x="1256" y="518">静态分析 → 根因</text><text class="te" x="1256" y="534">CODE ANALYSIS</text></g>
+
+        <!-- hub -->
+        <g class="hub">
+          <circle class="ring1" cx="720" cy="330" r="52"/>
+          <circle class="ring2" cx="720" cy="330" r="44"/>
+          <path d="M720 306 c-7 0 -11 5 -11 11 v6 l-4 5 h30 l-4 -5 v-6 c0 -6 -4 -11 -11 -11 z m-4 20 a4 4 0 0 0 8 0 z" fill="#dfe8f4"/>
+          <text class="h1" x="720" y="348" text-anchor="middle">告警入口</text>
+          <text class="h2" x="720" y="362" text-anchor="middle">ALERT INTAKE</text>
+        </g>
+        <circle id="train" cx="720" cy="330" r="8" fill="#fff" stroke="#ff6b35" stroke-width="4" opacity="0"/>
+      </svg>
+      </div>
+      <a class="stampcta" href="#close">预约演示
+        <svg width="18" height="18" viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="M2 8h11M9 3.5 13.5 8 9 12.5" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      </a>
+      </div>
+
+      <div class="simrow" role="group" aria-label="意图调度模拟器">
+        <span class="simlabel">意图调度模拟器 ·</span>
+        <button class="chip on" data-line="fta" data-alarm="Pod NotReady">Pod NotReady</button>
+        <button class="chip" data-line="skill" data-alarm="OOMKilled">OOMKilled</button>
+        <button class="chip" data-line="rag" data-alarm="High CPU Usage">High CPU Usage</button>
+        <button class="chip" data-line="code" data-alarm="Error 5xx Surge">Error 5xx Surge</button>
+      </div>
+      <p class="ticker" id="ticker" aria-live="polite"><span class="tk">▸</span> 待命 · 选择一个意图，观看它沿线路驶向根因。</p>
+      <div class="legend">
+        <span><svg width="34" height="8"><line x1="2" y1="4" x2="32" y2="4" stroke="#ff6b35" stroke-width="6" stroke-linecap="round"/></svg>实线 = 当前路径</span>
+        <span><svg width="34" height="8"><line x1="2" y1="4" x2="32" y2="4" stroke="#7d8da6" stroke-width="5" stroke-linecap="round" stroke-dasharray="8 7"/></svg>虚线 = 备选</span>
+        <span class="datanote">调用计数为示意数据</span>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- ================= TERMINAL INSTRUMENT ================= -->
+<section id="session">
+  <div class="wrap">
+    <h2 class="reveal">每一次调度，都是一次可审计的会话。<span class="huen">AUDITABLE SESSION</span></h2>
+    <p class="lede reveal">路由不是黑盒。意图分类、路径分发、证据求解、语料写回，全部以命令回显留痕，可回放、可复盘、可追责。</p>
+    <div class="termwin reveal" style="margin-top:34px">
+      <div class="termbar">
+        <span class="led" aria-hidden="true"></span>
+        <span class="tt">resolve · 调度会话审计 · AUDIT TRACE</span>
+      </div>
+      <div class="termbody" id="termbody">
+        <div class="tl"><span class="p">$</span> <span class="c">resolve route --intent "Pod NotReady"</span></div>
+        <div class="tl"><span class="o">→ intent.classify</span> <span class="dim">selector/intent.py</span> <span class="dim">confidence</span> <span class="hl">0.97</span></div>
+        <div class="tl"><span class="o">→ dispatch</span> <span class="hl">LINE FTA ● 主路径</span> <span class="dim">fta/evaluator.py</span></div>
+        <div class="tl"><span class="dim">  fallback      LINE RAG ○ 备选 · rag/pipeline.py</span></div>
+        <div class="tl"><span class="o">→ fta.evaluate</span> <span class="dim">最小割集:</span> <span class="c">probe 阈值过严 → node.kubernetes.io/not-ready</span></div>
+        <div class="tl"><span class="o">→ corpus.write</span> <span class="dim">call_chain_rag_generator:</span> <span class="c">+6 documents</span> <span class="dim">→ kudig-rag / code-analysis</span></div>
+        <div class="tl"><span class="ok">✓ ROOT CAUSE</span> <span class="c">Readiness Probe 阈值过严 — 修复建议已生成</span> <span class="dim">(2m 14s)</span> <span class="cur"></span></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ================= EVENT REPLAY INSTRUMENT ================= -->
+<section id="replay">
+  <div class="wrap replay">
+    <div>
+      <h2 class="reveal">一次告警，四路并行。<span class="huen">EVENT REPLAY</span></h2>
+      <p class="lede reveal">每个事件在调度枢纽被复制为四条分析径迹：故障树沿弯曲径迹做最小割集求解，RAG 以直线穿透知识层，技能与代码分析各自沉积证据。竞争假设以虚线幽灵径迹保留，置信度即线宽。</p>
+      <div class="trklist reveal" role="group" aria-label="分析径迹选择">
+        <button class="trk on" data-t="fta" style="--tc:#ff6b35"><span class="dot"></span><span class="nm">FTA 故障树推理</span><span class="md">python/src/resolveagent/fta/evaluator.py</span></button>
+        <button class="trk" data-t="rag" style="--tc:#00c2a8"><span class="dot"></span><span class="nm">RAG 检索增强</span><span class="md">python/src/resolveagent/rag/pipeline.py</span></button>
+        <button class="trk" data-t="skill" style="--tc:#7c6cff"><span class="dot"></span><span class="nm">技能编排</span><span class="md">skills/examples/k8s-pod-crash/skill.py</span></button>
+        <button class="trk" data-t="code" style="--tc:#ffc94d"><span class="dot"></span><span class="nm">代码分析</span><span class="md">python/src/resolveagent/code_analysis/engine.py</span></button>
+      </div>
+    </div>
+    <div class="scope reveal" id="scope">
+      <svg viewBox="0 0 760 560" role="img" aria-label="事件回放：一次告警事件喷出四条分析径迹">
+        <g fill="none" stroke="#33415c" stroke-width="1.5">
+          <circle cx="380" cy="280" r="90"/><circle cx="380" cy="280" r="150"/><circle cx="380" cy="280" r="210"/><circle cx="380" cy="280" r="258"/>
+        </g>
+        <g fill="none" stroke="#33415c" stroke-width="6" opacity=".5">
+          <path d="M380 22 a258 258 0 0 1 130 35" /><path d="M638 280 a258 258 0 0 1 -35 130"/>
+        </g>
+        <g class="ghost" fill="none" stroke="#64748b" stroke-width="1.5" stroke-dasharray="5 6">
+          <circle cx="380" cy="280" r="120"/><circle cx="380" cy="280" r="180"/>
+        </g>
+        <!-- bearing ticks -->
+        <g stroke="#33415c" stroke-width="1.5">
+          <line x1="380" y1="22" x2="380" y2="44"/>
+          <line x1="380" y1="22" x2="380" y2="36" transform="rotate(30 380 280)"/>
+          <line x1="380" y1="22" x2="380" y2="36" transform="rotate(60 380 280)"/>
+          <line x1="380" y1="22" x2="380" y2="44" transform="rotate(90 380 280)"/>
+          <line x1="380" y1="22" x2="380" y2="36" transform="rotate(120 380 280)"/>
+          <line x1="380" y1="22" x2="380" y2="36" transform="rotate(150 380 280)"/>
+          <line x1="380" y1="22" x2="380" y2="44" transform="rotate(180 380 280)"/>
+          <line x1="380" y1="22" x2="380" y2="36" transform="rotate(210 380 280)"/>
+          <line x1="380" y1="22" x2="380" y2="36" transform="rotate(240 380 280)"/>
+          <line x1="380" y1="22" x2="380" y2="44" transform="rotate(270 380 280)"/>
+          <line x1="380" y1="22" x2="380" y2="36" transform="rotate(300 380 280)"/>
+          <line x1="380" y1="22" x2="380" y2="36" transform="rotate(330 380 280)"/>
+        </g>
+        <!-- tracks -->
+        <g class="track sel" data-t="fta"><path d="M380 280 c30 -50 70 -60 96 -34 s20 66 66 60 s70 -40 96 -20" fill="none" stroke="#ff6b35" stroke-width="3.5"/><circle cx="638" cy="286" r="5" fill="#ff6b35"/></g>
+        <g class="track" data-t="rag"><path d="M380 280 L672 96" fill="none" stroke="#00c2a8" stroke-width="3"/><circle cx="672" cy="96" r="5" fill="#00c2a8"/></g>
+        <g class="track" data-t="skill"><path d="M380 280 C320 340 260 356 176 380" fill="none" stroke="#7c6cff" stroke-width="3"/><circle cx="176" cy="380" r="5" fill="#7c6cff"/></g>
+        <g class="track" data-t="code"><path d="M380 280 C410 360 470 402 556 440" fill="none" stroke="#ffc94d" stroke-width="3"/><circle cx="556" cy="440" r="5" fill="#ffc94d"/></g>
+        <circle cx="380" cy="280" r="7" fill="#fff"/>
+        <g font-family="JetBrains Mono, monospace" font-size="11" fill="#7d8da6">
+          <text x="46" y="470">INC-20260828-001</text>
+          <text x="46" y="488">4 TRACKS · CONF 0.97</text>
+          <text x="46" y="506">GHOST = 竞争假设</text>
+        </g>
+      </svg>
+    </div>
+  </div>
+</section>
+
+<!-- ================= FLYWHEEL ================= -->
+<section id="flywheel">
+  <div class="wrap fly">
+    <div>
+      <h2 class="reveal">用得越多，排查越准。<span class="huen">CORPUS FLYWHEEL</span></h2>
+      <p class="lede reveal">排查执行产出证据，证据经调用链语料生成器写入 RAG 集合，检索增强反哺下一次路由；闭环每转一圈，线路网的曝光就更厚一层。</p>
+      <div class="docchips reveal" aria-label="语料生成器输出的六类 RAG 文档">
+        <span class="dchip">概览 <b>overview</b></span><span class="dchip">源码文件 <b>source_file</b></span><span class="dchip">函数 <b>function</b></span><span class="dchip">流程 <b>flow</b></span><span class="dchip">组件交互 <b>cross_ref</b></span><span class="dchip">问答对 <b>qa_pair</b></span>
+      </div>
+      <div class="docchips reveal">
+        <span class="dchip">双写集合 → <b>code-analysis</b></span><span class="dchip"><b>kudig-rag</b></span>
+      </div>
+    </div>
+    <div class="flywheel reveal">
+      <svg viewBox="0 0 560 420" role="img" aria-label="语料飞轮：排查执行、语料生成、检索增强、更准路由四步循环">
+        <defs><marker id="ar" viewBox="0 0 8 8" refX="6" refY="4" markerWidth="7" markerHeight="7" orient="auto"><path d="M0 0 8 4 0 8z" fill="#a7b4c9"/></marker></defs>
+        <g fill="none" stroke="#a7b4c9" stroke-width="3" opacity=".85">
+          <path d="M330 84 A120 120 0 0 1 400 210" marker-end="url(#ar)"/>
+          <path d="M376 300 A120 120 0 0 1 240 330" marker-end="url(#ar)"/>
+          <path d="M160 296 A120 120 0 0 1 158 170" marker-end="url(#ar)"/>
+          <path d="M206 92 A120 120 0 0 1 300 76" marker-end="url(#ar)"/>
+        </g>
+        <g font-family="Noto Sans SC, sans-serif" font-weight="700" font-size="17" fill="#e8eef7">
+          <text x="230" y="52">排查执行</text><text x="416" y="216">语料生成</text><text x="196" y="368">检索增强</text><text x="60" y="180">更准路由</text>
+        </g>
+        <g font-family="JetBrains Mono, monospace" font-size="11" fill="#7d8da6">
+          <text x="230" y="72">runtime/engine.py</text><text x="416" y="236">corpus/call_chain_rag_generator.py</text><text x="196" y="388">rag/retrieve/retriever.py</text><text x="60" y="200">selector/router.py</text>
+        </g>
+        <circle cx="280" cy="206" r="58" fill="#111c30" stroke="rgba(232,238,247,.2)"/>
+        <text x="280" y="200" text-anchor="middle" font-family="Barlow Condensed, sans-serif" font-size="13" letter-spacing="3" fill="#7d8da6">EXPOSURE</text>
+        <text x="280" y="226" text-anchor="middle" font-family="Barlow, sans-serif" font-weight="800" font-size="24" fill="#ffc94d">+6 / 班</text>
+      </svg>
+    </div>
+  </div>
+</section>
+
+<!-- ================= GTM STRATEGY ================= -->
+<section id="strategy" class="strat">
+  <div class="wrap">
+    <h2 class="reveal">GTM 战略 · 线路规划图<span class="huen">NETWORK PLAN — 规划示意，非承诺</span></h2>
+    <p class="pos reveal">定位主张：<mark>多路径智能路由 + 排查知识自沉淀闭环</mark>。单一路径的 AI 问答谁都能做；让每一次排查都变成下一班语料的飞轮，只有这条线路网在做。</p>
+
+    <div class="stratgrid">
+      <div>
+        <h3 class="strath">目标客群 · ICP 站点群</h3>
+        <div class="icp">
+          <div class="icprow reveal" style="--lc:#ff6b35"><h3><span class="stn"></span>云原生企业的平台工程团队</h3><p><b>特征</b>：K8s 集群 ≥ 50，on-call 压力大，已有可观测栈。<b>切入点</b>：告警分诊与 RCA 提速。<b>证明方式</b>：MTTR 对照演练。</p></div>
+          <div class="icprow reveal" style="--lc:#00c2a8"><h3><span class="stn"></span>运维服务商（MSP）</h3><p><b>特征</b>：多客户多集群，知识在人头上。<b>切入点</b>：排查知识沉淀为可复用技能与语料。<b>证明方式</b>：跨客户语料库演示。</p></div>
+          <div class="icprow reveal" style="--lc:#7c6cff"><h3><span class="stn"></span>开源社区自部署用户</h3><p><b>特征</b>：从 kudig-database 语料与示例技能起步。<b>切入点</b>：开箱即用的 FTA + RAG 管线。<b>证明方式</b>：5 分钟本地跑通 Pod Crash 排查。</p></div>
+        </div>
+        <h3 class="strath" style="margin-top:44px">渠道 · 线路开通计划</h3>
+        <div class="icp">
+          <div class="icprow reveal" style="--lc:#ffc94d"><h3><span class="stn"></span>开源社区线 <span class="stat go" style="margin-left:auto">已发车</span></h3><p>GitHub 仓库 + 中文文档 + k8s-pod-crash 示例技能 + 调用链语料公开。</p></div>
+          <div class="icprow reveal" style="--lc:#ffc94d"><h3><span class="stn"></span>直销共创线 <span class="stat" style="margin-left:auto">筹备中</span></h3><p>种子客户共创：以真实告警回放做 POC，产出首批可引用案例。</p></div>
+          <div class="icprow reveal" style="--lc:#ffc94d"><h3><span class="stn"></span>生态集成线 <span class="stat" style="margin-left:auto">规划中</span></h3><p>AgentScope / Higress 网关集成，进入云市场与 AIOps 工具链目录。</p></div>
+        </div>
+      </div>
+      <div>
+        <h3 class="strath">里程碑 · 开通时刻表</h3>
+        <div class="timetable reveal">
+          <div class="ttrow"><span class="m">M1</span><span class="what">产品就绪：路由 + FTA + RAG + 语料生成全链路，种子用户内测</span><span class="when">当前季度</span><span class="stat go">已发车</span></div>
+          <div class="ttrow"><span class="m">M2</span><span class="what">开源发布：语料库与示例技能公开，社区线全面运营</span><span class="when">+1 季度</span><span class="stat">筹备中</span></div>
+          <div class="ttrow"><span class="m">M3</span><span class="what">首批付费标杆：3 个可引用案例，直销线转商业运营</span><span class="when">+2 季度</span><span class="stat">规划中</span></div>
+        </div>
+        <h3 class="strath" style="margin-top:44px">北极星 · 调度指标板（目标示意）</h3>
+        <div class="metrics reveal" style="margin-top:0">
+          <div class="metric" style="--mc:#ff6b35"><div class="v">−40%</div><div class="l">MTTR 中位数下降</div><div class="s">对照人工分诊基线</div></div>
+          <div class="metric" style="--mc:#00c2a8"><div class="v">≥0.9</div><div class="l">路由准确率</div><div class="s">意图 → 正确线路</div></div>
+          <div class="metric" style="--mc:#ffc94d"><div class="v">+120</div><div class="l">周语料增量</div><div class="s">RAG 文档 / 周</div></div>
+          <div class="metric" style="--mc:#7c6cff"><div class="v">300</div><div class="l">周活跃排查会话</div><div class="s">M3 目标</div></div>
+        </div>
+        <p class="datanote reveal" style="margin-top:16px">以上指标为规划目标示意，正式发布前以实测数据替换。</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ================= CLOSE ================= -->
+<section class="close" id="close">
+  <div class="wrap">
+    <h2 class="reveal">让每一次告警，<br>都有终点站。</h2>
+    <div class="herobtns reveal">
+      <a class="btn btn-primary" href="mailto:gtm@resolveagent.io?subject=ResolveAgent%20%E6%BC%94%E7%A4%BA%E9%A2%84%E7%BA%A6">预约演示
+        <svg width="16" height="16" viewBox="0 0 16 16" fill="none" aria-hidden="true"><rect x="2" y="3" width="12" height="11" rx="2" stroke="currentColor" stroke-width="1.8"/><path d="M2 6h12M5 1.5V4M11 1.5V4" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg>
+      </a>
+      <a class="btn btn-ghost" href="#">GitHub 仓库</a>
+      <a class="btn btn-ghost" href="#">产品文档</a>
+    </div>
+  </div>
+</section>
+</main>
+
+<footer>
+  <div class="wrap foot">
+    <span>ResolveAgent · GTM 策略中枢 · 内部规划与对外叙事合一页</span>
+    <span>调度数据为示意 · 世界：调度总图 (seed 69c678c1)</span>
+  </div>
+</footer>
+
+<script>
+(function(){
+  "use strict";
+  var RM = matchMedia("(prefers-reduced-motion: reduce)").matches;
+  /* clock */
+  var clock = document.getElementById("clock");
+  function tick(){ var d=new Date(); clock.textContent = d.toTimeString().slice(0,8)+" CST"; }
+  tick(); setInterval(tick,1000);
+
+  /* split-flap board */
+  var grid = document.getElementById("flapgrid");
+  var ROWS = [
+    {t:"14:31", id:"INT-8841", alarm:"Pod NotReady",   route:"LINE FTA",  st:"已发车", ok:true},
+    {t:"14:30", id:"INT-8842", alarm:"OOMKilled",      route:"LINE SKILL",st:"运行中"},
+    {t:"14:29", id:"INT-8843", alarm:"High CPU Usage", route:"LINE RAG",  st:"运行中"},
+    {t:"14:28", id:"INT-8844", alarm:"Error 5xx Surge",route:"LINE CODE", st:"待调度"}
+  ];
+  function tiles(text){
+    var s=document.createElement("span"); s.className="fcell";
+    for(var i=0;i<text.length;i++){ var t=document.createElement("span"); t.className="ftile"; t.textContent=text[i]===" "?"\u00A0":text[i]; s.appendChild(t); }
+    return s;
+  }
+  function renderBoard(){
+    grid.querySelectorAll(".frow").forEach(function(r){r.remove();});
+    ROWS.forEach(function(r){
+      var frag=document.createDocumentFragment();
+      [r.t,r.id,r.alarm,r.route,r.st].forEach(function(v,idx){
+        var c=tiles(v);
+        if(idx===4){ c.classList.add("fstatus"); if(r.ok)c.classList.add("ok"); }
+        var w=document.createElement("span"); w.className="frow"; frag.appendChild(c);
+      });
+      /* wrap: frow uses display:contents, so append cells directly with row marker */
+      grid.appendChild(frag);
+    });
+  }
+  /* simpler: rebuild cells in order; CSS grid flows them */
+  function rebuild(){
+    grid.querySelectorAll(".fcell,.farrow").forEach(function(c){c.remove();});
+    ROWS.forEach(function(r){
+      [r.t,r.id,r.alarm,r.route,r.st].forEach(function(v,idx){
+        if(idx===3){ var a=document.createElement("span"); a.className="farrow fcol-arrow"; a.textContent="→"; grid.appendChild(a); }
+        var c=tiles(v); c.classList.add(["fcol-t","fcol-id","fcol-alarm","fcol-route","fcol-st"][idx]); if(idx===4){c.classList.add("fstatus"); if(r.ok)c.classList.add("ok"); else if(r.st==="待调度")c.classList.add("warn");}
+        grid.appendChild(c);
+      });
+    });
+  }
+  rebuild();
+  function flapTo(cellIdx,text){
+    var cells=grid.querySelectorAll(".fcell"); var cell=cells[cellIdx]; if(!cell)return;
+    var old=cell; var nu=tiles(text);
+    old.classList.forEach(function(cl){ nu.classList.add(cl); });
+    if(RM){ old.replaceWith(nu); return; }
+    old.replaceWith(nu);
+    nu.querySelectorAll(".ftile").forEach(function(t,i){ setTimeout(function(){ t.classList.add("flip"); }, i*26); });
+  }
+
+  /* metro map line switching + train */
+  var LINES = { fta:{path:"pfta",color:"#ff6b35",route:"LINE FTA"}, skill:{path:"pskill",color:"#7c6cff",route:"LINE SKILL"}, rag:{path:"prag",color:"#00c2a8",route:"LINE RAG"}, code:{path:"pcode",color:"#ffc94d",route:"LINE CODE"} };
+  var train=document.getElementById("train");
+  var ticker=document.getElementById("ticker");
+  var active="fta";
+  function setLine(key){
+    active=key;
+    Object.keys(LINES).forEach(function(k){
+      var el=document.getElementById(LINES[k].path);
+      if(k===key){ el.setAttribute("stroke-width","10"); el.removeAttribute("stroke-dasharray"); }
+      else { el.setAttribute("stroke-width","7"); el.setAttribute("stroke-dasharray","16 12"); }
+    });
+  }
+  function runTrain(key, alarm){
+    var el=document.getElementById(LINES[key].path);
+    var len=el.getTotalLength();
+    train.setAttribute("stroke",LINES[key].color); train.setAttribute("opacity","1");
+    var steps=[
+      ["▸ "+alarm+" 进站 — intent.classify (selector/intent.py) 置信 0.97",0],
+      ["▸ 分发 "+LINES[key].route+" ● 主路径；其余线路保持虚线备选",.22],
+      ["▸ 沿途站点翻牌：证据聚合 → 求解 → 验证",.55],
+      ["▸ 终点站：根因确认 · corpus.write +6 documents → kudig-rag / code-analysis",1]
+    ];
+    if(RM){ train.setAttribute("opacity","0"); ticker.innerHTML='<span class="tk">▸</span> '+alarm+" → "+LINES[key].route+" → 根因（动画已按系统偏好关闭）"; return; }
+    var t0=null, DUR=2600, shown=0;
+    function frame(ts){
+      if(!t0)t0=ts; var p=Math.min((ts-t0)/DUR,1);
+      var e=1-Math.pow(1-p,3);
+      var pt=el.getPointAtLength(e*len);
+      train.setAttribute("cx",pt.x); train.setAttribute("cy",pt.y);
+      while(shown<steps.length && e>=steps[shown][1]){ ticker.innerHTML='<span class="tk">▸</span> '+steps[shown][0]; shown++; }
+      if(p<1) requestAnimationFrame(frame); else setTimeout(function(){train.setAttribute("opacity","0");},700);
+    }
+    requestAnimationFrame(frame);
+  }
+  document.querySelectorAll(".chip").forEach(function(ch){
+    ch.addEventListener("click",function(){
+      document.querySelectorAll(".chip").forEach(function(c){c.classList.remove("on");});
+      ch.classList.add("on");
+      var key=ch.dataset.line, alarm=ch.dataset.alarm;
+      setLine(key);
+      /* update top board row */
+      var d=new Date();
+      ROWS[0]={t:d.toTimeString().slice(0,5), id:"INT-"+(8845+Math.floor(Math.random()*90)), alarm:alarm, route:LINES[key].route, st:"已发车", ok:true};
+      ROWS[1].st="运行中";
+      rebuild();
+      var cells=grid.querySelectorAll(".fcell");
+      for(var i=0;i<5;i++){ (function(i){ setTimeout(function(){ flapTo(i, ROWS[0][["t","id","alarm","route","st"][i]]); }, i*90); })(i); }
+      runTrain(key, alarm);
+    });
+  });
+  /* terminal typing reveal */
+  var tb=document.getElementById("termbody");
+  var tio=new IntersectionObserver(function(es){ es.forEach(function(en){ if(en.isIntersecting){ tio.disconnect();
+    tb.querySelectorAll(".tl").forEach(function(l,i){ setTimeout(function(){ l.classList.add("in"); }, RM?0:i*260); });
+  }});},{threshold:.3});
+  tio.observe(tb);
+
+  /* generic reveal */
+  var rio=new IntersectionObserver(function(es){ es.forEach(function(en){ if(en.isIntersecting){ en.target.classList.add("in"); rio.unobserve(en.target);} }); },{threshold:.15});
+  document.querySelectorAll(".reveal").forEach(function(el){ rio.observe(el); });
+
+  /* replay track isolation */
+  var scope=document.getElementById("scope");
+  document.querySelectorAll(".trk").forEach(function(b){
+    b.addEventListener("click",function(){
+      var k=b.dataset.t;
+      scope.classList.add("iso");
+      scope.querySelectorAll(".track").forEach(function(t){ t.classList.toggle("sel", t.dataset.t===k); });
+      document.querySelectorAll(".trk").forEach(function(x){ x.classList.toggle("on", x===b); });
+    });
+  });
+  scope.addEventListener("dblclick",function(){ scope.classList.remove("iso"); scope.querySelectorAll(".track").forEach(function(t){t.classList.remove("sel");}); document.querySelector('.trk[data-t="fta"]').classList.add("on"); });
+})();
+</script>
+<!-- gtm-portal-backlink (managed by _scripts/sync-gtm.py) -->
+<a class="gtmp-back" href="/GTM/" aria-label="返回 GTM 门户">&#8617; GTM 门户</a>
+<style>
+.gtmp-back{position:fixed;right:1rem;bottom:1rem;z-index:2147483000;
+font:500 12px/1 ui-monospace,SFMono-Regular,Menlo,Consolas,monospace;
+letter-spacing:.05em;text-decoration:none;padding:.6rem .85rem;border-radius:999px;
+color:#14130f;background:rgba(251,250,247,.92);border:1px solid rgba(20,19,15,.16);
+box-shadow:0 2px 12px rgba(20,19,15,.14);backdrop-filter:blur(6px);
+transition:transform .15s ease,box-shadow .15s ease}
+.gtmp-back:hover{transform:translateY(-1px);box-shadow:0 4px 16px rgba(20,19,15,.22)}
+@media (prefers-color-scheme:dark){.gtmp-back{color:#f5f2ea;background:rgba(20,19,15,.88);
+border-color:rgba(245,242,234,.22)}}
+</style>
+</body>
+</html>

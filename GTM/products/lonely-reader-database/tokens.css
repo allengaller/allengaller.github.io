@@ -1,0 +1,56 @@
+/* Hallmark · macrostructure: Feature Stack · genre: editorial · theme: brand-preserving (ink · cinnabar)
+ * pre-emit critique: P5 H4 E5 S5 R5 V5
+ * nav: N6 Masthead · footer: Ft5 Statement · enrichment: Tier-A CSS book-spine shelf
+ * contrast: pass (ink-on-paper ≥ 7:1 · accent-on-paper ≥ 4.6:1)
+ */
+:root {
+  --color-paper:        oklch(15.5% 0.018 65);
+  --color-paper-2:      oklch(19.5% 0.022 65);
+  --color-paper-3:      oklch(24% 0.028 65);
+  --color-ink:          oklch(92.5% 0.028 92);
+  --color-ink-2:        oklch(76% 0.03 92);
+  --color-ink-3:        oklch(58% 0.028 88);
+  --color-accent:       oklch(55% 0.165 36);
+  --color-accent-bright:oklch(63% 0.185 38);
+  --color-accent-ink:   oklch(92.5% 0.028 92);
+  --color-focus:        oklch(70% 0.17 42);
+  --color-rule:         oklch(92.5% 0.028 92 / 0.14);
+  --color-rule-strong:  oklch(92.5% 0.028 92 / 0.32);
+  --color-zhusha:       oklch(55% 0.165 36 / 0.15);
+  --color-lamp:         oklch(80% 0.11 80 / 0.09);
+
+  --font-display: "Noto Serif SC", "Songti SC", "STSong", serif;
+  --font-body:    "Noto Serif SC", "Songti SC", "STSong", serif;
+  --font-kai:     "LXGW WenKai", "Kaiti SC", "STKaiti", "Noto Serif SC", serif;
+  --font-latin:   "Cormorant Garamond", Georgia, serif;
+  --font-mono:    "IBM Plex Mono", "SFMono-Regular", Menlo, monospace;
+
+  --space-3xs: 0.25rem;
+  --space-2xs: 0.5rem;
+  --space-xs:  0.75rem;
+  --space-sm:  1rem;
+  --space-md:  1.5rem;
+  --space-lg:  2rem;
+  --space-xl:  3rem;
+  --space-2xl: 4.5rem;
+  --space-3xl: 7rem;
+
+  --text-xs: 0.75rem;
+  --text-sm: 0.875rem;
+  --text-md: 1.0625rem;
+  --text-lg: 1.3125rem;
+  --text-xl: 1.75rem;
+  --text-2xl: 2.25rem;
+  --text-3xl: 3rem;
+  --text-display-s: clamp(2.4rem, 5.2vw, 4rem);
+  --text-display: clamp(3rem, 7.4vw, 6.2rem);
+
+  --ease-out: cubic-bezier(0.16, 1, 0.3, 1);
+  --ease-in-out: cubic-bezier(0.65, 0, 0.35, 1);
+  --dur-short: 220ms;
+  --dur-med: 480ms;
+  --dur-long: 800ms;
+
+  --radius-card: 4px;
+  --radius-spine: 3px;
+}

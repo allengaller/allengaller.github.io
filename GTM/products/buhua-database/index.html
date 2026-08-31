@@ -1,0 +1,266 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="description" content="不花 · Go-to-Market。把不花钱的美好，做成一座城市的入口。1030 条免费地点、116 座城市、51 个分类的结构化数据库与增长战略。">
+<title>不花 · Go to Market — 把不花钱的美好，做成一座城市的入口</title>
+<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🌼</text></svg>">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Serif+SC:wght@600;900&family=Noto+Sans+SC:wght@400;500;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<header class="topbar">
+  <div class="wrap">
+    <div class="brand">
+      <span class="logo" aria-hidden="true">🌼</span>
+      <div><b>不花</b><small>BUHUA · GO TO MARKET</small></div>
+    </div>
+    <nav class="nav" aria-label="页面导航">
+      <a href="#why">战略</a>
+      <a href="#data">数据</a>
+      <a href="#growth">增长</a>
+      <a href="#roadmap">里程碑</a>
+      <a href="#cta">合作</a>
+    </nav>
+    <a class="cta" href="#cta">参与共建</a>
+  </div>
+</header>
+
+<main>
+  <!-- ============ HERO ============ -->
+  <section class="hero">
+    <div class="wrap">
+      <div>
+        <p class="kicker">不花钱，也值得被认真对待</p>
+        <h1>把<em>不花钱</em>的美好，<br>做成一座城市的入口。</h1>
+        <p class="lede">「不花」是一个微信小程序与结构化数据库，收录全国免费的美好体验——公园、古镇、博物馆、日落点、绿道与寺庙。我们相信：免费不是将就，而是一种值得分享的生活方式。</p>
+        <div class="metrics">
+          <div class="metric m1"><span class="num" data-count="1030">0</span><small>条免费地点</small></div>
+          <div class="metric m2"><span class="num" data-count="116">0</span><small>座城市</small></div>
+          <div class="metric m3"><span class="num" data-count="51">0</span><small>个分类</small></div>
+        </div>
+      </div>
+      <div class="map-sticker" data-reveal>
+        <div class="map-card">
+          <h3>🗺️ 全国覆盖点阵 · 每点 = 1 城</h3>
+          <div id="dotmap" role="img" aria-label="116 个圆点，代表已覆盖的 116 座城市"></div>
+        </div>
+        <p class="map-note">深圳已验证 · 下一站，全国复制 🐬</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ 01 战略 / WHY NOW ============ -->
+  <section id="why">
+    <div class="wrap">
+      <div class="sec-head" data-reveal><span class="tape">战略</span><h2>为什么是现在？</h2><span class="rule"></span></div>
+      <div class="narrow" data-reveal>
+        <p style="font-size:1.05rem;color:var(--ink-soft)">消费正在回归理性，「citywalk」「免费开放日」「城市漫步」持续走热。人们不再为门票排队，而是为体验出发。但免费体验的信息散落在社交平台里：碎片、广告化、时效差。<b style="color:var(--ink-strong)">一个结构化、只讲「免费」的数据库，是尚未被认真做过的空白。</b></p>
+      </div>
+      <div class="notes" style="margin-top:36px">
+        <div class="note n1" data-reveal><span class="big">理性消费</span>「把钱花在刀刃上」成为共识，免费而高质量的体验需求被放大。</div>
+        <div class="note n2" data-reveal><span class="big">城市漫步热</span>citywalk、夜游、赏花、观鸟——免费场景正成为新的城市生活方式。</div>
+        <div class="note n3" data-reveal><span class="big">信息真空</span>现有平台广告化、碎片化，缺少一个只回答「哪里免费且值得去」的可信来源。</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ 02 数据资产 ============ -->
+  <section id="data">
+    <div class="wrap">
+      <div class="sec-head" data-reveal><span class="tape alt">数据</span><h2>我们手里有什么？</h2><span class="rule"></span></div>
+      <div class="assets">
+        <div class="spec" data-reveal>
+          <h3>📚 标准化字段（每条记录 11 项）</h3>
+          <ul>
+            <li>城市</li><li>地址</li><li>分类</li><li>标签</li>
+            <li>简介</li><li>亮点</li><li>适合人群</li><li>最佳时间</li>
+            <li>交通</li><li>小贴士</li><li>费用</li>
+          </ul>
+          <p style="margin-top:14px;font-size:13px;color:var(--ink-soft)">统一字段让数据可检索、可比较、可授权——这是内容，更是资产。</p>
+        </div>
+        <div>
+          <div class="chart-card" data-reveal>
+            <h3>📊 分类规模 TOP 10（条）</h3>
+            <div id="catBars"></div>
+          </div>
+          <div class="chart-card" data-reveal>
+            <h3>🏙️ 城市覆盖 TOP 8（条）</h3>
+            <div id="cityBars"></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ 03 用户 ICP ============ -->
+  <section id="users">
+    <div class="wrap">
+      <div class="sec-head" data-reveal><span class="tape">用户</span><h2>为谁而做？</h2><span class="rule"></span></div>
+      <div class="ledger" data-reveal>
+        <div class="row"><span class="who">🚶</span><span class="name">城市探索者</span><span class="scene">18–35 岁，周末想出门但拒绝人挤人与高门票。</span><span class="hook">钩子：<b>citywalk 路线</b>与小众打卡点</span></div>
+        <div class="row"><span class="who">👨‍👩‍👧</span><span class="name">预算敏感家庭</span><span class="scene">亲子出游高频，希望低成本又有质量的陪伴时间。</span><span class="hook">钩子：<b>公园 / 博物馆 / 农场</b>免费清单</span></div>
+        <div class="row"><span class="who">🎓</span><span class="name">学生党</span><span class="scene">时间充裕、预算有限，热衷分享与打卡。</span><span class="hook">钩子：<b>打卡成就</b>与社交裂变</span></div>
+        <div class="row"><span class="who">🧓</span><span class="name">银发漫步族</span><span class="scene">退休人群，日常散步、晨练、赏花的稳定用户。</span><span class="hook">钩子：<b>绿道 / 茶园 / 寺庙</b>等疗愈空间</span></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ 04 定位 / 差异化 ============ -->
+  <section id="position">
+    <div class="wrap">
+      <div class="sec-head" data-reveal><span class="tape alt">定位</span><h2>和别人有什么不同？</h2><span class="rule"></span></div>
+      <div data-reveal style="overflow-x:auto">
+        <table class="cmp">
+          <thead><tr><th scope="col"></th><th scope="col">小红书</th><th scope="col">大众点评</th><th scope="col">马蜂窝</th><th scope="col" class="us">不花</th></tr></thead>
+          <tbody>
+            <tr><td>内容形态</td><td>UGC 碎片</td><td>商业导向</td><td>旅行攻略</td><td class="us">结构化数据库</td></tr>
+            <tr><td>是否只讲免费</td><td>否</td><td>否</td><td>否</td><td class="us">是 · 唯一过滤器</td></tr>
+            <tr><td>信息时效</td><td>参差</td><td>参差</td><td>较慢</td><td class="us">字段化巡检</td></tr>
+            <tr><td>广告侵入</td><td>高</td><td>高</td><td>中</td><td class="us">用户侧零广告</td></tr>
+          </tbody>
+        </table>
+      </div>
+      <p class="narrow" data-reveal style="margin-top:20px;font-size:1rem;color:var(--ink-soft)">「免费」是最锋利的过滤器，也是最强的品牌钩子。我们不与内容平台比流量，而是比<b style="color:var(--ink-strong)">可信与专注</b>。</p>
+    </div>
+  </section>
+
+  <!-- ============ 05 增长飞轮 ============ -->
+  <section id="growth">
+    <div class="wrap">
+      <div class="sec-head" data-reveal><span class="tape">增长</span><h2>增长飞轮如何转？</h2><span class="rule"></span></div>
+      <div class="fly">
+        <div class="wheel-wrap" data-reveal><div id="wheel" role="img" aria-label="增长飞轮：数据资产、内容分发、打卡留存、合作变现四个节点循环"></div></div>
+        <div class="engines">
+          <div class="engine" data-reveal><span class="ic">🗄️</span><div><b>数据资产 → 内容分发</b><p>结构化数据自动生成城市榜单、季节清单，投喂搜一搜与社媒。</p></div></div>
+          <div class="engine" data-reveal><span class="ic">📣</span><div><b>内容分发 → 打卡留存</b><p>用户被清单吸引进入小程序，用打卡、成就与每日任务留存。</p></div></div>
+          <div class="engine" data-reveal><span class="ic">🐚</span><div><b>打卡留存 → 合作变现</b><p>活跃与分享产生传播，吸引文旅与商家的轻量合作。</p></div></div>
+          <div class="engine" data-reveal><span class="ic">🤝</span><div><b>合作变现 → 数据资产</b><p>合作收益反哺数据巡检与扩充，飞轮越转越快。</p></div></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ 06 渠道 ============ -->
+  <section id="channels">
+    <div class="wrap">
+      <div class="sec-head" data-reveal><span class="tape alt">渠道</span><h2>从哪里获取用户？</h2><span class="rule"></span></div>
+      <div class="ledger" data-reveal>
+        <div class="row"><span class="who">🔍</span><span class="name">微信搜一搜 SEO</span><span class="scene">「城市+免费」关键词矩阵，承接主动搜索流量。</span><span class="hook">阶段：<b>P1 起</b></span></div>
+        <div class="row"><span class="who">📕</span><span class="name">小红书种草</span><span class="scene">城市免费清单图文，打「不花钱」心智。</span><span class="hook">阶段：<b>P1 起</b></span></div>
+        <div class="row"><span class="who">🎬</span><span class="name">抖音探店</span><span class="scene">短视频实拍免费好去处，扩大曝光。</span><span class="hook">阶段：<b>P2</b></span></div>
+        <div class="row"><span class="who">🏫</span><span class="name">高校社群</span><span class="scene">学生党自发传播与打卡，低成本裂变。</span><span class="hook">阶段：<b>P2</b></span></div>
+        <div class="row"><span class="who">🏛️</span><span class="name">文旅局 / 媒体</span><span class="scene">城市免费体验报告与数据合作，建立公信力。</span><span class="hook">阶段：<b>P3</b></span></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ 07 变现 ============ -->
+  <section id="revenue">
+    <div class="wrap">
+      <div class="sec-head" data-reveal><span class="tape">变现</span><h2>如何活下去？</h2><span class="rule"></span></div>
+      <div class="cta-band" data-reveal style="margin-bottom:28px">
+        <h2>对用户，永远免费、零广告。</h2>
+        <p>这是品牌承诺，也是护城河。变现发生在 B 端，绝不以牺牲用户体验为代价。</p>
+      </div>
+      <div class="ledger" data-reveal>
+        <div class="row"><span class="who">🏛️</span><span class="name">文旅数据服务</span><span class="scene">为城市输出「免费体验报告」与数据看板。</span><span class="hook">形态：<b>项目制</b></span></div>
+        <div class="row"><span class="who">🏪</span><span class="name">本地商家轻曝光</span><span class="scene">免费体验周边消费（咖啡、骑行租赁）的温和推荐。</span><span class="hook">形态：<b>订阅</b></span></div>
+        <div class="row"><span class="who">🔌</span><span class="name">API / 内容授权</span><span class="scene">向地图、导航、生活平台授权结构化数据。</span><span class="hook">形态：<b>授权费</b></span></div>
+        <div class="row"><span class="who">🎨</span><span class="name">品牌联名路线</span><span class="scene">与品牌共建 citywalk 路线与线下活动。</span><span class="hook">形态：<b>联名</b></span></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ 08 里程碑 ============ -->
+  <section id="roadmap">
+    <div class="wrap">
+      <div class="sec-head" data-reveal><span class="tape alt">里程碑</span><h2>三步走到哪里？</h2><span class="rule"></span></div>
+      <div class="timeline">
+        <div class="phase p1" data-n="1" data-reveal>
+          <h3>单城验证 · 深圳</h3><span class="when">2026 Q4</span>
+          <p>以深圳 133 条数据与游戏化打卡地图跑通「收录 → 打卡 → 分享」闭环，验证留存与裂变系数。</p>
+          <span class="goal">北极星：周活跃打卡用户</span>
+        </div>
+        <div class="phase p2" data-n="2" data-reveal>
+          <h3>区域复制 · 30 城</h3><span class="when">2027 H1</span>
+          <p>向成都、北京、西安、杭州等高覆盖城市复制，上线 UGC 纠错与补充工具，让数据自我生长。</p>
+          <span class="goal">北极星：城市覆盖与收录增速</span>
+        </div>
+        <div class="phase p3" data-n="3" data-reveal>
+          <h3>平台化 · B 端变现</h3><span class="when">2027 H2</span>
+          <p>发布城市免费体验报告，开放 API 与文旅合作，建立「免费体验」品类的第一心智。</p>
+          <span class="goal">北极星：B 端合作收入占比</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ 09 KPI ============ -->
+  <section id="kpi">
+    <div class="wrap">
+      <div class="sec-head" data-reveal><span class="tape">指标</span><h2>用什么衡量成败？</h2><span class="rule"></span></div>
+      <div class="kpis">
+        <div class="kpi star" data-reveal><span class="num">WAU</span><small>周活跃打卡用户（北极星）</small></div>
+        <div class="kpi" data-reveal><span class="num num-c">1030+</span><small>收录条数持续增长</small></div>
+        <div class="kpi" data-reveal><span class="num num-c">116+</span><small>城市覆盖</small></div>
+        <div class="kpi" data-reveal><span class="num">↗</span><small>搜一搜曝光与分享率</small></div>
+        <div class="kpi" data-reveal><span class="num">D7</span><small>次周留存</small></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ 10 风险 ============ -->
+  <section id="risk">
+    <div class="wrap">
+      <div class="sec-head" data-reveal><span class="tape alt">风险</span><h2>我们担心什么？</h2><span class="rule"></span></div>
+      <div class="risk">
+        <div class="row" data-reveal><span class="r">免费政策变动，数据失效</span><span class="arrow">➜</span><span class="c">社区纠错 + 定期巡检字段</span></div>
+        <div class="row" data-reveal><span class="r">大厂跟进同类功能</span><span class="arrow">➜</span><span class="c">数据壁垒 + 「免费」品牌心智</span></div>
+        <div class="row" data-reveal><span class="r">政务 / 文旅合作门槛</span><span class="arrow">➜</span><span class="c">从深圳 93 条政务数据切入背书</span></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ CTA ============ -->
+  <section id="cta">
+    <div class="wrap">
+      <div class="cta-band" data-reveal>
+        <h2>一起把「不花钱的美好」，带到更多城市。</h2>
+        <p>无论你是文旅机构、本地商家、媒体，还是想补充家乡数据的个人——都欢迎加入共建。</p>
+        <div class="actions">
+          <a class="btn primary" href="../app/index.html">打开深圳奇妙地图</a>
+          <a class="btn ghost" href="../INDEX.md">浏览数据库索引</a>
+        </div>
+      </div>
+    </div>
+  </section>
+</main>
+
+<footer>
+  不花 · 发现身边不花钱的美好 ｜ 数据快照 2026-08（scripts/gtm_stats.py 全库解析）｜ 本页为 Go-to-Market 战略叙事
+</footer>
+
+<button class="cta" id="btnTop" hidden style="position:fixed;right:18px;bottom:18px;z-index:70">↑ 顶部</button>
+
+<script src="gtm-data.js"></script>
+<script src="gtm.js"></script>
+<!-- gtm-portal-backlink (managed by _scripts/sync-gtm.py) -->
+<a class="gtmp-back" href="/GTM/" aria-label="返回 GTM 门户">&#8617; GTM 门户</a>
+<style>
+.gtmp-back{position:fixed;right:1rem;bottom:1rem;z-index:2147483000;
+font:500 12px/1 ui-monospace,SFMono-Regular,Menlo,Consolas,monospace;
+letter-spacing:.05em;text-decoration:none;padding:.6rem .85rem;border-radius:999px;
+color:#14130f;background:rgba(251,250,247,.92);border:1px solid rgba(20,19,15,.16);
+box-shadow:0 2px 12px rgba(20,19,15,.14);backdrop-filter:blur(6px);
+transition:transform .15s ease,box-shadow .15s ease}
+.gtmp-back:hover{transform:translateY(-1px);box-shadow:0 4px 16px rgba(20,19,15,.22)}
+@media (prefers-color-scheme:dark){.gtmp-back{color:#f5f2ea;background:rgba(20,19,15,.88);
+border-color:rgba(245,242,234,.22)}}
+</style>
+</body>
+</html>
