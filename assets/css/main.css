@@ -1520,9 +1520,13 @@ strong { font-weight: 600; color: var(--text); }
 }
 
 .gtm-h1 em {
-  font-style: italic;
+  font-style: normal;
   color: var(--accent);
   font-variation-settings: "SOFT" 60, "WONK" 1;
+  text-decoration: underline;
+  text-decoration-thickness: 2px;
+  text-underline-offset: 0.14em;
+  text-decoration-color: var(--gold);
 }
 
 .gtm-sub {
@@ -2051,8 +2055,12 @@ strong { font-weight: 600; color: var(--text); }
 }
 
 .gtmp-h1 em {
-  font-style: italic;
+  font-style: normal;
   color: var(--accent);
+  text-decoration: underline;
+  text-decoration-thickness: 2px;
+  text-underline-offset: 0.14em;
+  text-decoration-color: var(--gold);
 }
 
 .gtmp-sub {

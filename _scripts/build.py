@@ -57,6 +57,7 @@ PAGES = [
 # Pages whose build must also depend on other files (portal cards come from the manifest)
 EXTRA_DEPS = {
     "GTM/index.html": ["_data/gtm-products.json"],
+    "index.html": ["_data/gtm-products.json"],
 }
 
 NAV_PAGES = {
