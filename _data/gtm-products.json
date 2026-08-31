@@ -1,0 +1,305 @@
+{
+  "_comment": "GTM 门户产品清单（唯一事实源）。新增产品：加一行 → python3 _scripts/sync-gtm.py → python3 _scripts/build.py。type: page=整目录复制独立HTML；docs=markdown战略文档渲染成页面。internal=true 表示页面由本仓库构建，sync 跳过。",
+  "products": [
+    {
+      "slug": "allengaller",
+      "repo": "allengaller/allengaller.github.io",
+      "name": "法喜 · 三重飞轮",
+      "tagline": "深度喂养知识，知识喂养工具，工具反哺深度。",
+      "group": "personal",
+      "private": false,
+      "type": "internal"
+    },
+    {
+      "slug": "klaw",
+      "repo": "kudig-io/klaw",
+      "name": "Klaw",
+      "tagline": "一个二进制，装下整个 Kubernetes 运维。",
+      "group": "tools",
+      "private": false,
+      "type": "page",
+      "source": "GTM"
+    },
+    {
+      "slug": "open-arch",
+      "repo": "allengaller/open-arch",
+      "name": "OpenArch",
+      "tagline": "把售前架构师的工作显性化为技能资产与工作流。",
+      "group": "tools",
+      "private": false,
+      "type": "page",
+      "source": "GTM"
+    },
+    {
+      "slug": "open-tam",
+      "repo": "allengaller/open-tam",
+      "name": "open-tam",
+      "tagline": "把 TAM 的排查工作显性化，产出三段式根因报告。",
+      "group": "tools",
+      "private": false,
+      "type": "page",
+      "source": "GTM"
+    },
+    {
+      "slug": "mcp4coder",
+      "repo": "standup-coder/mcp-database",
+      "name": "mcp4coder",
+      "tagline": "37 个 MCP Server，一套自托管框架统管。",
+      "group": "tools",
+      "private": false,
+      "type": "page",
+      "source": "GTM"
+    },
+    {
+      "slug": "cmd-database",
+      "repo": "standup-coder/cmd-database",
+      "name": "命令行语料库",
+      "tagline": "100 领域 · 1137 命令页，让智能体读懂每一条命令。",
+      "group": "tools",
+      "private": false,
+      "type": "page",
+      "source": "GTM"
+    },
+    {
+      "slug": "interview-coach",
+      "repo": "allengaller/gutter-interview-skills",
+      "name": "Interview Coach",
+      "tagline": "对话式面试教练，把面试练成一份成绩单。",
+      "group": "tools",
+      "private": false,
+      "type": "page",
+      "source": "GTM"
+    },
+    {
+      "slug": "fde-scope",
+      "repo": "ai-guru-global/fde-scope",
+      "name": "FDE Scope",
+      "tagline": "完整 FDE SOP（4 区 18 阶段 10 门禁），强制执行。",
+      "group": "tools",
+      "private": false,
+      "type": "page",
+      "source": "GTM"
+    },
+    {
+      "slug": "resolve-agent",
+      "repo": "ai-guru-global/resolve-agent",
+      "name": "ResolveAgent",
+      "tagline": "告警进站，四线分岔，终点站是根因。",
+      "group": "tools",
+      "private": false,
+      "type": "page",
+      "source": "GTM"
+    },
+    {
+      "slug": "opendemo",
+      "repo": "opendemo-work/opendemo-work",
+      "name": "OpenDemo",
+      "tagline": "959+ 生产级可运行 Demo，给 SA 的技术演示平台。",
+      "group": "tools",
+      "private": false,
+      "type": "page",
+      "source": "gtm.html",
+      "source_kind": "single-file"
+    },
+    {
+      "slug": "agent-up",
+      "repo": "ai-guru-global/agent-up",
+      "name": "agent-up",
+      "tagline": "Agent 持续改进闭环：反馈、归因、发布、一键回滚。",
+      "group": "tools",
+      "private": true,
+      "type": "page",
+      "source": "GTM/website"
+    },
+    {
+      "slug": "kudig-database",
+      "repo": "kudig-io/kudig-database",
+      "name": "KUDIG Database",
+      "tagline": "K8s + AI Infra 运维全域知识库，人类与 Agent 双读。",
+      "group": "knowledge",
+      "private": false,
+      "type": "page",
+      "source": "GTM"
+    },
+    {
+      "slug": "fintech-database",
+      "repo": "better-call-saull/fintech-database",
+      "name": "FinTech 数据库",
+      "tagline": "中文金融科技知识图谱：20 模块 · 177 篇主题文档。",
+      "group": "knowledge",
+      "private": true,
+      "type": "page",
+      "source": "GTM"
+    },
+    {
+      "slug": "dana-database",
+      "repo": "allengaller/dana-database",
+      "name": "dana · 大拿",
+      "tagline": "开源知识平台的 Go-to-Market 战略。",
+      "group": "knowledge",
+      "private": false,
+      "type": "page",
+      "source": "GTM"
+    },
+    {
+      "slug": "brain-database",
+      "repo": "allengaller/brain-database",
+      "name": "FightBrain",
+      "tagline": "市场、ICP、定位、定价到增长指标的完整战略。",
+      "group": "knowledge",
+      "private": false,
+      "type": "page",
+      "source": "GTM"
+    },
+    {
+      "slug": "idea-database",
+      "repo": "allengaller/idea-database",
+      "name": "点子内参 IDEA LEDGER",
+      "tagline": "点子内参：商业模式与六维第二短板。",
+      "group": "knowledge",
+      "private": true,
+      "type": "page",
+      "source": "GTM"
+    },
+    {
+      "slug": "dude-database",
+      "repo": "allengaller/dude-database",
+      "name": "DUDE Database",
+      "tagline": "11 城 × 33 类玩法 × 900+ 篇城市玩乐指南。",
+      "group": "knowledge",
+      "private": false,
+      "type": "page",
+      "source": "GTM"
+    },
+    {
+      "slug": "podcast-database",
+      "repo": "allengaller/podcast-database",
+      "name": "Podcast Database",
+      "tagline": "播客数据库上市总纲：定位到北极星指标。",
+      "group": "knowledge",
+      "private": false,
+      "type": "page",
+      "source": "GTM"
+    },
+    {
+      "slug": "knowledge-graph-basement",
+      "repo": "allengaller/knowledge-graph-basement",
+      "name": "knowledge-graph-basement",
+      "tagline": "指向任意 Markdown 文件夹，得到十六种活视图。",
+      "group": "knowledge",
+      "private": false,
+      "type": "page",
+      "source": "GTM"
+    },
+    {
+      "slug": "repo-database",
+      "repo": "allengaller/repo-database",
+      "name": "repo-database",
+      "tagline": "机器聚合千仓，人工评审留 117 篇档案。",
+      "group": "knowledge",
+      "private": false,
+      "type": "page",
+      "source": "GTM"
+    },
+    {
+      "slug": "ai-guru-database",
+      "repo": "ai-guru-global/ai-guru-database",
+      "name": "AI Guru Database",
+      "tagline": "AI Guru 数据库 GTM 与发布剧本（战略文档）。",
+      "group": "knowledge",
+      "private": true,
+      "type": "docs",
+      "source": "GTM"
+    },
+    {
+      "slug": "lonely-reader-database",
+      "repo": "lonely-reader-global/lonely-reader-database",
+      "name": "孤独读者",
+      "tagline": "孤独读者市场进入战略总纲。",
+      "group": "knowledge",
+      "private": true,
+      "type": "page",
+      "source": "GTM"
+    },
+    {
+      "slug": "lolipop-database",
+      "repo": "lonely-reader-global/lolipop-database",
+      "name": "lolipop",
+      "tagline": "商业化定价 · 渠道 · 路线图 · 合规边界（战略文档）。",
+      "group": "knowledge",
+      "private": true,
+      "type": "docs",
+      "source": "GTM"
+    },
+    {
+      "slug": "open-cognition-database",
+      "repo": "peace-lab-global/open-cognition-database",
+      "name": "Open Cognition",
+      "tagline": "开放认知数据库的入市战略。",
+      "group": "knowledge",
+      "private": false,
+      "type": "page",
+      "source": "GTM"
+    },
+    {
+      "slug": "lonely-world",
+      "repo": "panna-arts/lonely-world",
+      "name": "孤独世界",
+      "tagline": "没有既定剧情的中文 AI 文字冒险游戏。",
+      "group": "content",
+      "private": false,
+      "type": "page",
+      "source": "GTM"
+    },
+    {
+      "slug": "ai-book",
+      "repo": "allengaller/ai-book",
+      "name": "大模型全栈实战指南",
+      "tagline": "图书上市作战简报：市场洞察到增长指标。",
+      "group": "content",
+      "private": true,
+      "type": "page",
+      "source": "GTM"
+    },
+    {
+      "slug": "buhua-database",
+      "repo": "buhua-global/buhua-database",
+      "name": "不花",
+      "tagline": "1030 条免费地点 · 116 城，不花钱的城市入口。",
+      "group": "content",
+      "private": true,
+      "type": "page",
+      "source": "GTM"
+    },
+    {
+      "slug": "global-goodnews",
+      "repo": "peace-lab-global/global-goodnews",
+      "name": "全球好新闻",
+      "tagline": "以身心灵为滩头的每日好新闻策展媒体。",
+      "group": "content",
+      "private": false,
+      "type": "page",
+      "source": "GTM"
+    },
+    {
+      "slug": "xiao-guan",
+      "repo": "peace-lab-global/xiao-guan",
+      "name": "小观",
+      "tagline": "开源冥想感知硬件的市场进入战略。",
+      "group": "content",
+      "private": true,
+      "type": "page",
+      "source": "GTM"
+    },
+    {
+      "slug": "aporia-database",
+      "repo": "master-of-solitude/aporia-database",
+      "name": "孤裂 / The Aporia",
+      "tagline": "中文原创心理恐怖长篇的上市方案。",
+      "group": "content",
+      "private": true,
+      "type": "page",
+      "source": "GTM"
+    }
+  ]
+}
