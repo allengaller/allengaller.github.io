@@ -584,15 +584,14 @@ strong { font-weight: 600; color: var(--text); }
 .audience-grid {
   display: grid;
   grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
-  gap: 1px;
-  background: var(--border);
-  border: 1px solid var(--border);
-  border-radius: var(--radius);
-  overflow: hidden;
+  border-top: 1px solid var(--border);
+  border-left: 1px solid var(--border);
 }
 
 .audience-card {
   background: var(--bg);
+  border-right: 1px solid var(--border);
+  border-bottom: 1px solid var(--border);
   padding: 1.5rem;
   display: flex;
   align-items: flex-start;
