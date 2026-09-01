@@ -580,6 +580,66 @@ strong { font-weight: 600; color: var(--text); }
   color: var(--accent);
 }
 
+/* ── Featured Projects (grouped) ───────────── */
+.featured-group { margin-top: 2.5rem; }
+
+.featured-group:first-of-type { margin-top: 0; }
+
+.featured-group-title {
+  font-family: var(--font-mono);
+  font-size: 0.72rem;
+  font-weight: 500;
+  text-transform: uppercase;
+  letter-spacing: 0.18em;
+  color: var(--text-muted);
+  margin-bottom: 1rem;
+}
+
+.featured-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+  border-top: 1px solid var(--border);
+  border-left: 1px solid var(--border);
+}
+
+.featured-card {
+  background: var(--bg);
+  border-right: 1px solid var(--border);
+  border-bottom: 1px solid var(--border);
+  padding: 1.5rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  transition: background var(--dur-fast) var(--ease-out);
+}
+
+.featured-card:hover { background: var(--bg-subtle); }
+
+.featured-card h4 {
+  font-family: var(--font-display);
+  font-size: 1.125rem;
+  font-weight: 500;
+  letter-spacing: -0.015em;
+}
+
+.featured-card p {
+  font-size: 0.8125rem;
+  color: var(--text-secondary);
+  line-height: 1.55;
+  flex-grow: 1;
+}
+
+.repo-url {
+  font-family: var(--font-mono);
+  font-size: 0.72rem;
+  color: var(--text-muted);
+  letter-spacing: 0.02em;
+  word-break: break-all;
+  transition: color var(--dur-fast) var(--ease-out);
+}
+
+.featured-card:hover .repo-url { color: var(--accent); }
+
 /* ── Audience Grid ─────────────────────────── */
 .audience-grid {
   display: grid;
