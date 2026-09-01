@@ -26,3 +26,7 @@ backup_README.md
 
 # Dev previews
 .previews/
+
+# Meoo publishing
+dist/
+.env
