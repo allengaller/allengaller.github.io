@@ -640,6 +640,11 @@ strong { font-weight: 600; color: var(--text); }
 
 .featured-card:hover .repo-url { color: var(--accent); }
 
+.repo-private {
+  color: var(--text-muted);
+  font-style: italic;
+}
+
 /* ── Audience Grid ─────────────────────────── */
 .audience-grid {
   display: grid;

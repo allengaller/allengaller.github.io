@@ -1,17 +1,16 @@
 ---
 layout: default
-title: Projects | 完整项目导航
-description: 曹亚仑的完整项目导航页，集中列出所有工作室、语料库、应用、网站与工具项目。
+title: Projects | 代表项目
+description: 曹亚仑的代表项目导航，按应用、开放工具、知识库三分组列出，附完整 GitHub 地址。
 nav_active_projects: is-active
 ---
 
 <div class="projects">
 
   <header class="projects-header">
-    <h1>完整项目导航</h1>
-    <p class="projects-tagline">保留全部内容，但把首页留给精选与认知建立</p>
+    <h1>代表项目</h1>
     <p class="projects-desc">
-      首页看精选 → 来这里查全量 → 再进入对应 GitHub 组织或仓库。
+      按「应用 · 开放工具 · 知识库」三个维度组织，每个项目均附 GitHub 仓库地址。
     </p>
     <div class="projects-actions">
       <a href="/" class="btn">返回首页</a>
@@ -19,176 +18,73 @@ nav_active_projects: is-active
     </div>
   </header>
 
-  <section class="stats-grid">
-    <div class="stat"><span class="stat-num">36</span><span class="stat-label">完整收录</span></div>
-    <div class="stat"><span class="stat-num">11</span><span class="stat-label">工作室 / 组织</span></div>
-    <div class="stat"><span class="stat-num">6</span><span class="stat-label">知识库 / 语料库</span></div>
-    <div class="stat"><span class="stat-num">19</span><span class="stat-label">应用 / 网站 / 工具</span></div>
-  </section>
-
   <section class="page-section" id="featured">
-    <div class="section-header">
-      <h2 class="section-title">精选项目</h2>
-      <a href="/" class="section-more">返回首页 →</a>
+    <div class="featured-group reveal" data-reveal>
+      <h3 class="featured-group-title">应用</h3>
+      <div class="featured-grid">
+        <a class="featured-card" href="https://github.com/ai-guru-global/fde-scope" target="_blank" rel="noopener">
+          <h4>FDE Scope</h4>
+          <p>完整 FDE SOP（4 区 18 阶段 10 门禁），强制执行。</p>
+          <span class="repo-url">github.com/ai-guru-global/fde-scope</span>
+        </a>
+        <a class="featured-card" href="https://github.com/ai-guru-global/agent-up" target="_blank" rel="noopener">
+          <h4>agent-up</h4>
+          <p>Agent 持续改进闭环：反馈、归因、发布、一键回滚。</p>
+          <span class="repo-url repo-private">私有仓库 · 登录可见</span>
+        </a>
+        <a class="featured-card" href="https://github.com/ai-guru-global/resolve-agent" target="_blank" rel="noopener">
+          <h4>ResolveAgent</h4>
+          <p>告警进站，四线分岔，终点站是根因。</p>
+          <span class="repo-url">github.com/ai-guru-global/resolve-agent</span>
+        </a>
+        <a class="featured-card" href="https://github.com/kudig-io/klaw" target="_blank" rel="noopener">
+          <h4>Klaw</h4>
+          <p>一个二进制，装下整个 Kubernetes 运维。</p>
+          <span class="repo-url">github.com/kudig-io/klaw</span>
+        </a>
+      </div>
     </div>
-    <div class="project-list">
 
-      <a href="https://github.com/ai-guru-global/resolve-agent" target="_blank" rel="noopener" class="project-item">
-        <div class="item-main">
-          <h3>ResolveAgent</h3>
-          <p>AIOps · 故障树分析、RAG 知识检索与智能体交互结合到 AIOps 场景</p>
-        </div>
-        <div class="item-tags"><span>AIOps</span><span>Agent</span><span>故障分析</span></div>
-      </a>
-
-      <a href="https://github.com/kudig-io/kudig" target="_blank" rel="noopener" class="project-item">
-        <div class="item-main">
-          <h3>Kudig</h3>
-          <p>Cloud Native · K8s 节点诊断工具，覆盖 70+ 分析器与 eBPF 诊断能力</p>
-        </div>
-        <div class="item-tags"><span>Kubernetes</span><span>eBPF</span><span>SRE</span></div>
-      </a>
-
-      <a href="https://github.com/kudig-io/etcd-guardian" target="_blank" rel="noopener" class="project-item">
-        <div class="item-main">
-          <h3>EtcdGuardian</h3>
-          <p>Operator · 专注 etcd 备份与恢复的 Kubernetes Operator</p>
-        </div>
-        <div class="item-tags"><span>Operator</span><span>etcd</span><span>SRE</span></div>
-      </a>
-
-      <a href="https://github.com/standup-coder/leetcast" target="_blank" rel="noopener" class="project-item">
-        <div class="item-main">
-          <h3>LeetCast</h3>
-          <p>EDU · 把"每日一题"做成 AI 对话式播客，技术内容产品化</p>
-        </div>
-        <div class="item-tags"><span>AI</span><span>内容</span><span>产品化</span></div>
-      </a>
-
-      <a href="https://github.com/standup-coder/mcp4coder" target="_blank" rel="noopener" class="project-item">
-        <div class="item-main">
-          <h3>mcp4coder</h3>
-          <p>Dev Tooling · 聚合 MCP 工具生态，做成开发者可消费的资产</p>
-        </div>
-        <div class="item-tags"><span>MCP</span><span>Agent</span><span>DevTool</span></div>
-      </a>
-
-      <a href="https://github.com/opendemo-work/opendemo" target="_blank" rel="noopener" class="project-item">
-        <div class="item-main">
-          <h3>OpenDemo</h3>
-          <p>Showcase · 技术演示平台，沉淀 518+ 案例，可浏览可复用</p>
-        </div>
-        <div class="item-tags"><span>Demo</span><span>案例库</span><span>知识资产</span></div>
-      </a>
-
+    <div class="featured-group reveal" data-reveal>
+      <h3 class="featured-group-title">开放工具</h3>
+      <div class="featured-grid">
+        <a class="featured-card" href="https://github.com/allengaller/open-arch" target="_blank" rel="noopener">
+          <h4>OpenArch</h4>
+          <p>把售前架构师的工作显性化为技能资产与工作流。</p>
+          <span class="repo-url">github.com/allengaller/open-arch</span>
+        </a>
+        <a class="featured-card" href="https://github.com/allengaller/open-tam" target="_blank" rel="noopener">
+          <h4>open-tam</h4>
+          <p>把 TAM 的排查工作显性化，产出三段式根因报告。</p>
+          <span class="repo-url">github.com/allengaller/open-tam</span>
+        </a>
+        <a class="featured-card" href="https://github.com/opendemo-work/opendemo-work" target="_blank" rel="noopener">
+          <h4>OpenDemo</h4>
+          <p>959+ 生产级可运行 Demo，给 SA 的技术演示平台。</p>
+          <span class="repo-url">github.com/opendemo-work/opendemo-work</span>
+        </a>
+      </div>
     </div>
-  </section>
 
-  <section class="page-section" id="studios">
-    <div class="section-header">
-      <h2 class="section-title">工作室 / 品牌矩阵</h2>
-      <span class="section-count">11</span>
-    </div>
-    <div class="project-list">
-
-      <a href="https://github.com/ai-guru-global" target="_blank" rel="noopener" class="project-item">
-        <div class="item-main">
-          <h3>AI Guru Global</h3>
-          <p>AI 技术与工具相关的开源组织</p>
-        </div>
-        <span class="item-arrow">→</span>
-      </a>
-
-      <a href="https://github.com/kudig-io" target="_blank" rel="noopener" class="project-item">
-        <div class="item-main">
-          <h3>Kudig</h3>
-          <p>云原生诊断与 SRE 工具集</p>
-        </div>
-        <span class="item-arrow">→</span>
-      </a>
-
-      <a href="https://github.com/standup-coder" target="_blank" rel="noopener" class="project-item">
-        <div class="item-main">
-          <h3>Standup Coder</h3>
-          <p>开发者内容与工具品牌</p>
-        </div>
-        <span class="item-arrow">→</span>
-      </a>
-
-      <a href="https://github.com/opendemo-work" target="_blank" rel="noopener" class="project-item">
-        <div class="item-main">
-          <h3>OpenDemo</h3>
-          <p>技术演示与案例库</p>
-        </div>
-        <span class="item-arrow">→</span>
-      </a>
-
-      <a href="https://github.com/better-call-saull" target="_blank" rel="noopener" class="project-item">
-        <div class="item-main">
-          <h3>Better Call Saull</h3>
-          <p>内容品牌</p>
-        </div>
-        <span class="item-arrow">→</span>
-      </a>
-
-      <a href="https://github.com/lonely-reader-global" target="_blank" rel="noopener" class="project-item">
-        <div class="item-main">
-          <h3>Lonely Reader Global</h3>
-          <p>阅读与知识品牌</p>
-        </div>
-        <span class="item-arrow">→</span>
-      </a>
-
-      <a href="https://github.com/sit-music" target="_blank" rel="noopener" class="project-item">
-        <div class="item-main">
-          <h3>Sit Music</h3>
-          <p>音乐相关项目</p>
-        </div>
-        <span class="item-arrow">→</span>
-      </a>
-
-    </div>
-  </section>
-
-  <section class="page-section" id="tools">
-    <div class="section-header">
-      <h2 class="section-title">工具 / CLI / 框架</h2>
-      <span class="section-count">8</span>
-    </div>
-    <div class="project-list">
-
-      <a href="https://github.com/kudig-io/kudig" target="_blank" rel="noopener" class="project-item">
-        <div class="item-main">
-          <h3>Kudig</h3>
-          <p>K8s 节点诊断 CLI</p>
-        </div>
-        <span class="item-arrow">→</span>
-      </a>
-
-      <a href="https://github.com/kudig-io/etcd-guardian" target="_blank" rel="noopener" class="project-item">
-        <div class="item-main">
-          <h3>EtcdGuardian</h3>
-          <p>etcd 备份恢复 Operator</p>
-        </div>
-        <span class="item-arrow">→</span>
-      </a>
-
-      <a href="https://github.com/standup-coder/mcp4coder" target="_blank" rel="noopener" class="project-item">
-        <div class="item-main">
-          <h3>mcp4coder</h3>
-          <p>MCP 工具聚合</p>
-        </div>
-        <span class="item-arrow">→</span>
-      </a>
-
-      <a href="https://github.com/ai-guru-global/resolve-agent" target="_blank" rel="noopener" class="project-item">
-        <div class="item-main">
-          <h3>ResolveAgent</h3>
-          <p>AIOps 智能体</p>
-        </div>
-        <span class="item-arrow">→</span>
-      </a>
-
+    <div class="featured-group reveal" data-reveal>
+      <h3 class="featured-group-title">知识库</h3>
+      <div class="featured-grid">
+        <a class="featured-card" href="https://github.com/kudig-io/kudig-database" target="_blank" rel="noopener">
+          <h4>KUDIG Database</h4>
+          <p>K8s + AI Infra 运维全域知识库，人类与 Agent 双读。</p>
+          <span class="repo-url">github.com/kudig-io/kudig-database</span>
+        </a>
+        <a class="featured-card" href="https://github.com/ai-guru-global/ai-guru-database" target="_blank" rel="noopener">
+          <h4>AI Guru Database</h4>
+          <p>AI Guru 数据库 GTM 与发布剧本（战略文档）。</p>
+          <span class="repo-url">github.com/ai-guru-global/ai-guru-database</span>
+        </a>
+        <a class="featured-card" href="https://github.com/allengaller/ai-book" target="_blank" rel="noopener">
+          <h4>大模型全栈实战指南</h4>
+          <p>从数学直觉到工业级工程的体系化实战书。</p>
+          <span class="repo-url repo-private">私有仓库 · 登录可见</span>
+        </a>
+      </div>
     </div>
   </section>
 
