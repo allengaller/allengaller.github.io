@@ -1,4 +1,4 @@
-# Design — 法喜 (allengaller.github.io)
+# Design — Allen Galler 曹亚仑 (allengaller.github.io)
 
 A locked design system for this site. Every page reads this file before
 emitting code. Do not regenerate per page — extend or amend this file when

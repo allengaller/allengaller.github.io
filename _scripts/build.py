@@ -616,7 +616,7 @@ def _build_repo_page(repo, related):
         ],
         "author": {
             "@type": "Person",
-            "name": "法喜 (Allen Galler)",
+            "name": "Allen Galler (曹亚仑)",
             "url": "https://allengaller.github.io/about/",
         },
     }
@@ -1389,13 +1389,13 @@ def generate_rss(cache, force=False):
 
     parts = ['<?xml version="1.0" encoding="UTF-8"?>']
     parts.append('<feed xmlns="http://www.w3.org/2005/Atom">')
-    parts.append(f'  <title>{_h("法喜 — Repos")}</title>')
+    parts.append(f'  <title>{_h("Allen Galler — Repos")}</title>')
     parts.append(f'  <subtitle>{_h("My own GitHub repos, sorted by latest activity")}</subtitle>')
     parts.append(f'  <link href="{SITE_URL}/feed.xml" rel="self"/>')
     parts.append(f'  <link href="{SITE_URL}/"/>')
     parts.append(f'  <id>{SITE_URL}/</id>')
     parts.append(f'  <updated>{_h(updated)}</updated>')
-    parts.append('  <author><name>法喜 (Allen Galler)</name><uri>https://allengaller.github.io/about/</uri></author>')
+    parts.append('  <author><name>Allen Galler (曹亚仑)</name><uri>https://allengaller.github.io/about/</uri></author>')
 
     for r in repos:
         full_name = r.get("full_name", "")
@@ -1420,7 +1420,7 @@ def generate_rss(cache, force=False):
             parts.append(f'    <published>{_h(commit_iso)}</published>')
         if desc:
             parts.append(f'    <summary>{_h(desc)}</summary>')
-        parts.append(f'    <author><name>{_h(r.get("last_commit_author") or "法喜")}</name></author>')
+        parts.append(f'    <author><name>{_h(r.get("last_commit_author") or "曹亚仑")}</name></author>')
         parts.append('  </entry>')
     parts.append('</feed>')
 

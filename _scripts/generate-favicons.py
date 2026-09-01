@@ -88,9 +88,9 @@ def make_og_image():
     bbox = draw.textbbox((0, 0), accent_text, font=accent_font)
     draw.text((96, 80), accent_text, fill=(224, 120, 88, 255), font=accent_font)  # accent
 
-    # Name "法喜" — large, characterful serif feel
+    # Name "曹亚仑" — large, characterful serif feel
     name_font = load_font(220, "display")
-    name = "法喜"
+    name = "曹亚仑"
     bbox = draw.textbbox((0, 0), name, font=name_font)
     name_w = bbox[2] - bbox[0]
     name_h = bbox[3] - bbox[1]

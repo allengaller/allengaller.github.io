@@ -1,7 +1,7 @@
 {
   "scanned_at": "2026-08-31",
   "font_stack": "Fraunces (variable, display) + Geist (body) + JetBrains Mono — Google Fonts via _layouts/default.html L63-66",
-  "palette": "法喜 custom system, hex tokens in assets/css/main.css :root L8-72 (light) + L75-103 (dark): bg #fbfaf7, ink #14130f, accent terracotta #c8553d, secondary gold #b08a3e",
+  "palette": "Allen Galler custom system, hex tokens in assets/css/main.css :root L8-72 (light) + L75-103 (dark): bg #fbfaf7, ink #14130f, accent terracotta #c8553d, secondary gold #b08a3e",
   "motion": "vanilla JS (IntersectionObserver reveal, scroll-progress, stagger) — assets/js/site.js; CSS easings --ease-out/-in-out/-spring, --dur-fast/base/slow; reduced-motion supported",
   "spacing": "custom: --max-width 720/1080, --gutter 24, --nav-height 56, --radius 4/2",
   "framework": "vanilla static site, custom Python builder (_scripts/build.py), Jekyll-like front matter + {{ content }} layout",
