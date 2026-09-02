@@ -44,6 +44,11 @@ DEFAULT_OUTPUT = os.path.join(WORKSPACE, "_data", "repos.yml")
 # Repos to skip from the listing (always)
 DEFAULT_EXCLUDES = {
     "allengaller.github.io",  # this very site
+    # 敏感/个人向创作库，不在公开索引中暴露
+    "aporia-database",        # 心理恐怖长篇
+    "thanatopedia-database",  # 死亡学专题
+    "dark-database",          # 社会阴暗面研究
+    "lolipop-database",       # 商业化战略文档
 }
 
 # File-extension → language guess (covers most common cases)

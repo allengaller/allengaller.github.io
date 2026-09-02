@@ -222,16 +222,6 @@
       "source": "GTM"
     },
     {
-      "slug": "lolipop-database",
-      "repo": "lonely-reader-global/lolipop-database",
-      "name": "lolipop",
-      "tagline": "商业化定价 · 渠道 · 路线图 · 合规边界（战略文档）。",
-      "group": "knowledge",
-      "private": true,
-      "type": "docs",
-      "source": "GTM"
-    },
-    {
       "slug": "open-cognition-database",
       "repo": "peace-lab-global/open-cognition-database",
       "name": "Open Cognition",
@@ -286,16 +276,6 @@
       "repo": "peace-lab-global/xiao-guan",
       "name": "小观",
       "tagline": "开源冥想感知硬件的市场进入战略。",
-      "group": "content",
-      "private": true,
-      "type": "page",
-      "source": "GTM"
-    },
-    {
-      "slug": "aporia-database",
-      "repo": "master-of-solitude/aporia-database",
-      "name": "孤裂 / The Aporia",
-      "tagline": "中文原创心理恐怖长篇的上市方案。",
       "group": "content",
       "private": true,
       "type": "page",
