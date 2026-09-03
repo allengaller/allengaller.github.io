@@ -1,5 +1,5 @@
 /* TEAM */
-Author: Allen Galler (曹亚仑)
+Author: Allen Galler 
 Site: https://allengaller.github.io
 GitHub: https://github.com/allengaller
 From: 中国

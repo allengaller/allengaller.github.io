@@ -1,6 +1,6 @@
 # allengaller.github.io
 
-**Allen Galler 曹亚仑** 的个人品牌总入口 —— Cloud Native SRE · AI Toolsmith · Knowledge Architect
+**Allen Galler** 的个人品牌总入口 —— Cloud Native SRE · AI Toolsmith · Knowledge Architect
 
 在线访问：https://allengaller.github.io
 

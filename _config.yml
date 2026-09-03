@@ -2,7 +2,7 @@
 # 实际构建由自研脚本 _scripts/build.py 完成（输出到 _site/），该脚本不读取本文件。
 # 本文件仅作 GitHub Pages 兼容/站点元数据声明用途；其中 plugins、kramdown、
 # relative_links 等 Jekyll 配置均不生效，修改它们不会改变构建行为。
-title: Allen Galler 曹亚仑
+title: Allen Galler
 tagline: Cloud Native SRE · AI Toolsmith · Knowledge Architect
 description: 高产开源黑客的个人品牌总入口，聚合 4500+ 文档、10+ 开源工具、内容矩阵与合作入口。
 lang: zh-CN

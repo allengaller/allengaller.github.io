@@ -1,5 +1,5 @@
 /* ─────────────────────────────────────────────────────────
-   Allen Galler 曹亚仑 — site.js
+   Allen Galler — site.js
    Minimal vanilla JS for: scroll progress, back-to-top,
    scroll-triggered reveals, magnetic CTAs.
    No dependencies. ~1KB minified.

@@ -23,7 +23,7 @@ Jekyll 静态站点（kramdown/GFM，GitHub Pages 部署），原生 HTML + 单�
 
 ## Product Purpose
 
-Allen Galler 曹亚仑的个人品牌总入口：聚合 80+ 开源仓库、4500+ 知识文档与内容矩阵，把技术经验呈现为可复用工具、可增长知识资产与可长期经营的个人品牌。成功 = 访客在数秒内理解三重身份并找到自己的入口（合作/招聘/开源/内容）。
+Allen Galler 的个人品牌总入口：聚合 80+ 开源仓库、4500+ 知识文档与内容矩阵，把技术经验呈现为可复用工具、可增长知识资产与可长期经营的个人品牌。成功 = 访客在数秒内理解三重身份并找到自己的入口（合作/招聘/开源/内容）。
 
 ## Positioning
 
@@ -42,7 +42,7 @@ Allen Galler 曹亚仑的个人品牌总入口：聚合 80+ 开源仓库、4500+
 
 ## Brand Commitments
 
-- 名称：Allen Galler 曹亚仑。
+- 名称：Allen Galler。
 - 定位短语：Cloud Native SRE · AI Toolsmith · Knowledge Architect（站点 tagline，全站一致）。
 - 声音：高产开源黑客；编辑感 × 技术感（Editorial × Technical），克制、有证据、不浮夸。
 - 命名体系：`*-database` = 知识库，`*-global` = 品牌产品线，组织有 kudig-io、standup-coder、ai-guru-global、opendemo-work 等。

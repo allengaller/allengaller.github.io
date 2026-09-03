@@ -1,4 +1,4 @@
-# Design — Allen Galler 曹亚仑 (allengaller.github.io)
+# Design — Allen Galler (allengaller.github.io)
 
 A locked design system for this site. Every page reads this file before
 emitting code. Do not regenerate per page — extend or amend this file when
@@ -13,31 +13,33 @@ hierarchy carry the brand.
 
 ## Theme
 
-Light/dark auto via `prefers-color-scheme`. Single warm accent + secondary
-gold for tiny highlights only.
+Light only — dark mode was removed; the site is locked to a professional
+light theme. Single warm accent + secondary gold for tiny highlights only.
+Text tokens meet WCAG AA (≥ 4.5:1) on `--bg`.
 
-| Token | Light | Dark | Role |
-| --- | --- | --- | --- |
-| `--bg` | `#fbfaf7` | `#0b0a08` | Page surface (paper) |
-| `--bg-subtle` | `#f3f1ec` | `#131210` | Raised surface |
-| `--bg-hover` | `#ebe8e1` | `#1c1b18` | Hover wash |
-| `--ink` | `#14130f` | `#f5f3ee` | Primary text |
-| `--ink-soft` | `#2b2a26` | `#d4d1c8` | Secondary text |
-| `--text-secondary` | `#4a4842` | `#b4b1a8` | Tertiary text |
-| `--text-muted` | `#8a877e` | `#7a7872` | Meta / labels |
-| `--text-faint` | `#b8b5ac` | `#4a4944` | Disabled / hairlines |
-| `--border` | `#e2dfd6` | `#2a2925` | Hairline divider |
-| `--border-hover` | `#cdc9bc` | `#3d3c37` | Hairline on hover |
-| `--border-strong` | `#14130f` | `#f5f3ee` | Strong border (dark-on-light / light-on-dark) |
-| `--accent` | `#c8553d` (terracotta) | `#e07858` | Single warm accent (≤5 % per page) |
-| `--accent-soft` | `rgba(200,85,61,.08)` | `rgba(224,120,88,.12)` | Accent wash (selection / hover / em-underline) |
-| `--accent-fg` | `#ffffff` | `#0b0a08` | Text on accent |
-| `--gold` | `#b08a3e` | `#d4a857` | Secondary accent (tiny highlights: chapter marks, em-underline) |
-| `--gold-soft` | `rgba(176,138,62,.14)` | `rgba(212,168,87,.16)` | Gold wash |
-| `--selection-bg` | `#c8553d` | `#e07858` | Text selection |
-| `--selection-fg` | `#ffffff` | `#0b0a08` | Selection text |
-| `--focus-ring` | `0 0 0 2px var(--bg), 0 0 0 4px var(--accent)` | same | Visible focus halo |
-| `--atmosphere` | `radial-gradient(ellipse 90 % 60 % at 80 % −10 %, rgba(200,85,61,.06), transparent 60 %)` | `rgba(224,120,88,.08)`)` | Hero glow (very subtle) |
+| Token | Value | Role |
+| --- | --- | --- |
+| `--bg` | `#fcfcfa` | Page surface (paper) |
+| `--bg-subtle` | `#f4f3ee` | Raised surface |
+| `--bg-hover` | `#eceae4` | Hover wash |
+| `--ink` | `#14130f` | Primary text |
+| `--ink-soft` | `#2b2a26` | Secondary text |
+| `--text-secondary` | `#4a4842` | Tertiary text |
+| `--text-muted` | `#6f6c63` | Meta / labels (5.0:1 on `--bg`) |
+| `--text-faint` | `#b8b5ac` | Disabled / decorative hairlines |
+| `--border` | `#e2dfd6` | Hairline divider |
+| `--border-hover` | `#cdc9bc` | Hairline on hover |
+| `--border-strong` | `#14130f` | Strong border |
+| `--accent` | `#b4442c` (brick terracotta) | Single warm accent (≤5 % per page), 5.3:1 on `--bg` |
+| `--accent-soft` | `rgba(180,68,44,.08)` | Accent wash (selection / hover / em-underline) |
+| `--accent-fg` | `#ffffff` | Text on accent |
+| `--accent-dark` | `#93351f` | Accent hover state |
+| `--gold` | `#b08a3e` | Secondary accent (tiny highlights: chapter marks, em-underline) |
+| `--gold-soft` | `rgba(176,138,62,.14)` | Gold wash |
+| `--selection-bg` | `#b4442c` | Text selection |
+| `--selection-fg` | `#ffffff` | Selection text |
+| `--focus-ring` | `0 0 0 2px var(--bg), 0 0 0 4px var(--accent)` | Visible focus halo |
+| `--atmosphere` | `radial-gradient(ellipse 90 % 60 % at 80 % −10 %, rgba(180,68,44,.06), transparent 60 %)` | Hero glow (very subtle) |
 
 ## Typography
 
@@ -165,7 +167,7 @@ build-time `{{ gtm_total }}` / `{{ gtm_cards }}` placeholders.
 ## Maintenance rules
 
 - When extending, edit this file *first*, then implement.
-- When amending the colour system, keep both light + dark in lockstep.
+- When amending the colour system, keep the light theme AA-compliant (≥ 4.5:1 for text).
 - When changing the type scale, prefer adjusting the existing h1 sizes
   before introducing new variants.
 - Do not introduce new icon libraries. Arrows live as inline SVG or text.

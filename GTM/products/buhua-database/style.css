@@ -29,26 +29,6 @@
   --w-wide: 1120px;
   color-scheme: light;
 }
-@media (prefers-color-scheme: dark) {
-  :root {
-    --paper: #241c14;
-    --paper-2: #2b2218;
-    --card: #2f261b;
-    --ink: #f3e9d8;
-    --ink-strong: #fdf6e9;
-    --ink-soft: #cdbba3;
-    --line: rgba(243, 233, 216, .16);
-    --candy: #ff9db4; --candy-deep: #ff9db4;
-    --sun: #ffd977; --sun-deep: #ffd977;
-    --leaf: #9fdc98; --leaf-deep: #9fdc98;
-    --sea: #93d7ef; --sea-deep: #93d7ef;
-    --mint: #8ccdb9; --mint-deep: #8ccdb9;
-    --shadow: 0 4px 0 rgba(0, 0, 0, .4);
-    --shadow-lg: 8px 8px 0 rgba(0, 0, 0, .35);
-    color-scheme: dark;
-  }
-}
-
 /* ============ Base ============ */
 * { box-sizing: border-box; margin: 0; padding: 0; }
 html { scroll-behavior: smooth; }
@@ -260,7 +240,6 @@ table.cmp { width: 100%; border-collapse: collapse; background: var(--card); bor
 
 /* ============ CTA ============ */
 .cta-band { background: var(--ink-strong); color: var(--paper); border-radius: var(--r-l); box-shadow: var(--shadow-lg); padding: clamp(32px, 6vw, 64px); text-align: center; }
-@media (prefers-color-scheme: dark) { .cta-band { background: var(--card); color: var(--ink); } }
 .cta-band h2 { color: inherit; font-size: clamp(1.6rem, 4vw, 2.6rem); }
 .cta-band p { margin: 14px auto 26px; max-width: 52ch; opacity: .85; }
 .cta-band .actions { display: flex; gap: 14px; justify-content: center; flex-wrap: wrap; }
