@@ -30,3 +30,10 @@ backup_README.md
 # Meoo publishing
 dist/
 .env
+
+# Generated human-readable repo index (same data as repos-detailed.json)
+_data/repos.yml
+
+# Review tooling (local artifacts)
+.impeccable/
+.hallmark/

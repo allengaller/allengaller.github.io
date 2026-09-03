@@ -102,8 +102,9 @@ cd _site && python3 -m http.server 4000
         ↓
 _scripts/scan-repos.py     (只读所有 .git 元数据)
         ↓
-_data/repos.yml             (人读)
 _data/repos.json            (机读，36KB)
+_data/repos-detailed.json   (机读，供 build.py 生成仓库详情页)
+_data/repos.yml             (本地人读产物，已 gitignore，不提交)
         ↓
 repos/index.html            (fetch /_data/repos.json，JS 渲染)
         ↓

@@ -76,7 +76,6 @@ STATIC_FILES = [
     ("assets/js/site.js",     "assets/js/site.js"),
     ("assets/js/palette.js",  "assets/js/palette.js"),
     ("_data/repos.json",      "_data/repos.json"),
-    ("_data/repos.yml",       "_data/repos.yml"),
     ("assets/banners/resolve-agent.svg", "assets/banners/resolve-agent.svg"),
     ("assets/banners/kudig.svg",          "assets/banners/kudig.svg"),
     ("assets/banners/etcd-guardian.svg",  "assets/banners/etcd-guardian.svg"),
