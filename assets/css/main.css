@@ -2281,3 +2281,580 @@ strong { font-weight: 600; color: var(--text); }
   .gtmp-card-name { transition: none; }
   .gtmp-featured-card:hover .gtmp-featured-arrow { transform: none; }
 }
+
+/* ────────────────────────────────────────────────────────
+   Hallmark · macrostructure: Ecosystem Index (20) · genre: editorial
+   theme: locked by design.md · anchor hue: #b4442c (terracotta)
+   Scope: home page archetype additions — overview-band / by-category / by-domain / by-role / by-scenario
+   State coverage: default · hover · focus-visible · active (no disabled/loading on read-only links)
+   ──────────────────────────────────────────────────────── */
+
+/* ── 01 · Overview Band (ink-inverted rhythm break) ─────────── */
+.overview-band {
+  background: var(--ink);
+  color: var(--bg);
+  border-radius: var(--radius);
+  padding: 2.5rem 2rem;
+  margin: 0 0 5rem;
+  position: relative;
+  overflow: hidden;
+}
+
+.overview-list {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  gap: 0;
+}
+
+.overview-item {
+  padding: 0.25rem 1.5rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  border-left: 1px solid color-mix(in srgb, var(--bg) 12%, transparent);
+}
+
+.overview-item:first-child { border-left: 0; padding-left: 0.25rem; }
+
+.overview-num {
+  font-family: var(--font-display);
+  font-size: clamp(1.875rem, 3.8vw, 2.625rem);
+  font-weight: 400;
+  font-variation-settings: "opsz" 144, "SOFT" 30, "WONK" 0;
+  letter-spacing: -0.04em;
+  line-height: 1;
+  color: var(--bg);
+}
+
+.overview-num sup {
+  font-size: 0.5em;
+  vertical-align: top;
+  color: var(--accent);
+  font-weight: 500;
+  margin-left: 0.1em;
+}
+
+.overview-label {
+  font-family: var(--font-body);
+  font-size: 0.75rem;
+  letter-spacing: 0.04em;
+  color: color-mix(in srgb, var(--bg) 60%, transparent);
+}
+
+/* ── 02 · By Category (mosaic accent + per-group counter) ─────────── */
+.by-category .featured-group + .featured-group {
+  margin-top: 3rem;
+  padding-top: 2.5rem;
+  border-top: 1px solid var(--border);
+}
+
+.by-category .featured-group-title {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 1rem;
+  margin-bottom: 1.25rem;
+}
+
+.by-category .featured-group-title::after {
+  content: attr(data-count);
+  font-family: var(--font-mono);
+  font-size: 0.625rem;
+  letter-spacing: 0.14em;
+  color: var(--text-muted);
+  font-weight: 400;
+}
+
+.by-category .featured-grid {
+  border-top: 0;
+  border-left: 0;
+}
+
+.by-category .featured-card:first-child {
+  border-left: 2px solid var(--accent);
+}
+
+/* ── 03 · By Domain (eyebrow bar) ─────────── */
+.by-domain .domain-eyebrow {
+  display: flex;
+  align-items: center;
+  gap: 1.25rem;
+  padding: 0.5rem 0;
+  margin: 0 0 1rem;
+  border-top: 1px solid var(--border);
+  border-bottom: 1px solid var(--border);
+  font-family: var(--font-mono);
+  font-size: 0.6875rem;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--text-muted);
+}
+
+.by-domain .domain-eyebrow-count {
+  margin-left: auto;
+  color: var(--text);
+}
+
+/* ── 04 · By Role (dual-column pairs) ─────────── */
+.by-role .role-list {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+}
+
+.by-role .role-item {
+  display: grid;
+  grid-template-columns: 4rem minmax(0, 1fr) 1.5rem;
+  gap: 1.5rem;
+  align-items: baseline;
+  padding: 1.5rem 0;
+  border-bottom: 1px solid var(--border);
+  text-decoration: none;
+  color: inherit;
+  transition: padding var(--dur-fast) var(--ease-out);
+}
+
+.by-role .role-list .role-item:first-child { border-top: 1px solid var(--border); }
+
+.by-role .role-item:hover { padding-left: 0.75rem; }
+
+.by-role .role-item:focus-visible {
+  outline: none;
+  box-shadow: var(--focus-ring);
+}
+
+.by-role .role-item:active { padding-left: 0.5rem; }
+
+.by-role .role-num {
+  font-family: var(--font-mono);
+  font-size: 0.6875rem;
+  letter-spacing: 0.14em;
+  color: var(--text-muted);
+}
+
+.by-role .role-body {
+  display: flex;
+  flex-direction: column;
+  gap: 0.4rem;
+  min-width: 0;
+}
+
+.by-role .role-title {
+  font-family: var(--font-display);
+  font-size: 1.0625rem;
+  font-weight: 500;
+  letter-spacing: -0.015em;
+  color: var(--text);
+}
+
+.by-role .role-desc {
+  font-size: 0.875rem;
+  color: var(--text-secondary);
+  line-height: 1.55;
+  max-width: 56ch;
+}
+
+.by-role .role-arrow {
+  font-family: var(--font-mono);
+  color: var(--text-muted);
+  align-self: center;
+  text-align: right;
+  transition: color var(--dur-fast) var(--ease-out), transform var(--dur-fast) var(--ease-out);
+}
+
+.by-role .role-item:hover .role-arrow {
+  color: var(--accent);
+  transform: translateX(4px);
+}
+
+/* ── 05 · By Scenario (numbered ledger) ─────────── */
+.by-scenario .scenario-list {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  border-top: 1px solid var(--border);
+}
+
+.by-scenario .scenario-item {
+  display: grid;
+  grid-template-columns: 4rem minmax(0, 1fr);
+  gap: 1.5rem;
+  padding: 2rem 0;
+  border-bottom: 1px solid var(--border);
+  align-items: start;
+}
+
+.by-scenario .scenario-num {
+  font-family: var(--font-mono);
+  font-size: 0.75rem;
+  letter-spacing: 0.14em;
+  color: var(--accent);
+  font-weight: 500;
+  padding-top: 0.4rem;
+}
+
+.by-scenario .scenario-body {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  max-width: 64ch;
+}
+
+.by-scenario .scenario-item h3 {
+  font-family: var(--font-display);
+  font-size: 1.125rem;
+  font-weight: 500;
+  letter-spacing: -0.015em;
+  margin: 0;
+}
+
+.by-scenario .scenario-item p {
+  font-size: 0.9375rem;
+  color: var(--text-secondary);
+  line-height: 1.6;
+  margin: 0;
+}
+
+/* ── Ecosystem Index · responsive (page-scope) ── */
+@media (max-width: 768px) {
+  .overview-list {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 1.5rem 0;
+  }
+  .overview-item {
+    border-left: 0;
+    padding: 0 1rem;
+  }
+  .overview-item:nth-child(3),
+  .overview-item:nth-child(4) {
+    padding-top: 1.5rem;
+    border-top: 1px solid color-mix(in srgb, var(--bg) 12%, transparent);
+  }
+  .by-role .role-item {
+    grid-template-columns: 2.5rem minmax(0, 1fr);
+    gap: 1rem;
+  }
+  .by-role .role-arrow { display: none; }
+  .by-scenario .scenario-item {
+    grid-template-columns: 2.5rem minmax(0, 1fr);
+    gap: 1rem;
+  }
+}
+
+/* ── Ecosystem Index · reduced-motion (page-scope) ── */
+@media (prefers-reduced-motion: reduce) {
+  .by-role .role-item,
+  .by-role .role-arrow {
+    transition: none;
+  }
+}
+
+/* ────────────────────────────────────────────────────────
+   Hallmark · macrostructure: Long Document (02) · genre: editorial
+   theme: locked by design.md · anchor hue: #b4442c (terracotta)
+   Scope: home page archetype additions — opening-letter / now / stations / terrain / reach / closing
+   State coverage: default · hover · focus-visible · active (no disabled/loading on read-only links)
+   Note: previous Ecosystem Index block (overview-band · by-category · by-domain · by-role · by-scenario)
+   remains above as fallback; it is no longer referenced by index.html.
+   ──────────────────────────────────────────────────────── */
+
+/* ── Base prose typography (Long Document) ─────────── */
+.long-doc .letter-p,
+.long-doc .now-context,
+.long-doc .station-prose,
+.long-doc .terrain-prose,
+.long-doc .reach-prose,
+.long-doc .closing-prose {
+  font-family: var(--font-body);
+  font-size: 1.0625rem;
+  line-height: 1.75;
+  letter-spacing: -0.005em;
+  color: var(--text-secondary);
+  max-width: 64ch;
+  margin: 0 0 1.25rem;
+}
+
+.long-doc .letter-p em,
+.long-doc .now-context em,
+.long-doc .station-prose em,
+.long-doc .terrain-prose em,
+.long-doc .reach-prose em,
+.long-doc .closing-prose em {
+  color: var(--text);
+  font-weight: 500;
+  font-style: italic;
+  background: linear-gradient(transparent 65%, var(--accent-soft) 65%);
+  padding: 0 0.05em;
+}
+
+/* ── 01 · Opening Letter (prose with drop cap) ─────────── */
+.long-opening {
+  margin: 0 0 5rem;
+  padding: 2.5rem 0;
+  border-top: 1px solid var(--border);
+  border-bottom: 1px solid var(--border);
+}
+
+.long-opening .section-header { margin-bottom: 1rem; }
+
+.letter-body { max-width: 68ch; }
+
+.letter-p-lead {
+  font-size: 1.1875rem !important;
+  line-height: 1.7 !important;
+  color: var(--text) !important;
+  max-width: 66ch;
+}
+
+.drop-cap {
+  font-family: var(--font-display);
+  font-size: 4.5rem;
+  font-weight: 400;
+  font-variation-settings: "opsz" 144, "SOFT" 30, "WONK" 0;
+  line-height: 0.85;
+  color: var(--text);
+  float: left;
+  margin: 0.35rem 0.6rem 0 0;
+  letter-spacing: -0.04em;
+}
+
+/* ── 02 · Now (current focus) ─────────── */
+.long-now { margin: 0 0 5rem; }
+
+.long-now .section-title { margin-bottom: 1.25rem; }
+
+.now-line {
+  font-family: var(--font-display) !important;
+  font-size: clamp(1.375rem, 2.5vw, 1.75rem) !important;
+  font-weight: 500 !important;
+  font-variation-settings: "opsz" 144, "SOFT" 30, "WONK" 0 !important;
+  letter-spacing: -0.02em !important;
+  line-height: 1.25 !important;
+  color: var(--text) !important;
+  max-width: none !important;
+  margin: 1.5rem 0 1.5rem !important;
+  padding: 0 !important;
+  display: flex;
+  align-items: baseline;
+  gap: 0.75rem;
+}
+
+.now-marker {
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  background: var(--accent);
+  display: inline-block;
+  flex-shrink: 0;
+  align-self: center;
+  position: relative;
+}
+
+.now-marker::after {
+  content: "";
+  position: absolute;
+  inset: -4px;
+  border-radius: 50%;
+  background: var(--accent);
+  opacity: 0.25;
+}
+
+.now-context { margin-top: 1.5rem !important; }
+
+/* ── 03 · Stations of Work (prose-led article + cards) ─────────── */
+.long-stations { margin: 0 0 5rem; }
+
+.long-stations .section-header { margin-bottom: 1.5rem; }
+
+.station {
+  margin: 0 0 3rem;
+  padding: 0 0 3rem;
+  border-bottom: 1px solid var(--border);
+}
+
+.station:last-child {
+  border-bottom: 0;
+  margin-bottom: 0;
+  padding-bottom: 0;
+}
+
+.station-prose {
+  font-size: 1.125rem !important;
+  line-height: 1.7 !important;
+  color: var(--text) !important;
+  margin: 0 0 1.5rem !important;
+  max-width: 66ch !important;
+}
+
+.station-group-title {
+  font-family: var(--font-mono);
+  font-size: 0.72rem;
+  font-weight: 500;
+  text-transform: uppercase;
+  letter-spacing: 0.18em;
+  color: var(--text-muted);
+  margin: 0 0 1rem;
+}
+
+.station-cards {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+  border-top: 1px solid var(--border);
+  border-left: 1px solid var(--border);
+}
+
+.station-cards .featured-card:first-child {
+  border-left: 2px solid var(--accent);
+}
+
+/* ── 04 · Knowledge Terrain (prose + 5-card grid) ─────────── */
+.long-terrain { margin: 0 0 5rem; }
+
+.long-terrain .section-header { margin-bottom: 1.5rem; }
+
+.terrain-prose {
+  margin: 0 0 2rem !important;
+  max-width: 66ch !important;
+}
+
+/* ── 05 · Reach (prose + 4 numbered rows) ─────────── */
+.long-reach { margin: 0 0 5rem; }
+
+.long-reach .section-header { margin-bottom: 1.5rem; }
+
+.reach-prose {
+  margin: 0 0 2rem !important;
+  max-width: 66ch !important;
+}
+
+.reach-list {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  border-top: 1px solid var(--border);
+}
+
+.reach-item {
+  display: grid;
+  grid-template-columns: 4rem minmax(0, 1fr) 1.5rem;
+  gap: 1.5rem;
+  align-items: baseline;
+  padding: 1.5rem 0;
+  border-bottom: 1px solid var(--border);
+  text-decoration: none;
+  color: inherit;
+  transition: padding var(--dur-fast) var(--ease-out);
+}
+
+.reach-item:hover { padding-left: 0.75rem; }
+
+.reach-item:focus-visible {
+  outline: none;
+  box-shadow: var(--focus-ring);
+}
+
+.reach-item:active { padding-left: 0.5rem; }
+
+.reach-num {
+  font-family: var(--font-mono);
+  font-size: 0.6875rem;
+  letter-spacing: 0.14em;
+  color: var(--text-muted);
+}
+
+.reach-body {
+  display: flex;
+  flex-direction: column;
+  gap: 0.4rem;
+  min-width: 0;
+}
+
+.reach-title {
+  font-family: var(--font-display);
+  font-size: 1.0625rem;
+  font-weight: 500;
+  letter-spacing: -0.015em;
+  color: var(--text);
+}
+
+.reach-desc {
+  font-size: 0.875rem;
+  color: var(--text-secondary);
+  line-height: 1.55;
+  max-width: 56ch;
+}
+
+.reach-arrow {
+  font-family: var(--font-mono);
+  color: var(--text-muted);
+  align-self: center;
+  text-align: right;
+  transition: color var(--dur-fast) var(--ease-out), transform var(--dur-fast) var(--ease-out);
+}
+
+.reach-item:hover .reach-arrow {
+  color: var(--accent);
+  transform: translateX(4px);
+}
+
+/* ── 06 · Closing (prose + CTA) ─────────── */
+.long-closing {
+  margin: 0 0 5rem;
+  padding: 2.5rem 0 0;
+  border-top: 1px solid var(--border);
+}
+
+.long-closing .section-header { margin-bottom: 1.5rem; }
+
+.closing-prose {
+  font-size: 1.125rem !important;
+  margin: 0 0 1.5rem !important;
+  max-width: 66ch !important;
+}
+
+.closing-prose:last-of-type { margin-bottom: 2rem !important; }
+
+.closing-cta {
+  display: flex;
+  gap: 1rem;
+  flex-wrap: wrap;
+  align-items: center;
+  padding-top: 1rem;
+  border-top: 1px solid var(--border);
+}
+
+/* ── Long Document · responsive (page-scope) ── */
+@media (max-width: 768px) {
+  .long-doc .letter-p,
+  .long-doc .now-context,
+  .long-doc .station-prose,
+  .long-doc .terrain-prose,
+  .long-doc .reach-prose,
+  .long-doc .closing-prose { font-size: 1rem; }
+
+  .letter-p-lead { font-size: 1.0625rem !important; }
+  .drop-cap { font-size: 3.5rem; margin: 0.25rem 0.5rem 0 0; }
+
+  .reach-item {
+    grid-template-columns: 2.5rem minmax(0, 1fr);
+    gap: 1rem;
+  }
+  .reach-arrow { display: none; }
+
+  .station-cards { grid-template-columns: 1fr; }
+}
+
+/* ── Long Document · reduced-motion (page-scope) ── */
+@media (prefers-reduced-motion: reduce) {
+  .reach-item,
+  .reach-arrow { transition: none; }
+}

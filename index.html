@@ -22,7 +22,7 @@ jsonld: |
   }
 ---
 
-<div class="home">
+<div class="home long-doc">
 
   <!-- Scroll progress indicator -->
   <div class="scroll-progress" aria-hidden="true">
@@ -49,41 +49,56 @@ jsonld: |
         把技术经验沉淀成可复用的工具、可增长的知识资产，以及可长期经营的个人品牌。
       </p>
       <div class="home-actions">
-        <a href="#featured" class="btn btn-primary">代表项目</a>
+        <a href="#opening" class="btn btn-primary">从开场读起</a>
         <a href="/projects/" class="btn">完整导航</a>
         <a href="/about/" class="btn">关于我</a>
       </div>
     </aside>
   </header>
 
-  <section class="stats-grid reveal" data-reveal aria-label="数据概览">
-    <div class="stat" data-stagger="1">
-      <span class="stat-num">4500<sup>+</sup></span>
-      <span class="stat-label">文档与知识资产</span>
+  <!-- ── 01 · Opening Letter ── -->
+  <section class="long-opening reveal" data-reveal id="opening">
+    <div class="section-header">
+      <h2 class="section-title">开场 · Opening</h2>
     </div>
-    <div class="stat" data-stagger="2">
-      <span class="stat-num">10<sup>+</sup></span>
-      <span class="stat-label">开源工具与应用</span>
-    </div>
-    <div class="stat" data-stagger="3">
-      <span class="stat-num">5<sup>+</sup></span>
-      <span class="stat-label">年云原生实践</span>
-    </div>
-    <div class="stat" data-stagger="4">
-      <span class="stat-num">{{ gtm_total }}</span>
-      <span class="stat-label">GTM 页面 · 跨 11 个组织</span>
+    <div class="letter-body">
+      <p class="letter-p letter-p-lead">
+        <span class="drop-cap" aria-hidden="true">这</span>是一个个人主页。我把它当作一份长期维护的<em>笔记</em>——记录我在 Cloud Native、AI Tooling、知识架构三条线上正在做的事，以及为什么做。
+      </p>
+      <p class="letter-p">
+        多数站点会先放一组代表项目，然后等你滚动。我更愿意先讲清楚<em>判断</em>：写工具时优先考虑长期可维护性；选技术时优先考虑生产证据；做知识库时同时考虑人类读者与 Agent RAG。
+      </p>
+      <p class="letter-p">
+        如果你正在评估一次合作、招募一位工程师、或者只是好奇同一个技术领域的同行在想什么，下面的六个 station 会比 GitHub 个人页更快给你答案。
+      </p>
     </div>
   </section>
 
-  <section class="page-section" id="featured">
+  <!-- ── 02 · Now ── -->
+  <section class="long-now reveal" data-reveal>
+    <h2 class="section-title">此刻 · Now</h2>
+    <p class="now-line">
+      <span class="now-marker" aria-hidden="true"></span>
+      构建 Agent-native 知识工具。
+    </p>
+    <p class="now-context">
+      具体地说，我在把 KUDIG、ResolveAgent、LeetCast 这一类工具的<em>运行痕迹</em>沉淀成结构化知识库，让它们既能被人类直接阅读，也能被 Agent 作为 RAG 语料检索。同步在做 FDE Scope——把售前架构师工作显性化为可执行 SOP。
+    </p>
+  </section>
+
+  <!-- ── 03 · Stations of Work ── -->
+  <section class="long-stations" id="featured">
     <div class="section-header">
-      <h2 class="section-title">代表项目</h2>
-      <a href="/projects/" class="section-more">查看全部 →</a>
+      <h2 class="section-title">做过的 · Stations</h2>
+      <a href="/projects/" class="section-more">全部 →</a>
     </div>
 
-    <div class="featured-group reveal" data-reveal>
-      <h3 class="featured-group-title">应用</h3>
-      <div class="featured-grid">
+    <article class="station">
+      <p class="station-prose">
+        应用层是我投入精力最多的地方。它们大多以<em>"内部强制执行 SOP"</em>的形式存在——把模糊的工程判断变成可重复的流程。
+      </p>
+      <h3 class="station-group-title">应用</h3>
+      <div class="station-cards">
         <a class="featured-card" href="https://github.com/ai-guru-global/fde-scope" target="_blank" rel="noopener">
           <h4>FDE Scope</h4>
           <p>完整 FDE SOP（4 区 18 阶段 10 门禁），强制执行。</p>
@@ -105,11 +120,14 @@ jsonld: |
           <span class="repo-url">github.com/kudig-io/klaw</span>
         </a>
       </div>
-    </div>
+    </article>
 
-    <div class="featured-group reveal" data-reveal>
-      <h3 class="featured-group-title">开放工具</h3>
-      <div class="featured-grid">
+    <article class="station">
+      <p class="station-prose">
+        开放工具是我把日常工作沉淀为<em>可复用资产</em>的尝试。它们更轻量，但同样追求"用一次省一次"。
+      </p>
+      <h3 class="station-group-title">开放工具</h3>
+      <div class="station-cards">
         <a class="featured-card" href="https://github.com/allengaller/open-arch" target="_blank" rel="noopener">
           <h4>OpenArch</h4>
           <p>把售前架构师的工作显性化为技能资产与工作流。</p>
@@ -126,11 +144,14 @@ jsonld: |
           <span class="repo-url">github.com/opendemo-work/opendemo-work</span>
         </a>
       </div>
-    </div>
+    </article>
 
-    <div class="featured-group reveal" data-reveal>
-      <h3 class="featured-group-title">知识库</h3>
-      <div class="featured-grid">
+    <article class="station">
+      <p class="station-prose">
+        知识库这一类项目最有意思——它们<em>既是人读手册，也是 Agent 直接检索的 RAG 语料</em>。我把判断标准定得很简单：写下来的时候，要假设对面是一个陌生的工程师，他能从第一行读到最后一行而不会迷路。
+      </p>
+      <h3 class="station-group-title">知识库</h3>
+      <div class="station-cards">
         <a class="featured-card" href="https://github.com/kudig-io/kudig-database" target="_blank" rel="noopener">
           <h4>KUDIG Database</h4>
           <p>K8s + AI Infra 运维全域知识库，人类与 Agent 双读。</p>
@@ -147,16 +168,17 @@ jsonld: |
           <span class="repo-url repo-private">私有仓库 · 登录可见</span>
         </a>
       </div>
-    </div>
+    </article>
   </section>
 
-  <section class="page-section knowledge-map reveal" data-reveal>
+  <!-- ── 04 · Knowledge Terrain ── -->
+  <section class="long-terrain knowledge-map reveal" data-reveal>
     <div class="section-header">
-      <h2 class="section-title">知识版图</h2>
-      <a href="/repos/" class="section-more">全部仓库 →</a>
+      <h2 class="section-title">知识版图 · Terrain</h2>
+      <a href="/repos/" class="section-more">全部 →</a>
     </div>
-    <p class="section-lede">
-      52 个知识库、20 个工具，横跨 17 个组织。每个 <em>*-database</em> 既是人读手册，也是 Agent 可直接检索的 RAG 语料。
+    <p class="terrain-prose">
+      我目前维护 52 个知识库与 20 个工具，横跨 17 个组织。下面是其中 5 个领域的一张<em>地形图</em>。每一格不是简单的主题分类，而是一种我反复在做的工作模式——比如"Cloud Native"背后是从故障分析到 Operator 开发的同一组技能。
     </p>
     <div class="domain-grid">
       <div class="domain-card">
@@ -187,60 +209,73 @@ jsonld: |
     </div>
   </section>
 
-  <section class="page-section audience-section reveal" data-reveal>
+  <!-- ── 05 · Reach ── -->
+  <section class="long-reach audience-section reveal" data-reveal>
     <div class="section-header">
-      <h2 class="section-title">从不同入口认识我</h2>
+      <h2 class="section-title">如果你在 · Reach</h2>
     </div>
-    <div class="audience-grid">
-
-      <a href="#featured" class="audience-card">
-        <div>
-          <h3>开发者 / 技术粉丝</h3>
-          <p>先看我做过哪些工具、如何把知识和工程能力产品化。</p>
-        </div>
-      </a>
-
-      <a href="/projects/" class="audience-card">
-        <div>
-          <h3>想看全部项目的人</h3>
-          <p>直接进入完整项目导航，查看所有保留但不在首页铺开的组织、语料库、应用与工具。</p>
-        </div>
-      </a>
-
-      <a href="/about/" class="audience-card">
-        <div>
-          <h3>招聘方 / 合作方</h3>
-          <p>快速判断我的强项、代表战绩、适合怎样的合作方式。</p>
-        </div>
-      </a>
-
-      <a href="/topic/links/" class="audience-card">
-        <div>
-          <h3>自媒体读者 / 内容用户</h3>
-          <p>内容矩阵、外部链接、知识专题和长期输出从这里汇聚。</p>
-        </div>
-      </a>
-
-    </div>
+    <p class="reach-prose">
+      不同访客来这里的目的不太一样。下面四种身份是出现频率最高的——你可以直接跳到自己对应的入口。
+    </p>
+    <ol class="reach-list">
+      <li>
+        <a href="#featured" class="reach-item">
+          <span class="reach-num">01</span>
+          <span class="reach-body">
+            <span class="reach-title">开发者 / 技术粉丝</span>
+            <span class="reach-desc">先看我做过哪些工具、如何把知识和工程能力产品化。</span>
+          </span>
+          <span class="reach-arrow" aria-hidden="true">→</span>
+        </a>
+      </li>
+      <li>
+        <a href="/projects/" class="reach-item">
+          <span class="reach-num">02</span>
+          <span class="reach-body">
+            <span class="reach-title">想看全部项目的人</span>
+            <span class="reach-desc">直接进入完整项目导航，查看所有保留但不在首页铺开的组织、语料库、应用与工具。</span>
+          </span>
+          <span class="reach-arrow" aria-hidden="true">→</span>
+        </a>
+      </li>
+      <li>
+        <a href="/about/" class="reach-item">
+          <span class="reach-num">03</span>
+          <span class="reach-body">
+            <span class="reach-title">招聘方 / 合作方</span>
+            <span class="reach-desc">快速判断我的强项、代表战绩、适合怎样的合作方式。</span>
+          </span>
+          <span class="reach-arrow" aria-hidden="true">→</span>
+        </a>
+      </li>
+      <li>
+        <a href="/topic/links/" class="reach-item">
+          <span class="reach-num">04</span>
+          <span class="reach-body">
+            <span class="reach-title">自媒体读者 / 内容用户</span>
+            <span class="reach-desc">内容矩阵、外部链接、知识专题和长期输出从这里汇聚。</span>
+          </span>
+          <span class="reach-arrow" aria-hidden="true">→</span>
+        </a>
+      </li>
+    </ol>
   </section>
 
-  <section class="page-section collab-section reveal" data-reveal>
+  <!-- ── 06 · Closing ── -->
+  <section class="long-closing collab-section reveal" data-reveal>
     <div class="section-header">
-      <h2 class="section-title">最适合的合作场景</h2>
+      <h2 class="section-title">下一步 · Closing</h2>
     </div>
-    <div class="collab-list">
-      <div class="collab-item">
-        <h3>AI 工具与开发者产品共创</h3>
-        <p>适合把 Agent、RAG、MCP、CLI 或 AI Native Workflow 做成真正可落地的工具产品。</p>
-      </div>
-      <div class="collab-item">
-        <h3>Cloud Native / SRE 顾问</h3>
-        <p>围绕 Kubernetes、可观测性、故障分析、运维自动化，提供实战经验导向的方案设计。</p>
-      </div>
-      <div class="collab-item">
-        <h3>知识体系与技术内容产品化</h3>
-        <p>把文档、专题、课程、案例库和品牌内容做成持续增长的知识资产，而不只是一次性输出。</p>
-      </div>
+    <p class="closing-prose">
+      如果你的工作需要：把 Agent、RAG、MCP、CLI 或 AI Native Workflow 做成真正可落地的工具产品；围绕 Kubernetes、可观测性、故障分析做实战方案设计；或者把零散的文档与案例沉淀成可增长的知识资产——这是我<em>最擅长合作的三个场景</em>。
+    </p>
+    <p class="closing-prose">
+      主页不放联系表单。最直接的入口是 GitHub Issues，或者每个项目 README 里我留下的联系方式。
+    </p>
+    <div class="closing-cta">
+      <a href="/projects/" class="btn btn-primary">查看代表项目 →</a>
+      <a href="/topic/links/" class="btn">内容矩阵 →</a>
+      <a href="/about/" class="btn">关于我 →</a>
     </div>
   </section>
 
