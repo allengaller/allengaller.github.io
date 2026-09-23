@@ -12,7 +12,7 @@
   // ── Static pages registry (always available) ──
   const PAGES = [
     { name: 'Home',         url: '/',                 hint: '首页 · 概览',            keywords: 'home index landing' },
-    { name: 'Projects',     url: '/projects/',        hint: '精选项目 · 6 个 banner',  keywords: 'projects featured portfolio' },
+    { name: 'Projects',     url: '/projects/',        hint: '代表项目 · 应用/工具/知识库',  keywords: 'projects featured portfolio' },
     { name: 'Repos',        url: '/repos/',           hint: '本地 GitHub 镜像总览',     keywords: 'repos github index all' },
     { name: 'Links',        url: '/topic/links/',     hint: '常用外部链接集合',         keywords: 'links bookmarks external' },
     { name: 'AI Tools',     url: '/topic/ai-tools/',  hint: 'AI 工具分类与推荐',        keywords: 'ai tools llm gpt' },
@@ -31,6 +31,7 @@
   let activeIdx = 0;
   let filtered = [];
   let modal, input, list, hint, status;
+  let opener = null; // what had focus before the palette opened
 
   // ── Build DOM once ──
   function buildModal() {
@@ -50,12 +51,14 @@
             <path d="M11 11 L14 14" stroke-linecap="round"/>
           </svg>
           <input id="palette-input" type="text" placeholder="跳到… 搜索仓库、页面、链接"
-                 autocomplete="off" spellcheck="false" aria-label="搜索">
+                 autocomplete="off" spellcheck="false" aria-label="搜索"
+                 role="combobox" aria-expanded="true" aria-controls="palette-list"
+                 aria-autocomplete="list" aria-activedescendant="">
           <kbd class="palette-kbd">esc</kbd>
         </div>
         <ul id="palette-list" class="palette-list" role="listbox" aria-label="搜索结果"></ul>
         <div class="palette-foot">
-          <span id="palette-status" class="palette-status">输入关键词 · ↑↓ 移动 · ↵ 跳转</span>
+          <span id="palette-status" class="palette-status" aria-live="polite">输入关键词 · ↑↓ 移动 · ↵ 跳转</span>
           <span class="palette-foot-hint"><kbd>↑↓</kbd> 移动 · <kbd>↵</kbd> 打开 · <kbd>esc</kbd> 关闭</span>
         </div>
       </div>
@@ -75,6 +78,31 @@
       const li = e.target.closest('[data-idx]');
       if (li) jump(parseInt(li.dataset.idx, 10));
     });
+    // aria-modal only holds if focus cannot escape, and nothing behind the
+    // backdrop is reachable while the dialog is open. Registered on document
+    // rather than the panel: for the first ~30 ms after open() the caret is
+    // still on <body>, and a Tab from there never reaches the panel.
+    document.addEventListener('keydown', trapTab);
+  }
+
+  function trapTab(e) {
+    if (!open || e.key !== 'Tab') return;
+    const focusables = Array.from(
+      modal.querySelectorAll('input, [href], button, [tabindex]:not([tabindex="-1"])')
+    ).filter((el) => !el.disabled && el.getClientRects().length);
+    if (!focusables.length) return;
+    const first = focusables[0];
+    const last = focusables[focusables.length - 1];
+    if (!modal.contains(document.activeElement)) {
+      e.preventDefault();
+      first.focus();
+    } else if (e.shiftKey && document.activeElement === first) {
+      e.preventDefault();
+      last.focus();
+    } else if (!e.shiftKey && document.activeElement === last) {
+      e.preventDefault();
+      first.focus();
+    }
   }
 
   // ── Load repo index lazily ──
@@ -143,8 +171,9 @@
   function render(query) {
     filtered = searchAll(query);
     if (filtered.length === 0) {
-      list.innerHTML = `<li class="palette-empty">没有匹配的结果 · 试试别的关键词</li>`;
+      list.innerHTML = `<li class="palette-empty" role="option" aria-disabled="true">没有匹配的结果 · 试试别的关键词</li>`;
       status.textContent = query ? `没有匹配 " ${query} "` : '输入关键词开始搜索';
+      input.setAttribute('aria-activedescendant', '');
       return;
     }
     activeIdx = Math.min(activeIdx, filtered.length - 1);
@@ -153,13 +182,16 @@
       const icon = item.type === 'repo'
         ? `<svg class="palette-item-icon" viewBox="0 0 16 16" width="14" height="14" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true"><path d="M2 2.5L8 1L14 2.5V13.5L8 15L2 13.5V2.5Z"/><path d="M2 2.5L8 4L14 2.5"/><path d="M8 4V15"/></svg>`
         : `<svg class="palette-item-icon" viewBox="0 0 16 16" width="14" height="14" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true"><path d="M2 13V3L8 1L14 3V13L8 15L2 13Z"/><path d="M2 3L8 5L14 3"/><path d="M8 5V15"/></svg>`;
-      return `<li class="palette-item ${isActive}" data-idx="${i}" role="option" aria-selected="${i === activeIdx}">
+      return `<li id="palette-opt-${i}" class="palette-item ${isActive}" data-idx="${i}" role="option" aria-selected="${i === activeIdx}">
         ${icon}
         <span class="palette-item-name">${escapeHtml(item.name)}</span>
         <span class="palette-item-hint">${escapeHtml(item.hint || '')}</span>
         <span class="palette-item-type">${item.type === 'repo' ? '仓库' : '页面'}</span>
       </li>`;
     }).join('');
+    // The input keeps focus the whole time, so the caret never moves onto the
+    // option — point the AT at it explicitly.
+    input.setAttribute('aria-activedescendant', `palette-opt-${activeIdx}`);
     status.textContent = `${filtered.length} 个结果 · 当前 ${activeIdx + 1}/${filtered.length}`;
     // Scroll active into view
     const activeEl = list.querySelector('.palette-item.is-active');
@@ -198,6 +230,7 @@
     if (open) return;
     buildModal();
     open = true;
+    opener = document.activeElement;
     modal.hidden = false;
     document.body.classList.add('palette-open');
     input.value = '';
@@ -213,6 +246,12 @@
     modal.hidden = true;
     document.body.classList.remove('palette-open');
     input.value = '';
+    // Return the caret to wherever it was, otherwise keyboard users are dropped
+    // at the top of the document after Esc.
+    if (opener && typeof opener.focus === 'function' && document.contains(opener)) {
+      opener.focus();
+    }
+    opener = null;
   }
 
   // ── Global keybindings ──

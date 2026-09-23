@@ -51,6 +51,7 @@ PAGES = [
     ("topic/archive/index.html",         "topic/archive/index.html",         0.5, "yearly"),
     ("GTM/index.html",                   "GTM/index.html",                   0.8, "weekly"),
     ("GTM/personal/index.html",          "GTM/products/allengaller/index.html", 0.7, "weekly"),
+    ("licensing/index.html",             "licensing/index.html",               0.5, "yearly"),
     ("404.html",                         "404.html",                         None, None),  # not in sitemap
 ]
 
@@ -59,6 +60,12 @@ EXTRA_DEPS = {
     "GTM/index.html": ["_data/gtm-products.json"],
     "index.html": ["_data/gtm-products.json"],
 }
+
+# Sources every {{ stat.* }} counter is computed from. A page that quotes one is
+# detected from its own text at build time, so this stays honest as pages change.
+_STAT_DEPS = ["_data/gtm-products.json", "_data/repos.json",
+              "projects/index.html", "topic/ai-tools/index.html",
+              "topic/archive/index.html"]
 
 NAV_PAGES = {
     "index.html":                "nav_active_home",
@@ -76,21 +83,20 @@ STATIC_FILES = [
     ("assets/js/site.js",     "assets/js/site.js"),
     ("assets/js/palette.js",  "assets/js/palette.js"),
     ("_data/repos.json",      "_data/repos.json"),
-    ("assets/banners/resolve-agent.svg", "assets/banners/resolve-agent.svg"),
-    ("assets/banners/kudig.svg",          "assets/banners/kudig.svg"),
-    ("assets/banners/etcd-guardian.svg",  "assets/banners/etcd-guardian.svg"),
-    ("assets/banners/leetcast.svg",       "assets/banners/leetcast.svg"),
-    ("assets/banners/mcp4coder.svg",      "assets/banners/mcp4coder.svg"),
-    ("assets/banners/opendemo.svg",       "assets/banners/opendemo.svg"),
+    # assets/banners/*.svg was shipped from here until no page referenced it any more;
+    # the six files and generate-bunicipals.py now sit in _attic/banners/.
     ("sitemap.xml",           "sitemap.xml"),
     ("robots.txt",            "robots.txt"),
     ("humans.txt",            "humans.txt"),
     ("manifest.webmanifest",  "manifest.webmanifest"),
+    ("LICENSE",               "LICENSE"),
     ("favicon.svg",           "favicon.svg"),
+    ("favicon-maskable.svg",  "favicon-maskable.svg"),
     ("favicon-32.png",        "favicon-32.png"),
     ("favicon-180.png",       "favicon-180.png"),
     ("og-default.png",        "og-default.png"),
-    ("404.html",              "404.html"),
+    # 404.html is deliberately absent: it is in PAGES and must reach the output
+    # through the layout. Copying it as a static file would ship raw front matter.
     (".well-known/security.txt", ".well-known/security.txt"),
     ("feed.xml",              "feed.xml"),
 ]
@@ -162,43 +168,32 @@ def extract_frontmatter(html):
     return {}, html
 
 
+# The one control-flow form _layouts/ uses: truthiness of a page variable.
+# Jekyll resolves it during branch-deploy; if build.py ignored it, the published
+# markup would carry raw `{% if %}` inside attributes.
+LIQUID_IF_RE = re.compile(
+    r'\{%-?\s*if\s+page\.(\w+)\s*-?%\}(.*?)\{%-?\s*endif\s*-?%\}', re.DOTALL)
+
+
+def _dir_url(dst_rel):
+    """Canonical URL for a built file.
+
+    GitHub Pages 301-redirects extensionless paths to their trailing-slash form,
+    so a bare "/about" is really a second URL for "/about/". Every producer of a
+    URL here — canonical, sitemap <loc>, og:url — goes through this one function
+    so the three can never disagree, and so the hand-written pages match the
+    shape of the generated ones ("/repos/<org>/<name>/").
+    """
+    if dst_rel.endswith("index.html"):
+        return "/" + dst_rel[: -len("index.html")]
+    return "/" + dst_rel
+
+
 def render_page(src_path, layout_html, page_url):
     """Render a page by applying layout to content. Returns rendered HTML."""
     with open(src_path) as f:
         src = f.read()
-
-    meta, content = extract_frontmatter(src)
-
-    out = layout_html
-    out = out.replace('{{ page.title }}', str(meta.get('title', '')))
-    out = out.replace('{{ page.description }}', str(meta.get('description', '')))
-    out = out.replace('{{ page.url }}', page_url)
-
-    # Handle `{{ page.robots | default: 'index,follow' }}` pattern
-    robots_value = meta.get('robots', 'index,follow')
-    if not robots_value:
-        robots_value = 'index,follow'
-    out = out.replace("{{ page.robots | default: 'index,follow' }}", str(robots_value))
-    out = out.replace('{{ page.robots }}', str(robots_value))
-
-    for key in NAV_PAGES.values():
-        placeholder = '{{ page.' + key + ' }}'
-        out = out.replace(placeholder, str(meta.get(key, '')))
-
-    # JSON-LD (optional; defaults to empty string)
-    jsonld = meta.get('jsonld', '')
-    if jsonld is None:
-        jsonld = ''
-    jsonld = str(jsonld).strip()
-    out = out.replace('{{ page.jsonld }}', jsonld)
-
-    out = out.replace('{{ content }}', content)
-
-    # GTM portal injections (no-op on pages without the placeholders);
-    # must run after content substitution — the placeholders live in page bodies
-    out = out.replace('{{ gtm_total }}', str(_gtm_total()))
-    out = out.replace('{{ gtm_cards }}', _gtm_cards_html())
-    return out
+    return _apply_layout(src, layout_html, page_url)
 
 
 def build_page(src_rel, dst_rel, layout_html, cache, force=False):
@@ -211,7 +206,14 @@ def build_page(src_rel, dst_rel, layout_html, cache, force=False):
         return False
 
     src_h = file_hash(src_path)
-    dep_h = "".join(file_hash(os.path.join(BASE, d)) for d in EXTRA_DEPS.get(src_rel, []))
+    deps = list(EXTRA_DEPS.get(src_rel, []))
+    # A page can inherit a derived counter from the chrome around it — the footer
+    # year lives in the layout — so the dependency has to be read off both files.
+    with open(src_path, encoding="utf-8") as f:
+        stat_refs = f.read() + layout_html
+    if "{{ stat." in stat_refs:
+        deps.extend(_STAT_DEPS)
+    dep_h = "".join(file_hash(os.path.join(BASE, d)) for d in deps)
     layout_h = file_hash(os.path.join(BASE, "_layouts/default.html"))
 
     cache_key = f"page:{src_rel}:src"
@@ -219,9 +221,7 @@ def build_page(src_rel, dst_rel, layout_html, cache, force=False):
     if not force and cache.get(cache_key) == src_h + dep_h and cache.get(layout_key) == layout_h:
         return False  # unchanged
 
-    page_url = "/" + dst_rel.replace("index.html", "").rstrip("/")
-    if page_url == "/":
-        page_url = "/"
+    page_url = _dir_url(dst_rel)
 
     rendered = render_page(src_path, layout_html, page_url)
 
@@ -243,29 +243,30 @@ def generate_sitemap(cache, force=False):
         # Skip pages with None priority (e.g. 404)
         if priority is None:
             continue
-        page_url = "/" + dst_rel.replace("index.html", "").rstrip("/")
-        if page_url == "/":
-            page_url = ""
-        url_entries.append((page_url, priority, changefreq))
+        url_entries.append((_dir_url(dst_rel), priority, changefreq, ""))
 
-    # Append per-repo pages (sourced from generated registry)
+    # Append per-repo pages (sourced from generated registry). These are the only
+    # URLs with a lastmod we can actually stand behind: the date comes from the
+    # repo's latest commit, not from a build timestamp that would reset every run.
     repo_pages = cache.get("repo_pages:list", [])
     for repo_url, iso in repo_pages:
-        url_entries.append((repo_url, 0.5, "monthly"))
+        url_entries.append((repo_url, 0.5, "monthly", _iso_date(iso)))
 
     # Append GTM portal product pages (page / docs ship under /GTM/products/;
     # the internal product's URL is already in PAGES)
-    for product in load_gtm_manifest():
+    for product in gtm_public_products():
         if product.get("type") == "internal":
             continue
         slug = product.get("slug", "")
         if slug:
-            url_entries.append((f"/GTM/products/{slug}/", 0.6, "weekly"))
+            url_entries.append((f"/GTM/products/{slug}/", 0.6, "weekly", ""))
 
     body = '<?xml version="1.0" encoding="UTF-8"?>\n'
     body += '<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">\n'
-    for url, priority, changefreq in url_entries:
+    for url, priority, changefreq, lastmod in url_entries:
         body += f"  <url>\n    <loc>{SITE_URL}{url}</loc>\n"
+        if lastmod:
+            body += f"    <lastmod>{lastmod}</lastmod>\n"
         body += f"    <priority>{priority}</priority>\n"
         body += f"    <changefreq>{changefreq}</changefreq>\n  </url>\n"
     body += "</urlset>\n"
@@ -300,10 +301,30 @@ def load_gtm_manifest():
 _GTM_CARDS_CACHE = {}
 
 
+def gtm_public_products():
+    """Manifest entries that are allowed to reach the published site.
+
+    private:true products stay out of the portal grid, out of _site/, and out
+    of the sitemap; their snapshots live in _attic/gtm-private/.
+    """
+    return [p for p in load_gtm_manifest() if not p.get("private")]
+
+
+def gtm_private_slugs():
+    """Manifest slugs withheld from publication."""
+    return {p.get("slug") for p in load_gtm_manifest() if p.get("private")}
+
+
+def gtm_orgs():
+    """Distinct GitHub orgs across public products (for the portal counters)."""
+    return {p.get("repo", "").split("/")[0] for p in gtm_public_products() if p.get("repo")}
+
+
 def _gtm_total():
-    """Total number of GTM products listed in the manifest."""
+    """Number of public GTM products listed in the portal."""
     if "total" not in _GTM_CARDS_CACHE:
-        _GTM_CARDS_CACHE["total"] = len(load_gtm_manifest())
+        _GTM_CARDS_CACHE["total"] = len(
+            [p for p in gtm_public_products() if p.get("type") != "internal"])
     return _GTM_CARDS_CACHE["total"]
 
 
@@ -316,7 +337,7 @@ def _gtm_cards_html():
     if "html" in _GTM_CARDS_CACHE:
         return _GTM_CARDS_CACHE["html"]
 
-    products = [p for p in load_gtm_manifest() if p.get("type") != "internal"]
+    products = [p for p in gtm_public_products() if p.get("type") != "internal"]
     groups = [
         ("tools", "产品与工具"),
         ("knowledge", "知识库"),
@@ -330,12 +351,11 @@ def _gtm_cards_html():
         cards = []
         for p in items:
             org = p.get("repo", "").split("/")[0] if p.get("repo") else ""
-            badge = '<span class="gtmp-card-badge">内部</span>' if p.get("private") else ""
             cards.append(
                 f'<a class="gtmp-card" href="/GTM/products/{_h(p.get("slug", ""))}/">'
                 f'<span class="gtmp-card-name">{_h(p.get("name") or p.get("slug", ""))}</span>'
                 f'<span class="gtmp-card-tagline">{_h(p.get("tagline", ""))}</span>'
-                f'<span class="gtmp-card-meta"><span class="gtmp-card-org">{_h(org)}</span>{badge}</span>'
+                f'<span class="gtmp-card-meta"><span class="gtmp-card-org">{_h(org)}</span></span>'
                 f'</a>'
             )
         sections.append(
@@ -350,21 +370,96 @@ def _gtm_cards_html():
     return _GTM_CARDS_CACHE["html"]
 
 
+# ─────────────────────────────────────────────────────────
+# Derived statistics ({{ stat.* }} in page bodies)
+# ─────────────────────────────────────────────────────────
+
+_STATS_CACHE = {}
+
+# Each archive section heads a hand-written list; the count chip used to be
+# typed too and drifted from the items under it.
+ARCHIVE_SECTION_RE = re.compile(
+    r'<section class="archive-section"[^>]*>.*?</section>', re.DOTALL)
+
+
+def _repos_data():
+    path = os.path.join(BASE, "_data", "repos.json")
+    if not os.path.exists(path):
+        return None
+    with open(path, encoding="utf-8") as f:
+        return json.load(f)
+
+
+def _page_source(rel_path):
+    path = os.path.join(BASE, rel_path)
+    if not os.path.exists(path):
+        return ""
+    with open(path, encoding="utf-8") as f:
+        return f.read()
+
+
+def _stats():
+    """Counts quoted in prose, computed from the data rather than typed by hand."""
+    if _STATS_CACHE:
+        return _STATS_CACHE
+
+    s = {}
+    data = _repos_data()
+    if data:
+        repos = data.get("repos", [])
+        own = [r for r in repos if r.get("is_own")]
+        s["repos_total"] = len(repos)
+        s["repos_own"] = len(own)
+        s["repos_databases"] = sum(1 for r in own if r.get("repo_type") == "database")
+        s["repos_tools"] = sum(1 for r in own if r.get("repo_type") == "tool")
+        s["repos_orgs"] = len({r.get("org") for r in own if r.get("org")})
+        # The footer copyright year claims "this site is alive in year N", so it
+        # is derived from the newest commit on record rather than typed by hand —
+        # a build clock would also churn every page hash on each run.
+        active_years = {r["last_commit_iso"][:4] for r in repos
+                        if r.get("last_commit_iso")}
+        if active_years:
+            s["year"] = max(active_years)
+    s["gtm_products"] = _gtm_total()
+    s["gtm_orgs"] = len(gtm_orgs())
+    s["archive_docs"] = _page_source("topic/archive/index.html").count('class="archive-item"')
+    s["featured_projects"] = _page_source("projects/index.html").count('class="featured-card"')
+    tool_cards = re.findall(r'class="tool-card([^"]*)"', _page_source("topic/ai-tools/index.html"))
+    s["ai_tools"] = len(tool_cards)
+    s["ai_tools_free"] = sum(1 for c in tool_cards if "free" in c)
+    s["ai_tools_paid"] = len(tool_cards) - s["ai_tools_free"]
+    _STATS_CACHE.update(s)
+    return s
+
+
+def _derive_section_counts(content):
+    """Rewrite each archive section's count chip from the items actually listed."""
+    def fix(m):
+        block = m.group(0)
+        n = block.count('class="archive-item"')
+        return re.sub(r'(<span class="section-count">)[^<]*(</span>)',
+                      lambda c: f"{c.group(1)}{n}{c.group(2)}", block, count=1)
+
+    return ARCHIVE_SECTION_RE.sub(fix, content)
+
+
 def copy_gtm_products(cache, force=False):
     """Mirror synced GTM product pages (GTM/products/) into _site/, hash-incremental.
 
     Skips dotfiles and directories reserved for build_page-rendered products
-    (their _site/ copies come from build_page instead).
+    (their _site/ copies come from build_page instead), and prunes any
+    private:true product left over from an earlier build.
     """
     src_root = os.path.join(BASE, "GTM", "products")
     dst_root = os.path.join(SITE_DIR, "GTM", "products")
     if not os.path.isdir(src_root):
         return
+    hidden = gtm_private_slugs()
     protected = {
         p.get("slug")
         for p in load_gtm_manifest()
         if p.get("type") in ("internal", "docs")
-    }
+    } - hidden
 
     seen = set()
     copied = 0
@@ -375,7 +470,7 @@ def copy_gtm_products(cache, force=False):
                 continue
             src_path = os.path.join(root, fname)
             rel = os.path.relpath(src_path, src_root)
-            if rel.split(os.sep)[0] in protected:
+            if rel.split(os.sep)[0] in protected or rel.split(os.sep)[0] in hidden:
                 continue
             seen.add(rel)
             dst_path = os.path.join(dst_root, rel)
@@ -540,14 +635,62 @@ def _format_size(kb):
     return f"{kb/1024:.1f} MB"
 
 
-def _format_date(iso):
+def _iso_date(iso):
+    """Normalise a commit timestamp to the date-only W3C form sitemaps accept."""
     if not iso:
-        return "—"
+        return ""
     try:
-        d = datetime.fromisoformat(iso)
-        return d.strftime("%Y-%m-%d")
+        return datetime.fromisoformat(iso).strftime("%Y-%m-%d")
     except (ValueError, TypeError):
-        return "—"
+        return ""
+
+
+def _format_date(iso):
+    return _iso_date(iso) or "—"
+
+
+_MD_IMAGE = re.compile(r"!\[[^\]]*\]\([^)]*\)")
+_MD_LINK = re.compile(r"\[([^\]]*)\]\([^)]*\)")
+_MD_HEADING = re.compile(r"^\s{0,3}#{1,6}\s+")
+_MD_QUOTE = re.compile(r"^\s*>\s?")
+_HTML_COMMENT = re.compile(r"<!--.*?-->", re.S)
+_HTML_TAG = re.compile(r"</?[a-zA-Z][^>]*>")
+_WS = re.compile(r"\s+")
+
+
+def _plain(text, limit=160):
+    """Reduce a repo description or README first line to one line of prose.
+
+    When a repo has no GitHub description the fallback is the README's first
+    line, which arrives as markup — "# Claw Workspace", badge links, HTML
+    comments. That string is reused verbatim as the tagline, the meta
+    description and the JSON-LD description, so the syntax shows up in the
+    search snippet. Underscores are kept: they carry meaning in snake_case names,
+    but asterisks only ever arrive here as emphasis ("* aka the Coder Toolset *").
+    """
+    if not text:
+        return ""
+    s = _MD_IMAGE.sub(" ", text)
+    s = _HTML_COMMENT.sub(" ", s)
+    s = _MD_LINK.sub(r"\1", s)
+    s = _MD_HEADING.sub("", s)
+    s = _MD_QUOTE.sub("", s)
+    s = _HTML_TAG.sub(" ", s)
+    # The scanner truncates long README lines, which can cut a link in half and
+    # leave "see [README" behind. Drop a dangling fragment, but keep balanced
+    # brackets — "[WIP] notes" is a label, not broken markup.
+    if "[" in s and "]" not in s:
+        s = s[:s.index("[")]
+    s = _WS.sub(" ", s.replace("`", "").replace("*", "").rstrip(" ,;:-—–|/")).strip()
+    if len(s) > limit:
+        s = (s[:limit].rsplit(" ", 1)[0] or s[:limit]) + "…"
+    return s
+
+
+def _repo_summary(repo):
+    """One-line summary for a repo: GitHub description, README line, or the default."""
+    return _plain(repo.get("description") or repo.get("readme_excerpt") or "") or \
+        "本仓库由本地 Git 镜像自动生成。"
 
 
 def _build_repo_page(repo, related):
@@ -555,8 +698,7 @@ def _build_repo_page(repo, related):
     org = repo.get("org") or ""
     name = repo.get("name") or ""
     full_name = repo.get("full_name") or f"{org}/{name}"
-    description = (repo.get("description") or repo.get("readme_excerpt") or
-                   "本仓库由本地 Git 镜像自动生成。")
+    description = _repo_summary(repo)
     lang_top = repo.get("language_top") or "—"
     last_iso = repo.get("last_commit_iso") or ""
     last_rel = repo.get("last_commit_rel") or ""
@@ -623,8 +765,8 @@ def _build_repo_page(repo, related):
 
     page_title = f"{name} · {org}"
     page_url = f"/repos/{org}/{name}/"
-    # Trim and clean description; YAML-quoted via json.dumps below
-    page_desc = description[:160].replace("\n", " ").strip()
+    # _repo_summary already yields one clean line within the meta-description budget
+    page_desc = description
     # Always quote to be safe with special YAML chars
     page_desc_yaml = json.dumps(page_desc, ensure_ascii=False)
     page_title_yaml = json.dumps(page_title, ensure_ascii=False)
@@ -820,7 +962,7 @@ jsonld: {jsonld_str}
 }}
 .badge-own {{
   background: var(--accent-soft);
-  color: var(--accent);
+  color: var(--accent-dark);
   border: 1px solid var(--accent);
 }}
 .badge-ext {{
@@ -1144,7 +1286,7 @@ jsonld: {jsonld_str}
 .commit-sha {{
   font-family: var(--font-mono);
   font-size: 0.7rem;
-  color: var(--accent);
+  color: var(--accent-dark);
   background: var(--accent-soft);
   padding: 0.1rem 0.35rem;
   border-radius: 3px;
@@ -1328,15 +1470,20 @@ def build_repo_pages(cache, force=False, layout_html=None):
 
 
 def _apply_layout(src_html, layout_html, page_url):
-    """Like render_page() but accepts an already-rendered string + layout.
+    """Resolve layout tokens against a page's frontmatter + body.
 
-    Strips Jekyll frontmatter from src_html, substitutes placeholders in
-    the layout, and injects src_html as {{ content }}.
+    Single implementation shared by tracked pages (render_page) and generated
+    repo detail pages, so the two cannot drift apart on token support.
     """
     meta, content = extract_frontmatter(src_html)
     out = layout_html
-    out = out.replace('{{ page.title }}', str(meta.get('title', '')))
-    out = out.replace('{{ page.description }}', str(meta.get('description', '')))
+    out = LIQUID_IF_RE.sub(
+        lambda m: m.group(2) if meta.get(m.group(1)) else "", out)
+    # Titles and descriptions land in both text and attribute contexts
+    # (<title>, og:*, twitter:*). Nothing in front matter uses markup today, but
+    # an unescaped "&" in a future title would silently invalidate five tags.
+    out = out.replace('{{ page.title }}', _h(meta.get('title', '')))
+    out = out.replace('{{ page.description }}', _h(meta.get('description', '')))
     out = out.replace('{{ page.url }}', page_url)
     robots_value = meta.get('robots', 'index,follow')
     if not robots_value:
@@ -1347,10 +1494,19 @@ def _apply_layout(src_html, layout_html, page_url):
         placeholder = '{{ page.' + key + ' }}'
         out = out.replace(placeholder, str(meta.get(key, '')))
     jsonld = meta.get('jsonld', '')
-    if jsonld is None:
-        jsonld = ''
-    out = out.replace('{{ page.jsonld }}', str(jsonld).strip())
-    out = out.replace('{{ content }}', content)
+    if isinstance(jsonld, (dict, list)):
+        # Repo pages declare JSON-LD as a parsed mapping; str() would emit Python
+        # repr with single quotes, which no consumer can parse as JSON.
+        jsonld = json.dumps(jsonld, ensure_ascii=False, separators=(",", ":"))
+    out = out.replace('{{ page.jsonld }}', str(jsonld or "").strip())
+    out = out.replace('{{ content }}', _derive_section_counts(content))
+
+    # GTM portal placeholders and derived counters live in page bodies (and in
+    # the description frontmatter just inserted), so they resolve last.
+    out = out.replace('{{ gtm_total }}', str(_gtm_total()))
+    out = out.replace('{{ gtm_cards }}', _gtm_cards_html())
+    for key, value in _stats().items():
+        out = out.replace('{{ stat.' + key + ' }}', str(value))
     return out
 
 
@@ -1402,7 +1558,7 @@ def generate_rss(cache, force=False):
             continue
         name = r.get("name", "")
         org = r.get("org", "")
-        desc = (r.get("description") or r.get("readme_excerpt") or "").strip().replace("\n", " ")[:200]
+        desc = _plain(r.get("description") or r.get("readme_excerpt") or "", 200)
         iso = r.get("last_commit_iso", "")
         page_url = f"{SITE_URL}/repos/{org}/{name}/"
         gh_url = f"https://github.com/{full_name}"
@@ -1501,33 +1657,25 @@ def check_external_links(timeout=8, max_links=80):
 
 
 def check_internal_links(strict=False):
-    """Verify every internal href in _site/ resolves to a real file. Returns (issues, total).
+    """Verify every internal href and src in _site/ resolves to a real file.
 
-    Pages under GTM/products/ that were verbatim-synced from their source repos
-    are skipped: their links are relative to the origin checkout, not this site.
+    Returns (issues, total). GTM product snapshots are checked too: sync-gtm.py
+    rewrites their escaping relative paths into absolute GitHub URLs at sync
+    time, so anything still relative here is a genuine broken link.
     """
     issues = []
     total = 0
     if not os.path.isdir(SITE_DIR):
         return issues, total
 
-    built_products = {
-        f"GTM/products/{p.get('slug')}/index.html"
-        for p in load_gtm_manifest()
-        if p.get("type") in ("internal", "docs")
-    }
-
     for root, _, files in os.walk(SITE_DIR):
         for fname in files:
             if not fname.endswith(".html"):
                 continue
             path = os.path.join(root, fname)
-            rel_path = os.path.relpath(path, SITE_DIR)
-            if rel_path.startswith("GTM/products/") and rel_path not in built_products:
-                continue
             with open(path) as f:
                 html = f.read()
-            for href in re.findall(r'href="([^"]+)"', html):
+            for href in re.findall(r'(?:href|src)="([^"]+)"', html):
                 if href.startswith(("http://", "https://", "mailto:", "tel:", "javascript:", "data:", "#")):
                     continue
                 # Skip template-literal placeholders (e.g. ${url} in inline JS)
@@ -1603,7 +1751,7 @@ def main():
 
     # Generate GTM docs pages (markdown strategic docs rendered via the site layout)
     docs_built = 0
-    for product in load_gtm_manifest():
+    for product in gtm_public_products():
         if product.get("type") == "docs":
             slug = product.get("slug", "")
             if build_page(f"_gtm_docs/{slug}/index.html", f"GTM/products/{slug}/index.html", layout_html, cache, force):

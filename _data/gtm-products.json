@@ -222,6 +222,16 @@
       "source": "GTM"
     },
     {
+      "slug": "lolipop-database",
+      "repo": "lonely-reader-global/lolipop-database",
+      "name": "lolipop",
+      "tagline": "商业化定价 · 渠道 · 路线图 · 合规边界（战略文档）。",
+      "group": "knowledge",
+      "private": true,
+      "type": "docs",
+      "source": "GTM"
+    },
+    {
       "slug": "open-cognition-database",
       "repo": "peace-lab-global/open-cognition-database",
       "name": "Open Cognition",

@@ -1,10 +1,15 @@
-# ⚠️ 注意：本站并非真正的 Jekyll 构建。
-# 实际构建由自研脚本 _scripts/build.py 完成（输出到 _site/），该脚本不读取本文件。
-# 本文件仅作 GitHub Pages 兼容/站点元数据声明用途；其中 plugins、kramdown、
-# relative_links 等 Jekyll 配置均不生效，修改它们不会改变构建行为。
+# ⚠️ 本文件不参与构建。
+# 站点由 GitHub Actions（.github/workflows/deploy.yml）调用自研脚本 _scripts/build.py
+# 生成 _site/ 后发布，Pages 的 Source 需设为 "GitHub Actions"。
+# build.py 不读取本文件；此处 title/description/plugins/kramdown/relative_links
+# 仅作为元数据声明保留，只有把 Pages 来源切回 "deploy from a branch" 时才会生效。
+# 切回分支部署前必读：那条链路只认识被 git 跟踪的源文件，
+# repos/<org>/<repo>/ 详情页、feed.xml、sitemap.xml 均由 build.py 生成，切回即消失。
 title: Allen Galler
 tagline: Cloud Native SRE · AI Toolsmith · Knowledge Architect
-description: 高产开源黑客的个人品牌总入口，聚合 4500+ 文档、10+ 开源工具、内容矩阵与合作入口。
+# description 不写具体数量：站内数字一律由 build.py 从 _data/repos.json 构建期派生，
+# 而本文件不参与构建，任何字面数字都会随仓库增长变成假话。
+description: 高产开源黑客的个人品牌总入口，聚合知识库、开源工具、内容矩阵与合作入口。
 lang: zh-CN
 url: https://allengaller.github.io
 
@@ -39,6 +44,7 @@ relative_links:
 exclude:
   - backup_*/
   - vendor/
+  - _attic/
   - README.md
   - backup_README.md
   - skills-lock.json

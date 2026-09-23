@@ -18,22 +18,27 @@
   --ink-soft: #2b2a26;      /* secondary ink */
   --text: #14130f;
   --text-secondary: #4a4842;
-  --text-muted: #6f6c63;    /* 5.0:1 on --bg — WCAG AA */
-  --text-faint: #b8b5ac;
+  --text-muted: #6f6c63;    /* 5.1:1 on --bg — WCAG AA */
+  --text-faint: #767369;    /* 4.6:1 on --bg — WCAG AA for the smallest captions */
 
   /* Lines */
   --border: #e2dfd6;
   --border-hover: #cdc9bc;
   --border-strong: #14130f;
 
+  /* Decoration only — 2.0:1, deliberately below AA because it carries no
+     meaning (the section divider). Never use it for text a person must read. */
+  --ornament: #b8b5ac;
+
   /* Single warm accent — used very sparingly */
   --accent: #b4442c;        /* brick terracotta — 5.3:1 on --bg, WCAG AA */
   --accent-soft: rgba(180, 68, 44, 0.08);
   --accent-fg: #ffffff;
-  --accent-dark: #93351f;   /* hover state on accent surfaces */
+  --accent-dark: #93351f;   /* accent ink: hover on accent surfaces, and small text on --accent-soft tints */
 
   /* Secondary accent — gold, used only for tiny highlights (chapter marks, dots) */
-  --gold: #b08a3e;
+  --gold: #b08a3e;         /* decoration / large display numerals — 3.12:1 */
+  --gold-ink: #876629;     /* the same hue darkened to 5.2:1 so it may carry small text */
   --gold-soft: rgba(176, 138, 62, 0.14);
 
   /* Atmospheric — used in hero glows */
@@ -146,16 +151,26 @@ a {
   text-decoration: none;
   text-underline-offset: 3px;
   text-decoration-thickness: 1px;
-  transition: opacity var(--dur-fast) var(--ease-out), color var(--dur-fast) var(--ease-out);
+  transition: color var(--dur-fast) var(--ease-out);
 }
 
-a:hover { opacity: 0.55; }
-a:active { opacity: 0.4; }
+a:hover,
+a:active { text-decoration: underline; }
 
 a:focus-visible {
   outline: none;
   box-shadow: var(--focus-ring);
   border-radius: var(--radius-sm);
+}
+
+/* Windows high-contrast / forced-colors mode discards box-shadow, which is
+   every focus ring on this site. Give the outline back there — !important so it
+   beats the per-component `outline: none` above and below. */
+@media (forced-colors: active) {
+  :focus-visible {
+    outline: 2px solid Highlight !important;
+    outline-offset: 2px;
+  }
 }
 
 code, pre, kbd {
@@ -228,8 +243,8 @@ strong { font-weight: 600; color: var(--text); }
 }
 
 .site-nav a:hover {
-  opacity: 1;
   color: var(--text);
+  text-decoration: none; /* nav already says "live": muted → ink, plus the active bar */
 }
 
 .site-nav a.is-active {
@@ -246,7 +261,8 @@ strong { font-weight: 600; color: var(--text); }
   background: var(--text);
 }
 
-.site-nav a:last-child {
+/* Keep the ⌘K chip flush right whether it is an anchor or a button. */
+.site-nav > :last-child {
   margin-left: auto;
 }
 
@@ -308,7 +324,7 @@ strong { font-weight: 600; color: var(--text); }
 .ornament {
   text-align: center;
   font-family: var(--font-display);
-  color: var(--text-faint);
+  color: var(--ornament);
   font-size: 0.75rem;
   letter-spacing: 1em;
   margin: 0 auto 3rem;
@@ -361,172 +377,10 @@ strong { font-weight: 600; color: var(--text); }
   letter-spacing: 0.02em;
 }
 
-/* ── Project Card Grid (with banner) ─────────── */
-.project-grid {
-  display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
-  gap: 1px;
-  background: var(--border);
-  border: 1px solid var(--border);
-  border-radius: var(--radius);
-  overflow: hidden;
-}
-
-.project-card {
-  background: var(--bg);
-  display: flex;
-  flex-direction: column;
-  transition: background var(--dur-fast) var(--ease-out);
-  position: relative;
-  overflow: hidden;
-}
-
-.project-card:hover { background: var(--bg-subtle); }
-
-.project-card:hover .project-banner img {
-  transform: scale(1.04);
-}
-
-.project-banner {
-  width: 100%;
-  aspect-ratio: 3 / 1;
-  overflow: hidden;
-  background: var(--bg-subtle);
-  border-bottom: 1px solid var(--border);
-  position: relative;
-}
-
-.project-banner img {
-  width: 100%;
-  height: 100%;
-  display: block;
-  object-fit: cover;
-  transition: transform var(--dur-slow) var(--ease-out);
-}
-
-.project-body {
-  padding: 1.25rem 1.5rem 1.5rem;
-  display: flex;
-  flex-direction: column;
-  gap: 0.5rem;
-  flex: 1;
-}
-
-.project-type {
-  font-family: var(--font-mono);
-  font-size: 0.625rem;
-  font-weight: 500;
-  text-transform: uppercase;
-  letter-spacing: 0.12em;
-  color: var(--text-muted);
-}
-
-.project-card h3 {
-  font-family: var(--font-display);
-  font-size: 1.25rem;
-  font-weight: 500;
-  letter-spacing: -0.02em;
-  margin-top: 0.25rem;
-  transition: color var(--dur-fast) var(--ease-out);
-}
-
-.project-card:hover h3 { color: var(--accent); }
-
-.project-card p {
-  font-size: 0.8125rem;
-  color: var(--text-secondary);
-  line-height: 1.6;
-  flex: 1;
-}
-
-.project-tags {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 0.375rem;
-  margin-top: 0.75rem;
-}
-
-.project-tags span {
-  font-size: 0.6875rem;
-  padding: 0.2rem 0.55rem;
-  background: var(--bg-subtle);
-  border: 1px solid var(--border);
-  border-radius: 2rem;
-  color: var(--text-muted);
-  font-family: var(--font-body);
-}
-
-/* ── Project List (flat rows) ─────────────────────────── */
-.project-list {
-  display: flex;
-  flex-direction: column;
-}
-
-.project-item {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  gap: 1rem;
-  padding: 1.25rem 0;
-  border-bottom: 1px solid var(--border);
-  transition: background var(--dur-fast) var(--ease-out), padding var(--dur-fast) var(--ease-out);
-}
-
-.project-item:last-child { border-bottom: none; }
-
-.project-item:hover {
-  background: var(--bg-subtle);
-  margin: 0 calc(-1 * var(--gutter));
-  padding-left: var(--gutter);
-  padding-right: var(--gutter);
-}
-
-.project-item .item-main { flex: 1; min-width: 0; }
-
-.project-item .item-main h3 {
-  font-family: var(--font-display);
-  font-size: 1.0625rem;
-  font-weight: 500;
-  margin-bottom: 0.2rem;
-  letter-spacing: -0.015em;
-}
-
-.project-item .item-main p {
-  font-size: 0.8125rem;
-  color: var(--text-muted);
-  white-space: nowrap;
-  overflow: hidden;
-  text-overflow: ellipsis;
-}
-
-.project-item .item-tags {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 0.375rem;
-  flex-shrink: 0;
-}
-
-.project-item .item-tags span {
-  font-size: 0.6875rem;
-  padding: 0.2rem 0.5rem;
-  background: var(--bg-subtle);
-  border: 1px solid var(--border);
-  border-radius: 2rem;
-  color: var(--text-muted);
-}
-
-.project-item .item-arrow {
-  font-family: var(--font-display);
-  font-size: 1.125rem;
-  color: var(--text-muted);
-  flex-shrink: 0;
-  transition: transform var(--dur-fast) var(--ease-out), color var(--dur-fast) var(--ease-out);
-}
-
-.project-item:hover .item-arrow {
-  transform: translateX(4px);
-  color: var(--accent);
-}
+/* The .project-grid / .project-card / .project-banner / .project-list /
+   .project-item component lived here until 2026-09-23; no page or mirror
+   referenced it and the banners it displayed are archived. The rules are
+   kept verbatim in _attic/css/main__project-card-list.css. */
 
 /* ── Featured Projects (grouped) ───────────── */
 .featured-group { margin-top: 2.5rem; }
@@ -606,7 +460,7 @@ strong { font-weight: 600; color: var(--text); }
   font-family: var(--font-mono);
   font-style: normal;
   font-size: 0.875em;
-  color: var(--text-primary);
+  color: var(--text);
 }
 
 .domain-grid {
@@ -741,14 +595,15 @@ strong { font-weight: 600; color: var(--text); }
 }
 
 .btn:hover {
-  opacity: 1;
   background: var(--bg-hover);
   border-color: var(--border-hover);
   transform: translateY(-1px);
+  text-decoration: none; /* the pill itself is the affordance */
 }
 
 .btn:active {
   transform: translateY(0);
+  text-decoration: none;
 }
 
 .btn-primary {
@@ -1039,6 +894,22 @@ strong { font-weight: 600; color: var(--text); }
   color: var(--text-faint);
 }
 
+/* The LICENSE link sits in faint subtext; lift it to the same weight as the
+   other footer links so it reads as a link instead of caption noise. */
+.footer-license {
+  color: var(--text-muted);
+  text-decoration: none;
+  border-bottom: 1px solid var(--border-hover);
+  transition: color var(--dur-fast) var(--ease-out),
+              border-color var(--dur-fast) var(--ease-out);
+}
+
+.footer-license:hover {
+  color: var(--text);
+  border-bottom-color: var(--text-muted);
+  text-decoration: none; /* the border-bottom already is the underline */
+}
+
 .footer-meta {
   font-family: var(--font-mono);
   font-variant-numeric: tabular-nums;
@@ -1177,20 +1048,18 @@ strong { font-weight: 600; color: var(--text); }
   to { opacity: 1; transform: translateY(0); }
 }
 
-@keyframes revealUp {
-  from { opacity: 0; transform: translateY(24px); filter: blur(4px); }
-  to { opacity: 1; transform: translateY(0); filter: blur(0); }
-}
-
 /* ── v2 · Scroll-triggered reveal (IntersectionObserver) ─── */
-[data-reveal] {
+/* Gated on .js (set by the inline script in the layout head) so that a page
+   whose script never runs — JS off, CSP, a 404 on site.js — still shows its
+   content instead of an invisible document. */
+.js [data-reveal] {
   opacity: 0;
   transform: translateY(24px);
   transition: opacity var(--dur-slow) var(--ease-out), transform var(--dur-slow) var(--ease-out), filter var(--dur-slow) var(--ease-out);
   filter: blur(4px);
 }
 
-[data-reveal].is-revealed {
+.js [data-reveal].is-revealed {
   opacity: 1;
   transform: translateY(0);
   filter: blur(0);
@@ -1309,9 +1178,6 @@ strong { font-weight: 600; color: var(--text); }
   .site-nav a.is-active::after { bottom: -14px; }
   .site-main { padding: 2rem 20px 4rem; }
   .stats-grid { grid-template-columns: repeat(2, 1fr); }
-  .project-item { flex-direction: column; align-items: flex-start; gap: 0.75rem; }
-  .project-item .item-tags { display: none; }
-  .project-item:hover { margin: 0 -20px; padding-left: 20px; padding-right: 20px; }
   .footer-row { flex-direction: column; align-items: flex-start; gap: 0.5rem; }
   .footer-row-sub { gap: 0.75rem; }
   .about-header, .projects-header, .links-header, .archive-header { padding: 3rem 0 2rem; }
@@ -1328,6 +1194,13 @@ strong { font-weight: 600; color: var(--text); }
   [data-stagger], .home-eyebrow, .home-name, .home-tagline, .home-hero-aside {
     opacity: 1 !important;
     animation: none !important;
+  }
+  /* Reveal is a motion effect, not a loading state — never leave content
+     waiting on an observer for someone who asked for no animation. */
+  [data-reveal] {
+    opacity: 1 !important;
+    transform: none !important;
+    filter: none !important;
   }
   .back-to-top { transition: opacity 0.01ms !important; }
   .scroll-progress-bar { transition: none !important; }
@@ -1549,8 +1422,17 @@ strong { font-weight: 600; color: var(--text); }
   transition: all 0.2s var(--ease-out);
   text-decoration: none;
   user-select: none;
+  appearance: none;           /* it is a <button> now: drop the UA chrome */
+  line-height: 1.2;
+  font-weight: 500;
 }
 .palette-hint:hover {
+  color: var(--accent);
+  border-color: var(--accent);
+}
+.palette-hint:focus-visible {
+  outline: none;
+  box-shadow: var(--focus-ring);
   color: var(--accent);
   border-color: var(--accent);
 }
@@ -1626,7 +1508,7 @@ strong { font-weight: 600; color: var(--text); }
   color: var(--text-muted);
 }
 
-.gtm-proofline sup { color: var(--gold); }
+.gtm-proofline sup { color: var(--gold-ink); }
 
 /* ── Wheel ─────────────────────────────────────────── */
 .gtm-wheel-wrap { display: grid; place-items: center; }
@@ -1784,7 +1666,7 @@ strong { font-weight: 600; color: var(--text); }
   font-family: var(--font-mono);
   font-size: 0.72rem;
   letter-spacing: 0.1em;
-  color: var(--gold);
+  color: var(--gold-ink);
 }
 
 .gtm-evi-text {
@@ -1977,7 +1859,7 @@ strong { font-weight: 600; color: var(--text); }
   font-family: var(--font-mono);
   font-size: 0.68rem;
   letter-spacing: 0.12em;
-  color: var(--gold);
+  color: var(--gold-ink);
 }
 
 .gtm-engage-link {
@@ -2101,7 +1983,7 @@ strong { font-weight: 600; color: var(--text); }
   font-family: var(--font-mono);
   font-size: 0.72rem;
   letter-spacing: 0.22em;
-  color: var(--gold);
+  color: var(--gold-ink);
   margin-bottom: 1.4rem;
 }
 
@@ -2150,7 +2032,7 @@ strong { font-weight: 600; color: var(--text); }
   font-family: var(--font-mono);
   font-size: 0.68rem;
   letter-spacing: 0.2em;
-  color: var(--gold);
+  color: var(--gold-ink);
   margin-bottom: 0.7rem;
 }
 
@@ -2257,7 +2139,7 @@ strong { font-weight: 600; color: var(--text); }
 
 .gtmp-card-badge {
   border: 1px solid var(--gold);
-  color: var(--gold);
+  color: var(--gold-ink);
   font-size: 0.66rem;
   padding: 0.1rem 0.4rem;
   border-radius: var(--radius-sm);

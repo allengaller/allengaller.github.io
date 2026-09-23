@@ -1,6 +1,6 @@
 ---
 layout: default
-nav_active_links: is-active
+nav_active_archive: is-active
 title: 归档知识库 | Archive
 description: 早期沉淀的技术写作与知识语料库，已停止更新，仅作长期参考与索引存档。
 ---
@@ -11,7 +11,7 @@ description: 早期沉淀的技术写作与知识语料库，已停止更新，�
     <span class="archive-badge">ARCHIVED</span>
     <h1>归档知识库</h1>
     <p class="archive-desc">
-      早期沉淀的 33 篇技术写作与两份大型语料库。<br>
+      早期沉淀的 {{ stat.archive_docs }} 篇技术写作与两份大型语料库。<br>
       2024 年起内容已停止更新，仅作长期参考与索引留存。
     </p>
   </header>
@@ -22,7 +22,7 @@ description: 早期沉淀的技术写作与知识语料库，已停止更新，�
     <section class="archive-section">
       <div class="section-header">
         <h2 class="section-title">云原生 & 基础设施</h2>
-        <span class="section-count">14</span>
+        <span class="section-count">17</span>
       </div>
 
       <div class="archive-list">
@@ -269,7 +269,7 @@ description: 早期沉淀的技术写作与知识语料库，已停止更新，�
   </main>
 
   <footer class="archive-foot">
-    <p>📦 33 个早期文档已停止更新。如需最新内容请前往 <a href="/topic/ai-tools/">AI 工具链</a> 与 <a href="/projects/">完整项目导航</a>。</p>
+    <p>📦 {{ stat.archive_docs }} 个早期文档已停止更新。如需最新内容请前往 <a href="/topic/ai-tools/">AI 工具链</a> 与 <a href="/projects/">完整项目导航</a>。</p>
   </footer>
 
 </div>

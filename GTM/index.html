@@ -1,7 +1,7 @@
 ---
 layout: default
 title: Go to Market — Allen Galler · GTM 索引
-description: Allen Galler 全部 Go to Market 页面的汇总入口：产品与工具、知识库、内容作品，跨 11 个 GitHub 组织，每一页对应一个真实仓库，一站打开。
+description: Allen Galler 全部 Go to Market 页面的汇总入口：产品与工具、知识库、内容作品，跨 {{ stat.gtm_orgs }} 个 GitHub 组织，每一页对应一个真实仓库，一站打开。
 robots: index,follow
 nav_active_gtm: is-active
 jsonld: |
@@ -15,7 +15,7 @@ jsonld: |
       "@type": "Person",
       "name": "Allen Galler",
       "alternateName": "Allen Galler",
-      "url": "https://allengaller.github.io",
+      "url": "https://allengaller.github.io/",
       "sameAs": ["https://github.com/allengaller"]
     },
     "about": "Allen Galler 全部 Go to Market 页面的汇总索引：产品与工具、知识库、内容作品，每一页对应一个真实仓库。"
@@ -26,10 +26,11 @@ jsonld: |
 THESIS: 汇总索引不做目录复读——第一屏给量级与论点，特色卡给唯一起点，三组发丝线网格给全部入口。
 OWN-WORLD: 继承站点体系（纸白/墨/陶土红/金、Fraunces/Geist/JetBrains Mono、发丝线、明暗双模式），
         复用 gtm-actions / gtm-proofline / gtm-close 词汇，不引入新色、新字、新材质。
-SOURCE: 卡片组与总数由 _data/gtm-products.json 经 _scripts/build.py 注入
-        （EXTRA_DEPS 保证 manifest 变更即重建；卡片内链已豁免 origin 相对路径检查）。
+SOURCE: 卡片组、总数与组织数由 _data/gtm-products.json 经 _scripts/build.py 注入
+        （EXTRA_DEPS 保证 manifest 变更即重建；快照内仓库相对路径已在同步期
+         改写为 GitHub 绝对链接，因此内链检查不再豁免 GTM/products/）。
 FINISH: unreviewed and undocumented is unfinished——本页随 GTM 门户管线一并验证
-        （构建 / 内链 / 30 产品 URL / 四视口截图）。
+        （构建 / 内链 / 产品 URL 可达性 / 四视口截图）。
 -->
 
 <div class="gtmp">
@@ -57,7 +58,7 @@ FINISH: unreviewed and undocumented is unfinished——本页随 GTM 门户管�
     <p class="gtm-proofline">
       <span>{{ gtm_total }} 个 GTM 页面</span>
       <span aria-hidden="true">·</span>
-      <span>11 个 GitHub 组织</span>
+      <span>{{ stat.gtm_orgs }} 个 GitHub 组织</span>
       <span aria-hidden="true">·</span>
       <span>随 manifest 自动更新</span>
     </p>

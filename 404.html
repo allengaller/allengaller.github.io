@@ -44,12 +44,12 @@ robots: noindex,follow
     <a href="/projects/" class="notfound-link">
       <span class="notfound-link-num">02</span>
       <span class="notfound-link-main">浏览全部项目</span>
-      <span class="notfound-link-sub">36 个项目 / 11 个工作室</span>
+      <span class="notfound-link-sub">{{ stat.featured_projects }} 个精选项目 / {{ stat.repos_orgs }} 个组织</span>
     </a>
     <a href="/repos/" class="notfound-link">
       <span class="notfound-link-num">03</span>
       <span class="notfound-link-main">仓库总览</span>
-      <span class="notfound-link-sub">85 个本地 GitHub 镜像</span>
+      <span class="notfound-link-sub">{{ stat.repos_total }} 个本地 GitHub 镜像</span>
     </a>
     <a href="/topic/links/" class="notfound-link">
       <span class="notfound-link-num">04</span>
@@ -59,7 +59,7 @@ robots: noindex,follow
     <a href="/topic/archive/" class="notfound-link">
       <span class="notfound-link-num">05</span>
       <span class="notfound-link-main">归档知识库</span>
-      <span class="notfound-link-sub">33 篇早期技术写作</span>
+      <span class="notfound-link-sub">{{ stat.archive_docs }} 篇早期技术写作</span>
     </a>
   </nav>
 

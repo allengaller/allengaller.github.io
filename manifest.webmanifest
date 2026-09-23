@@ -3,9 +3,10 @@
   "short_name": "Allen Galler",
   "description": "Cloud Native SRE · AI Toolsmith · Knowledge Architect",
   "start_url": "/",
+  "scope": "/",
   "display": "standalone",
-  "background_color": "#ffffff",
-  "theme_color": "#111111",
+  "background_color": "#fcfcfa",
+  "theme_color": "#fcfcfa",
   "lang": "zh-CN",
   "icons": [
     {
@@ -18,7 +19,13 @@
       "src": "/favicon.svg",
       "sizes": "any",
       "type": "image/svg+xml",
-      "purpose": "any maskable"
+      "purpose": "any"
+    },
+    {
+      "src": "/favicon-maskable.svg",
+      "sizes": "any",
+      "type": "image/svg+xml",
+      "purpose": "maskable"
     }
   ]
 }

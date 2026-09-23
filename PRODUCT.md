@@ -23,7 +23,7 @@ Jekyll 静态站点（kramdown/GFM，GitHub Pages 部署），原生 HTML + 单�
 
 ## Product Purpose
 
-Allen Galler 的个人品牌总入口：聚合 80+ 开源仓库、4500+ 知识文档与内容矩阵，把技术经验呈现为可复用工具、可增长知识资产与可长期经营的个人品牌。成功 = 访客在数秒内理解三重身份并找到自己的入口（合作/招聘/开源/内容）。
+Allen Galler 的个人品牌总入口：聚合 75 个自有开源仓库、4500+ 知识文档与内容矩阵，把技术经验呈现为可复用工具、可增长知识资产与可长期经营的个人品牌。成功 = 访客在数秒内理解三重身份并找到自己的入口（合作/招聘/开源/内容）。
 
 ## Positioning
 
@@ -50,7 +50,7 @@ Allen Galler 的个人品牌总入口：聚合 80+ 开源仓库、4500+ 知识�
 ## Evidence on Hand
 
 - 代表项目（首页已展示，均真实）：ResolveAgent（AIOps Agent）、Kudig（K8s 节点诊断，70+ 分析器 + eBPF）、EtcdGuardian（etcd 备份 Operator）、LeetCast（AI 对话式刷题播客）、mcp4coder（MCP 工具生态）、OpenDemo（518+ 技术演示）。
-- 数字（站点已公开）：4500+ 文档与知识资产、10+ 开源工具、5+ 年云原生实践。
+- 数字（站点已公开）：4500+ 文档与知识资产（用户提供的基数）、5+ 年云原生实践；知识库与工具数量不再手写，由 `_scripts/build.py` 从 `_data/repos.json` 构建期派生（`{{ stat.repos_databases }}` / `{{ stat.repos_tools }}` / `{{ stat.repos_orgs }}`），改仓库即改文案，不会失真。
 - 仓库全索引：`_data/repos.json` / `_data/repos-detailed.json`、`/repos/` 页面。
 - 缺失：真实客户证言、付费案例、联系方式邮箱 — 不得虚构，需要用户提供。
 

@@ -127,12 +127,27 @@ def get_default_branch(repo_path):
     return "(unknown)"
 
 
+# Commit subjects ship verbatim to the public repo detail pages. Notes about
+# researching a named person are not ours to publish, so they never leave the disk.
+PRIVATE_SUBJECT_RE = re.compile(
+    r"osint|sherlock scan|背调|人肉|dox(?:ing|cer)|surveillance|caoyalun",
+    re.IGNORECASE,
+)
+
+
+def scrub_subject(subject):
+    """Blank out commit subjects that expose third-party identities."""
+    if subject and PRIVATE_SUBJECT_RE.search(subject):
+        return "（该提交信息不公开）"
+    return subject
+
+
 def get_last_commit(repo_path):
     """Return (iso_date, relative_age, subject)."""
     iso = run(["git", "log", "-1", "--format=%aI"], cwd=repo_path)
     rel = run(["git", "log", "-1", "--format=%ar"], cwd=repo_path)
     subj = run(["git", "log", "-1", "--format=%s"], cwd=repo_path)
-    return iso, rel, subj
+    return iso, rel, scrub_subject(subj)
 
 
 def get_total_commits(repo_path):
@@ -232,7 +247,7 @@ def get_recent_commits(repo_path, n=10):
             "iso": iso,
             "rel": rel,
             "author": author,
-            "subject": subject,
+            "subject": scrub_subject(subject),
         })
     return commits
 

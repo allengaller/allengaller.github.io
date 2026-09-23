@@ -26,7 +26,7 @@
 
   <!-- Canonical & hreflang -->
   <link rel="canonical" href="https://allengaller.github.io{{ page.url }}">
-  <link rel="alternate" hreflang="zh-CN" href="https://allengaller.github.io{{ page.url }}">
+  <!-- One language, one URL — no alternate exists to cluster, so only x-default. -->
   <link rel="alternate" hreflang="x-default" href="https://allengaller.github.io{{ page.url }}">
 
   <!-- RSS / Atom feed -->
@@ -56,8 +56,8 @@
   <meta http-equiv="Referrer-Policy" content="strict-origin-when-cross-origin">
   <meta http-equiv="Permissions-Policy" content="accelerometer=(), camera=(), geolocation=(), gyroscope=(), microphone=(), payment=(), usb=()">
 
-  <!-- JSON-LD (overridden per page; empty when not set) -->
-  <script type="application/ld+json" class="page-jsonld">{{ page.jsonld }}</script>
+  <!-- JSON-LD: omitted entirely when a page declares none, so crawlers never see an empty block -->
+  {% if page.jsonld %}<script type="application/ld+json" class="page-jsonld">{{ page.jsonld }}</script>{% endif %}
 
   <!-- Fonts: variable Fraunces (display) + Geist (body) + JetBrains Mono (code) -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -65,6 +65,9 @@
   <link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght,SOFT,WONK@9..144,300..900,0..100,0..1&family=Geist:wght@300..700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
 
   <link rel="stylesheet" href="/assets/css/main.css">
+  <!-- Must run before first paint: main.css hides [data-reveal] only under .js,
+       so a browser that never executes site.js still shows the whole page. -->
+  <script>document.documentElement.className += ' js';</script>
   <script src="/assets/js/site.js" defer></script>
   <script src="/assets/js/palette.js" defer></script>
 </head>
@@ -80,7 +83,7 @@
       <a href="/GTM/" class="{{ page.nav_active_gtm }}"{% if page.nav_active_gtm %} aria-current="page"{% endif %}>GTM</a>
       <a href="/about/" class="{{ page.nav_active_about }}"{% if page.nav_active_about %} aria-current="page"{% endif %}>About</a>
       <a href="https://github.com/allengaller" target="_blank" rel="noopener">GitHub ↗</a>
-      <a href="#" class="palette-hint" data-palette-trigger aria-label="打开命令面板 (Cmd+K)">⌘ K</a>
+      <button type="button" class="palette-hint" data-palette-trigger aria-haspopup="dialog" aria-keyshortcuts="Meta+K Control+K /" aria-label="打开命令面板 (Cmd+K)">⌘ K</button>
     </nav>
   </header>
 
@@ -92,7 +95,7 @@
     <div class="footer-row">
       <span class="footer-mark">Allen Galler</span>
       <span class="footer-text">Build in public · learn in public</span>
-      <span class="footer-meta">2026</span>
+      <span class="footer-meta">{{ stat.year }}</span>
     </div>
     <div class="footer-row footer-row-sub">
       <a href="/repos/" class="footer-link">Repos</a>
@@ -101,7 +104,7 @@
       <a href="https://github.com/allengaller/allengaller.github.io" target="_blank" rel="noopener" class="footer-link">Source ↗</a>
       <a href="/humans.txt" class="footer-link">humans.txt</a>
       <a href="/sitemap.xml" class="footer-link">sitemap</a>
-      <span class="footer-text-sub">·  Open source · MIT</span>
+      <span class="footer-text-sub">·  Open source · <a href="/licensing/" class="footer-license">MIT</a></span>
     </div>
   </footer>
 

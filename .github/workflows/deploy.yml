@@ -1,0 +1,63 @@
+name: Deploy site
+
+# Publishes the output of _scripts/build.py (_site/) to GitHub Pages.
+# Pages source must be set to "GitHub Actions" (Settings → Pages → Build and deployment).
+
+on:
+  push:
+    branches: [master]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+concurrency:
+  group: pages
+  cancel-in-progress: false
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+
+      - name: Install build dependencies
+        run: python -m pip install --upgrade pip pyyaml markdown
+
+      - name: Verify committed GTM snapshots
+        run: python3 _scripts/sync-gtm.py --check-committed
+
+      - name: Build (_site/)
+        run: python3 _scripts/build.py --force --strict
+
+      - name: Quality gate
+        run: python3 _scripts/check-quality.py
+
+      - name: Report artifact size
+        run: |
+          echo "  pages:   $(find _site -name '*.html' | wc -l | tr -d ' ')"
+          echo "  sitemap: $(grep -c '<loc>' _site/sitemap.xml) URL(s)"
+          echo "  feed:    $(grep -c '<entry>' _site/feed.xml) entry(ies)"
+          echo "  size:    $(du -sh _site | cut -f1)"
+
+      - uses: actions/configure-pages@v5
+
+      - uses: actions/upload-pages-artifact@v3
+        with:
+          path: _site
+
+  deploy:
+    needs: build
+    runs-on: ubuntu-latest
+    environment:
+      name: github-pages
+      url: ${{ steps.output.outputs.page_url }}
+    steps:
+      - id: output
+        uses: actions/deploy-pages@v4
