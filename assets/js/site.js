@@ -92,4 +92,30 @@
   if (prefersReduced) {
     document.querySelectorAll('[data-reveal]').forEach((el) => el.classList.add('is-revealed'));
   }
+
+  // ── Theme toggle (light ⇄ dark) ───────────────────────
+  // Default is light; a saved choice in localStorage overrides it.
+  // The pre-paint boot script in <head> applies the same value early.
+  const themeToggle = document.querySelector('[data-theme-toggle]');
+  const themeMeta = document.getElementById('meta-theme-color');
+  let isDark = document.documentElement.dataset.theme === 'dark';
+  const syncThemeUI = () => {
+    if (themeToggle) {
+      const label = isDark ? '切换到浅色模式' : '切换到深色模式';
+      themeToggle.setAttribute('aria-pressed', String(isDark));
+      themeToggle.setAttribute('aria-label', label);
+      themeToggle.setAttribute('title', label);
+    }
+    if (themeMeta) themeMeta.setAttribute('content', isDark ? '#131210' : '#fcfcfa');
+  };
+  if (themeToggle) {
+    themeToggle.addEventListener('click', () => {
+      isDark = !isDark;
+      if (isDark) document.documentElement.dataset.theme = 'dark';
+      else delete document.documentElement.dataset.theme;
+      try { localStorage.setItem('theme', isDark ? 'dark' : 'light'); } catch (e) {}
+      syncThemeUI();
+    });
+    syncThemeUI();
+  }
 })();

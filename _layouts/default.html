@@ -3,11 +3,13 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+  <!-- Page renders light by default regardless of OS preference; the
+       data-theme="dark" CSS block flips color-scheme to dark instead. -->
   <meta name="color-scheme" content="light">
   <title>{{ page.title }}</title>
   <meta name="description" content="{{ page.description }}">
   <meta name="robots" content="{{ page.robots | default: 'index,follow' }}">
-  <meta name="theme-color" content="#fcfcfa">
+  <meta name="theme-color" id="meta-theme-color" content="#fcfcfa">
   <meta name="generator" content="allengaller.github.io (custom Python builder)">
 
   <!-- Favicons -->
@@ -64,6 +66,9 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght,SOFT,WONK@9..144,300..900,0..100,0..1&family=Geist:wght@300..700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
 
+  <!-- Must run before first stylesheet/paint: restores the saved theme so a
+       dark-mode visitor never sees a light flash. Default stays light. -->
+  <script>(function(){try{if(localStorage.getItem('theme')==='dark'){document.documentElement.dataset.theme='dark';var m=document.getElementById('meta-theme-color');if(m)m.setAttribute('content','#131210');}}catch(e){}})();</script>
   <link rel="stylesheet" href="/assets/css/main.css">
   <!-- Must run before first paint: main.css hides [data-reveal] only under .js,
        so a browser that never executes site.js still shows the whole page. -->
@@ -83,6 +88,10 @@
       <a href="/GTM/" class="{{ page.nav_active_gtm }}"{% if page.nav_active_gtm %} aria-current="page"{% endif %}>GTM</a>
       <a href="/about/" class="{{ page.nav_active_about }}"{% if page.nav_active_about %} aria-current="page"{% endif %}>About</a>
       <a href="https://github.com/allengaller" target="_blank" rel="noopener">GitHub ↗</a>
+      <button type="button" class="theme-toggle" data-theme-toggle aria-pressed="false" aria-label="切换到深色模式" title="切换到深色模式">
+        <svg class="icon-moon" width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg>
+        <svg class="icon-sun" width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="4"/><path d="M12 2v2m0 16v2M4.93 4.93l1.41 1.41m11.32 11.32 1.41 1.41M2 12h2m16 0h2M4.93 19.07l1.41-1.41m11.32-11.32 1.41-1.41"/></svg>
+      </button>
       <button type="button" class="palette-hint" data-palette-trigger aria-haspopup="dialog" aria-keyshortcuts="Meta+K Control+K /" aria-label="打开命令面板 (Cmd+K)">⌘ K</button>
     </nav>
   </header>

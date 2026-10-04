@@ -77,6 +77,50 @@
   --dur-slow: 600ms;
 }
 
+/* ── Tokens (Dark) — opt-in via html[data-theme="dark"] ──
+   Manual toggle only; the default page stays light regardless of
+   prefers-color-scheme. Accent is split into two roles at night:
+   --accent stays a light terracotta (6.9:1 on --bg) for text, while
+   --accent-fg flips to deep ink for type sitting on accent surfaces. */
+html[data-theme="dark"] {
+  color-scheme: dark;
+  --bg: #131210;
+  --bg-subtle: #1b1a16;
+  --bg-hover: #23211c;
+  --surface: #131210;
+  --surface-elev: #1d1b17;
+
+  --ink: #f2eee3;
+  --ink-soft: #dcd7c9;
+  --text: #f2eee3;
+  --text-secondary: #c9c3b4;
+  --text-muted: #a29c8d;   /* 7.7:1 on --bg */
+  --text-faint: #8d8779;   /* 5.4:1 on --bg */
+
+  --border: #2c2a24;
+  --border-hover: #413d34;
+  --border-strong: #f2eee3;
+  --ornament: #514c41;
+
+  --accent: #e5825a;        /* light terracotta — 6.9:1 on --bg, for text */
+  --accent-soft: rgba(229, 130, 90, 0.12);
+  --accent-fg: #1a120d;     /* deep ink for text on accent-filled surfaces */
+  --accent-dark: #d0734a;   /* hover fill (5.7:1 with --accent-fg) */
+
+  --gold: #c9a45c;
+  --gold-ink: #d8b16b;
+  --gold-soft: rgba(201, 164, 92, 0.16);
+
+  --atmosphere: radial-gradient(
+    ellipse 90% 60% at 80% -10%,
+    rgba(229, 130, 90, 0.08) 0%,
+    transparent 60%
+  );
+
+  --selection-bg: #e5825a;
+  --selection-fg: #131210;
+}
+
 /* ── Reset ─────────────────────────────────────────── */
 *, *::before, *::after {
   box-sizing: border-box;
@@ -261,9 +305,14 @@ strong { font-weight: 600; color: var(--text); }
   background: var(--text);
 }
 
-/* Keep the ⌘K chip flush right whether it is an anchor or a button. */
-.site-nav > :last-child {
+/* Theme toggle takes the auto margin so it and the ⌘K chip sit flush right. */
+.site-nav > .theme-toggle {
   margin-left: auto;
+}
+
+/* Keep the ⌘K chip flush right whether it is an anchor or a button. */
+.site-nav > .palette-hint {
+  margin-left: 0;
 }
 
 /* ── Layout ─────────────────────────────────── */
@@ -1437,6 +1486,37 @@ strong { font-weight: 600; color: var(--text); }
   border-color: var(--accent);
 }
 @media (max-width: 760px) { .palette-hint { display: none; } }
+
+/* ── Theme toggle (light ⇄ dark) — same chip language as ⌘K ── */
+.theme-toggle {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  font-family: var(--font-mono);
+  color: var(--text-muted);
+  padding: 0.2rem 0.35rem;
+  border: 1px solid var(--border);
+  border-radius: 3px;
+  background: var(--bg-subtle);
+  cursor: pointer;
+  transition: all 0.2s var(--ease-out);
+  user-select: none;
+  appearance: none;
+  line-height: 0;
+}
+.theme-toggle:hover {
+  color: var(--accent);
+  border-color: var(--accent);
+}
+.theme-toggle:focus-visible {
+  outline: none;
+  box-shadow: var(--focus-ring);
+  color: var(--accent);
+  border-color: var(--accent);
+}
+.theme-toggle .icon-sun { display: none; }
+html[data-theme="dark"] .theme-toggle .icon-moon { display: none; }
+html[data-theme="dark"] .theme-toggle .icon-sun { display: block; }
 
 @media (prefers-reduced-motion: reduce) {
   .palette-backdrop, .palette-panel { animation: none; }
@@ -2740,3 +2820,50 @@ strong { font-weight: 600; color: var(--text); }
   .reach-item,
   .reach-arrow { transition: none; }
 }
+
+/* ============================================================
+   Dark theme patches
+   Token coverage lives in html[data-theme="dark"] at the top.
+   Everything below fixes the few spots where a literal value or an
+   ink-inversion band cannot simply re-resolve through tokens.
+   ============================================================ */
+
+/* Grain: the black noise was made for paper (multiply). At night,
+   invert it to white noise and screen it so the texture survives. */
+html[data-theme="dark"] body::before {
+  filter: invert(1);
+  mix-blend-mode: screen;
+  opacity: 0.35;
+}
+
+/* Back-to-top floats over dark ground — deepen its shadow. */
+html[data-theme="dark"] .back-to-top {
+  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.5), 0 4px 12px rgba(0, 0, 0, 0.4);
+}
+
+/* Inversion bands (ledger, overview) were built as ink-on-paper solids.
+   At night a full light slab glares, so they read as elevated panels
+   instead: subtle background, hairline borders, regular text tokens. */
+html[data-theme="dark"] .gtm-ledger {
+  --l-line: rgba(242, 238, 227, 0.14);
+  --l-line-soft: rgba(242, 238, 227, 0.08);
+  --l-muted: rgba(242, 238, 227, 0.62);
+  background: var(--bg-subtle);
+  color: var(--text);
+  border-top: 1px solid var(--border);
+  border-bottom: 1px solid var(--border);
+}
+
+html[data-theme="dark"] .overview-band {
+  background: var(--bg-subtle);
+  color: var(--text);
+  border: 1px solid var(--border);
+}
+
+html[data-theme="dark"] .overview-num { color: var(--text); }
+
+html[data-theme="dark"] .overview-item {
+  border-left-color: color-mix(in srgb, var(--text) 14%, transparent);
+}
+
+html[data-theme="dark"] .overview-label { color: var(--text-muted); }

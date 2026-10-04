@@ -116,6 +116,18 @@ h1 .thin{font-weight:400;color:var(--paper-dim)}
   border-left:2px solid var(--cinnabar);padding-left:20px;
 }
 .hero-sub b{color:var(--paper);font-weight:600}
+.hero-cta{display:flex;flex-wrap:wrap;align-items:center;gap:14px 22px;margin-top:36px}
+.btn{
+  display:inline-flex;align-items:center;gap:12px;
+  background:var(--cinnabar);color:var(--paper);
+  font-family:var(--kai);font-size:17px;letter-spacing:.16em;
+  padding:14px 32px;border-radius:3px;
+  box-shadow:0 10px 26px rgba(203,65,38,.3);
+  transition:background .25s,transform .25s,box-shadow .25s;
+}
+.btn:hover{background:var(--cinnabar-bright);transform:translateY(-2px);box-shadow:0 14px 32px rgba(203,65,38,.42)}
+.hero-cta .note{font-family:var(--mono);font-size:12px;color:var(--paper-faint);letter-spacing:.08em;line-height:1.9}
+.hero-cta .note b{color:var(--paper-dim);font-weight:500}
 .vertical-motto{
   writing-mode:vertical-rl;font-family:var(--kai);
   font-size:clamp(20px,2.6vw,30px);letter-spacing:.5em;color:var(--paper);
@@ -316,6 +328,7 @@ footer{border-top:1px solid var(--hairline);padding:26px 0 34px}
 .hero .reveal:nth-child(2){transition-delay:.18s}
 .hero .reveal:nth-child(3){transition-delay:.32s}
 .hero .reveal:nth-child(4){transition-delay:.46s}
+.hero .reveal:nth-child(5){transition-delay:.6s}
 @media(prefers-reduced-motion:reduce){
   html{scroll-behavior:auto}
   .reveal{opacity:1;transform:none;transition:none}
@@ -360,6 +373,10 @@ footer{border-top:1px solid var(--hairline);padding:26px 0 34px}
           <h1 class="reveal">GTM 总纲<br><span class="thin">孤独读者</span></h1>
           <div class="hero-latin reveal">From a literary archive to the reading infrastructure of a generation.</div>
           <p class="hero-sub reveal">从一座<b>文学知识库</b>出发，成为文学院学生与严肃读者的<b>深度阅读基础设施</b>。本总纲回答五个问题：为谁而做、凭何不同、如何抵达、靠什么持续、以及用什么衡量成败。</p>
+          <div class="hero-cta reveal">
+            <a class="btn" href="https://rox7o1zeds61.meoo.fun/" target="_blank" rel="noopener">在线阅读全部文档 →</a>
+            <span class="note">知识库<b>已上线</b>：11 个学科模块 · <b>3,280</b> 篇文档 · <b>1,282</b> 个目录 · <b>507</b> 万字<br>本总纲所述内容，皆可在阅读站中逐篇查证。</span>
+          </div>
         </div>
         <div class="vertical-motto reveal"><span>读者不孤 · 必有邻</span></div>
       </div>
@@ -635,6 +652,7 @@ footer{border-top:1px solid var(--hairline);padding:26px 0 34px}
   <div class="wrap foot">
     <span>© 2026 Lonely Reader Global</span>
     <a href="#top">返回总纲 ↑</a>
+    <a href="https://rox7o1zeds61.meoo.fun/" target="_blank" rel="noopener">在线阅读全部文档 →</a>
     <span class="right">内部战略资料 · 请勿外传</span>
   </div>
 </footer>
