@@ -82,6 +82,10 @@ STATIC_FILES = [
     ("assets/css/main.css",   "assets/css/main.css"),
     ("assets/js/site.js",     "assets/js/site.js"),
     ("assets/js/palette.js",  "assets/js/palette.js"),
+    # Self-hosted variable fonts (Google Fonts is unreachable from CN networks).
+    ("assets/fonts/fraunces-latin-full-normal.woff2",       "assets/fonts/fraunces-latin-full-normal.woff2"),
+    ("assets/fonts/geist-latin-wght-normal.woff2",          "assets/fonts/geist-latin-wght-normal.woff2"),
+    ("assets/fonts/jetbrains-mono-latin-wght-normal.woff2", "assets/fonts/jetbrains-mono-latin-wght-normal.woff2"),
     ("_data/repos.json",      "_data/repos.json"),
     # assets/banners/*.svg was shipped from here until no page referenced it any more;
     # the six files and generate-bunicipals.py now sit in _attic/banners/.

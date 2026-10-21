@@ -61,10 +61,11 @@
   <!-- JSON-LD: omitted entirely when a page declares none, so crawlers never see an empty block -->
   {% if page.jsonld %}<script type="application/ld+json" class="page-jsonld">{{ page.jsonld }}</script>{% endif %}
 
-  <!-- Fonts: variable Fraunces (display) + Geist (body) + JetBrains Mono (code) -->
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght,SOFT,WONK@9..144,300..900,0..100,0..1&family=Geist:wght@300..700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+  <!-- Fonts: self-hosted variable woff2 (see main.css @font-face). Preload the
+       two faces that paint above the fold; Google Fonts is unreachable from CN
+       networks and must never be reintroduced as a render-blocking stylesheet. -->
+  <link rel="preload" href="/assets/fonts/geist-latin-wght-normal.woff2" as="font" type="font/woff2" crossorigin>
+  <link rel="preload" href="/assets/fonts/fraunces-latin-full-normal.woff2" as="font" type="font/woff2" crossorigin>
 
   <!-- Must run before first stylesheet/paint: restores the saved theme so a
        dark-mode visitor never sees a light flash. Default stays light. -->

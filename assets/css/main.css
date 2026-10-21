@@ -4,6 +4,35 @@
    Display: Fraunces (variable serif)  ·  Body: Geist  ·  Mono: JetBrains Mono
    ============================================================ */
 
+/* ── Self-hosted variable fonts ─────────────────────────
+   Google Fonts (fonts.googleapis.com / fonts.gstatic.com) is unreachable
+   from CN networks and used to block first paint for 30s+. These woff2
+   files ship with the site instead. Latin subset only — CJK glyphs fall
+   through to the system stacks in --font-*.
+   Fraunces: full variable axes (opsz 9..144, wght 100..900, SOFT, WONK).
+   Source: @fontsource-variable/* 5.3.0 (OFL / MIT). */
+@font-face {
+  font-family: "Fraunces";
+  font-style: normal;
+  font-weight: 100 900;
+  font-display: swap;
+  src: url("/assets/fonts/fraunces-latin-full-normal.woff2") format("woff2-variations");
+}
+@font-face {
+  font-family: "Geist";
+  font-style: normal;
+  font-weight: 100 900;
+  font-display: swap;
+  src: url("/assets/fonts/geist-latin-wght-normal.woff2") format("woff2-variations");
+}
+@font-face {
+  font-family: "JetBrains Mono";
+  font-style: normal;
+  font-weight: 100 900;
+  font-display: swap;
+  src: url("/assets/fonts/jetbrains-mono-latin-wght-normal.woff2") format("woff2-variations");
+}
+
 /* ── Tokens (Light) ─────────────────────────────────── */
 :root {
   /* Surface */
