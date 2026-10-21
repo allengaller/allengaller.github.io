@@ -12,7 +12,7 @@
 |------|------|------|
 | Home | `/` | 个人简介 + 代表项目 + 合作场景 |
 | Projects | `/projects/` | 10 个代表项目，按应用 / 开放工具 / 知识库三分组导航 |
-| **Repos** | `/repos/` | **本地 GitHub 镜像全索引（81 仓库自动扫描，其中 75 个属自有组织）** |
+| **Repos** | `/repos/` | **本地 GitHub 镜像全索引（108 仓库自动扫描，其中 91 个属自有组织）** |
 | Links | `/topic/links/` | 云原生 / 数据 / 开发 / AI / 生活资源链接 |
 | AI Tools | `/topic/ai-tools/` | 36 款 AI 工具订阅清单（编程 / 对话 / 创作 / 陪伴 / Agent / 本地） |
 | About | `/about/` | 背景、能力、合作方式 |
@@ -30,7 +30,7 @@
 - **质量门禁**：`_scripts/sync-gtm.py --check-committed` 校验 GTM 快照完整性，`_scripts/check-quality.py` 校验产物
   （私有产品不落地、无未渲染模板、JSON-LD 可解析、必需文件非空），任一失败即阻断发布
 - **交互**：`assets/js/site.js`（vanilla, 0 依赖：scroll progress / back-to-top / reveal / magnetic CTA）
-- **数据**：`scan-repos.py` 自动从 `~/Documents/GitHub/` 提取 81 个仓库元数据
+- **数据**：`scan-repos.py` 自动从 `~/Documents/GitHub/` 提取 108 个仓库元数据
 - **字体**：Fraunces (display, variable) + Geist (body) + JetBrains Mono (code)
 - **图标**：favicon.svg + favicon-32.png + favicon-180.png
 - **社交卡片**：og-default.png (1200×630) 自动生成
