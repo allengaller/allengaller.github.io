@@ -536,6 +536,10 @@ def _rewrite_readme_links(html, full_name, branch):
         if not url or url.startswith(("http://", "https://", "mailto:", "tel:", "#",
                                        "data:", "javascript:")):
             return m.group(0)
+        # Root-relative links in a README mean repo-root-relative on GitHub —
+        # leaving them as-is makes the site link checker see a broken internal link.
+        if url.startswith("/") and not url.startswith("//"):
+            return f'{m.group(1)}{blob_base}{url.lstrip("/")}{m.group(3)}'
         if _looks_relative(url):
             path = url[2:] if url.startswith("./") else url
             return f'{m.group(1)}{blob_base}{path}{m.group(3)}'
@@ -545,6 +549,8 @@ def _rewrite_readme_links(html, full_name, branch):
         url = m.group(2)
         if not url or url.startswith(("http://", "https://", "data:")):
             return m.group(0)
+        if url.startswith("/") and not url.startswith("//"):
+            return f'{m.group(1)}{raw_base}{url.lstrip("/")}{m.group(3)}'
         if _looks_relative(url):
             path = url[2:] if url.startswith("./") else url
             return f'{m.group(1)}{raw_base}{path}{m.group(3)}'
