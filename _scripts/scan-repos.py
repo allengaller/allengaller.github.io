@@ -474,6 +474,29 @@ def scan(root, excludes, dry_run=False, verbose=True):
     return repos
 
 
+def apply_description_overrides(repos, overrides_path=None):
+    """Replace auto-extracted descriptions with hand-written ones.
+
+    The scanner's description is README first-line residue ("# Title", badge
+    links, "notes"). _data/repo-descriptions.json holds one curated line per
+    repo (keyed by full_name); it wins over whatever the scan found, so
+    re-scanning never clobbers the hand-written copy.
+    """
+    path = overrides_path or os.path.join(WORKSPACE, "_data", "repo-descriptions.json")
+    if not os.path.exists(path):
+        return 0
+    with open(path, encoding="utf-8") as f:
+        overrides = {k: v for k, v in json.load(f).items()
+                     if not k.startswith("_") and isinstance(v, str) and v.strip()}
+    applied = 0
+    for r in repos:
+        ov = overrides.get(r.get("full_name", ""))
+        if ov:
+            r["description"] = ov.strip()
+            applied += 1
+    return applied
+
+
 def write_yaml(repos, output_path):
     """Write the repos list as YAML to output_path."""
     os.makedirs(os.path.dirname(output_path), exist_ok=True)
@@ -585,6 +608,11 @@ def main():
     print(f"\n  Found {len(repos)} repos "
           f"({sum(1 for r in repos if r['is_own'])} own · "
           f"{sum(1 for r in repos if not r['is_own'])} external)")
+
+    n_overridden = apply_description_overrides(repos)
+    if n_overridden:
+        print(f"  ✎ Applied {n_overridden} hand-written descriptions "
+              f"(_data/repo-descriptions.json)")
 
     if args.dry_run:
         print("\n  --dry-run: skipping write")

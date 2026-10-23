@@ -150,10 +150,20 @@ def copy_static_files(cache, force=False):
         if not os.path.exists(src_path):
             continue
         src_h = file_hash(src_path)
+        if src_rel == "_data/repos.json":
+            # The /repos/ page fetches this file verbatim, so bake the
+            # hand-written descriptions in here too; its hash joins the cache
+            # key, otherwise editing only the overrides would never re-copy.
+            src_h += file_hash(os.path.join(BASE, "_data", "repo-descriptions.json"))
         if not force and cache.get(f"static:{src_rel}") == src_h:
             continue
         os.makedirs(os.path.dirname(dst_path), exist_ok=True)
-        shutil.copy2(src_path, dst_path)
+        if src_rel == "_data/repos.json":
+            data = _repos_data()
+            with open(dst_path, "w", encoding="utf-8") as f:
+                json.dump(data, f, ensure_ascii=False, separators=(",", ":"))
+        else:
+            shutil.copy2(src_path, dst_path)
         cache[f"static:{src_rel}"] = src_h
         copied += 1
     if copied:
@@ -388,12 +398,43 @@ ARCHIVE_SECTION_RE = re.compile(
     r'<section class="archive-section"[^>]*>.*?</section>', re.DOTALL)
 
 
+_DESC_OVERRIDES_CACHE = None
+
+
+def _apply_desc_overrides(repos):
+    """Hand-written descriptions (_data/repo-descriptions.json) win over the
+    scanner's README-residue descriptions. scan-repos.py applies them too; this
+    is the belt-and-braces pass so an older repos.json / repos-detailed.json
+    still renders with the curated copy."""
+    global _DESC_OVERRIDES_CACHE
+    if _DESC_OVERRIDES_CACHE is None:
+        path = os.path.join(BASE, "_data", "repo-descriptions.json")
+        try:
+            with open(path, encoding="utf-8") as f:
+                _DESC_OVERRIDES_CACHE = {
+                    k: v.strip() for k, v in json.load(f).items()
+                    if not k.startswith("_") and isinstance(v, str) and v.strip()
+                }
+        except (OSError, json.JSONDecodeError):
+            _DESC_OVERRIDES_CACHE = {}
+    if not _DESC_OVERRIDES_CACHE:
+        return repos
+    for r in repos:
+        ov = _DESC_OVERRIDES_CACHE.get(r.get("full_name", ""))
+        if ov:
+            r["description"] = ov
+    return repos
+
+
 def _repos_data():
     path = os.path.join(BASE, "_data", "repos.json")
     if not os.path.exists(path):
         return None
     with open(path, encoding="utf-8") as f:
-        return json.load(f)
+        data = json.load(f)
+    if isinstance(data, dict) and isinstance(data.get("repos"), list):
+        _apply_desc_overrides(data["repos"])
+    return data
 
 
 def _page_source(rel_path):
@@ -1420,7 +1461,7 @@ def build_repo_pages(cache, force=False, layout_html=None):
 
     layout_h = file_hash(os.path.join(BASE, "_layouts/default.html"))
 
-    repos = data.get("repos", [])
+    repos = _apply_desc_overrides(data.get("repos", []))
     # Build org index for related lookups
     by_org = {}
     for r in repos:
@@ -1550,7 +1591,8 @@ def generate_rss(cache, force=False):
     except (json.JSONDecodeError, OSError):
         return
 
-    repos = [r for r in data.get("repos", []) if r.get("is_own") and r.get("last_commit_iso")]
+    repos = _apply_desc_overrides(
+        [r for r in data.get("repos", []) if r.get("is_own") and r.get("last_commit_iso")])
     repos.sort(key=lambda r: r["last_commit_iso"], reverse=True)
     repos = repos[:30]
 
