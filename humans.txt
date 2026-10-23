@@ -4,10 +4,10 @@ Site: https://allengaller.github.io
 GitHub: https://github.com/allengaller
 From: 中国
 Built with: Custom Python static-site builder, Fraunces + Geist + JetBrains Mono
-Last update: 2026/07
+Last update: 2026/10
 
 /* SITE */
-Last deploy: 2026/07
+Last deploy: 2026/10
 Standards: HTML5, CSS3, Open Graph, JSON-LD
 Components: Custom build, no frameworks
 Software: Python 3, Pillow, PyYAML

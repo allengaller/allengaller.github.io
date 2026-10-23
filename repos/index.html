@@ -1,7 +1,7 @@
 ---
 layout: default
 title: Repos | 本地仓库总览
-description: 我本地克隆的所有 GitHub 仓库镜像：按组织、类型、最近活动多维度索引。自动从 ~/Documents/GitHub/ 扫描。
+description: 我本地克隆的所有 GitHub 仓库镜像：按组织、类型、最近活动多维度索引。元数据自动扫描，描述逐条手写。
 nav_active_repos: is-active
 ---
 
@@ -100,8 +100,7 @@ nav_active_repos: is-active
 
   <footer class="repos-foot">
     <p>
-      📦 数据由 <code>_scripts/scan-repos.py</code> 自动生成。
-      重新扫描：<code>python3 _scripts/scan-repos.py --json</code>。
+      📦 元数据由 <code>_scripts/scan-repos.py</code> 自动扫描；仓库描述逐条手写，存于 <code>_data/repo-descriptions.json</code>，重扫不会覆盖。
     </p>
   </footer>
 
