@@ -4,6 +4,53 @@ A locked design system for this site. Every page reads this file before
 emitting code. Do not regenerate per page — extend or amend this file when
 the system needs to grow.
 
+---
+
+## Amendment 2026-10-22 — The Shipping Ledger (home page world)
+
+The home page (`index.html`, `body.chrome-ledger`) runs its own visual world,
+"The Shipping Ledger", replacing the editorial hero/stations system **on the
+home page only**. Everything below this amendment still governs every other
+page (about, projects, repos, topic, GTM, 404). Direction seed:
+`seed:8c7dc8c5f5b40446`, surface brief `.impeccable/surfaces/index-html.md`.
+
+**Thesis.** The homepage is a verifiable shipping ledger, not a pitch: real
+repos, real commit hashes, real dates, each row a link to the real repository.
+Output is a ledger you can audit, never an adjective.
+
+**World rules (home only):**
+
+- The page is one paper sheet: `--ledger-paper #fbfaf7` centered at
+  `max-width: 1536px` with a `1.5px` ink frame border, floating on a desk
+  ground (`--ledger-desk #e8e6df`). No cards, no shadows, no gradients.
+- Ink is `--ledger-ink #16150f`; secondary ink `--ledger-ink-muted #5c594f`;
+  row separators are hairlines `--ledger-hairline #d9d5c9`; section and table
+  strips are ruled top and bottom with 1px muted-ink lines.
+- **The Two-Stamp Rule.** Color appears exactly twice: shipped-green
+  `--ledger-shipped #1f7a4d` for status dots only, stamp-amber
+  `--ledger-tag #b07a1f` for version/kind stamps (bordered chips) only.
+  Neither is ever a background fill or body-text color.
+- **The Mono-Is-Data Rule.** Iosevka Charon Mono (self-hosted woff2, 400/700)
+  sets the wordmark, all ledger data (hashes, dates, versions, stats),
+  column heads, and section labels. Geist sets nav, repo names, and prose.
+  Mono is measurement, not costume; prose never goes mono.
+- Ledger rows are grid tracks (`90px 1fr 240px 180px 140px` at 1536px,
+  collapsing to `28px 1fr auto` under 640px), `min-height` one ledger line
+  (111px at reference width), hover wash `#f4f2ea`, focus ring 2px ink.
+- Motion is one authored moment: hero rows cascade in on load (70ms stagger),
+  sections reveal on scroll, the NOW status dot breathes (2.6s). All of it
+  collapses under `prefers-reduced-motion`.
+- Text selection is themed ink-on-paper (`#16150f` on `#fbfaf7`).
+- Home is light-only: the global nav (with theme toggle and palette) is
+  suppressed via `ledger_chrome: true` front matter; navigation lives in the
+  sheet's file head (Projects / Repos / About), centered in the right 48%
+  of the header row.
+- Ledger dates render as ISO with a JS upgrade to relative ages
+  (`today` / `Nd ago` / `Nw ago`); the date line shows the real current date.
+  No typed numbers: stats come from `{{ stat.* }}` counters.
+
+---
+
 ## Genre
 
 editorial — Editorial × Technical, content-led, calm density, mono accent

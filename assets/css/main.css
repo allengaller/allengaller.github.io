@@ -2896,3 +2896,408 @@ html[data-theme="dark"] .overview-item {
 }
 
 html[data-theme="dark"] .overview-label { color: var(--text-muted); }
+
+/* ════════════════════════════════════════════════════
+   Ledger home (chrome-ledger) — The Shipping Ledger
+   Direction: seed:8c7dc8c5f5b40446 · paper ledger, hairline rules,
+   mono data, no cards / shadows / gradients.
+   All rules scoped to the home page via body.chrome-ledger.
+   ════════════════════════════════════════════════════ */
+
+@font-face {
+  font-family: "Iosevka Charon Mono";
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+  src: url("/assets/fonts/iosevka-charon-mono-latin-400-normal.woff2") format("woff2");
+}
+@font-face {
+  font-family: "Iosevka Charon Mono";
+  font-weight: 700;
+  font-style: normal;
+  font-display: swap;
+  src: url("/assets/fonts/iosevka-charon-mono-latin-700-normal.woff2") format("woff2");
+}
+
+body.chrome-ledger {
+  --ledger-paper: #fbfaf7;
+  --ledger-ink: #16150f;
+  --ledger-ink-muted: #5c594f;
+  --ledger-hairline: #d9d5c9;
+  --ledger-shipped: #1f7a4d;
+  --ledger-tag: #b07a1f;
+  --ledger-desk: #e8e6df;
+  --ledger-mono: "Iosevka Charon Mono", "JetBrains Mono", ui-monospace, monospace;
+  --ledger-sans: "Geist", -apple-system, "PingFang SC", "Microsoft YaHei", sans-serif;
+  background: var(--ledger-desk);
+  color-scheme: light;
+}
+
+/* The ledger sheet replaces the global chrome on the home page. */
+.chrome-ledger .site-nav-wrap { display: none; }
+.chrome-ledger .site-main { padding: 0; max-width: none; }
+.chrome-ledger .site-footer {
+  border-top: 0;
+  background: transparent;
+}
+
+.ledger-sheet {
+  max-width: 1536px;
+  margin: 0 auto;
+  background: var(--ledger-paper);
+  color: var(--ledger-ink);
+  border: 1.5px solid var(--ledger-ink);
+  min-height: 100vh;
+  padding: clamp(18px, 2.2vw, 22px) clamp(18px, 2.7vw, 42px) clamp(28px, 2.6vw, 40px);
+  font-family: var(--ledger-sans);
+}
+
+/* ── File head ── */
+.lh-head {
+  display: grid;
+  grid-template-columns: minmax(0, 52%) minmax(0, 48%);
+  align-items: start;
+  gap: 24px;
+}
+.lh-name {
+  font-family: var(--ledger-mono);
+  font-weight: 700;
+  font-size: clamp(40px, 5.1vw, 78px);
+  line-height: 1;
+  letter-spacing: 0.01em;
+  text-transform: uppercase;
+  margin: 0;
+  color: var(--ledger-ink);
+}
+.lh-nav {
+  display: flex;
+  gap: clamp(16px, 2vw, 30px);
+  padding-top: clamp(14px, 2.6vw, 40px);
+  justify-self: center;
+}
+.lh-nav a {
+  font-size: clamp(14px, 1.55vw, 24px);
+  font-weight: 500;
+  color: var(--ledger-ink);
+  text-decoration: none;
+  letter-spacing: 0.02em;
+}
+.lh-nav a:hover { text-decoration: underline; text-underline-offset: 4px; }
+.lh-nav a:focus-visible { outline: 2px solid var(--ledger-ink); outline-offset: 3px; }
+.lh-nav a[aria-current="page"] { text-decoration: underline; text-underline-offset: 4px; }
+.lh-tagline {
+  margin: clamp(10px, 0.9vw, 14px) 0 0;
+  font-family: var(--ledger-mono);
+  font-size: clamp(15px, 1.45vw, 22px);
+  color: var(--ledger-ink);
+  overflow-wrap: break-word;
+}
+.lh-date {
+  margin: clamp(26px, 2.9vw, 44px) 0 0;
+  font-family: var(--ledger-mono);
+  font-size: clamp(14px, 1.3vw, 20px);
+  font-weight: 700;
+  color: var(--ledger-ink);
+}
+
+/* ── Ledger table ── */
+.lh-ledger { margin-top: clamp(34px, 3.6vw, 55px); }
+.lh-col-head {
+  display: grid;
+  grid-template-columns: 90px minmax(0, 1fr) 240px 180px 140px;
+  align-items: center;
+  border-top: 1px solid var(--ledger-ink-muted);
+  border-bottom: 1px solid var(--ledger-ink-muted);
+  padding: clamp(22px, 2.3vw, 36px) 0 clamp(20px, 2.1vw, 32px);
+  font-family: var(--ledger-mono);
+  font-size: clamp(13px, 1.25vw, 19px);
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--ledger-ink-muted);
+}
+.lh-col-head span:nth-child(3) { text-align: center; }
+.lh-col-head span:nth-child(4) { padding-left: 24px; }
+.lh-col-head span:nth-child(5) { text-align: right; }
+
+.lh-row {
+  display: grid;
+  grid-template-columns: 90px minmax(0, 1fr) 240px 180px 140px;
+  align-items: center;
+  min-height: clamp(84px, 7.2vw, 111px);
+  border-bottom: 1px solid var(--ledger-hairline);
+  text-decoration: none;
+  color: var(--ledger-ink);
+  transition: background 160ms ease-out;
+}
+.lh-row:last-child { border-bottom: 0; }
+.lh-row:hover { background: #f4f2ea; }
+.lh-row:hover .lh-repo { text-decoration: underline; text-underline-offset: 5px; }
+.lh-row:focus-visible { outline: 2px solid var(--ledger-ink); outline-offset: -2px; }
+
+.lh-dot {
+  width: clamp(14px, 1.6vw, 24px);
+  height: clamp(14px, 1.6vw, 24px);
+  border-radius: 50%;
+  background: var(--ledger-shipped);
+  display: inline-block;
+}
+.lh-repo {
+  font-size: clamp(19px, 2.35vw, 36px);
+  font-weight: 500;
+  letter-spacing: 0.05em;
+  overflow-wrap: anywhere;
+}
+.lh-release { text-align: center; }
+.lh-chip {
+  display: inline-block;
+  font-family: var(--ledger-mono);
+  font-size: clamp(14px, 1.45vw, 22px);
+  color: var(--ledger-tag);
+  border: 2px solid var(--ledger-tag);
+  border-radius: 6px;
+  padding: clamp(4px, 0.5vw, 8px) clamp(10px, 1.3vw, 20px);
+  min-width: clamp(72px, 7.8vw, 120px);
+  text-align: center;
+}
+.lh-chip-empty { color: var(--ledger-ink-muted); border-color: var(--ledger-hairline); }
+.lh-hash {
+  font-family: var(--ledger-mono);
+  font-size: clamp(13px, 1.45vw, 22px);
+  color: var(--ledger-ink-muted);
+  padding-left: 24px;
+}
+.lh-shipped {
+  font-family: var(--ledger-mono);
+  font-size: clamp(13px, 1.45vw, 22px);
+  color: var(--ledger-ink);
+  text-align: right;
+  white-space: nowrap;
+}
+
+/* ── Stats + CTA strip ── */
+.lh-stats {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  gap: 18px;
+  flex-wrap: wrap;
+  border-top: 1px solid var(--ledger-ink-muted);
+  border-bottom: 1px solid var(--ledger-ink-muted);
+  padding: clamp(22px, 2.3vw, 36px) 0 clamp(18px, 2vw, 30px);
+}
+.lh-stats-nums {
+  font-family: var(--ledger-mono);
+  font-size: clamp(16px, 1.85vw, 28px);
+  color: var(--ledger-ink);
+}
+.lh-cta {
+  font-family: var(--ledger-mono);
+  font-size: clamp(17px, 1.9vw, 29px);
+  font-weight: 700;
+  color: var(--ledger-ink);
+  text-decoration: none;
+}
+.lh-cta:hover { text-decoration: underline; text-underline-offset: 5px; }
+.lh-cta:focus-visible { outline: 2px solid var(--ledger-ink); outline-offset: 3px; }
+
+/* ── Sections below the fold (same ledger grammar) ── */
+.lh-section { margin-top: clamp(56px, 6vw, 96px); }
+.lh-sec-head {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  border-top: 1px solid var(--ledger-ink-muted);
+  border-bottom: 1px solid var(--ledger-ink-muted);
+  padding: clamp(16px, 1.6vw, 26px) 0;
+  font-family: var(--ledger-mono);
+  font-size: clamp(13px, 1.25vw, 19px);
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--ledger-ink-muted);
+}
+.lh-sec-head h2 {
+  margin: 0;
+  font: inherit;
+  letter-spacing: inherit;
+  text-transform: inherit;
+  color: inherit;
+}
+.lh-sec-more {
+  color: var(--ledger-ink);
+  text-decoration: none;
+  font: inherit;
+}
+.lh-sec-more:hover { text-decoration: underline; text-underline-offset: 4px; }
+
+/* generic sub-ledger rows */
+.lh-list { margin: 0; padding: 0; list-style: none; }
+.lh-item {
+  display: grid;
+  align-items: center;
+  gap: 18px;
+  padding: clamp(16px, 1.7vw, 26px) 0;
+  border-bottom: 1px solid var(--ledger-hairline);
+  text-decoration: none;
+  color: var(--ledger-ink);
+  transition: background 160ms ease-out;
+}
+.lh-item:last-child { border-bottom: 0; }
+a.lh-item:hover { background: #f4f2ea; }
+a.lh-item:hover .lh-item-title { text-decoration: underline; text-underline-offset: 4px; }
+a.lh-item:focus-visible { outline: 2px solid var(--ledger-ink); outline-offset: -2px; }
+
+.lh-item-tag {
+  font-family: var(--ledger-mono);
+  font-size: clamp(12px, 1vw, 15px);
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--ledger-ink-muted);
+}
+.lh-item-title {
+  font-size: clamp(17px, 1.5vw, 22px);
+  font-weight: 500;
+  letter-spacing: 0.01em;
+}
+.lh-item-note {
+  font-size: clamp(14px, 1.15vw, 17px);
+  color: var(--ledger-ink-muted);
+  line-height: 1.55;
+}
+.lh-item-arrow {
+  font-family: var(--ledger-mono);
+  font-size: clamp(15px, 1.3vw, 20px);
+  color: var(--ledger-ink-muted);
+  text-align: right;
+}
+.lh-item-chip {
+  font-family: var(--ledger-mono);
+  font-size: clamp(11px, 0.95vw, 14px);
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--ledger-tag);
+  border: 1.5px solid var(--ledger-tag);
+  border-radius: 5px;
+  padding: 3px 10px;
+  white-space: nowrap;
+  justify-self: start;
+}
+
+/* column plans per section */
+.lh-item--work { grid-template-columns: minmax(0, 1.1fr) auto minmax(0, 1.6fr); }
+.lh-item--terrain { grid-template-columns: minmax(140px, 0.6fr) minmax(0, 0.9fr) minmax(0, 1.8fr); }
+.lh-item--reach { grid-template-columns: 56px minmax(0, 0.9fr) minmax(0, 1.8fr) 32px; }
+
+.lh-num {
+  font-family: var(--ledger-mono);
+  font-size: clamp(14px, 1.2vw, 18px);
+  color: var(--ledger-ink-muted);
+}
+
+/* now line */
+.lh-now {
+  display: flex;
+  align-items: baseline;
+  gap: 14px;
+  padding: clamp(18px, 2vw, 30px) 0;
+  border-bottom: 1px solid var(--ledger-hairline);
+}
+.lh-now-text {
+  font-size: clamp(17px, 1.6vw, 24px);
+  font-weight: 500;
+}
+.lh-now-context {
+  margin: clamp(14px, 1.4vw, 22px) 0 0;
+  max-width: 72ch;
+  font-size: clamp(14px, 1.15vw, 17px);
+  line-height: 1.7;
+  color: var(--ledger-ink-muted);
+}
+
+/* closing */
+.lh-closing p {
+  max-width: 72ch;
+  margin: clamp(18px, 1.8vw, 28px) 0 0;
+  font-size: clamp(15px, 1.25vw, 18px);
+  line-height: 1.75;
+  color: var(--ledger-ink);
+}
+.lh-closing p.lh-closing-sub { color: var(--ledger-ink-muted); }
+.lh-close-links {
+  display: flex;
+  flex-wrap: wrap;
+  gap: clamp(18px, 2.4vw, 36px);
+  margin-top: clamp(22px, 2.2vw, 34px);
+  font-family: var(--ledger-mono);
+  font-size: clamp(14px, 1.2vw, 18px);
+}
+.lh-close-links a {
+  color: var(--ledger-ink);
+  text-decoration: none;
+  font-weight: 700;
+}
+.lh-close-links a:hover { text-decoration: underline; text-underline-offset: 4px; }
+
+/* one orchestrated load cascade for the hero rows; scroll reveals below */
+@media (prefers-reduced-motion: no-preference) {
+  .js .lh-row[data-load] {
+    opacity: 0;
+    transform: translateY(10px);
+    animation: lh-row-in 480ms ease-out forwards;
+    animation-delay: calc(var(--i, 0) * 70ms);
+  }
+  @keyframes lh-row-in {
+    to { opacity: 1; transform: translateY(0); }
+  }
+}
+
+/* ── Ledger responsive ── */
+@media (max-width: 900px) {
+  .lh-col-head, .lh-row {
+    grid-template-columns: 40px minmax(0, 1fr) 150px 110px;
+  }
+  .lh-col-head span:first-child { visibility: hidden; }
+  .lh-col-head span:nth-child(3), .lh-release { display: none; }
+  .lh-col-head span:nth-child(4) { padding-left: 0; }
+  .lh-hash { padding-left: 0; }
+}
+@media (max-width: 640px) {
+  .lh-head { grid-template-columns: 1fr; gap: 10px; }
+  .lh-nav { padding-top: 4px; justify-self: start; }
+  .lh-col-head, .lh-row {
+    grid-template-columns: 28px minmax(0, 1fr) auto;
+  }
+  .lh-col-head span:nth-child(4), .lh-hash { display: none; }
+  .lh-item--work, .lh-item--terrain, .lh-item--reach {
+    grid-template-columns: minmax(0, 1fr) auto;
+    row-gap: 6px;
+  }
+  .lh-item--work .lh-item-note,
+  .lh-item--terrain .lh-item-note { grid-column: 1 / -1; }
+  .lh-item--reach .lh-num { display: none; }
+  .lh-item--reach { grid-template-columns: minmax(0, 1fr) 24px; }
+  .lh-item--reach .lh-item-note { grid-column: 1 / -1; }
+  .lh-stats { flex-direction: column; align-items: flex-start; }
+}
+
+@media print {
+  body.chrome-ledger { background: white; }
+  .ledger-sheet { border: 0; }
+}
+
+/* ledger motion: the NOW dot breathes; hero rows cascade on load (above).
+   Global prefers-reduced-motion block already collapses both. */
+@media (prefers-reduced-motion: no-preference) {
+  .lh-now .lh-dot {
+    animation: lh-dot-pulse 2.6s ease-in-out infinite;
+  }
+  @keyframes lh-dot-pulse {
+    0%, 100% { box-shadow: 0 0 0 0 rgba(31, 122, 77, 0.28); }
+    50% { box-shadow: 0 0 0 7px rgba(31, 122, 77, 0); }
+  }
+}
+
+/* browser surfaces carry the palette too */
+.chrome-ledger ::selection {
+  background: #16150f;
+  color: #fbfaf7;
+}

@@ -86,6 +86,8 @@ STATIC_FILES = [
     ("assets/fonts/fraunces-latin-full-normal.woff2",       "assets/fonts/fraunces-latin-full-normal.woff2"),
     ("assets/fonts/geist-latin-wght-normal.woff2",          "assets/fonts/geist-latin-wght-normal.woff2"),
     ("assets/fonts/jetbrains-mono-latin-wght-normal.woff2", "assets/fonts/jetbrains-mono-latin-wght-normal.woff2"),
+    ("assets/fonts/iosevka-charon-mono-latin-400-normal.woff2", "assets/fonts/iosevka-charon-mono-latin-400-normal.woff2"),
+    ("assets/fonts/iosevka-charon-mono-latin-700-normal.woff2", "assets/fonts/iosevka-charon-mono-latin-700-normal.woff2"),
     ("_data/repos.json",      "_data/repos.json"),
     # assets/banners/*.svg was shipped from here until no page referenced it any more;
     # the six files and generate-bunicipals.py now sit in _attic/banners/.
@@ -417,6 +419,8 @@ def _stats():
         s["repos_databases"] = sum(1 for r in own if r.get("repo_type") == "database")
         s["repos_tools"] = sum(1 for r in own if r.get("repo_type") == "tool")
         s["repos_orgs"] = len({r.get("org") for r in own if r.get("org")})
+        # Orgs across the whole ledger (own + external), matching repos.json's orgs table.
+        s["orgs_total"] = len(data.get("orgs", {})) or s["repos_orgs"]
         # The footer copyright year claims "this site is alive in year N", so it
         # is derived from the newest commit on record rather than typed by hand —
         # a build clock would also churn every page hash on each run.

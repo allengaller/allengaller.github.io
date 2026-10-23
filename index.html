@@ -1,8 +1,8 @@
 ---
 layout: default
-title: Allen Galler | 高产开源黑客的个人品牌总入口
-description: 聚合 Cloud Native、AI Tooling、知识库、内容矩阵与合作路径的个人品牌首页，面向开发者、合作方、客户与国际受众。
-nav_active_home: is-active
+ledger_chrome: true
+title: Allen Galler | 高产开源黑客的出货台账
+description: 出货台账式个人首页：108 个仓库、21 个组织、4500+ 篇文档的实时出货记录——Cloud Native SRE · AI Toolsmith · Knowledge Architect。
 jsonld: |
   {
     "@context": "https://schema.org",
@@ -22,267 +22,237 @@ jsonld: |
   }
 ---
 
-<div class="home long-doc">
+<div class="ledger-sheet">
 
-  <!-- Scroll progress indicator -->
-  <div class="scroll-progress" aria-hidden="true">
-    <div class="scroll-progress-bar" id="scroll-progress"></div>
+  <!-- ── File head ── -->
+  <header class="lh-head">
+    <h1 class="lh-name">Allen Galler</h1>
+    <nav class="lh-nav" aria-label="主导航">
+      <a href="/projects/">Projects</a>
+      <a href="/repos/">Repos</a>
+      <a href="/about/">About</a>
+    </nav>
+  </header>
+  <p class="lh-tagline">Cloud Native SRE · AI Toolsmith · Knowledge Architect</p>
+  <p class="lh-date" data-today>Oct 22, 2026 (Thu)</p>
+
+  <!-- ── The ledger: latest real shipments ── -->
+  <section class="lh-ledger" aria-label="最近出货记录">
+    <div class="lh-col-head" aria-hidden="true">
+      <span>Status</span><span>Repository</span><span>Latest Release</span><span>Commit</span><span>Shipped</span>
+    </div>
+    <a class="lh-row" data-load style="--i:0" href="https://github.com/kudig-io/kudig-database" target="_blank" rel="noopener">
+      <span class="lh-status"><span class="lh-dot" aria-label="已发布"></span></span>
+      <span class="lh-repo">kudig-io/kudig-database</span>
+      <span class="lh-release"><span class="lh-chip lh-chip-empty">–</span></span>
+      <span class="lh-hash">e60e45f</span>
+      <span class="lh-shipped"><time datetime="2026-10-22T11:02:44+08:00" data-rel>2026-10-22</time></span>
+    </a>
+    <a class="lh-row" data-load style="--i:1" href="https://github.com/fat-looser/fat-looser-database" target="_blank" rel="noopener">
+      <span class="lh-status"><span class="lh-dot" aria-label="已发布"></span></span>
+      <span class="lh-repo">fat-looser/fat-looser-database</span>
+      <span class="lh-release"><span class="lh-chip lh-chip-empty">–</span></span>
+      <span class="lh-hash">fd2bee6</span>
+      <span class="lh-shipped"><time datetime="2026-10-21T12:22:31+08:00" data-rel>2026-10-21</time></span>
+    </a>
+    <a class="lh-row" data-load style="--i:2" href="https://github.com/ai-guru-global/agent-up" target="_blank" rel="noopener">
+      <span class="lh-status"><span class="lh-dot" aria-label="已发布"></span></span>
+      <span class="lh-repo">ai-guru-global/agent-up</span>
+      <span class="lh-release"><span class="lh-chip lh-chip-empty">–</span></span>
+      <span class="lh-hash">d93f15f</span>
+      <span class="lh-shipped"><time datetime="2026-10-20T18:29:56+08:00" data-rel>2026-10-20</time></span>
+    </a>
+    <a class="lh-row" data-load style="--i:3" href="https://github.com/ai-guru-global/resolve-agent" target="_blank" rel="noopener">
+      <span class="lh-status"><span class="lh-dot" aria-label="已发布"></span></span>
+      <span class="lh-repo">ai-guru-global/resolve-agent</span>
+      <span class="lh-release"><span class="lh-chip">v0.4.0</span></span>
+      <span class="lh-hash">834be57</span>
+      <span class="lh-shipped"><time datetime="2026-10-20T18:08:38+08:00" data-rel>2026-10-20</time></span>
+    </a>
+  </section>
+
+  <!-- ── Stats + primary action ── -->
+  <div class="lh-stats">
+    <p class="lh-stats-nums">{{ stat.repos_total }} repos · {{ stat.orgs_total }} orgs · 4500+ docs</p>
+    <a class="lh-cta" href="/repos/">浏览完整台账 →</a>
   </div>
 
-  <header class="home-hero">
-    <div class="home-hero-text">
-      <p class="home-eyebrow">
-        <span class="eyebrow-dot"></span>
-        <span>Open Source Builder · 自 2020</span>
-        <span class="home-status" aria-label="当前在做什么">
-          <span class="status-dot"></span>
-          <span>当前：构建 Agent-native 知识工具</span>
-        </span>
-      </p>
-      <h1 class="home-name">Allen Galler</h1>
-      <p class="home-tagline">Cloud Native SRE · AI Toolsmith · Knowledge Architect</p>
+  <!-- ── 01 · Now ── -->
+  <section class="lh-section" data-reveal>
+    <div class="lh-sec-head">
+      <h2>01 · Now / 此刻</h2>
     </div>
-    <aside class="home-hero-aside">
-      <p class="home-desc">
-        在 <em>Cloud Native</em>、<em>AI Tooling</em>、<em>Knowledge Architecture</em>
-        的交叉地带持续输出。<br>
-        把技术经验沉淀成可复用的工具、可增长的知识资产，以及可长期经营的个人品牌。
-      </p>
-      <div class="home-actions">
-        <a href="#opening" class="btn btn-primary">从开场读起</a>
-        <a href="/projects/" class="btn">完整导航</a>
-        <a href="/about/" class="btn">关于我</a>
-      </div>
-    </aside>
-  </header>
-
-  <!-- ── 01 · Opening Letter ── -->
-  <section class="long-opening reveal" data-reveal id="opening">
-    <div class="section-header">
-      <h2 class="section-title">开场 · Opening</h2>
+    <div class="lh-now">
+      <span class="lh-dot" aria-hidden="true"></span>
+      <p class="lh-now-text">构建 Agent 持续改进闭环与 GEO 知识体系。</p>
     </div>
-    <div class="letter-body">
-      <p class="letter-p letter-p-lead">
-        <span class="drop-cap" aria-hidden="true">这</span>是一个个人主页。我把它当作一份长期维护的<em>笔记</em>——记录我在 Cloud Native、AI Tooling、知识架构三条线上正在做的事，以及为什么做。
-      </p>
-      <p class="letter-p">
-        多数站点会先放一组代表项目，然后等你滚动。我更愿意先讲清楚<em>判断</em>：写工具时优先考虑长期可维护性；选技术时优先考虑生产证据；做知识库时同时考虑人类读者与 Agent RAG。
-      </p>
-      <p class="letter-p">
-        如果你正在评估一次合作、招募一位工程师、或者只是好奇同一个技术领域的同行在想什么，下面的六个 station 会比 GitHub 个人页更快给你答案。
-      </p>
-    </div>
-  </section>
-
-  <!-- ── 02 · Now ── -->
-  <section class="long-now reveal" data-reveal>
-    <h2 class="section-title">此刻 · Now</h2>
-    <p class="now-line">
-      <span class="now-marker" aria-hidden="true"></span>
-      构建 Agent 持续改进闭环与 GEO 知识体系。
-    </p>
-    <p class="now-context">
-      具体地说，我在做 agent-up——把 Agent 的反馈、归因、发布与回滚做成强制执行的改进闭环；同步在整理 open-geo（生成式引擎优化的系统性知识库），并把 KUDIG、ResolveAgent 这一类工具的<em>运行痕迹</em>沉淀成既能被人类直接阅读、也能被 Agent 作为 RAG 语料检索的结构化知识库。
+    <p class="lh-now-context">
+      具体地说：agent-up——把 Agent 的反馈、归因、发布与回滚做成强制执行的改进闭环；open-geo——生成式引擎优化的系统性知识库；同时把 KUDIG、ResolveAgent 这类工具的运行痕迹沉淀成人类可读、Agent 可检索的结构化知识资产。
     </p>
   </section>
 
-  <!-- ── 03 · Stations of Work ── -->
-  <section class="long-stations" id="featured">
-    <div class="section-header">
-      <h2 class="section-title">做过的 · Stations</h2>
-      <a href="/projects/" class="section-more">全部 →</a>
+  <!-- ── 02 · Selected work ── -->
+  <section class="lh-section" id="selected" data-reveal>
+    <div class="lh-sec-head">
+      <h2>02 · Selected Work / 代表项目</h2>
+      <a href="/projects/" class="lh-sec-more">全部 →</a>
     </div>
-
-    <article class="station">
-      <p class="station-prose">
-        应用层是我投入精力最多的地方。它们大多以<em>"内部强制执行 SOP"</em>的形式存在——把模糊的工程判断变成可重复的流程。
-      </p>
-      <h3 class="station-group-title">应用</h3>
-      <div class="station-cards">
-        <a class="featured-card" href="https://github.com/ai-guru-global/fde-scope" target="_blank" rel="noopener">
-          <h4>FDE Scope</h4>
-          <p>完整 FDE SOP（4 区 18 阶段 10 门禁），强制执行。</p>
-          <span class="repo-url">github.com/ai-guru-global/fde-scope</span>
-        </a>
-        <a class="featured-card" href="https://github.com/ai-guru-global/agent-up" target="_blank" rel="noopener">
-          <h4>agent-up</h4>
-          <p>Agent 持续改进闭环：反馈、归因、发布、一键回滚。</p>
-          <span class="repo-url">github.com/ai-guru-global/agent-up</span>
-        </a>
-        <a class="featured-card" href="https://github.com/ai-guru-global/resolve-agent" target="_blank" rel="noopener">
-          <h4>ResolveAgent</h4>
-          <p>告警进站，四线分岔，终点站是根因。</p>
-          <span class="repo-url">github.com/ai-guru-global/resolve-agent</span>
-        </a>
-        <a class="featured-card" href="https://github.com/kudig-io/klaw" target="_blank" rel="noopener">
-          <h4>Klaw</h4>
-          <p>一个二进制，装下整个 Kubernetes 运维。</p>
-          <span class="repo-url">github.com/kudig-io/klaw</span>
-        </a>
-      </div>
-    </article>
-
-    <article class="station">
-      <p class="station-prose">
-        开放工具是我把日常工作沉淀为<em>可复用资产</em>的尝试。它们更轻量，但同样追求"用一次省一次"。
-      </p>
-      <h3 class="station-group-title">开放工具</h3>
-      <div class="station-cards">
-        <a class="featured-card" href="https://github.com/allengaller/open-arch" target="_blank" rel="noopener">
-          <h4>OpenArch</h4>
-          <p>把售前架构师的工作显性化为技能资产与工作流。</p>
-          <span class="repo-url">github.com/allengaller/open-arch</span>
-        </a>
-        <a class="featured-card" href="https://github.com/allengaller/open-tam" target="_blank" rel="noopener">
-          <h4>open-tam</h4>
-          <p>把 TAM 的排查工作显性化，产出三段式根因报告。</p>
-          <span class="repo-url">github.com/allengaller/open-tam</span>
-        </a>
-        <a class="featured-card" href="https://github.com/opendemo-work/opendemo-work" target="_blank" rel="noopener">
-          <h4>OpenDemo</h4>
-          <p>959+ 生产级可运行 Demo，给 SA 的技术演示平台。</p>
-          <span class="repo-url">github.com/opendemo-work/opendemo-work</span>
-        </a>
-      </div>
-    </article>
-
-    <article class="station">
-      <p class="station-prose">
-        知识库这一类项目最有意思——它们<em>既是人读手册，也是 Agent 直接检索的 RAG 语料</em>。我把判断标准定得很简单：写下来的时候，要假设对面是一个陌生的工程师，他能从第一行读到最后一行而不会迷路。
-      </p>
-      <h3 class="station-group-title">知识库</h3>
-      <div class="station-cards">
-        <a class="featured-card" href="https://github.com/kudig-io/kudig-database" target="_blank" rel="noopener">
-          <h4>KUDIG Database</h4>
-          <p>K8s + AI Infra 运维全域知识库，人类与 Agent 双读。</p>
-          <span class="repo-url">github.com/kudig-io/kudig-database</span>
-        </a>
-        <a class="featured-card" href="https://github.com/ai-guru-global/ai-guru-database" target="_blank" rel="noopener">
-          <h4>AI Guru Database</h4>
-          <p>AI Guru 数据库 GTM 与发布剧本（战略文档）。</p>
-          <span class="repo-url">github.com/ai-guru-global/ai-guru-database</span>
-        </a>
-        <a class="featured-card" href="https://github.com/allengaller/ai-book" target="_blank" rel="noopener">
-          <h4>大模型全栈实战指南</h4>
-          <p>从数学直觉到工业级工程的体系化实战书。</p>
-          <span class="repo-url repo-private">私有仓库 · 登录可见</span>
-        </a>
-      </div>
-    </article>
+    <ul class="lh-list">
+      <li><a class="lh-item lh-item--work" href="https://github.com/ai-guru-global/fde-scope" target="_blank" rel="noopener">
+        <span class="lh-item-title">ai-guru-global/fde-scope</span>
+        <span class="lh-item-chip">SOP</span>
+        <span class="lh-item-note">完整 FDE 流程：4 区 18 阶段 10 门禁，强制执行。</span>
+      </a></li>
+      <li><a class="lh-item lh-item--work" href="https://github.com/ai-guru-global/agent-up" target="_blank" rel="noopener">
+        <span class="lh-item-title">ai-guru-global/agent-up</span>
+        <span class="lh-item-chip">Tool</span>
+        <span class="lh-item-note">Agent 持续改进闭环：反馈、归因、发布、一键回滚。</span>
+      </a></li>
+      <li><a class="lh-item lh-item--work" href="https://github.com/ai-guru-global/resolve-agent" target="_blank" rel="noopener">
+        <span class="lh-item-title">ai-guru-global/resolve-agent</span>
+        <span class="lh-item-chip">App</span>
+        <span class="lh-item-note">告警进站，四线分岔，终点站是根因。</span>
+      </a></li>
+      <li><a class="lh-item lh-item--work" href="https://github.com/kudig-io/klaw" target="_blank" rel="noopener">
+        <span class="lh-item-title">kudig-io/klaw</span>
+        <span class="lh-item-chip">Tool</span>
+        <span class="lh-item-note">一个二进制，装下整个 Kubernetes 运维。</span>
+      </a></li>
+      <li><a class="lh-item lh-item--work" href="https://github.com/allengaller/open-arch" target="_blank" rel="noopener">
+        <span class="lh-item-title">allengaller/open-arch</span>
+        <span class="lh-item-chip">Skill</span>
+        <span class="lh-item-note">把售前架构师的工作显性化为技能资产与工作流。</span>
+      </a></li>
+      <li><a class="lh-item lh-item--work" href="https://github.com/opendemo-work/opendemo-work" target="_blank" rel="noopener">
+        <span class="lh-item-title">opendemo-work/opendemo-work</span>
+        <span class="lh-item-chip">Demo</span>
+        <span class="lh-item-note">959+ 生产级可运行 Demo，给 SA 的技术演示平台。</span>
+      </a></li>
+      <li><a class="lh-item lh-item--work" href="https://github.com/kudig-io/kudig-database" target="_blank" rel="noopener">
+        <span class="lh-item-title">kudig-io/kudig-database</span>
+        <span class="lh-item-chip">KB</span>
+        <span class="lh-item-note">K8s + AI Infra 运维全域知识库，人类与 Agent 双读。</span>
+      </a></li>
+      <li><a class="lh-item lh-item--work" href="https://github.com/allengaller/ai-book" target="_blank" rel="noopener">
+        <span class="lh-item-title">allengaller/ai-book</span>
+        <span class="lh-item-chip">Book</span>
+        <span class="lh-item-note">大模型全栈实战指南：从数学直觉到工业级工程（私有仓库）。</span>
+      </a></li>
+    </ul>
   </section>
 
-  <!-- ── 04 · Knowledge Terrain ── -->
-  <section class="long-terrain knowledge-map reveal" data-reveal>
-    <div class="section-header">
-      <h2 class="section-title">知识版图 · Terrain</h2>
-      <a href="/repos/" class="section-more">全部 →</a>
+  <!-- ── 03 · Knowledge terrain ── -->
+  <section class="lh-section" data-reveal>
+    <div class="lh-sec-head">
+      <h2>03 · Terrain / 知识版图</h2>
+      <a href="/repos/" class="lh-sec-more">全部 →</a>
     </div>
-    <p class="terrain-prose">
-      我目前维护 {{ stat.repos_databases }} 个知识库与 {{ stat.repos_tools }} 个工具，横跨 {{ stat.repos_orgs }} 个组织。下面是其中 5 个领域的一张<em>地形图</em>。每一格不是简单的主题分类，而是一种我反复在做的工作模式——比如"Cloud Native"背后是从故障分析到 Operator 开发的同一组技能。
-    </p>
-    <div class="domain-grid">
-      <div class="domain-card">
-        <span class="domain-tag">Cloud Native</span>
-        <h4>云原生与基础设施</h4>
-        <p>KUDIG Database · Kuba 全网故障库 · O-RAN 知识库</p>
-      </div>
-      <div class="domain-card">
-        <span class="domain-tag">AI &amp; Agents</span>
-        <h4>AI 与 Agent</h4>
-        <p>AI Guru · AI News · MCP Tool Suite · 命令行语料库 · Skills Database</p>
-      </div>
-      <div class="domain-card">
-        <span class="domain-tag">Product &amp; GTM</span>
-        <h4>产品与增长战略</h4>
-        <p>FinTech · dana 大拿 · FightBrain · 点子内参 · Podcast · Open Cognition</p>
-      </div>
-      <div class="domain-card">
-        <span class="domain-tag">Life &amp; Culture</span>
-        <h4>生活与文化</h4>
-        <p>不花 · DUDE 城市玩乐 · Cinelume 电影 · 艺术学院 · SIT Music · ZenX</p>
-      </div>
-      <div class="domain-card">
-        <span class="domain-tag">Personal OS</span>
-        <h4>个人操作系统</h4>
-        <p>me-os 人生管理 · 任务狗 · repo-database · knowledge-graph-basement</p>
-      </div>
-    </div>
+    <ul class="lh-list">
+      <li><div class="lh-item lh-item--terrain">
+        <span class="lh-item-tag">Cloud Native</span>
+        <span class="lh-item-title">云原生与基础设施</span>
+        <span class="lh-item-note">KUDIG Database · Kuba 全网故障库 · O-RAN 知识库</span>
+      </div></li>
+      <li><div class="lh-item lh-item--terrain">
+        <span class="lh-item-tag">AI &amp; Agents</span>
+        <span class="lh-item-title">AI 与 Agent</span>
+        <span class="lh-item-note">AI Guru · AI News · MCP Tool Suite · 命令行语料库 · Skills Database</span>
+      </div></li>
+      <li><div class="lh-item lh-item--terrain">
+        <span class="lh-item-tag">Product &amp; GTM</span>
+        <span class="lh-item-title">产品与增长战略</span>
+        <span class="lh-item-note">FinTech · dana 大拿 · FightBrain · 点子内参 · Podcast · Open Cognition</span>
+      </div></li>
+      <li><div class="lh-item lh-item--terrain">
+        <span class="lh-item-tag">Life &amp; Culture</span>
+        <span class="lh-item-title">生活与文化</span>
+        <span class="lh-item-note">不花 · DUDE 城市玩乐 · Cinelume 电影 · 艺术学院 · SIT Music · ZenX</span>
+      </div></li>
+      <li><div class="lh-item lh-item--terrain">
+        <span class="lh-item-tag">Personal OS</span>
+        <span class="lh-item-title">个人操作系统</span>
+        <span class="lh-item-note">me-os 人生管理 · 任务狗 · repo-database · knowledge-graph-basement</span>
+      </div></li>
+    </ul>
   </section>
 
-  <!-- ── 05 · Reach ── -->
-  <section class="long-reach audience-section reveal" data-reveal>
-    <div class="section-header">
-      <h2 class="section-title">如果你在 · Reach</h2>
+  <!-- ── 04 · Entrances ── -->
+  <section class="lh-section" data-reveal>
+    <div class="lh-sec-head">
+      <h2>04 · Entrances / 如果你在找入口</h2>
     </div>
-    <p class="reach-prose">
-      不同访客来这里的目的不太一样。下面四种身份是出现频率最高的——你可以直接跳到自己对应的入口。
-    </p>
-    <ol class="reach-list">
-      <li>
-        <a href="#featured" class="reach-item">
-          <span class="reach-num">01</span>
-          <span class="reach-body">
-            <span class="reach-title">开发者 / 技术粉丝</span>
-            <span class="reach-desc">先看我做过哪些工具、如何把知识和工程能力产品化。</span>
-          </span>
-          <span class="reach-arrow" aria-hidden="true">→</span>
-        </a>
-      </li>
-      <li>
-        <a href="/projects/" class="reach-item">
-          <span class="reach-num">02</span>
-          <span class="reach-body">
-            <span class="reach-title">想看全部项目的人</span>
-            <span class="reach-desc">直接进入完整项目导航，查看所有保留但不在首页铺开的组织、语料库、应用与工具。</span>
-          </span>
-          <span class="reach-arrow" aria-hidden="true">→</span>
-        </a>
-      </li>
-      <li>
-        <a href="/about/" class="reach-item">
-          <span class="reach-num">03</span>
-          <span class="reach-body">
-            <span class="reach-title">招聘方 / 合作方</span>
-            <span class="reach-desc">快速判断我的强项、代表战绩、适合怎样的合作方式。</span>
-          </span>
-          <span class="reach-arrow" aria-hidden="true">→</span>
-        </a>
-      </li>
-      <li>
-        <a href="/topic/links/" class="reach-item">
-          <span class="reach-num">04</span>
-          <span class="reach-body">
-            <span class="reach-title">自媒体读者 / 内容用户</span>
-            <span class="reach-desc">内容矩阵、外部链接、知识专题和长期输出从这里汇聚。</span>
-          </span>
-          <span class="reach-arrow" aria-hidden="true">→</span>
-        </a>
-      </li>
-    </ol>
+    <ul class="lh-list">
+      <li><a class="lh-item lh-item--reach" href="#selected">
+        <span class="lh-num">01</span>
+        <span class="lh-item-title">开发者 / 技术同行</span>
+        <span class="lh-item-note">代表工具与知识库，看工程能力如何产品化。</span>
+        <span class="lh-item-arrow" aria-hidden="true">→</span>
+      </a></li>
+      <li><a class="lh-item lh-item--reach" href="/projects/">
+        <span class="lh-num">02</span>
+        <span class="lh-item-title">想看全部项目的人</span>
+        <span class="lh-item-note">完整项目导航：组织、语料库、应用与工具。</span>
+        <span class="lh-item-arrow" aria-hidden="true">→</span>
+      </a></li>
+      <li><a class="lh-item lh-item--reach" href="/about/">
+        <span class="lh-num">03</span>
+        <span class="lh-item-title">招聘方 / 合作方</span>
+        <span class="lh-item-note">强项、代表战绩、适合的合作方式。</span>
+        <span class="lh-item-arrow" aria-hidden="true">→</span>
+      </a></li>
+      <li><a class="lh-item lh-item--reach" href="/topic/links/">
+        <span class="lh-num">04</span>
+        <span class="lh-item-title">自媒体读者 / 内容用户</span>
+        <span class="lh-item-note">内容矩阵、外部链接与长期输出的汇聚处。</span>
+        <span class="lh-item-arrow" aria-hidden="true">→</span>
+      </a></li>
+    </ul>
   </section>
 
-  <!-- ── 06 · Closing ── -->
-  <section class="long-closing collab-section reveal" data-reveal>
-    <div class="section-header">
-      <h2 class="section-title">下一步 · Closing</h2>
+  <!-- ── 05 · Closing ── -->
+  <section class="lh-section lh-closing" data-reveal>
+    <div class="lh-sec-head">
+      <h2>05 · Closing / 下一步</h2>
     </div>
-    <p class="closing-prose">
-      如果你的工作需要：把 Agent、RAG、MCP、CLI 或 AI Native Workflow 做成真正可落地的工具产品；围绕 Kubernetes、可观测性、故障分析做实战方案设计；或者把零散的文档与案例沉淀成可增长的知识资产——这是我<em>最擅长合作的三个场景</em>。
+    <p>
+      如果你的工作需要：把 Agent、RAG、MCP、CLI 或 AI Native Workflow 做成真正可落地的工具产品；围绕 Kubernetes、可观测性、故障分析做实战方案设计；或者把零散的文档与案例沉淀成可增长的知识资产——这是我最擅长合作的三个场景。
     </p>
-    <p class="closing-prose">
+    <p class="lh-closing-sub">
       主页不放联系表单。最直接的入口是 GitHub Issues，或者每个项目 README 里我留下的联系方式。
     </p>
-    <div class="closing-cta">
-      <a href="/projects/" class="btn btn-primary">查看代表项目 →</a>
-      <a href="/topic/links/" class="btn">内容矩阵 →</a>
-      <a href="/about/" class="btn">关于我 →</a>
+    <div class="lh-close-links">
+      <a href="/projects/">查看代表项目 →</a>
+      <a href="/topic/links/">内容矩阵 →</a>
+      <a href="/about/">关于我 →</a>
     </div>
   </section>
 
 </div>
 
-<button class="back-to-top" id="back-to-top" aria-label="回到顶部">
-  <svg viewBox="0 0 16 16" width="14" height="14" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
-    <path d="M8 13 V3 M3 8 L8 3 L13 8"/>
-  </svg>
-</button>
+<script>
+(function () {
+  'use strict';
+  // Date-line: render today's date in the comp's format; static text is the fallback.
+  var el = document.querySelector('[data-today]');
+  if (el) {
+    var now = new Date();
+    var months = ['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'];
+    var days = ['Sun','Mon','Tue','Wed','Thu','Fri','Sat'];
+    el.textContent = months[now.getMonth()] + ' ' + now.getDate() + ', ' + now.getFullYear() + ' (' + days[now.getDay()] + ')';
+  }
+  // Shipped column: ISO date is the no-JS fallback; JS upgrades to relative age.
+  var times = document.querySelectorAll('time[data-rel]');
+  var DAY = 86400000;
+  times.forEach(function (t) {
+    var d = new Date(t.getAttribute('datetime'));
+    if (isNaN(d)) return;
+    var today = new Date(); today.setHours(0, 0, 0, 0);
+    var that = new Date(d); that.setHours(0, 0, 0, 0);
+    var diff = Math.round((today - that) / DAY);
+    if (diff <= 0) t.textContent = 'today';
+    else if (diff === 1) t.textContent = '1d ago';
+    else if (diff < 7) t.textContent = diff + 'd ago';
+    else if (diff < 30) t.textContent = Math.floor(diff / 7) + 'w ago';
+  });
+})();
+</script>

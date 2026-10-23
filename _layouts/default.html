@@ -66,6 +66,8 @@
        networks and must never be reintroduced as a render-blocking stylesheet. -->
   <link rel="preload" href="/assets/fonts/geist-latin-wght-normal.woff2" as="font" type="font/woff2" crossorigin>
   <link rel="preload" href="/assets/fonts/fraunces-latin-full-normal.woff2" as="font" type="font/woff2" crossorigin>
+  {% if page.ledger_chrome %}<link rel="preload" href="/assets/fonts/iosevka-charon-mono-latin-700-normal.woff2" as="font" type="font/woff2" crossorigin>
+  <link rel="preload" href="/assets/fonts/iosevka-charon-mono-latin-400-normal.woff2" as="font" type="font/woff2" crossorigin>{% endif %}
 
   <!-- Must run before first stylesheet/paint: restores the saved theme so a
        dark-mode visitor never sees a light flash. Default stays light. -->
@@ -77,7 +79,7 @@
   <script src="/assets/js/site.js" defer></script>
   <script src="/assets/js/palette.js" defer></script>
 </head>
-<body>
+<body{% if page.ledger_chrome %} class="chrome-ledger"{% endif %}>
 
   <a href="#main" class="skip-link">跳到主要内容</a>
 
